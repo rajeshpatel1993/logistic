@@ -1,0 +1,38 @@
+<nb-layout-column>
+
+  
+    <!-- <ngx-datatable class="material"  columnMode="force"
+    [headerHeight]="50"
+    [footerHeight]="0"
+    [rowHeight]="50"
+    [scrollbarV]="true"
+    [scrollbarH]="true" 
+      [rows]="rows"
+      [columns]="columns">
+    </ngx-datatable> -->
+
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+        
+          <th scope="col">Name</th>
+          <th scope="col">Status</th>
+          <th scope="col">Type</th>
+          <th scope="col">Group</th>
+          <th scope="col">Current Meter</th>
+          <th scope="col">Operator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of vehiclesList">
+        
+          <td>{{item.name}}</td>
+          <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td>
+          <td>{{item.vehicleDetailsArray[0].vehicleDetails}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  
+</nb-layout-column>
