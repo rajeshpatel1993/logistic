@@ -1,0 +1,35 @@
+.VechileDetail{
+    width: 100%;
+    float: left;
+    &_image{
+        width: 48px;
+        float: left;
+        margin-right: 5px;
+    }
+    &_name{
+        width: calc(100%- 55px);
+        float: left;
+        
+    }
+}
+.VechilType{
+    width: 100%;
+    float: left;
+    
+}
+h5{
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 500;
+    margin: 0;
+}
+p{
+    font-size: 14px;
+    margin: 0;
+}
+h6{
+    font-size: 13px;
+    line-height: 20px;
+    margin: 0;
+    font-weight: 600;
+}

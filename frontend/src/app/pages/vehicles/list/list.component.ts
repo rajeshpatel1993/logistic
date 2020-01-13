@@ -27,21 +27,5 @@ export class ListComponent {
     
   }
 
-  rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
-  columns = [
-    { prop: 'Name' },
-    { prop: 'Status' },
-    { prop: 'Type' },
-    {prop: 'Group'},
-    {
-      prop: 'Current Meter'
-    },
-    {
-      prop: 'Operator'
-    }
-  ];
+ 
 }
