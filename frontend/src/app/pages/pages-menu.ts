@@ -20,13 +20,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Services',
-    icon: 'email-outline',
+    icon: 'settings-2-outline',
     link: '/pages/services',
     home: true,
   },
   {
     title: 'Repairs/Complaint',
-    icon: 'message-circle-outline',
+    icon: 'message-square-outline',
     link: '/pages/repair',
     home: true,
   },

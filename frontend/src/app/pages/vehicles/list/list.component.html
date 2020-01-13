@@ -1,7 +1,8 @@
-<nb-layout-column>
+<div class="Vehicle">
+<nb-layout-column class="p-0">
     <button type="button" class="btn btn-primary">Add Vehicle</button>
 
-  <table class="table table-hover">
+  <table class="table table-hover mt-4">
       <thead>
         <tr>
         
@@ -19,16 +20,16 @@
       <tbody>
         <tr *ngFor="let item of vehiclesList">
           <td>
-            <div class="VechileDetail">
-              <div class="VechileDetail_image">
+            <div class="VehicleDetail">
+              <div class="VehicleDetail_image">
                 <img src="{{item.vehicleImage}}" width="48">
               </div>
-              <div class="VechileDetail_name">
+              <div class="VehicleDetail_name">
                 <h5>{{item.name}}</h5>
                 <p>{{item.regNo}}</p>
               </div>
             </div>
-            <!-- <div class="VechilType">
+            <!-- <div class="VehicleType">
               <h6><b>R/S No.</b>: fhiqf</h6>
               <h6><b>Type</b>: 6r23</h6>
             </div> -->
@@ -51,3 +52,4 @@
 
   
 </nb-layout-column>
+</div>
