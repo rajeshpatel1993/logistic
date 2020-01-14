@@ -1,55 +1,68 @@
 <div class="Vehicle">
-<nb-layout-column class="p-0">
-    <button type="button" class="btn btn-primary">Add Vehicle</button>
+  <nb-card>
+    <nb-card-body>
 
-  <table class="table table-hover mt-4">
-      <thead>
-        <tr>
-        
-          <th scope="col">Name</th>
-          <th scope="col">Type</th>
-          <th scope="col">Status</th>
-          <th scope="col">Insurance Expiry</th>
-          <th scope="col">Road Tax</th>
-          <th scope="col">Warranty</th>
-          <th scope="col">Work Location</th>
-          <th scope="col">Unasigned</th>
-          <th scope="col">Remainders</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of vehiclesList">
-          <td>
-            <div class="VehicleDetail">
-              <div class="VehicleDetail_image">
-                <img src="{{item.vehicleImage}}" width="48">
-              </div>
-              <div class="VehicleDetail_name">
-                <h5>{{item.name}}</h5>
-                <p>{{item.regNo}}</p>
-              </div>
-            </div>
-            <!-- <div class="VehicleType">
-              <h6><b>R/S No.</b>: fhiqf</h6>
-              <h6><b>Type</b>: 6r23</h6>
-            </div> -->
-          </td>
-          <td>
-            <!-- <h5>Car</h5> -->
-            <p>{{item.vehicleDetailsArray[0].vehicleDetails}}</p>
-          </td>
-          <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td>
-          <td>{{item.insuranceValid}}</td>
-          <td>{{item.roadTaxValid}}</td>
-          <td>{{item.warrantyPeriod}}</td>
-          <td>{{item.workLocationArray[0].workLocation}}</td>
+      <nb-tabset>
+        <nb-tab tabTitle=" Vehicle List">
+          <nb-layout-column class="p-0">
+            <a class="btn btn-primary" routerLink="/pages/vehicles/add-vehicle">Add Vehicle</a>
+            <table class="table table-hover mt-4">
+              <thead>
+                <tr>
 
-          <td>Unassigne</td>
-          <td>Yes</td>
-        </tr>
-      </tbody>
-    </table>
+                  <th scope="col">Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Insurance Expiry</th>
+                  <th scope="col">Road Tax</th>
+                  <th scope="col">Warranty</th>
+                  <th scope="col">Work Location</th>
+                  <th scope="col">Unasigned</th>
+                  <th scope="col">Remainders</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of vehiclesList">
+                  <td>
+                    <div class="VehicleDetail">
+                      <div class="VehicleDetail_image">
+                        <img src="{{item.vehicleImage}}" width="48">
+                      </div>
+                      <div class="VehicleDetail_name">
+                        <h5>{{item.name}}</h5>
+                        <p>{{item.regNo}}</p>
+                      </div>
+                    </div>
+                    <!-- <div class="VehicleType">
+                      <h6><b>R/S No.</b>: fhiqf</h6>
+                      <h6><b>Type</b>: 6r23</h6>
+                    </div> -->
+                  </td>
+                  <td>
+                    <!-- <h5>Car</h5> -->
+                    <p>{{item.vehicleDetailsArray[0].vehicleDetails}}</p>
+                  </td>
+                  <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td>
+                  <td>{{item.insuranceValid}}</td>
+                  <td>{{item.roadTaxValid}}</td>
+                  <td>{{item.warrantyPeriod}}</td>
+                  <td>{{item.workLocationArray[0].workLocation}}</td>
 
-  
-</nb-layout-column>
+                  <td>Unassigne</td>
+                  <td>Yes</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          </nb-layout-column>
+        </nb-tab>
+        <nb-tab tabTitle="Assign vehicle">
+          <p><strong>Assign Vehicle</strong></p>
+        </nb-tab>
+      </nb-tabset>
+
+    </nb-card-body>
+  </nb-card>
+
 </div>
