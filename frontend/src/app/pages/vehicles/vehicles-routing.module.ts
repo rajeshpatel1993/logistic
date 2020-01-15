@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { VehicleComponent } from './vehicles.component';
 import { ListComponent } from '../vehicles/list/list.component';
+import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,6 +12,10 @@ const routes: Routes = [{
       {
         path: 'list',
         component: ListComponent
+      },
+      {
+        path: 'add-vehicle',
+        component: AddVehicleComponent
       }
     // {
     //   path: 'stepper',

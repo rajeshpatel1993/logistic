@@ -35,3 +35,18 @@
 
   @include nb-overrides();
 };
+.VehicleAddTab{
+  nb-tabset .tabset{
+    display: inherit!important;
+    flex-direction: column!important;
+    float: left;
+    .tab{
+      a:before{
+        height: 100%;
+        top: 0;
+        bottom: inherit!important;
+        width: 2px!important;
+      }
+    }
+  }
+}

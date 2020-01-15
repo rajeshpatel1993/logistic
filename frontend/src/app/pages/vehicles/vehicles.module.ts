@@ -7,7 +7,7 @@ import {
   NbCardModule,
   NbRouteTabsetModule,
   NbStepperModule,
-  NbLayoutModule, NbUserModule,
+  NbLayoutModule, NbUserModule,NbTabsetModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -15,6 +15,7 @@ import { VehicleComponent } from './vehicles.component';
 import { VehicleRoutingModule } from './vehicles-routing.module';
 import { ListComponent } from './list/list.component';
 import { VehicleService } from './vehicles.service';
+import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 
 @NgModule({
   imports: [
@@ -29,10 +30,12 @@ import { VehicleService } from './vehicles.service';
     NbButtonModule,
     NbUserModule,
     VehicleRoutingModule,
+    NbTabsetModule
   ],
   declarations: [
     VehicleComponent,
-    ListComponent
+    ListComponent,
+    AddVehicleComponent
 
   ],
   providers: [
