@@ -1,19 +1,19 @@
 <div class="VehicleAddTab">
-  <nb-tabset>
-    <nb-tab tabTitle="Simple Tab #1">
-      <div class="VehicleAddTab_From">
-        <form>
-          <div class="form-group row">
-            <label for="vehicletype" class="col-sm-2 col-form-label">Vehicle Type</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="vehicletype">
-                <option>Light Vehicle</option>
-                <option>Heavy Vehicle</option>
-                <option>Plant, Machinery</option>
-                <option>Power tools</option>
-              </select>
-            </div>
-          </div>
+  <form>
+    <div class="form-group row">
+      <label for="vehicletype" class="col-sm-2 col-form-label">Vehicle Type</label>
+      <div class="col-sm-10">
+        <select class="form-control" id="vehicletype">
+          <option>Light Vehicle</option>
+          <option>Heavy Vehicle</option>
+          <option>Plant, Machinery</option>
+          <option>Power tools</option>
+        </select>
+      </div>
+    </div>
+    <nb-tabset>
+      
+        <nb-tab tabTitle="Identification">
           <div class="form-group row">
             <label for="vehicledetails" class="col-sm-2 col-form-label">Vehicle Details</label>
             <div class="col-sm-10">
@@ -29,6 +29,8 @@
               <input type="text" id="vehiclecode" class="form-control">
             </div>
           </div>
+        </nb-tab>
+        <nb-tab tabTitle="Specification">
           <div class="form-group row">
             <label for="vehiclename" class="col-sm-2 col-form-label">Vehicle Name</label>
             <div class="col-sm-10">
@@ -116,6 +118,8 @@
               </select>
             </div>
           </div>
+        </nb-tab>
+        <nb-tab tabTitle="Document Specification ">
           <div class="form-group row">
             <label for="insurance" class="col-sm-2 col-form-label">Insurance Policy No </label>
             <div class="col-sm-10">
@@ -186,11 +190,21 @@
               </select>
             </div>
           </div>
-        </form>
-      </div>
-    </nb-tab>
-    <nb-tab tabTitle="Simple Tab #2">
-      Tab content 2
-    </nb-tab>
-  </nb-tabset>
+          <div class="form-group row">
+            <label for="attachdoc" class="col-sm-2 col-form-label">Attach Documents </label>
+            <div class="col-sm-10">
+              <input type="file" id="attachdoc" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="attachimg" class="col-sm-2 col-form-label">Attach Image </label>
+            <div class="col-sm-10">
+              <input type="file" id="attachimg" class="form-control">
+            </div>
+          </div>
+          
+        </nb-tab>
+      
+    </nb-tabset>
+  </form>
 </div>
