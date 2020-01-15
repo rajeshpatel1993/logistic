@@ -16,6 +16,7 @@ import { VehicleRoutingModule } from './vehicles-routing.module';
 import { ListComponent } from './list/list.component';
 import { VehicleService } from './vehicles.service';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
+import { JwPaginationComponent } from 'jw-angular-pagination';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
   declarations: [
     VehicleComponent,
     ListComponent,
-    AddVehicleComponent
+    AddVehicleComponent,
+    JwPaginationComponent
 
   ],
   providers: [

@@ -20,8 +20,8 @@ export class VehicleService {
 
   public baseUrl = environment.baseUrl;
 
-  loadVehicles(){
-    return this.http.get(this.baseUrl+"/vehicles");
+  loadVehicles(page){
+    return this.http.get(this.baseUrl+"/vehicles?page="+page);
   }
 
   // load(page: number, pageSize: number): Observable<any[]> {
