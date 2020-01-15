@@ -14,6 +14,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.21.2",
+    "jw-paginate": "^1.0.4",
     "mongoose": "^5.8.7",
     "morgan": "^1.9.1"
   }
