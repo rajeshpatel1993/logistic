@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {Vehicle} = require("../models/vehicle");
 const {VehicleType} = require("../models/vechileType");
+const {VehicleDetail} = require("../models/vehicleDetail");
 const paginate = require('jw-paginate');
 
 router.post("/add", async (req, res)=> {
@@ -48,6 +49,35 @@ router.get("/types", async(req,res)=>{
         console.log(error);
     }
 });
+
+router.get("/details", async(req,res)=>{
+    try{
+        let vehicleDetailsData = await VehicleDetail.find().select("vehicleDetailsId , vehicleDetails");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = vehicleDetailsData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+router.get("/regnos", async(req,res)=>{
+    try{
+        let regData = await Vehicle.find().distinct('regNo');
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = regData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
 router.get("/",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
