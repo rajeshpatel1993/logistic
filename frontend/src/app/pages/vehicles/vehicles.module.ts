@@ -17,6 +17,7 @@ import { ListComponent } from './list/list.component';
 import { VehicleService } from './vehicles.service';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { JwPaginationComponent } from 'jw-angular-pagination';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { JwPaginationComponent } from 'jw-angular-pagination';
     NbButtonModule,
     NbUserModule,
     VehicleRoutingModule,
-    NbTabsetModule
+    NbTabsetModule,
+    AutocompleteLibModule
   ],
   declarations: [
     VehicleComponent,
