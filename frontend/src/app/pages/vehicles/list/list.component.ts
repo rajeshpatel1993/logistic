@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -68,11 +68,11 @@ export class ListComponent {
 
   pager = {};
   pageOfItems = [];
+  public dropDownAction = false;
 
+  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef) {
 
- 
-
-  
+  } 
 
   ngOnInit() {
     this.loadVehiclesTypes();
@@ -144,9 +144,11 @@ export class ListComponent {
     this.pageOfItems = pageOfItems;
   }
 
-  ngOnDestroy() {
-    
-  }
+  ngOnDestroy() {}
 
+  toggleAtion() {
+    this.dropDownAction = !this.dropDownAction;
+  }
  
+  
 }

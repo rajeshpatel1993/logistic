@@ -35,11 +35,58 @@
 
   @include nb-overrides();
 };
+
+h5{
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 600;
+  margin: 0;
+}
+p{
+  font-size: 13px;
+  margin: 0;
+}
+h6{
+  font-size: 13px;
+  line-height: 20px;
+  margin: 0;
+  font-weight: 600;
+}
+a:focus{
+  color: #fff;
+  box-shadow: none !important;
+}
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid\9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+.logiVehicle{
+  .layout{
+    .layout-container {
+      .content {
+        .columns{
+          nb-layout-column{
+            padding: var(--layout-small-padding);
+          }
+        }
+      }
+    }
+  }
+}
 .VehicleAddTab{
   nb-tabset .tabset{
     display: inherit!important;
     flex-direction: column!important;
     float: left;
+    background-color: rgba($color: #000000, $alpha: 0.10);
+
     .tab{
       a:before{
         height: 100%;
