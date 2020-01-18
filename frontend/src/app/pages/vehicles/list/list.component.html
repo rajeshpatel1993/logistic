@@ -2,6 +2,82 @@
   <nb-card>
     <nb-card-body>
 
+      <div class="ng-autocomplete">
+        <ng-autocomplete
+          [data]="vehicleTypes"
+          [searchKeyword]="keyword"
+          placeHolder="Enter the Vehicle Types"
+          (selected)='selectEvent($event, "vehicletype")'
+          (inputChanged)='onChangeSearch($event)'
+          (inputFocused)='onFocused($event)'
+          historyIdentifier="vehicleTypes"
+          [itemTemplate]="itemTemplate"
+          [notFoundTemplate]="notFoundTemplate">
+        </ng-autocomplete>
+      
+        <ng-template #itemTemplate let-item>
+          <a [innerHTML]="item.name"></a>
+        </ng-template>
+      
+        <ng-template #notFoundTemplate let-notFound>
+          <div [innerHTML]="notFound"></div>
+        </ng-template>
+      </div>
+
+
+      <div class="ng-autocomplete">
+          <ng-autocomplete
+            [data]="vehicleDetails"
+            [searchKeyword]="keyword"
+            placeHolder="Enter the Vehicle Details"
+            (selected)='selectEvent($event, "vehicledetails")'
+            (inputChanged)='onChangeSearch($event)'
+            (inputFocused)='onFocused($event)'
+            historyIdentifier="vehicleDetails"
+            [itemTemplate]="itemTemplate1"
+            [notFoundTemplate]="notFoundTemplate1">
+          </ng-autocomplete>
+        
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.name"></a>
+          </ng-template>
+        
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+
+
+        <div class="ng-autocomplete">
+            <ng-autocomplete
+              [data]="vehicleRegistrations"
+              [searchKeyword]="keyword"
+              placeHolder="Enter the Vehicle Registration"
+              (selected)='selectEvent($event, "vehiclereg")'
+              (inputChanged)='onChangeSearch($event)'
+              (inputFocused)='onFocused($event)'
+              historyIdentifier="vehicleRegistrations"
+              [itemTemplate]="itemTemplate2"
+              [notFoundTemplate]="notFoundTemplate2">
+            </ng-autocomplete>
+          
+            <ng-template #itemTemplate2 let-item>
+              <a [innerHTML]="item.name"></a>
+            </ng-template>
+          
+            <ng-template #notFoundTemplate2 let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+
+          <div>
+              <button nbButton status="Filter" (click)="filterData()">Info</button>
+
+          </div>
+
+
+
+
       <nb-tabset>
         <nb-tab tabTitle=" Vehicle List">
           <div class="row">

@@ -24,14 +24,20 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles?page="+page);
   }
 
-  // load(page: number, pageSize: number): Observable<any[]> {
-  //   // const startIndex = ((page - 1) % TOTAL_PAGES) * pageSize;
+  loadVehiclesTypes(){
+    return this.http.get(this.baseUrl+"/vehicles/types");
+  }
 
-  //   return this.http
-  //     .get('assets/data/news.json')
-  //     .pipe(
-  //       map(news => news.splice(startIndex, pageSize)),
-  //       delay(1500),
-  //     );
-  // }
+  loadVehicleDetails(){
+    return this.http.get(this.baseUrl+"/vehicles/details");
+
+  }
+
+  loadVehicleRegistrations(){
+    return this.http.get(this.baseUrl+"/vehicles/regnos");
+  }
+
+  loadFiltereddata(querystring:String, page){
+    return this.http.get(this.baseUrl+"/vehicles/filtervehicle?"+querystring, page);
+  }
 }
