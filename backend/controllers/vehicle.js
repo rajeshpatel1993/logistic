@@ -3,6 +3,12 @@ const router = express.Router();
 const {Vehicle} = require("../models/vehicle");
 const {VehicleType} = require("../models/vechileType");
 const {VehicleDetail} = require("../models/vehicleDetail");
+const {Model} = require("../models/models");
+const {Brand} = require("../models/brands");
+const {Color} = require("../models/colors");
+const {FuelType} = require("../models/fuelType");
+const {FuelMesaurement} = require("../models/fuelMeasurement");
+
 const paginate = require('jw-paginate');
 
 router.post("/add", async (req, res)=> {
@@ -117,6 +123,76 @@ router.get("/types", async(req,res)=>{
         console.log(error);
     }
 });
+
+
+router.get("/models", async(req,res)=>{
+    try{
+        let modelsData = await Model.find().select("modelId , model , brandId");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = modelsData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+router.get("/brands", async(req,res)=>{
+    try{
+        let brandsData = await Brand.find().select("brandId , brand");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = brandsData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+router.get("/colors", async(req,res)=>{
+    try{
+        let colorsData = await Color.find().select("colorId , name");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = colorsData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+router.get("/fueltype", async(req,res)=>{
+    try{
+        let fuelTypeData = await FuelType.find().select("fuelTypeId , fuelTypeName");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = fuelTypeData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+router.get("/fuelMeasurement", async(req,res)=>{
+    try{
+        let fuelMesaurementData = await FuelMesaurement.find().select("fuelMeausrementId , fuelMeausrement");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = fuelMesaurementData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+
 
 
 router.get("/details", async(req,res)=>{

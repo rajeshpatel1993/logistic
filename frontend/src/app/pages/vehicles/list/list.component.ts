@@ -18,9 +18,9 @@ export class ListComponent {
 
   keyword = 'name';
   public filterQueryString = "";
-  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute) {
+  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef) {
 
-  }
+  } 
 
   selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
@@ -70,9 +70,7 @@ export class ListComponent {
   pageOfItems = [];
   public dropDownAction = false;
 
-  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef) {
 
-  } 
 
   ngOnInit() {
     this.loadVehiclesTypes();
