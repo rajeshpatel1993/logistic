@@ -40,4 +40,23 @@ export class VehicleService {
   loadFiltereddata(querystring:String, page){
     return this.http.get(this.baseUrl+"/vehicles/filtervehicle?"+querystring, page);
   }
+
+  loadModelsData(){
+    return this.http.get(this.baseUrl+"/vehicles/models");
+  }
+
+  loadBrandsData(){
+    return this.http.get(this.baseUrl+"/vehicles/brands");
+  }
+
+  loadColorsData(){
+    return this.http.get(this.baseUrl+"/vehicles/colors");
+  }
+  loadFuelTypeData(){
+    return this.http.get(this.baseUrl+"/vehicles/fueltype")
+  }
+  loadFuelMesaurementData(){
+    return this.http.get(this.baseUrl+"/vehicles/fuelMeasurement")
+  }
+  
 }
