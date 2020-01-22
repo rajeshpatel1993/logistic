@@ -14,25 +14,31 @@ export class AddVehicleComponent implements OnInit {
   public modelsList:any = [];
   public brandsList:any = [];
   public colorsList:any = [];
+  public agentsList: any = [];
+  public ownershipList:any=[];
   public fuelTypeList:any = [];
   public fuelMeasurementList:any = [];
+  public showExtraField:boolean = true;
+
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder) { }
   public vehicleCode: String;
   public vehicleTypes = [];
 
+  public statuses = [{"id":1,"name":"Active"},{"id":2, "name":"Inactive"}, {"id":3, "name":"Sold"}];
+
 
   ngOnInit() {
     this.loadVehiclesTypes();
-    this.createForm();
+    this.createForm(this.showExtraField);
     this.loadVehicleDetails();
     this.loadModelsData();
     this.loadBrandsData();
     this.loadColorsData();
     this.loadFuelTypeData();
     this.loadFuelMesaurementData();
-    this.addItems();
-    this.addItems();
+    this.loadAgentsData();
+    this.loadOwnershipdata();
 
   }
 
@@ -140,9 +146,39 @@ export class AddVehicleComponent implements OnInit {
   }
 
 
+  public loadAgentsData(){
+    this.vehicleService.loadAgentData().subscribe((agentData:any) => {
+      let agentsData = agentData.data;
+      agentsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.insuranceCompanyId;
+        tmpObj["name"] = item.insuranceCompanyName;
+        this.agentsList.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
 
-  createForm() {
-    this.vehicleForm = this.fb.group({
+  }
+
+
+  public loadOwnershipdata(){
+    this.vehicleService.loadOwnerShipData().subscribe((ownershipData:any) => {
+      let ownershipsData = ownershipData.data;
+      ownershipsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.vehicleOwnershipId;
+        tmpObj["name"] = item.vehicleOwnership;
+        this.ownershipList.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+
+  }
+
+
+
+  createForm(showExtraField) {
+    let group = {
       vehicleType: [''],
       vehicledetails: [''],
       vehicleCode: [this.vehicleCode],
@@ -158,21 +194,26 @@ export class AddVehicleComponent implements OnInit {
       warranty_period:[''],
       fuel_type:  [''],
       fuelMeausrement: ['']
-      ,
-      documentSpecification:  this.fb.array([])
-    });
+    };
+    if(showExtraField){
+      group["insurance_policy_no"] = [''];
+      group["insurance_amount"] = [''];
+      group["policy_expiry"] = [''];
+      group["insurance_agent"] = [''];
+      group["road_tax_no"] = [''];
+      group["road_tax_amount"] = [''];
+      group["road_tax_expiry"] = [''];
+
+
+    }
+
+    group["ownership_status"] = [''];
+    group["note"] = [''];
+    group["status"] = [1];
+    this.vehicleForm = this.fb.group(group);
   }
 
   get f() { return this.vehicleForm.controls; }
-
-  get documentSpecification() {
-    return this.vehicleForm.get('documentSpecification') as FormArray
-  }
-
-  addItems() {
-    this.documentSpecification.push(this.fb.control(''))
-  }
-
 
   // get t() { return this.f.documentSpecification as FormArray; }
 
@@ -182,7 +223,6 @@ export class AddVehicleComponent implements OnInit {
     console.log(this.vehicleForm.value);
   }
 
-  public showExtraField:boolean = true;
 
   selectEvent(item) {
   
@@ -200,6 +240,8 @@ export class AddVehicleComponent implements OnInit {
     }else{
       this.showExtraField = false;
     }
+
+    this.createForm(this.showExtraField);
     
 
 
