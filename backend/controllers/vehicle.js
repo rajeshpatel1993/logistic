@@ -8,8 +8,19 @@ const {Brand} = require("../models/brands");
 const {Color} = require("../models/colors");
 const {FuelType} = require("../models/fuelType");
 const {FuelMesaurement} = require("../models/fuelMeasurement");
+const {Agent} = require("../models/insuranceAgent");
+const {OwnerShip} = require("../models/ownership");
+const { upload } = require("../utils/upload_file_to_s3");
+const multer = require('multer');
 
 const paginate = require('jw-paginate');
+
+router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).array(
+    'files', 10
+  ),upload, async(req,res) => {
+
+
+});
 
 router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
@@ -139,6 +150,34 @@ router.get("/models", async(req,res)=>{
 });
 
 
+router.get("/agents", async(req,res)=>{
+    try{
+        let agentsData = await Agent.find().select("insuranceCompanyId  , insuranceCompanyName");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = agentsData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+router.get("/ownerships", async(req,res)=>{
+    try{
+        let ownershipsData = await OwnerShip.find().select("vehicleOwnershipId  , vehicleOwnership");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = ownershipsData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
 router.get("/brands", async(req,res)=>{
     try{
         let brandsData = await Brand.find().select("brandId , brand");
@@ -190,6 +229,8 @@ router.get("/fuelMeasurement", async(req,res)=>{
         console.log(error);
     }
 });
+
+
 
 
 

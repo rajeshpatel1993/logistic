@@ -52,11 +52,21 @@ export class VehicleService {
   loadColorsData(){
     return this.http.get(this.baseUrl+"/vehicles/colors");
   }
+  
   loadFuelTypeData(){
-    return this.http.get(this.baseUrl+"/vehicles/fueltype")
+    return this.http.get(this.baseUrl+"/vehicles/fueltype");
   }
+
   loadFuelMesaurementData(){
-    return this.http.get(this.baseUrl+"/vehicles/fuelMeasurement")
+    return this.http.get(this.baseUrl+"/vehicles/fuelMeasurement");
+  }
+
+  loadAgentData(){
+    return this.http.get(this.baseUrl+"/vehicles/agents");
+  }
+
+  loadOwnerShipData(){
+    return this.http.get(this.baseUrl+"/vehicles/ownerships");
   }
   
 }
