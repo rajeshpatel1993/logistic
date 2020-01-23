@@ -16,6 +16,8 @@ const multer = require('multer');
 
 const paginate = require('jw-paginate');
 
+
+//upload files
 router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).array(
     'files', 10
   ),upload, async(req,res) => {
