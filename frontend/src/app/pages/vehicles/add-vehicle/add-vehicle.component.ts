@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
-
+import * as uuid from 'uuid';
 @Component({
   selector: 'ngx-add-vehicle',
   templateUrl: './add-vehicle.component.html',
@@ -19,16 +19,44 @@ export class AddVehicleComponent implements OnInit {
   public fuelTypeList:any = [];
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
+  public selectedFiles: any[] = [];
 
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder) { }
   public vehicleCode: String;
   public vehicleTypes = [];
+  public billfileuniqueid = uuid.v4();
+  public imageFileUniqueId = uuid.v4();
 
+  imgSrc: any = [];
+
+  options = `{
+    fileSize: 2048, // in Bytes (by default 2048 Bytes = 2 MB)
+    minWidth: 0, // minimum width of image that can be uploaded (by default 0, signifies any width)
+    maxWidth: 0,  // maximum width of image that can be uploaded (by default 0, signifies any width)
+    minHeight: 0,  // minimum height of image that can be uploaded (by default 0, signifies any height)
+    maxHeight: 0,  // maximum height of image that can be uploaded (by default 0, signifies any height)
+    fileType: ['image/gif', 'image/jpeg', 'image/png'] // mime type of files accepted
+    height: 400, // height of cropper
+    quality: 0.8, // quaity of image after compression
+    crop: [  // array of objects for mulitple image crop instances (by default null, signifies no cropping)
+      {
+        ratio: 1, // ratio in which image needed to be cropped (by default null, signifies ratio to be free of any restrictions)
+        minWidth: 0, // minimum width of image to be exported (by default 0, signifies any width)
+        maxWidth: 0,  // maximum width of image to be exported (by default 0, signifies any width)
+        minHeight: 0,  // minimum height of image to be exported (by default 0, signifies any height)
+        maxHeight: 0,  // maximum height of image to be exported (by default 0, signifies any height)
+        width: 0,  // width of image to be exported (by default 0, signifies any width)
+        height: 0,  // height of image to be exported (by default 0, signifies any height)
+      }
+    ]
+  }`;
+  
   public statuses = [{"id":1,"name":"Active"},{"id":2, "name":"Inactive"}, {"id":3, "name":"Sold"}];
 
 
   ngOnInit() {
+    
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
     this.loadVehicleDetails();
@@ -43,6 +71,62 @@ export class AddVehicleComponent implements OnInit {
   }
 
 
+  onSelect($event: any) {
+    this.imageFileUniqueId = uuid.v4();
+    this.imgSrc = [];
+    switch (typeof($event)) {
+      case 'string':
+        this.imgSrc = [$event];
+        break;
+      case 'object':
+        this.imgSrc = $event;
+        break;
+      default:
+    }
+  }
+
+  onReset() {
+    this.imgSrc = [];
+  }
+
+
+  public dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
+
+  uploadImage(){
+    // console.log(this.imgSrc);
+    const blob = this.dataURItoBlob(this.imgSrc[0]);
+    var fd = new FormData();
+    fd.append('fileId', this.imageFileUniqueId);
+    fd.append('typeoffile', "vehicle_images");
+    fd.append("files", blob);
+
+    this.vehicleService.uploadFile(fd).subscribe((data) => {
+      alert("successfully uploaded");
+    },(err)=>{
+      console.log(err);
+    });
+
+
+
+  }
   public loadVehiclesTypes(){
     this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
       let vehicleTypeData = vehicleType.data;
@@ -207,6 +291,10 @@ export class AddVehicleComponent implements OnInit {
 
     }
 
+
+    group['bill_file_unique_id'] = [this.billfileuniqueid];
+    group['image_file_unique_id'] = [this.imageFileUniqueId];
+
     group["ownership_status"] = [''];
     group["note"] = [''];
     group["status"] = [1];
@@ -225,7 +313,7 @@ export class AddVehicleComponent implements OnInit {
 
 
   selectEvent(item) {
-  
+
     this.vehicleCode = item.code+" 001";
     this.vehicleForm.patchValue({
       vehicleType: item
@@ -257,8 +345,34 @@ export class AddVehicleComponent implements OnInit {
     // And reassign the 'data' which is binded to 'data' property.
   }
 
+  // when files are selected, save them in array selectedFiles
+  fileAdded(event) {
+    if(event.target.files.length){
+      for(let i=0 ; i < event.target.files.length ;i++){ 
+        this.selectedFiles.push(<File>event.target.files[i]);
+      }
+    }
+  }
 
- 
+  uploadBills(){
+    // console.log(this.selectedFiles);
+
+   let formD = new FormData();
+   formD.append('fileId', this.billfileuniqueid);
+   formD.append('typeoffile', "bills");
+    if(this.selectedFiles.length){
+      for(let i=0 ; i < this.selectedFiles.length ; i++){
+        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
+      }
+    }
+
+    this.vehicleService.uploadFile(formD).subscribe((data) => {
+      alert("successfully uploaded");
+    },(err)=>{
+      console.log(err);
+    });
+
+  }
 
 
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgxImgModule } from 'ngx-img';
 
 import {
   NbButtonModule,
@@ -33,7 +34,9 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     NbUserModule,
     VehicleRoutingModule,
     NbTabsetModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    NgxImgModule.forRoot(),
+
   ],
   declarations: [
     VehicleComponent,
