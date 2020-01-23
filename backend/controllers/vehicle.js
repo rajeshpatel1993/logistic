@@ -9,6 +9,7 @@ const {Color} = require("../models/colors");
 const {FuelType} = require("../models/fuelType");
 const {FuelMesaurement} = require("../models/fuelMeasurement");
 const {Agent} = require("../models/insuranceAgent");
+const {File} = require("../models/files");
 const {OwnerShip} = require("../models/ownership");
 const { upload } = require("../utils/upload_file_to_s3");
 const multer = require('multer');
@@ -18,7 +19,20 @@ const paginate = require('jw-paginate');
 router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).array(
     'files', 10
   ),upload, async(req,res) => {
+    let {fileId, typeoffile} = req.body;
+    try{
+        let file_instance = new File({"fileId":fileId,"filetype" : typeoffile, "s3Urls":req.uploadedFiles});
+        let saveFileData = await file_instance.save();
 
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = saveFileData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
 
 });
 
