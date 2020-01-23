@@ -13,6 +13,11 @@ const dev = {
         mongo_uri: process.env.MONGO_URI,
         db_username: process.env.DB_USERNAME,
         db_password: process.env.DB_PASSWORD
+    },
+    aws:{
+        accessKeyId: process.env.AWS_ACCESSKEY,
+        secretAccessKey: process.env.AWS_SECRETACCESSKEY,
+
     }
 
 };
@@ -26,6 +31,11 @@ const prod = {
         mongo_uri: process.env.MONGO_URI,
         db_username: process.env.DB_USERNAME,
         db_password: process.env.DB_PASSWORD
+    },
+    aws:{
+        accessKeyId: process.env.AWS_ACCESSKEY,
+        secretAccessKey: process.env.AWS_SECRETACCESSKEY,
+
     }
 }
 

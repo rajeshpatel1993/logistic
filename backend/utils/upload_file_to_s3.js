@@ -1,20 +1,21 @@
 const aws = require("aws-sdk");
 const fs  = require("fs");
-
-module.exports.upload = async (req, res)  => {
+const config = require("../config/config");
+module.exports.upload = async (req, res, next)  => {
 
     aws.config.setPromisesDependency();
     aws.config.update({
-      accessKeyId: process.env.ACCESSKEYID,
-      secretAccessKey: process.env.SECRETACCESSKEY,
-      region: process.env.REGION
+      accessKeyId: config['aws'].accessKeyId,
+      secretAccessKey: config['aws'].secretAccessKey
     });
     const s3 = new aws.S3();
     const file = req.files;
+    let lengthofFile = file.length;
+  
 
     const uploadedFileData = [];
 try{
-    file.map(async (item) => {
+    file.map(async (item, index) => {
         const params = {
           Bucket: "logistic-management",
           Body: fs.createReadStream(item.path),
@@ -26,8 +27,18 @@ try{
                     fs.unlinkSync(item.path); // Empty temp folder
                     const locationUrl = data.Location;
                     uploadedFileData.push(locationUrl);
+
+                    if(index == 1){
+                      req.uploadedFiles = uploadedFileData;
+                      next();
+                    }
+                    // console.log("test");
         }
     });
+// console.log(uploadedFileData);
+
+
+
     //     , (err, data) => {
     //       if (err) {
     //         console.log('Error occured while trying to upload to S3 bucket', err);
@@ -58,5 +69,7 @@ try{
 }
 
     // console.log()
+
+    
    
   }
