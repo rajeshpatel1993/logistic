@@ -68,5 +68,9 @@ export class VehicleService {
   loadOwnerShipData(){
     return this.http.get(this.baseUrl+"/vehicles/ownerships");
   }
+
+  uploadFile(formdata){
+    return this.http.post(this.baseUrl+"/vehicles/fileupload", formdata);
+  }
   
 }
