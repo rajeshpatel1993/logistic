@@ -72,5 +72,9 @@ export class VehicleService {
   uploadFile(formdata){
     return this.http.post(this.baseUrl+"/vehicles/fileupload", formdata);
   }
+
+  addVehicle(data){
+    return this.http.post(this.baseUrl+"/vehicles/add",data);
+  }
   
 }

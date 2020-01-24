@@ -28,41 +28,13 @@ try{
                     const locationUrl = data.Location;
                     uploadedFileData.push(locationUrl);
 
-                    if(index == 1){
+                    if(index == (lengthofFile-1)){
                       req.uploadedFiles = uploadedFileData;
                       next();
                     }
                     // console.log("test");
         }
     });
-// console.log(uploadedFileData);
-
-
-
-    //     , (err, data) => {
-    //       if (err) {
-    //         console.log('Error occured while trying to upload to S3 bucket', err);
-    //       }
-
-    //       if (data) {
-    //         fs.unlinkSync(item.path); // Empty temp folder
-    //         const locationUrl = data.Location;
-    //         uploadedFileData.push(locationUrl);
-    //         console.log(locationUrl);
-    //         // let newUser = new Users({ ...req.body, avatar: locationUrl });
-    //         // newUser
-    //         //   .save()
-    //         //   .then(user => {
-    //         //     res.json({ message: 'User created successfully', user });
-    //         //   })
-    //         //   .catch(err => {
-    //         //     console.log('Error occured while trying to save to DB');
-    //         //   });
-    //       }
-    //     });
-    // });
-   
-
 
 }catch(error){
 

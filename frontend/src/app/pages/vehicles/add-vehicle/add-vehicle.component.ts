@@ -127,6 +127,7 @@ export class AddVehicleComponent implements OnInit {
 
 
   }
+  public vehicleTypesData = [];
   public loadVehiclesTypes(){
     this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
       let vehicleTypeData = vehicleType.data;
@@ -134,8 +135,8 @@ export class AddVehicleComponent implements OnInit {
         let tmpObj = {};
         tmpObj["id"] = item.vehicleTypeId;
         tmpObj["name"] = item.vehicleType;
-        tmpObj["code"] = item.vehicleTypeCode;
-        this.vehicleTypes.push(tmpObj);
+         tmpObj["code"] = item.vehicleTypeCode;
+        this.vehicleTypesData.push(tmpObj);
       });
       // console.log(vehicleTypeData);
     });
@@ -263,7 +264,7 @@ export class AddVehicleComponent implements OnInit {
 
   createForm(showExtraField) {
     let group = {
-      vehicleType: [''],
+      vehicleTypef: [this.selectedVehicleType],
       vehicledetails: [''],
       vehicleCode: [this.vehicleCode],
       vehicleName: [''],
@@ -308,19 +309,24 @@ export class AddVehicleComponent implements OnInit {
 
 
   addVehicle(){
-    console.log(this.vehicleForm.value);
+
+    this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
+      console.log(data);
+    },(error)=>{});
+    // console.log(this.vehicleForm.value);
   }
 
-
-  selectEvent(item) {
-
+public selectedVehicleType;
+  selectEventD(item) {
+    // console.log(item);
     this.vehicleCode = item.code+" 001";
-    this.vehicleForm.patchValue({
-      vehicleType: item
-    });
-    this.vehicleForm.patchValue({
-      vehicleCode: this.vehicleCode
-    });
+    this.selectedVehicleType = item;
+    // this.vehicleForm.patchValue({
+    //   vehicleTypef: item
+    // });
+    // this.vehicleForm.patchValue({
+    //   vehicleCode: this.vehicleCode
+    // });
 
 
     if(item.id == 1 || item.id ==2){
