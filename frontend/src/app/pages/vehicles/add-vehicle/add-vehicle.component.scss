@@ -14,6 +14,11 @@
     .vehbgcolor{
         background-color: rgba($color: #000000, $alpha: 0.10);
         padding: 1rem;
+        .col-form-label{
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--tabset-tab-active-text-color);
+        }
     }
     .tabset{
         .tab{
@@ -22,6 +27,15 @@
                     background-color: #fff;
                 }
             }
+            .tab-link{
+                font-size: 14px;
+            }
         }
     }
+    .ng-autocomplete {
+        width: 100%;
+    }
+}
+.autocomplete-container .input-container input{
+    padding: 20px;
 }
