@@ -42,8 +42,10 @@ router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
 try{
 
-    let {service_code, msg} = req.body;
-    res.status(200).json({"msg":"saved successfully"});
+    // let {service_code, msg} = req.body;
+    // res.status(200).json({"msg":"saved successfully"});
+
+    res.status(200).json(req.body);
 }catch(err){
     console.log(err);
 }
