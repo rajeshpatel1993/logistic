@@ -13,6 +13,7 @@ export class AddVehicleComponent implements OnInit {
   public vehicleDetailsData = [];
   public modelsList:any = [];
   public brandsList:any = [];
+  public vehicleStatusList: any = [];
   public colorsList:any = [];
   public agentsList: any = [];
   public ownershipList:any=[];
@@ -20,6 +21,7 @@ export class AddVehicleComponent implements OnInit {
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
+  public workLocationsList: any[] = [];
 
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder) { }
@@ -52,7 +54,8 @@ export class AddVehicleComponent implements OnInit {
     ]
   }`;
   
-  public statuses = [{"id":1,"name":"Active"},{"id":2, "name":"Inactive"}, {"id":3, "name":"Sold"}];
+
+  public initialValue ;
 
 
   ngOnInit() {
@@ -67,12 +70,13 @@ export class AddVehicleComponent implements OnInit {
     this.loadFuelMesaurementData();
     this.loadAgentsData();
     this.loadOwnershipdata();
-
+    this.loadVehicleStatus();
+    this.loadWorkLocations();
   }
 
 
   onSelect($event: any) {
-    this.imageFileUniqueId = uuid.v4();
+    // this.imageFileUniqueId = uuid.v4();
     this.imgSrc = [];
     switch (typeof($event)) {
       case 'string':
@@ -87,6 +91,7 @@ export class AddVehicleComponent implements OnInit {
 
   onReset() {
     this.imgSrc = [];
+
   }
 
 
@@ -143,6 +148,9 @@ export class AddVehicleComponent implements OnInit {
       // console.log(vehicleTypeData);
     });
   }
+
+
+  
 
 
   public loadVehicleDetails(){
@@ -280,7 +288,8 @@ export class AddVehicleComponent implements OnInit {
       purchase_date: [''],
       warranty_period:[''],
       fuel_type:  [''],
-      fuelMeausrement: ['']
+      fuelMeausrement: [''],
+      workLocation: ['']
     };
     if(showExtraField){
       group["insurance_policy_no"] = [''];
@@ -300,7 +309,7 @@ export class AddVehicleComponent implements OnInit {
 
     group["ownership_status"] = [''];
     group["note"] = [''];
-    group["status"] = [1];
+    group["vehicleStatus"] = [5];
     this.vehicleForm = this.fb.group(group);
   }
 
@@ -313,10 +322,52 @@ export class AddVehicleComponent implements OnInit {
   addVehicle(){
 
     this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
-      console.log(data);
+      // console.log(data);
       alert("Saved successfully");
     },(error)=>{});
     // console.log(this.vehicleForm.value);
+  }
+
+  loadVehicleStatus(){
+    this.vehicleService.loadVehicleStatus().subscribe((vehicleStatus)=>{
+      let vehicleStatusData = vehicleStatus.data;
+      vehicleStatusData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = +item.vehicleStatusId;
+        tmpObj["name"] = item.vehicleStatus;
+        this.vehicleStatusList.push(tmpObj);
+       
+
+      });
+
+
+      // console.log(this.vehicleStatusList);
+
+
+    },
+    (error) => {
+      
+    });
+  }
+
+
+  loadWorkLocations(){
+    this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
+      let workLocationsData = workLocations.data;
+      workLocationsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = +item.workLocationId;
+        tmpObj["name"] = item.workLocation;
+        this.workLocationsList.push(tmpObj);
+       
+
+      });
+
+
+    },
+    (error) => {
+      
+    });
   }
 
 public selectedVehicleType;
@@ -371,7 +422,7 @@ public selectedVehicleType;
    formD.append('typeoffile', "bills");
     if(this.selectedFiles.length){
       for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files selected', this.selectedFiles[i],this.selectedFiles[i].name);
+        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
       }
     }
 

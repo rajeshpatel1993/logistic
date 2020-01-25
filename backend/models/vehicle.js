@@ -5,13 +5,13 @@ const vehicleSchema = new mongoose.Schema ({
         type:String
     },
     vehicle_typeId:{
-        type:Number
+        type:String
     },
     vehicle_code: {
         type: String
     },
     vehicleDetailsId: {
-        type: Number
+        type: String
     },
     name: {
         type: String
@@ -138,9 +138,6 @@ const vehicleSchema = new mongoose.Schema ({
     },
     note : {
         type : String
-    },
-    status: {
-        type : Number
     }
 
 
