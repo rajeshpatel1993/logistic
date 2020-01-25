@@ -330,6 +330,8 @@
           <div class="form-group row">
             <label for="attachimg" class="col-sm-3 col-form-label">Attach Image </label>
             <div class="col-sm-9">
+              <input type="hidden" id="image_file_unique_id" class="form-control" formControlName="image_file_unique_id">
+
               <div class="row no-gutters">
                 <div class="col-8">
                   <ngx-img (onSelect)="onSelect($event)" (onReset)="onReset()" [config]="{ crop: [ { ratio: 1.5 } ] }">

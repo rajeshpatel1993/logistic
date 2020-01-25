@@ -106,20 +106,22 @@ export class AddVehicleComponent implements OnInit {
     for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i);
     }
-
     return new Blob([ia], {type:mimeString});
 }
 
   uploadImage(){
     // console.log(this.imgSrc);
     const blob = this.dataURItoBlob(this.imgSrc[0]);
+    let imgFileName = blob.type.split("/")[1];
     var fd = new FormData();
     fd.append('fileId', this.imageFileUniqueId);
     fd.append('typeoffile', "vehicle_images");
-    fd.append("files selected", blob);
+    fd.append("files", blob, this.imageFileUniqueId+"."+imgFileName);
+    // console.log(imgFileName);
 
     this.vehicleService.uploadFile(fd).subscribe((data) => {
       alert("successfully uploaded");
+      this.imgSrc = [];
     },(err)=>{
       console.log(err);
     });
