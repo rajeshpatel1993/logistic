@@ -26,7 +26,6 @@ router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 102
         let file_instance = new File({"fileId":fileId,"filetype" : typeoffile, "s3Urls":req.uploadedFiles});
         let saveFileData = await file_instance.save();
 
-
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = saveFileData;
@@ -42,10 +41,27 @@ router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
 try{
 
-    // let {service_code, msg} = req.body;
-    // res.status(200).json({"msg":"saved successfully"});
+     let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
+        fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
+          bill_file_unique_id, image_file_unique_id, ownership_status, note, status} = req.body;
 
-    res.status(200).json(req.body);
+     let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+     let imgUrl = vehicleImage[0].s3Urls[0];
+    
+        const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
+            yearofManufacturer : manufacture_year, model : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
+            warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
+            insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note, status : status,
+            insuranceAgent: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, make: brand.id
+        
+        })
+    let saveData = await vehicle_instance.save();
+    if(saveData){
+        res.status(200).json({"msg":"saved successfully"});
+    }
+    
+ 
+    // res.status(200).json(req.body);
 }catch(err){
     console.log(err);
 }
