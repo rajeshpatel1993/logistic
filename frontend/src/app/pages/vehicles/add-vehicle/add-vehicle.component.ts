@@ -116,7 +116,7 @@ export class AddVehicleComponent implements OnInit {
     var fd = new FormData();
     fd.append('fileId', this.imageFileUniqueId);
     fd.append('typeoffile', "vehicle_images");
-    fd.append("files", blob);
+    fd.append("files selected", blob);
 
     this.vehicleService.uploadFile(fd).subscribe((data) => {
       alert("successfully uploaded");
@@ -369,7 +369,7 @@ public selectedVehicleType;
    formD.append('typeoffile', "bills");
     if(this.selectedFiles.length){
       for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
+        formD.append('files selected', this.selectedFiles[i],this.selectedFiles[i].name);
       }
     }
 
