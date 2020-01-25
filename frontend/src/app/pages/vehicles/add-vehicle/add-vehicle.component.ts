@@ -312,6 +312,7 @@ export class AddVehicleComponent implements OnInit {
 
     this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
       console.log(data);
+      alert("Saved successfully");
     },(error)=>{});
     // console.log(this.vehicleForm.value);
   }
