@@ -10,7 +10,10 @@ const {FuelType} = require("../models/fuelType");
 const {FuelMesaurement} = require("../models/fuelMeasurement");
 const {Agent} = require("../models/insuranceAgent");
 const {File} = require("../models/files");
+const {VehicleStatus} = require("../models/vehicleStatus");
 const {OwnerShip} = require("../models/ownership");
+const {WorkLocation} = require("../models/workLocation");
+
 const { upload } = require("../utils/upload_file_to_s3");
 const multer = require('multer');
 
@@ -43,7 +46,7 @@ try{
 
      let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
         fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
-          bill_file_unique_id, image_file_unique_id, ownership_status, note, status} = req.body;
+          bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
 
      let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
      let imgUrl = vehicleImage[0].s3Urls[0];
@@ -51,8 +54,9 @@ try{
         const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
             yearofManufacturer : manufacture_year, model : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
             warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
-            insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note, status : status,
-            insuranceAgent: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, make: brand.id
+            insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
+            insuranceAgent: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, make: brand.id,
+            vehicleStatusId: vehicleStatus, workLocationId : workLocation.id
         
         })
     let saveData = await vehicle_instance.save();
@@ -162,6 +166,35 @@ router.get("/types", async(req,res)=>{
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = vehicleTypeData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+router.get("/workLocations", async(req,res)=>{
+    try{
+        let workLocationData = await WorkLocation.find().select("workLocationId  workLocation -_id");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = workLocationData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+
+router.get("/vehicleStatus", async(req,res)=>{
+    try{
+        let vehicleStatusData = await VehicleStatus.find().select("vehicleStatusId  vehicleStatus -_id");
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = vehicleStatusData;
         res.status(200).json(responseData);
 
     }catch(error){
@@ -309,7 +342,6 @@ router.get("/",async(req,res) => {
 
          // get pager object for specified page
          const pager = paginate(nooitems, page,resPerPage);
-
 
        let vehicleData = await Vehicle.aggregate([ {
             $lookup: {

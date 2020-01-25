@@ -76,5 +76,11 @@ export class VehicleService {
   addVehicle(data){
     return this.http.post(this.baseUrl+"/vehicles/add",data);
   }
-  
+
+  loadVehicleStatus(){
+    return this.http.get(this.baseUrl+"/vehicles/vehicleStatus");
+  }
+  loadWorkLocation(){
+    return this.http.get(this.baseUrl+"/vehicles/workLocations");
+  }
 }

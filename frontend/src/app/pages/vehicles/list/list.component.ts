@@ -86,6 +86,8 @@ export class ListComponent {
     let p = page || 1;
     this.vehicleService.loadVehicles(p).subscribe((vehicleData:any)=>{
      this.vehiclesList = vehicleData.data;
+     console.log(this.vehiclesList);
+     
      this.totalItems, this.pageOfItems = vehicleData.data; 
      this.pager = vehicleData.page;
     //  this.pageOfItems = vehicleData.data;
