@@ -1,6 +1,6 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-vehicle-list',
@@ -18,7 +18,7 @@ export class ListComponent {
 
   keyword = 'name';
   public filterQueryString = "";
-  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef) {
+  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router ) {
 
   } 
 
@@ -95,6 +95,26 @@ export class ListComponent {
     },(error)=>{
 
     });
+  }
+
+
+  deleteVehicle(vehicleId){
+    this.vehicleService.deleteVehicle({id:vehicleId}).subscribe((d) =>{
+      this.activeRoute.queryParams.subscribe(queryParams => {
+        this.loadVehicles(queryParams.page);
+      });
+
+     
+    },(error) => {
+      console.log(error);
+    }
+    );
+  }
+
+  editVehicle(vehicleId){
+    
+    this.router.navigateByUrl('/pages/vehicles/edit-vehicle/'+vehicleId);
+    console.log(vehicleId);
   }
 
   public loadVehiclesTypes(){

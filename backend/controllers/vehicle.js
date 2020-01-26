@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require('mongoose');
 const {Vehicle} = require("../models/vehicle");
 const {VehicleType} = require("../models/vechileType");
 const {VehicleDetail} = require("../models/vehicleDetail");
@@ -71,6 +72,36 @@ try{
 }
 
 
+});
+
+
+router.get("/getvehicle/:id", async (req, res) => {
+    const id = req.params.id; //or use req.param('id')
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    const vehicle = await Vehicle.find(filter);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
+
+router.post("/deleteVehicle", async (req, res) => {
+    try{
+
+        let {id} = req.body;
+        const filter = { _id: mongoose.Types.ObjectId(id) };
+        const update = { isDeleted: 1 };
+        let updateVehicle = await Vehicle.findOneAndUpdate(filter, update);
+        res.status(200).json({"msg":"saved successfully"});
+        // console.log(updateVehicle);
+
+    }catch(error){
+        console.log(error);
+    }
 });
 
 router.get("/filtervehicle", async(req,res)=>{
@@ -338,12 +369,19 @@ router.get("/",async(req,res) => {
     try {
        
 
-        const nooitems = await Vehicle.count();
-
+        const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
+        console.log(nooitems);
          // get pager object for specified page
          const pager = paginate(nooitems, page,resPerPage);
 
-       let vehicleData = await Vehicle.aggregate([ {
+       let vehicleData = await Vehicle.aggregate([{
+
+        $match: {
+            "isDeleted":"0"
+        }
+       }
+        
+        , {
             $lookup: {
                 from: "vehicleDetails", // collection to join
                 let: { "vechDetId": "$vehicleDetailsId" },
