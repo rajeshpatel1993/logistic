@@ -3,11 +3,11 @@ import { VehicleService } from '../vehicles.service';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import * as uuid from 'uuid';
 @Component({
-  selector: 'ngx-add-vehicle',
-  templateUrl: './add-vehicle.component.html',
-  styleUrls: ['./add-vehicle.component.scss']
+  selector: 'ngx-edit-vehicle',
+  templateUrl: './edit-vehicle.component.html',
+  styleUrls: ['./edit-vehicle.component.scss']
 })
-export class AddVehicleComponent implements OnInit {
+export class EditVehicleComponent implements OnInit {
   keyword = 'name';
   public vehicleForm: FormGroup;
   public vehicleDetailsData = [];
@@ -18,6 +18,7 @@ export class AddVehicleComponent implements OnInit {
   public agentsList: any = [];
   public ownershipList:any=[];
   public fuelTypeList:any = [];
+  public vehicle:any = [];
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
@@ -75,6 +76,9 @@ export class AddVehicleComponent implements OnInit {
   }
 
 
+
+
+
   onSelect($event: any) {
     // this.imageFileUniqueId = uuid.v4();
     this.imgSrc = [];
@@ -114,7 +118,12 @@ export class AddVehicleComponent implements OnInit {
     return new Blob([ia], {type:mimeString});
 }
 
-  uploadImage(){
+
+selectVehicle(){
+  
+}
+
+uploadImage(){
     // console.log(this.imgSrc);
     const blob = this.dataURItoBlob(this.imgSrc[0]);
     let imgFileName = blob.type.split("/")[1];

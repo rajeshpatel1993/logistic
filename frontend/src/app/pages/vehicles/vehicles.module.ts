@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { NgxImgModule } from 'ngx-img';
 
 import {
@@ -19,13 +18,13 @@ import { VehicleService } from './vehicles.service';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { JwPaginationComponent } from 'jw-angular-pagination';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
 
 @NgModule({
   imports: [
     FormsModule,
     ReactiveFormsModule,
     ThemeModule,
-    NgxDatatableModule,
     NbLayoutModule,
     NbRouteTabsetModule,
     NbStepperModule,
@@ -42,7 +41,8 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     VehicleComponent,
     ListComponent,
     AddVehicleComponent,
-    JwPaginationComponent
+    JwPaginationComponent,
+    EditVehicleComponent
 
   ],
   providers: [
