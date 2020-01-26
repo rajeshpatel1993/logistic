@@ -26,6 +26,8 @@ mongoose.connect(`mongodb+srv://${db_username}:${db_password}@${db_uri}`, {useNe
 
 mongoose.set('debug', true);
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+
 
 const vehicleController = require("./controllers/vehicle");
 

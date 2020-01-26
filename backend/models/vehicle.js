@@ -140,7 +140,7 @@ const vehicleSchema = new mongoose.Schema ({
         type : String
     },
     isDeleted: {
-        type: Number,
+        type: String,
         default: 0
     }
 

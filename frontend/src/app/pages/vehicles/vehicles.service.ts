@@ -83,4 +83,8 @@ export class VehicleService {
   loadWorkLocation(){
     return this.http.get(this.baseUrl+"/vehicles/workLocations");
   }
+
+  deleteVehicle(data) {
+    return this.http.post(this.baseUrl+"/vehicles/deleteVehicle", data);
+  }
 }
