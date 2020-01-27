@@ -5,4 +5,6 @@
  */
 export const environment = {
   production: true,
+  baseUrl: 'http://3.16.135.76:3000/api'  
+
 };
