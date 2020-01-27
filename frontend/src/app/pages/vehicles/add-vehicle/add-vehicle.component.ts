@@ -330,7 +330,7 @@ export class AddVehicleComponent implements OnInit {
 
   loadVehicleStatus(){
     this.vehicleService.loadVehicleStatus().subscribe((vehicleStatus)=>{
-      let vehicleStatusData = vehicleStatus.data;
+      let vehicleStatusData = vehicleStatus["data"];
       vehicleStatusData.forEach((item,index) => {
         let tmpObj = {};
         tmpObj["id"] = +item.vehicleStatusId;
@@ -353,7 +353,7 @@ export class AddVehicleComponent implements OnInit {
 
   loadWorkLocations(){
     this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
-      let workLocationsData = workLocations.data;
+      let workLocationsData = workLocations["data"];
       workLocationsData.forEach((item,index) => {
         let tmpObj = {};
         tmpObj["id"] = +item.workLocationId;
