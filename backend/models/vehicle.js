@@ -19,10 +19,10 @@ const vehicleSchema = new mongoose.Schema ({
     yearofManufacturer: {
         type: String
     },
-    make: {
+    brandId: {
         type: String
     },
-    model: {
+    modelId: {
         type: String
     },
     color: {
@@ -82,7 +82,7 @@ const vehicleSchema = new mongoose.Schema ({
     insuranceCopy : {
         type: String
     },
-    insuranceAgent : {
+    insuranceCompanyId : {
         type: String
     },
     roadTaxValid : {

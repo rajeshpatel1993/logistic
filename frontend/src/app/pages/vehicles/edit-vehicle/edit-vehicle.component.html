@@ -4,7 +4,7 @@
       <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE</label>
       <div class="col-sm-9">
         <div class="ng-autocomplete">
-          <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
+          <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword"  [(ngModel)]="selectedVehicleT" #ctrl="ngModel" [ngModelOptions]="{standalone: true}" placeHolder="Enter the Vehicle Types"
             (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
           </ng-autocomplete>
 
@@ -324,7 +324,7 @@
           <div class="form-group row">
             <label for="note" class="col-sm-3 col-form-label">Note </label>
             <div class="col-sm-9">
-              <input type="text" id="note" class="form-control" placeholder="Note" formControlName="note">
+              <input type="text" id="note" name="note" class="form-control" placeholder="Note" formControlName="note">
             </div>
           </div>
 
@@ -352,8 +352,8 @@
 
 
             <label for="status" class="col-sm-3 col-form-label">Status </label>
-            <div class="col-sm-9">
-              <select class="form-control" id="status" formControlName="vehicleStatus">
+            <div class="col-sm-9">vehicleStatus
+              <select class="form-control" id="status" formControlName="">
                 <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
               </select>
             </div>
