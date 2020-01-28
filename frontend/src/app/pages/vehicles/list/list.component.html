@@ -133,7 +133,7 @@
             </table>
 
             <div class="card-footer pb-0 pt-3 pb-3">
-              <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+              <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination">
                 <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
                   <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{page: 1}" class="page-link">First</a>
                 </li>

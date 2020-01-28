@@ -41,6 +41,109 @@ router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 102
 
 });
 
+
+router.post("/updateVehicle", async (req, res)=> {
+    // let {asset} = req.body;
+    try{
+
+        console.log(req.body);
+        let vehicle_types;
+        let vehicle_typeId;
+        let vehicleDetailsId;
+
+        let updateField = {};
+
+    
+         let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
+            fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
+              bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
+              updateField["vehicleStatusId"] = vehicleStatus;
+            if(typeof vehicleTypef != "string"){
+                updateField["vehicle_type"] = vehicleTypef.name;
+                updateField["vehicle_typeId"] =  vehicleTypef.id;
+
+            }else{
+                updateField["vehicle_type"] = vehicleTypef.name;
+
+            }
+
+
+            if(typeof vehicledetails != "string"){
+                updateField["vehicleDetailsId"] = vehicledetails.id;
+
+            }
+
+            if(typeof model != "string"){
+                updateField["modelId"] = model.id;
+
+            }
+
+            if(typeof brand != "string"){
+                updateField["brandId"] = brand.id;
+            }
+
+            if(typeof color != "string"){
+                updateField["color"] = color.name;
+            }
+
+            if(typeof fuel_type != "string"){
+                updateField["fuelTypeId"] = fuel_type.id;
+            }
+
+            if(typeof fuelMeausrement != "string"){
+                updateField["fuelMeausrementId"] = fuelMeausrement.id;
+            }
+
+            if(typeof insurance_agent != "string"){
+                updateField["insuranceCompanyId"] = insurance_agent.id;
+            }
+
+            if(typeof ownership_status != "string"){
+                updateField["vehicleOwnershipId"] = ownership_status.id;
+            }
+
+            if(typeof ownership_status != "string"){
+                updateField["vehicleOwnershipId"] = ownership_status.id;
+            }
+
+            if(typeof workLocation != "string"){
+                updateField["workLocationId"] = workLocation.id;
+            }
+
+            // console.log(updateField);
+
+        //  let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+        //  let imgUrl = vehicleImage[0].s3Urls[0];
+
+        //  let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+        //  let billUrls = vehicleBills[0].s3Urls;
+        
+        const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
+                yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
+                warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
+                insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
+                insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
+                vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls
+            
+        });
+
+
+        // let saveData = await vehicle_instance.save();
+        // if(saveData){
+        //     res.status(200).json({"msg":"saved successfully"});
+        // }
+        
+     
+        // res.status(200).json(req.body);
+    }catch(err){
+        console.log(err);
+    }
+    
+    
+});
+
+
+
 router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
 try{
@@ -52,14 +155,17 @@ try{
      let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
      let imgUrl = vehicleImage[0].s3Urls[0];
     
+     let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+     let billUrls = vehicleBills[0].s3Urls;
+
         const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
-            yearofManufacturer : manufacture_year, model : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
+            yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
             warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
             insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
-            insuranceAgent: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, make: brand.id,
-            vehicleStatusId: vehicleStatus, workLocationId : workLocation.id
+            insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
+            vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls, bill_file_unique_id, image_file_unique_id
         
-        })
+        });
     let saveData = await vehicle_instance.save();
     if(saveData){
         res.status(200).json({"msg":"saved successfully"});
@@ -75,19 +181,7 @@ try{
 });
 
 
-router.get("/getvehicle/:id", async (req, res) => {
-    const id = req.params.id; //or use req.param('id')
-    const filter = { _id: mongoose.Types.ObjectId(id) };
-    const vehicle = await Vehicle.find(filter);
-    
-    let responseData = {};
-    responseData["status"] = 200;
-    responseData["data"] = vehicle;
-    res.status(200).json(responseData);
-    
 
-
-});
 
 router.post("/deleteVehicle", async (req, res) => {
     try{
@@ -103,6 +197,154 @@ router.post("/deleteVehicle", async (req, res) => {
         console.log(error);
     }
 });
+
+
+router.get("/getvehicle/:id", async (req, res) => {
+    const id = req.params.id; //or use req.param('id')
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    const vehicle = await Vehicle.aggregate([{$match:filter},{
+        
+            $lookup: {
+                from: "vehicleDetails", // collection to join
+                let: { "vechDetId": "$vehicleDetailsId" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
+                    { "$project": { "vehicleDetails": 1, "_id": 0 }}
+                ],
+                as: "vehicleDetailsArray"// output array field
+            }
+        
+    },
+    {
+
+        $lookup: {
+            from: "model", // collection to join
+            let: { "modelID": "$modelId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$modelId", "$$modelID"] }}},
+                { "$project": { "model": 1, "_id": 0 }}
+            ],
+            as: "vehicleModels"// output array field
+        }
+
+    },
+
+    {
+
+        $lookup: {
+            from: "brand", // collection to join
+            let: { "brandID": "$brandId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$brandId", "$$brandID"] }}},
+                { "$project": { "brand": 1, "_id": 0 }}
+            ],
+            as: "vehicleBrands"// output array field
+        }
+
+    },
+
+    {
+
+        $lookup: {
+            from: "fuelType", // collection to join
+            let: { "fuelTypeID": "$fuelTypeId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$fuelTypeId", "$$fuelTypeID"] }}},
+                { "$project": { "fuelTypeName": 1, "_id": 0 }}
+            ],
+            as: "fuelTypes"// output array field
+        }
+
+    },
+
+    {
+
+        $lookup: {
+            from: "fuelMeausrement", // collection to join
+            let: { "fuelMeausrementID": "$fuelMeausrementId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$fuelMeausrementId", "$$fuelMeausrementID"] }}},
+                { "$project": { "fuelMeausrement": 1, "_id": 0 }}
+            ],
+            as: "fuelMesaureMents"// output array field
+        }
+
+    },
+
+    {
+
+        $lookup: {
+            from: "worklocation", // collection to join
+            let: { "workLocationID": "$workLocationId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$workLocationId", "$$workLocationID"] }}},
+                { "$project": { "workLocation": 1, "_id": 0 }}
+            ],
+            as: "workLocations"// output array field
+        }
+
+    },
+
+    {
+
+        $lookup: {
+            from: "insuranceCompany", // collection to join
+            let: { "insuranceCompanyID": "$insuranceCompanyId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$insuranceCompanyId", "$$insuranceCompanyID"] }}},
+                { "$project": { "insuranceCompanyName": 1, "_id": 0 }}
+            ],
+            as: "insuranceAgents"// output array field
+        }
+
+    },
+
+    {
+
+        $lookup: {
+            from: "vehicleOwnership", // collection to join
+            let: { "vehicleOwnershipID": "$vehicleOwnershipId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$vehicleOwnershipId", "$$vehicleOwnershipID"] }}},
+                { "$project": { "vehicleOwnership": 1, "_id": 0 }}
+            ],
+            as: "vehicleOwnerships"// output array field
+        }
+
+    },
+
+    
+
+    // {
+
+    //     $lookup: {
+    //         from: "vehicleStatus", // collection to join
+    //         let: { "vehicleStatusID": "$vehicleStatusId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vehicleStatusID"] }}},
+    //             { "$project": { "vehicleStatus": 1, "_id": 0 }}
+    //         ],
+    //         as: "vehicleStatuses"// output array field
+    //     }
+
+    // }
+
+
+
+
+
+
+]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
+
 
 router.get("/filtervehicle", async(req,res)=>{
    
