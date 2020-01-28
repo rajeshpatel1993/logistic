@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import * as uuid from 'uuid';
 @Component({
   selector: 'ngx-add-vehicle',
@@ -9,6 +9,7 @@ import * as uuid from 'uuid';
 })
 export class AddVehicleComponent implements OnInit {
   keyword = 'name';
+  submitted = false;
   public vehicleForm: FormGroup;
   public vehicleDetailsData = [];
   public modelsList:any = [];
@@ -275,13 +276,13 @@ export class AddVehicleComponent implements OnInit {
   createForm(showExtraField) {
     let group = {
       vehicleTypef: [this.selectedVehicleType],
-      vehicledetails: [''],
+      vehicledetails: ['', Validators.required],
       vehicleCode: [this.vehicleCode],
-      vehicleName: [''],
-      regNo: [''],
-      model: [''],
-      brand: [''],
-      color: [''],
+      vehicleName: ['',Validators.required],
+      regNo: ['', Validators.required],
+      model: ['', Validators.required],
+      brand: ['', Validators.required],
+      color: ['', Validators.required],
       manufacture_year: [''],
       engine_no: [''],
       chasis_no: [''],
@@ -320,7 +321,13 @@ export class AddVehicleComponent implements OnInit {
 
 
   addVehicle(){
+    this.submitted = true;
+    console.log(this.submitted);
+    if (this.vehicleForm.invalid) {
+      return;
+    }
 
+    
     this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
       // console.log(data);
       alert("Saved successfully");
