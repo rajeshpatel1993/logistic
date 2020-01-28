@@ -86,7 +86,7 @@ a:focus{
     flex-direction: column!important;
     float: left;
     width: 30%;
-    background-color: rgba($color: #000000, $alpha: 0.10);
+    background-color: rgba($color: #000000, $alpha: 0.04);
 
     .tab{
       a:before{
@@ -94,6 +94,26 @@ a:focus{
         top: 0;
         bottom: inherit!important;
         width: 2px!important;
+      }
+    }
+  }
+  .autocomplete-container{
+    .suggestions-container{
+        ul{
+            .item{
+                a{
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+  }
+  .form-group{
+    &:last-child,&:nth-last-child(2),&:nth-last-child(3){
+      .autocomplete-container{
+        .suggestions-container{
+          bottom: 100%;
+        }
       }
     }
   }
