@@ -53,11 +53,33 @@ router.post("/updateVehicle", async (req, res)=> {
 
         let updateField = {};
 
-    
+
+
          let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
             fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
-              bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
+              bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation, vehicleId} = req.body;
+
+            
               updateField["vehicleStatusId"] = vehicleStatus;
+              updateField["vehicle_code"] = vehicleCode;
+              updateField["name"] = vehicleName;
+              updateField["regNo"] = regNo;
+              updateField["yearofManufacturer"] = manufacture_year;
+              updateField["engineNo"] = engine_no;
+              updateField["chassisNo"] = chasis_no;
+              updateField["purchase_date"] = purchase_date;
+              updateField["warrantyPeriod"] = warranty_period;
+              updateField["insuranceNo"] = insurance_policy_no;
+              updateField["insuranceAmt"] = insurance_amount;
+              updateField["insuranceValid"] = policy_expiry;
+              updateField["roadTaxNo"] = road_tax_no;
+              updateField["roadTaxAmt"] = road_tax_amount;
+              updateField["roadTaxValid"] = road_tax_expiry;
+              updateField["bill_file_unique_id"] = bill_file_unique_id;
+              updateField["image_file_unique_id"] = image_file_unique_id;
+              updateField["note"] = note;
+
+
             if(typeof vehicleTypef != "string"){
                 updateField["vehicle_type"] = vehicleTypef.name;
                 updateField["vehicle_typeId"] =  vehicleTypef.id;
@@ -110,31 +132,21 @@ router.post("/updateVehicle", async (req, res)=> {
                 updateField["workLocationId"] = workLocation.id;
             }
 
-            // console.log(updateField);
 
-        //  let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
-        //  let imgUrl = vehicleImage[0].s3Urls[0];
+            const filter = { _id: mongoose.Types.ObjectId(vehicleId) };
+            const update = updateField;
 
-        //  let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
-        //  let billUrls = vehicleBills[0].s3Urls;
+
+            let doc = await Vehicle.findOneAndUpdate(filter, update, {
+                new: true,
+                upsert: true // Make this update into an upsert
+              });
+
         
-        const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
-                yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
-                warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
-                insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
-                insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
-                vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls
-            
-        });
+        if(doc){
+            res.status(200).json({"msg":"saved successfully"});
+        }
 
-
-        // let saveData = await vehicle_instance.save();
-        // if(saveData){
-        //     res.status(200).json({"msg":"saved successfully"});
-        // }
-        
-     
-        // res.status(200).json(req.body);
     }catch(err){
         console.log(err);
     }
