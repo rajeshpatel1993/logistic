@@ -19,14 +19,17 @@ const vehicleSchema = new mongoose.Schema ({
     yearofManufacturer: {
         type: String
     },
-    make: {
+    brandId: {
         type: String
     },
-    model: {
+    modelId: {
         type: String
     },
     color: {
         type: String
+    },
+    vehicleBill:{
+        type: []
     },
     vehicleImage:{
         type: String
@@ -82,7 +85,7 @@ const vehicleSchema = new mongoose.Schema ({
     insuranceCopy : {
         type: String
     },
-    insuranceAgent : {
+    insuranceCompanyId : {
         type: String
     },
     roadTaxValid : {
@@ -142,6 +145,12 @@ const vehicleSchema = new mongoose.Schema ({
     isDeleted: {
         type: String,
         default: 0
+    },
+    bill_file_unique_id: {
+        type: String
+    },
+    image_file_unique_id: {
+        type: String
     }
 
 
