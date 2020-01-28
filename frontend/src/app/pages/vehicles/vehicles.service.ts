@@ -72,5 +72,27 @@ export class VehicleService {
   uploadFile(formdata){
     return this.http.post(this.baseUrl+"/vehicles/fileupload", formdata);
   }
-  
+
+  addVehicle(data){
+    return this.http.post(this.baseUrl+"/vehicles/add",data);
+  }
+
+  loadVehicleStatus(){
+    return this.http.get(this.baseUrl+"/vehicles/vehicleStatus");
+  }
+  loadWorkLocation(){
+    return this.http.get(this.baseUrl+"/vehicles/workLocations");
+  }
+
+  deleteVehicle(data) {
+    return this.http.post(this.baseUrl+"/vehicles/deleteVehicle", data);
+  }
+
+  loadVehicle(vehicleId){
+    return this.http.get(this.baseUrl+"/vehicles/getvehicle/"+vehicleId);
+  }
+
+  updateVehicle(data){
+    return this.http.post(this.baseUrl+"/vehicles/updateVehicle",data);
+  }
 }

@@ -7,7 +7,6 @@
     nb-tab {
         width: 70%;
         float: left;
-        min-height: 355px;
     }
 
     .col-form-label {
@@ -16,7 +15,7 @@
     }
 
     .vehbgcolor {
-        background-color: rgba($color: #000000, $alpha: 0.05);
+        background-color: rgba($color: #000000, $alpha: 0.10);
         padding: 1rem;
 
         .col-form-label {
@@ -42,7 +41,6 @@
 
     .ng-autocomplete {
         width: 100%;
-        
     }
 
 
@@ -75,7 +73,6 @@
         }
 
     }
-
 }
 
 .autocomplete-container .input-container input {

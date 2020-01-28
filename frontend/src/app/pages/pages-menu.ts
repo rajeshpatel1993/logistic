@@ -3,7 +3,10 @@ import { NbMenuItem } from '@nebular/theme';
 export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Dashboard',
-    icon: 'home-outline',
+    icon: {
+      icon: 'th-large',
+      pack: 'solid'
+    },
     link: '/pages/dashboard',
   },
   {
@@ -14,43 +17,59 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Assign Vechiles',
-    icon: 'car-outline',
+    icon:  {
+      icon: 'truck',
+      pack: 'solid'},
     link: '/pages/assign-vechiles',
     home: true,
   },
   {
     title: 'Services',
-    icon: 'settings-2-outline',
+    icon: {
+      icon: 'headset',
+      pack: 'solid'},
     link: '/pages/services',
     home: true,
   },
   {
     title: 'Repairs/Complaint',
-    icon: 'message-square-outline',
+    icon: {
+      icon: 'comment-alt',
+      pack: 'regular',
+    },
     link: '/pages/repair',
     home: true,
   },
   {
     title: 'Fuel',
-    icon: 'message-circle-outline',
+    icon: {
+      icon: 'gas-pump',
+      pack: 'solid'
+    },
     link: '/pages/fuel',
     home: true,
   },
   {
     title: 'Transaction',
-    icon: 'message-circle-outline',
+    icon: {
+      icon: 'money-bill-wave',
+      pack: 'solid'},
     link: '/pages/transaction',
     home: true,
   },
   {
     title: 'Notes',
-    icon: 'message-circle-outline',
+    icon: {
+      icon: 'clipboard',
+      pack: 'regular'},
     link: '/pages/notes',
     home: true,
   },
   {
     title: 'Remainders',
-    icon: 'message-circle-outline',
+    icon: {
+      icon: 'bell',
+      pack: 'regular'},
     link: '/pages/remainders',
     home: true,
   },

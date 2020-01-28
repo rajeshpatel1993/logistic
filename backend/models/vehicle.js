@@ -1,20 +1,17 @@
 const mongoose = require('mongoose');
 
 const vehicleSchema = new mongoose.Schema ({
-    vehicleID: {
-        type: Number
-    },
     vehicle_type:{
         type:String
     },
     vehicle_typeId:{
-        type:Number
+        type:String
     },
     vehicle_code: {
         type: String
     },
     vehicleDetailsId: {
-        type: Number
+        type: String
     },
     name: {
         type: String
@@ -22,14 +19,17 @@ const vehicleSchema = new mongoose.Schema ({
     yearofManufacturer: {
         type: String
     },
-    make: {
+    brandId: {
         type: String
     },
-    model: {
+    modelId: {
         type: String
     },
     color: {
         type: String
+    },
+    vehicleBill:{
+        type: []
     },
     vehicleImage:{
         type: String
@@ -85,7 +85,7 @@ const vehicleSchema = new mongoose.Schema ({
     insuranceCopy : {
         type: String
     },
-    insuranceAgent : {
+    insuranceCompanyId : {
         type: String
     },
     roadTaxValid : {
@@ -134,6 +134,22 @@ const vehicleSchema = new mongoose.Schema ({
         type: String
     },
     organizationId : {
+        type: String
+    },
+    purchase_date: {
+        type : String
+    },
+    note : {
+        type : String
+    },
+    isDeleted: {
+        type: String,
+        default: 0
+    },
+    bill_file_unique_id: {
+        type: String
+    },
+    image_file_unique_id: {
         type: String
     }
 

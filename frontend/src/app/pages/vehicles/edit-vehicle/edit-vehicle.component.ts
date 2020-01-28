@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import * as uuid from 'uuid';
+import { ActivatedRoute } from '@angular/router';
 @Component({
-  selector: 'ngx-add-vehicle',
-  templateUrl: './add-vehicle.component.html',
-  styleUrls: ['./add-vehicle.component.scss']
+  selector: 'ngx-edit-vehicle',
+  templateUrl: './edit-vehicle.component.html',
+  styleUrls: ['./edit-vehicle.component.scss']
 })
-export class AddVehicleComponent implements OnInit {
+export class EditVehicleComponent implements OnInit {
   keyword = 'name';
   public vehicleForm: FormGroup;
   public vehicleDetailsData = [];
@@ -18,13 +19,15 @@ export class AddVehicleComponent implements OnInit {
   public agentsList: any = [];
   public ownershipList:any=[];
   public fuelTypeList:any = [];
+  public vehicle:any = [];
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
   public workLocationsList: any[] = [];
+  public vehicleData:any[] = [];
 
   // public documentSpecification: FormArray;
-  constructor(private vehicleService: VehicleService, private fb: FormBuilder) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute) { }
   public vehicleCode: String;
   public vehicleTypes = [];
   public billfileuniqueid = uuid.v4();
@@ -56,10 +59,10 @@ export class AddVehicleComponent implements OnInit {
   
 
   public initialValue ;
-
+  public vehicleId : string;
 
   ngOnInit() {
-    
+    this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
     this.loadVehicleDetails();
@@ -72,7 +75,14 @@ export class AddVehicleComponent implements OnInit {
     this.loadOwnershipdata();
     this.loadVehicleStatus();
     this.loadWorkLocations();
+    this.loadVehicle();
+
+
+
   }
+
+
+
 
 
   onSelect($event: any) {
@@ -114,7 +124,14 @@ export class AddVehicleComponent implements OnInit {
     return new Blob([ia], {type:mimeString});
 }
 
-  uploadImage(){
+
+selectVehicle(){
+  
+}
+
+
+
+uploadImage(){
     // console.log(this.imgSrc);
     const blob = this.dataURItoBlob(this.imgSrc[0]);
     let imgFileName = blob.type.split("/")[1];
@@ -271,12 +288,128 @@ export class AddVehicleComponent implements OnInit {
   }
 
 
+ public selectedVehicleT ;
+ public selectedVehicleType;
+ public vehDetail;
+ public vehName;
+ public regName;
+ public vehicleModel;
+ public vehicleBrand;
+ public vehicleColor;
+ public manufactureYear;
+ public engineNo;
+ public chasisNo;
+ public purchaseDate;
+ public warrantyPeriod;
+ public fuelType;
+ public fuelMeasureMent;
+ public workLocation;
+ public insurancePolicy;
+ public insuranceAmount;
+ public policyExpiry;
+ public insuranceAgent;
+ public roadTaxNo;
+ public roadTaxAmount;
+ public roadTaxExpiry;
+ public ownershipStatus;
+ public note;
+ public status;
+ public attachDocument;
+ public image;
+ public uniqueFileId;
+ public uniqueImageId;
+
+
+
+  loadVehicle(){
+    this.vehicleService.loadVehicle(this.vehicleId).subscribe((d) => {
+      this.vehicleData = d['data'][0];
+      this.selectedVehicleType = this.vehicleData['vehicle_code'];
+      this.selectedVehicleT = this.vehicleData['vehicle_type'];
+      this.vehDetail = this.vehicleData['vehicleDetailsArray'][0].vehicleDetails;
+      this.vehName = this.vehicleData['name'];
+      this.regName = this.vehicleData['regNo'];
+      this.vehicleModel = this.vehicleData['vehicleModels'][0].model;
+      this.vehicleBrand = this.vehicleData['vehicleBrands'][0].brand;
+      this.vehicleColor = this.vehicleData['color'];
+      this.manufactureYear = this.vehicleData['yearofManufacturer'];
+      this.engineNo = this.vehicleData['engineNo'];
+      this.chasisNo = this.vehicleData['chassisNo'];
+      this.purchaseDate = this.vehicleData['purchase_date'];
+      this.warrantyPeriod = this.vehicleData['warrantyPeriod'];
+      this.fuelType = this.vehicleData['fuelTypes'][0].fuelTypeName;
+      this.fuelMeasureMent = this.vehicleData['fuelMesaureMents'][0].fuelMeausrement;
+      this.workLocation = this.vehicleData['workLocations'][0].workLocation;
+      this.insurancePolicy = this.vehicleData['insuranceNo'];
+      this.insuranceAmount = this.vehicleData['insuranceAmt'];
+      this.policyExpiry = this.vehicleData['insuranceValid'];
+      this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
+      this.roadTaxNo = this.vehicleData['roadTaxNo'];
+      this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
+      this.roadTaxExpiry = this.vehicleData['roadTaxValid'];
+      this.ownershipStatus = this.vehicleData['vehicleOwnerships'][0].vehicleOwnership;
+      this.status = +this.vehicleData['vehicleStatusId'];
+      this.note = this.vehicleData['note'];
+      this.uniqueFileId = this.vehicleData['bill_file_unique_id'];
+      this.uniqueImageId = this.vehicleData['image_file_unique_id'];
+
+
+
+
+
+
+
+
+
+      this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
+      this.vehicleForm.get("vehicleTypef").patchValue(this.selectedVehicleT);
+
+      this.vehicleForm.get("vehicledetails").patchValue(this.vehDetail);
+      this.vehicleForm.get("vehicleName").patchValue(this.vehName);
+      this.vehicleForm.get("regNo").patchValue(this.regName);
+      this.vehicleForm.get("model").patchValue(this.vehicleModel);
+      this.vehicleForm.get("brand").patchValue(this.vehicleBrand);
+      this.vehicleForm.get("color").patchValue(this.vehicleColor);
+      this.vehicleForm.get("manufacture_year").patchValue(this.manufactureYear);
+      this.vehicleForm.get("engine_no").patchValue(this.engineNo);
+      this.vehicleForm.get("chasis_no").patchValue(this.chasisNo);
+      this.vehicleForm.get("purchase_date").patchValue(this.purchaseDate);
+      this.vehicleForm.get("warranty_period").patchValue(this.warrantyPeriod);
+      this.vehicleForm.get("fuel_type").patchValue(this.fuelType);
+      this.vehicleForm.get("fuelMeausrement").patchValue(this.fuelMeasureMent);
+      this.vehicleForm.get("workLocation").patchValue(this.workLocation);
+      this.vehicleForm.get("insurance_policy_no").patchValue(this.insurancePolicy);
+      this.vehicleForm.get("insurance_amount").patchValue(this.insuranceAmount);
+      this.vehicleForm.get("policy_expiry").patchValue(this.policyExpiry);
+      this.vehicleForm.get("insurance_agent").patchValue(this.insuranceAgent);
+      this.vehicleForm.get("road_tax_no").patchValue(this.roadTaxNo);
+      this.vehicleForm.get("road_tax_amount").patchValue(this.roadTaxAmount);
+      this.vehicleForm.get("road_tax_expiry").patchValue(this.roadTaxExpiry);
+      this.vehicleForm.get("ownership_status").patchValue(this.ownershipStatus);
+      this.vehicleForm.get("vehicleStatus").patchValue(this.status);
+       this.vehicleForm.get("note").patchValue(this.note);
+
+       this.vehicleForm.get("image_file_unique_id").patchValue(this.uniqueImageId);
+       this.vehicleForm.get("bill_file_unique_id").patchValue(this.uniqueFileId);
+
+
+
+
+
+      console.log(d);
+    }, (error) => {
+  
+    });
+  }
+
 
   createForm(showExtraField) {
     let group = {
-      vehicleTypef: [this.selectedVehicleType],
-      vehicledetails: [''],
-      vehicleCode: [this.vehicleCode],
+      // vehicleT:[],
+      vehicleId: [this.vehicleId],
+      vehicleTypef: [],
+      vehicledetails: [],
+      vehicleCode: [this.selectedVehicleType],
       vehicleName: [''],
       regNo: [''],
       model: [''],
@@ -304,12 +437,12 @@ export class AddVehicleComponent implements OnInit {
     }
 
 
-    group['bill_file_unique_id'] = [this.billfileuniqueid];
-    group['image_file_unique_id'] = [this.imageFileUniqueId];
+    group['bill_file_unique_id'] = [];
+    group['image_file_unique_id'] = [];
 
     group["ownership_status"] = [''];
     group["note"] = [''];
-    group["vehicleStatus"] = [5];
+    group["vehicleStatus"] = [];
     this.vehicleForm = this.fb.group(group);
   }
 
@@ -319,10 +452,13 @@ export class AddVehicleComponent implements OnInit {
 
 
 
-  addVehicle(){
+  updateVehicle(){
+    console.log(this.selectedVehicleT);
 
-    this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
-      // console.log(data);
+    console.log(this.vehicleForm.value);
+
+   this.vehicleService.updateVehicle(this.vehicleForm.value).subscribe((data)=>{
+       console.log(data);
       alert("Saved successfully");
     },(error)=>{});
     // console.log(this.vehicleForm.value);
@@ -370,17 +506,16 @@ export class AddVehicleComponent implements OnInit {
     });
   }
 
-public selectedVehicleType;
+
   selectEventD(item) {
     // console.log(item);
     this.vehicleCode = item.code+" 001";
     this.selectedVehicleType = item;
-    // this.vehicleForm.patchValue({
-    //   vehicleTypef: item
-    // });
-    // this.vehicleForm.patchValue({
-    //   vehicleCode: this.vehicleCode
-    // });
+    console.log(this.vehicleCode);
+    this.selectedVehicleType = this.vehicleCode;
+
+    this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
+    this.vehicleForm.get("vehicleTypef").patchValue(item);
 
 
     if(item.id == 1 || item.id ==2){
@@ -389,7 +524,7 @@ public selectedVehicleType;
       this.showExtraField = false;
     }
 
-    this.createForm(this.showExtraField);
+    // this.createForm(this.showExtraField);
     
 
 
@@ -415,8 +550,6 @@ public selectedVehicleType;
   }
 
   uploadBills(){
-    // console.log(this.selectedFiles);
-
    let formD = new FormData();
    formD.append('fileId', this.billfileuniqueid);
    formD.append('typeoffile', "bills");
