@@ -91,4 +91,8 @@ export class VehicleService {
   loadVehicle(vehicleId){
     return this.http.get(this.baseUrl+"/vehicles/getvehicle/"+vehicleId);
   }
+
+  updateVehicle(data){
+    return this.http.post(this.baseUrl+"/vehicles/updateVehicle",data);
+  }
 }

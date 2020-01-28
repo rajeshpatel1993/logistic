@@ -62,7 +62,7 @@ export class EditVehicleComponent implements OnInit {
   public vehicleId : string;
 
   ngOnInit() {
-    
+    this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
     this.loadVehicleDetails();
@@ -75,7 +75,6 @@ export class EditVehicleComponent implements OnInit {
     this.loadOwnershipdata();
     this.loadVehicleStatus();
     this.loadWorkLocations();
-    this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehicle();
 
 
@@ -317,6 +316,9 @@ uploadImage(){
  public status;
  public attachDocument;
  public image;
+ public uniqueFileId;
+ public uniqueImageId;
+
 
 
   loadVehicle(){
@@ -344,10 +346,13 @@ uploadImage(){
       this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
       this.roadTaxNo = this.vehicleData['roadTaxNo'];
       this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
-      this.roadTaxExpiry = this.vehicleData['roadTaxExpiry'];
+      this.roadTaxExpiry = this.vehicleData['roadTaxValid'];
       this.ownershipStatus = this.vehicleData['vehicleOwnerships'][0].vehicleOwnership;
-      this.status = this.vehicleData['vehicleStatusId'];
+      this.status = +this.vehicleData['vehicleStatusId'];
       this.note = this.vehicleData['note'];
+      this.uniqueFileId = this.vehicleData['bill_file_unique_id'];
+      this.uniqueImageId = this.vehicleData['image_file_unique_id'];
+
 
 
 
@@ -357,6 +362,8 @@ uploadImage(){
 
 
       this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
+      this.vehicleForm.get("vehicleTypef").patchValue(this.selectedVehicleT);
+
       this.vehicleForm.get("vehicledetails").patchValue(this.vehDetail);
       this.vehicleForm.get("vehicleName").patchValue(this.vehName);
       this.vehicleForm.get("regNo").patchValue(this.regName);
@@ -382,6 +389,9 @@ uploadImage(){
       this.vehicleForm.get("vehicleStatus").patchValue(this.status);
        this.vehicleForm.get("note").patchValue(this.note);
 
+       this.vehicleForm.get("image_file_unique_id").patchValue(this.uniqueImageId);
+       this.vehicleForm.get("bill_file_unique_id").patchValue(this.uniqueFileId);
+
 
 
 
@@ -396,6 +406,7 @@ uploadImage(){
   createForm(showExtraField) {
     let group = {
       // vehicleT:[],
+      vehicleId: [this.vehicleId],
       vehicleTypef: [],
       vehicledetails: [],
       vehicleCode: [this.selectedVehicleType],
@@ -426,12 +437,12 @@ uploadImage(){
     }
 
 
-    group['bill_file_unique_id'] = [this.billfileuniqueid];
-    group['image_file_unique_id'] = [this.imageFileUniqueId];
+    group['bill_file_unique_id'] = [];
+    group['image_file_unique_id'] = [];
 
     group["ownership_status"] = [''];
     group["note"] = [''];
-    group["vehicleStatus"] = [5];
+    group["vehicleStatus"] = [];
     this.vehicleForm = this.fb.group(group);
   }
 
@@ -441,10 +452,13 @@ uploadImage(){
 
 
 
-  addVehicle(){
+  updateVehicle(){
+    console.log(this.selectedVehicleT);
 
-    this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
-      // console.log(data);
+    console.log(this.vehicleForm.value);
+
+   this.vehicleService.updateVehicle(this.vehicleForm.value).subscribe((data)=>{
+       console.log(data);
       alert("Saved successfully");
     },(error)=>{});
     // console.log(this.vehicleForm.value);
@@ -501,6 +515,7 @@ uploadImage(){
     this.selectedVehicleType = this.vehicleCode;
 
     this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
+    this.vehicleForm.get("vehicleTypef").patchValue(item);
 
 
     if(item.id == 1 || item.id ==2){
@@ -509,7 +524,7 @@ uploadImage(){
       this.showExtraField = false;
     }
 
-    this.createForm(this.showExtraField);
+    // this.createForm(this.showExtraField);
     
 
 
@@ -535,8 +550,6 @@ uploadImage(){
   }
 
   uploadBills(){
-    // console.log(this.selectedFiles);
-
    let formD = new FormData();
    formD.append('fileId', this.billfileuniqueid);
    formD.append('typeoffile', "bills");

@@ -58,6 +58,7 @@
             </div>
           </div>
 
+          <input type="hidden" id="vehicleId" class="form-control" formControlName="vehicleId">
 
           <input type="hidden" id="vehicletypeformcontrol" class="form-control" formControlName="vehicleTypef">
 
@@ -331,29 +332,11 @@
           <div class="form-group row">
 
             
-              <!-- <label for="status" class="col-sm-3 col-form-label">Vehicle Status </label>
-              <div class="col-sm-9">
-                <div class="ng-autocomplete">
-                  <ng-autocomplete [data]="vehicleStatusList" [initialValue]="initialValue" [searchKeyword]="keyword"  [itemTemplate]="itemTemplate7"
-                    formControlName="vehicleStatus" [notFoundTemplate]="notFoundTemplate7"
-                    placeHolder="Enter the Vehicle Status" >
-                  </ng-autocomplete>
-  
-                  <ng-template #itemTemplate7 let-item>
-                    <a [innerHTML]="item.name"></a>
-                  </ng-template>
-  
-                  <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                  </ng-template>
-                </div>
-              </div>
-             -->
 
 
             <label for="status" class="col-sm-3 col-form-label">Status </label>
-            <div class="col-sm-9">vehicleStatus
-              <select class="form-control" id="status" formControlName="">
+            <div class="col-sm-9">
+              <select class="form-control" id="status" formControlName="vehicleStatus">
                 <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
               </select>
             </div>
@@ -414,7 +397,7 @@
     </div>
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
-        <button type="submit" (click)="addVehicle()" class="btn btn-primary float-right">Submit</button>
+        <button type="submit" (click)="updateVehicle()" class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
 

@@ -28,6 +28,9 @@ const vehicleSchema = new mongoose.Schema ({
     color: {
         type: String
     },
+    vehicleBill:{
+        type: []
+    },
     vehicleImage:{
         type: String
     },
@@ -142,6 +145,12 @@ const vehicleSchema = new mongoose.Schema ({
     isDeleted: {
         type: String,
         default: 0
+    },
+    bill_file_unique_id: {
+        type: String
+    },
+    image_file_unique_id: {
+        type: String
     }
 
 

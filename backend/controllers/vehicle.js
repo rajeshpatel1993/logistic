@@ -41,6 +41,109 @@ router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 102
 
 });
 
+
+router.post("/updateVehicle", async (req, res)=> {
+    // let {asset} = req.body;
+    try{
+
+        console.log(req.body);
+        let vehicle_types;
+        let vehicle_typeId;
+        let vehicleDetailsId;
+
+        let updateField = {};
+
+    
+         let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
+            fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
+              bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
+              updateField["vehicleStatusId"] = vehicleStatus;
+            if(typeof vehicleTypef != "string"){
+                updateField["vehicle_type"] = vehicleTypef.name;
+                updateField["vehicle_typeId"] =  vehicleTypef.id;
+
+            }else{
+                updateField["vehicle_type"] = vehicleTypef.name;
+
+            }
+
+
+            if(typeof vehicledetails != "string"){
+                updateField["vehicleDetailsId"] = vehicledetails.id;
+
+            }
+
+            if(typeof model != "string"){
+                updateField["modelId"] = model.id;
+
+            }
+
+            if(typeof brand != "string"){
+                updateField["brandId"] = brand.id;
+            }
+
+            if(typeof color != "string"){
+                updateField["color"] = color.name;
+            }
+
+            if(typeof fuel_type != "string"){
+                updateField["fuelTypeId"] = fuel_type.id;
+            }
+
+            if(typeof fuelMeausrement != "string"){
+                updateField["fuelMeausrementId"] = fuelMeausrement.id;
+            }
+
+            if(typeof insurance_agent != "string"){
+                updateField["insuranceCompanyId"] = insurance_agent.id;
+            }
+
+            if(typeof ownership_status != "string"){
+                updateField["vehicleOwnershipId"] = ownership_status.id;
+            }
+
+            if(typeof ownership_status != "string"){
+                updateField["vehicleOwnershipId"] = ownership_status.id;
+            }
+
+            if(typeof workLocation != "string"){
+                updateField["workLocationId"] = workLocation.id;
+            }
+
+            // console.log(updateField);
+
+        //  let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+        //  let imgUrl = vehicleImage[0].s3Urls[0];
+
+        //  let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+        //  let billUrls = vehicleBills[0].s3Urls;
+        
+        const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
+                yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
+                warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
+                insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
+                insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
+                vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls
+            
+        });
+
+
+        // let saveData = await vehicle_instance.save();
+        // if(saveData){
+        //     res.status(200).json({"msg":"saved successfully"});
+        // }
+        
+     
+        // res.status(200).json(req.body);
+    }catch(err){
+        console.log(err);
+    }
+    
+    
+});
+
+
+
 router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
 try{
@@ -52,14 +155,17 @@ try{
      let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
      let imgUrl = vehicleImage[0].s3Urls[0];
     
+     let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+     let billUrls = vehicleBills[0].s3Urls;
+
         const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
             yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
             warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
             insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
             insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
-            vehicleStatusId: vehicleStatus, workLocationId : workLocation.id
+            vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls, bill_file_unique_id, image_file_unique_id
         
-        })
+        });
     let saveData = await vehicle_instance.save();
     if(saveData){
         res.status(200).json({"msg":"saved successfully"});
