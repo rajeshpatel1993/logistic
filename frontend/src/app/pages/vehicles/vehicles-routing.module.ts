@@ -5,6 +5,7 @@ import { VehicleComponent } from './vehicles.component';
 import { ListComponent } from '../vehicles/list/list.component';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
+import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component'
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +23,7 @@ const routes: Routes = [{
         path: 'edit-vehicle/:id',
         component: EditVehicleComponent
       }
+      
     // {
     //   path: 'stepper',
     //   component: StepperComponent,
@@ -58,6 +60,10 @@ const routes: Routes = [{
     //   ],
     // },
   ],
+},
+{
+  path: 'assign-vehicles',
+  component: AssignVehicleComponent
 }];
 
 @NgModule({

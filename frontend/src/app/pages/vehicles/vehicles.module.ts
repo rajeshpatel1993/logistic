@@ -19,6 +19,7 @@ import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { JwPaginationComponent } from 'jw-angular-pagination';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
+import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component'
 
 @NgModule({
   imports: [
@@ -42,8 +43,8 @@ import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
     ListComponent,
     AddVehicleComponent,
     JwPaginationComponent,
-    EditVehicleComponent
-
+    EditVehicleComponent,
+    AssignVehicleComponent
   ],
   providers: [
     VehicleService

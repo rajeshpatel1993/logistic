@@ -67,6 +67,10 @@ a:focus{
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
 }
+.star{
+  color: #f00;
+  vertical-align: super;
+}
 .logiVehicle{
   .layout{
     .layout-container {
@@ -109,15 +113,25 @@ a:focus{
     }
   }
   .form-group{
+    &:first-child,&:nth-of-type(2),&:nth-of-type(3){
+      .autocomplete-container{
+        .suggestions-container{
+          bottom: inherit!important;
+          top: 100%!important;
+        }
+      }
+    }
     &:last-child,&:nth-last-child(2),&:nth-last-child(3){
       .autocomplete-container{
         .suggestions-container{
           bottom: 100%;
+          top: inherit;
         }
       }
     }
   }
 }
+
 //vechile page search input design
 .VehicleAddTab {
   .form-group{
@@ -148,4 +162,10 @@ a:focus{
   }
 } 
 
- 
+.Vehicle{
+  nb-card-body{
+    nb-card-body{
+        padding: 0;
+    }
+  }
+}
