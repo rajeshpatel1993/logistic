@@ -1,5 +1,5 @@
 <div class="VehicleAddTab">
-  <form [formGroup]="vehicleForm">
+  <form [formGroup]="vehicleForm" novalidate>
     <div class="form-group row m-0 mb-3 vehbgcolor">
       <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
       <div class="col-sm-9">
@@ -31,7 +31,13 @@
                 <ng-autocomplete [data]="vehicleDetailsData" [itemTemplate]="itemTemplate1"
                   formControlName="vehicledetails" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword"
                   placeHolder="Enter the Vehicle Details">
+
+               
                 </ng-autocomplete>
+                <div *ngIf="vehicleForm.get('vehicledetails').hasError('required') && submitted" class="invalid-feedback">
+                  Vehicle Detail is required
+                </div>
+
 
                 <ng-template #itemTemplate1 let-item>
                   <a [innerHTML]="item.name"></a>
@@ -68,6 +74,15 @@
             <div class="col-sm-9">
               <input type="text" id="vehiclename" class="form-control" placeholder="Vehicle Name"
                 formControlName="vehicleName">
+                <div *ngIf="f.vehicleName.invalid && (f.vehicleName.dirty || f.vehicleName.touched)">
+                  Vehicle  Name is required
+                </div>
+
+
+                <!-- <div *ngIf="vehicleForm.get('vehicleName').hasError('required') && submitted" class="invalid-feedback">
+                  Vehicle  Name is required
+                </div> -->
+
             </div>
           </div>
           <div class="form-group row">
@@ -330,25 +345,7 @@
 
           <div class="form-group row">
 
-            
-              <!-- <label for="status" class="col-sm-3 col-form-label">Vehicle Status </label>
-              <div class="col-sm-9">
-                <div class="ng-autocomplete">
-                  <ng-autocomplete [data]="vehicleStatusList" [initialValue]="initialValue" [searchKeyword]="keyword"  [itemTemplate]="itemTemplate7"
-                    formControlName="vehicleStatus" [notFoundTemplate]="notFoundTemplate7"
-                    placeHolder="Enter the Vehicle Status" >
-                  </ng-autocomplete>
-  
-                  <ng-template #itemTemplate7 let-item>
-                    <a [innerHTML]="item.name"></a>
-                  </ng-template>
-  
-                  <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                  </ng-template>
-                </div>
-              </div>
-             -->
+          
 
 
             <label for="status" class="col-sm-3 col-form-label">Status<span class="star">*</span></label>
@@ -414,6 +411,7 @@
     </div>
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
+        <!-- [disabled]="vehicleForm.invalid"  -->
         <button type="submit" (click)="addVehicle()" class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
