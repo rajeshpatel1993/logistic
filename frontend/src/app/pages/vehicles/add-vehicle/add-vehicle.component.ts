@@ -319,7 +319,6 @@ export class AddVehicleComponent implements OnInit {
   // get t() { return this.f.documentSpecification as FormArray; }
 
 
-
   addVehicle(){
     this.submitted = true;
     console.log(this.submitted);
