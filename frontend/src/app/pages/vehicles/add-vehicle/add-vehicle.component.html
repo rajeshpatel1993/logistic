@@ -34,10 +34,7 @@
 
                
                 </ng-autocomplete>
-                <div *ngIf="vehicleForm.get('vehicledetails').hasError('required') && submitted" class="invalid-feedback">
-                  Vehicle Detail is required
-                </div>
-
+             
 
                 <ng-template #itemTemplate1 let-item>
                   <a [innerHTML]="item.name"></a>
@@ -46,6 +43,11 @@
                 <ng-template #notFoundTemplate1 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+
+                <div *ngIf="f.vehicledetails.invalid && (f.vehicledetails.dirty || f.vehicledetails.touched)">
+                  Vehicle  Detail is required
+                </div>
+
               </div>
 
               <!-- <select class="form-control" id="vehicledetails" formControlName="vehicledetails">
@@ -61,6 +63,11 @@
             <div class="col-sm-9">
               <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code"
                 formControlName="vehicleCode">
+
+                <div *ngIf="f.vehicleCode.invalid && (f.vehicleCode.dirty || f.vehicleCode.touched)">
+                  Vehicle  Code is required
+                </div>
+
             </div>
           </div>
 
@@ -76,6 +83,8 @@
                 formControlName="vehicleName">
                 <div *ngIf="f.vehicleName.invalid && (f.vehicleName.dirty || f.vehicleName.touched)">
                   Vehicle  Name is required
+
+
                 </div>
 
 
@@ -90,6 +99,13 @@
             <div class="col-sm-9">
               <input type="text" id="regno" class="form-control" placeholder="Reg No" formControlName="regNo">
             </div>
+
+            <div *ngIf="f.regNo.invalid && (f.regNo.dirty || f.regNo.touched)">
+              Reg no is required
+            </div>
+
+
+            
           </div>
           <div class="form-group row">
             <label for="make" class="col-sm-3 col-form-label">Model<span class="star">*</span></label>
@@ -106,6 +122,10 @@
                 <ng-template #notFoundTemplate2 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+              </div>
+
+              <div *ngIf="f.model.invalid && (f.model.dirty || f.model.touched)">
+                Model is required
               </div>
             </div>
           </div>
@@ -124,6 +144,11 @@
                 <ng-template #notFoundTemplate3 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+
+                <div *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
+                  Brand is required
+                </div>
+
               </div>
             </div>
           </div>
@@ -142,6 +167,11 @@
                 <ng-template #notFoundTemplate4 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+
+                <div *ngIf="f.color.invalid && (f.color.dirty || f.color.touched)">
+                  Color is required
+                </div>
+
               </div>
             </div>
           </div>
@@ -150,18 +180,32 @@
             <div class="col-sm-9">
               <input type="text" id="manufacture" placeholder="Manufacture Year" class="form-control"
                 formControlName="manufacture_year">
+
+                <div *ngIf="f.manufacture_year.invalid && (f.manufacture_year.dirty || f.manufacture_year.touched)">
+                 Manufacture year is required
+                </div>
+
             </div>
           </div>
           <div class="form-group row">
             <label for="engine" class="col-sm-3 col-form-label">Engine No<span class="star">*</span></label>
             <div class="col-sm-9">
               <input type="text" id="engine" class="form-control" placeholder="Engine No" formControlName="engine_no">
+
+              <div *ngIf="f.engine_no.invalid && (f.engine_no.dirty || f.engine_no.touched)">
+                Engine no is required
+               </div>
+
             </div>
           </div>
           <div class="form-group row">
             <label for="chassis" class="col-sm-3 col-form-label">Chassis No<span class="star">*</span></label>
             <div class="col-sm-9">
               <input type="text" id="chassis" class="form-control" placeholder="Chassis No" formControlName="chasis_no">
+
+              <div *ngIf="f.chasis_no.invalid && (f.chasis_no.dirty || f.chasis_no.touched)">
+                Chassis no is required
+               </div>
             </div>
           </div>
           <div class="form-group row">
@@ -169,6 +213,11 @@
             <div class="col-sm-9">
               <input type="text" id="purchase" class="form-control" placeholder="Purchase Date"
                 formControlName="purchase_date">
+
+                <div *ngIf="f.purchase_date.invalid && (f.purchase_date.dirty || f.purchase_date.touched)">
+                  Purchase date is required
+                 </div>
+
             </div>
           </div>
           <div class="form-group row">
@@ -176,6 +225,10 @@
             <div class="col-sm-9">
               <input type="text" id="warranty" class="form-control" placeholder="Warranty Period"
                 formControlName="warranty_period">
+                <div *ngIf="f.warranty_period.invalid && (f.warranty_period.dirty || f.warranty_period.touched)">
+                  Warranty Period is required
+                 </div>
+
             </div>
           </div>
           <div class="form-group row">

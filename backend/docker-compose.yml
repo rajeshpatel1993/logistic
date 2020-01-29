@@ -1,0 +1,24 @@
+#docker file for logistic Backend
+version: "2"
+services:
+  node:
+    restart: always
+    mem_limit: 500m
+    build:
+      dockerfile: dockerfile
+      context: .
+
+    environment:
+      - NODE_ENV=prod
+
+    ports:
+      - '3000:3000'
+#     external_links:
+#          - mongodbserver
+#     networks:
+#         - blackrabbit_default
+
+# networks:
+#     blackrabbit_default:
+#         external: true
+

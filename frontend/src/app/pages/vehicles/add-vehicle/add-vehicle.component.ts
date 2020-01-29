@@ -277,7 +277,7 @@ export class AddVehicleComponent implements OnInit {
     let group = {
       vehicleTypef: [this.selectedVehicleType],
       vehicledetails: ['', Validators.required],
-      vehicleCode: [this.vehicleCode],
+      vehicleCode: [this.vehicleCode, Validators.required],
       vehicleName: ['',Validators.required],
       regNo: ['', Validators.required],
       model: ['', Validators.required],
@@ -317,7 +317,6 @@ export class AddVehicleComponent implements OnInit {
   get f() { return this.vehicleForm.controls; }
 
   // get t() { return this.f.documentSpecification as FormArray; }
-
 
 
   addVehicle(){
