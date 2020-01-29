@@ -16,11 +16,11 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Assign Vechiles',
+    title: 'Assign Vehicles',
     icon:  {
       icon: 'truck',
       pack: 'solid'},
-    link: '/pages/assign-vechiles',
+    link: '/pages/vehicles/assign-vehicles',
     home: true,
   },
   {
