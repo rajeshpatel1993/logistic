@@ -7,7 +7,7 @@ import {
   NbCardModule,
   NbRouteTabsetModule,
   NbStepperModule,
-  NbLayoutModule, NbUserModule,NbTabsetModule,
+  NbLayoutModule, NbUserModule,NbTabsetModule,NbDatepickerModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -19,7 +19,8 @@ import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import { JwPaginationComponent } from 'jw-angular-pagination';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
-import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component'
+import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component';
+import { AssignVehicleDetailsComponent } from './assign-vehicle-details/assign-vehicle-details.component'
 
 @NgModule({
   imports: [
@@ -36,7 +37,7 @@ import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component'
     NbTabsetModule,
     AutocompleteLibModule,
     NgxImgModule.forRoot(),
-
+    NbDatepickerModule.forRoot(),
   ],
   declarations: [
     VehicleComponent,
@@ -44,7 +45,8 @@ import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component'
     AddVehicleComponent,
     JwPaginationComponent,
     EditVehicleComponent,
-    AssignVehicleComponent
+    AssignVehicleComponent,
+    AssignVehicleDetailsComponent
   ],
   providers: [
     VehicleService
