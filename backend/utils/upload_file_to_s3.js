@@ -17,7 +17,7 @@ module.exports.upload = async (req, res, next)  => {
 try{
     file.map(async (item, index) => {
         const params = {
-          Bucket: "logistic-management",
+          Bucket:config['aws'].s3_bucket,
           Body: fs.createReadStream(item.path),
           Key: `files/${item.originalname}`
         };
