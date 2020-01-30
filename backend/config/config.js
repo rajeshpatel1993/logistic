@@ -7,7 +7,6 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
 const dev = {
     app: {
         port: parseInt(process.env.DEV_APP_PORT) || ''
-
     },
     db: {
         mongo_uri: process.env.MONGO_URI,
@@ -17,6 +16,8 @@ const dev = {
     aws:{
         accessKeyId: process.env.AWS_ACCESSKEY,
         secretAccessKey: process.env.AWS_SECRETACCESSKEY,
+        s3_bucket: process.env.AWS_S3_BUCKET
+
 
     }
 
@@ -35,6 +36,8 @@ const prod = {
     aws:{
         accessKeyId: process.env.AWS_ACCESSKEY,
         secretAccessKey: process.env.AWS_SECRETACCESSKEY,
+        s3_bucket: process.env.AWS_S3_BUCKET
+
 
     }
 }
