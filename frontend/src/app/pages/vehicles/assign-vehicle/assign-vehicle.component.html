@@ -1,4 +1,4 @@
-<!-- <div class="AssignVehicle">
+<div class="AssignVehicle">
   <nb-card>
     <nb-card-body>
       <h5 class="pb-3">Assign Vehicles</h5>
@@ -23,10 +23,9 @@
           </div>
           <div class="col-auto">
             <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword"
-                placeHolder="Enter the Vehicle Details" (selected)='selectEvent($event, "vehicledetails")'
-                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
+              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
+                (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
                 [notFoundTemplate]="notFoundTemplate1">
               </ng-autocomplete>
 
@@ -62,6 +61,96 @@
               class="fas fa-search"></i> Search</button>
         </div>
       </form>
+
+      <nb-layout-column class="p-0">
+        <table class="table table-responsive table-hover mt-3">
+          <thead>
+            <tr>
+              <th>Vehicle Name</th>
+              <th> vehicle Status color</th>
+              <th> Vehicle details type </th>
+              <th>Assignment Status </th>
+              <th>Assigned to </th>
+              <th>Assignment Date </th>
+              <th>Work Location </th>
+              <th> Project </th>
+              <th>Fuel Limit </th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="VehicleDetail">
+                  <div class="VehicleDetail_image">
+                    <img src="assets/images/camera3.jpg" width="48">
+                  </div>
+                  <div class="VehicleDetail_name">
+                    <h5>Maruti Suzuki</h5>
+                    <h6><b>Code:</b> 34759</h6>
+                    <p><b>Reg/Ser No.:</b> bk7687vjkk</p>
+                  </div>
+                </div>
+              </td>
+              <td>Black</td>
+              <td>Heavy</td>
+              <td>Status</td>
+              <td>Assigned</td>
+              <td>Start Date</td>
+              <td>Work Location</td>
+              <td>Project</td>
+              <td>Fuel Limit</td>
+              <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details">Assign</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="VehicleDetail">
+                  <div class="VehicleDetail_image">
+                    <img src="assets/images/camera3.jpg" width="48">
+                  </div>
+                  <div class="VehicleDetail_name">
+                    <h5>Maruti Suzuki</h5>
+                    <h6><b>Code:</b> 34759</h6>
+                    <p><b>Reg/Ser No.:</b> bk7687vjkk</p>
+                  </div>
+                </div>
+              </td>
+              <td>Black</td>
+              <td>Heavy</td>
+              <td>Status</td>
+              <td>Assigned</td>
+              <td>Start Date</td>
+              <td>Work Location</td>
+              <td>Project</td>
+              <td>Fuel Limit</td>
+              <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details">Assign</a></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="VehicleDetail">
+                  <div class="VehicleDetail_image">
+                    <img src="assets/images/camera3.jpg" width="48">
+                  </div>
+                  <div class="VehicleDetail_name">
+                    <h5>Maruti Suzuki</h5>
+                    <h6><b>Code:</b> 34759</h6>
+                    <p><b>Reg/Ser No.:</b> bk7687vjkk</p>
+                  </div>
+                </div>
+              </td>
+              <td>Black</td>
+              <td>Heavy</td>
+              <td>Status</td>
+              <td>Assigned</td>
+              <td>Start Date</td>
+              <td>Work Location</td>
+              <td>Project</td>
+              <td>Fuel Limit</td>
+              <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details">Assign</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </nb-layout-column>
     </nb-card-body>
   </nb-card>
-</div> -->
+</div>
