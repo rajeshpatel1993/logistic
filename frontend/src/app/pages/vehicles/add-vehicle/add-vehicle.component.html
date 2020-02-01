@@ -246,6 +246,12 @@
                 <ng-template #notFoundTemplate5 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+
+
+                <div *ngIf="f.fuel_type.invalid && (f.fuel_type.dirty || f.fuel_type.touched)">
+                  Fuel Type is required
+                </div>
+
               </div>
             </div>
           </div>
@@ -265,6 +271,12 @@
                 <ng-template #notFoundTemplate6 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+
+
+                <div *ngIf="f.fuelMeausrement.invalid && (f.fuelMeausrement.dirty || f.fuelMeausrement.touched)">
+                  Fuel Measurement is required
+                </div>
+
               </div>
             </div>
           </div>
@@ -285,6 +297,10 @@
                 <ng-template #notFoundTemplate10 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
+
+                <div *ngIf="f.workLocation.invalid && (f.workLocation.dirty || f.workLocation.touched)">
+                 Work Location is required
+                </div>
               </div>
             </div>
           </div>
@@ -300,6 +316,12 @@
                 <input type="text" id="insurancepolicy" class="form-control" placeholder="Insurance Policy No"
                   formControlName="insurance_policy_no">
               </div>
+
+
+            <div *ngIf="f.insurance_policy_no.invalid && (f.insurance_policy_no.dirty || f.insurance_policy_no.touched)">
+             Insurance Policy No is required
+            </div>
+
             </div>
 
             <div class="form-group row">
@@ -308,6 +330,12 @@
                 <input type="text" id="insurance_amount" class="form-control" placeholder="Insurance Amount"
                   formControlName="insurance_amount">
               </div>
+
+              <div *ngIf="f.insurance_amount.invalid && (f.insurance_amount.dirty || f.insurance_amount.touched)">
+                Insurance Amount is required
+              </div>
+
+
             </div>
 
 
