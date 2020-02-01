@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-vehicle-list',
@@ -18,7 +19,7 @@ export class ListComponent {
 
   keyword = 'name';
   public filterQueryString = "";
-  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router ) {
+  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router,private dialogService: NbDialogService ) {
 
   } 
 
@@ -170,5 +171,7 @@ export class ListComponent {
     this.dropDownAction = !this.dropDownAction;
   }
  
-  
+  open(dialog:any) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
+  }
 }
