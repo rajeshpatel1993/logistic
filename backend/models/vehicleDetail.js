@@ -9,7 +9,7 @@ const vehicleDetailSchema = new mongoose.Schema ({
     },
     vehicleTypeId:
     {
-        type: Number
+        type: String
     },
     createdDate:{
         type:String
