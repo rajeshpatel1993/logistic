@@ -21,6 +21,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
 import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component';
 import { AssignVehicleDetailsComponent } from './assign-vehicle-details/assign-vehicle-details.component'
+import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { AssignVehicleDetailsComponent } from './assign-vehicle-details/assign-v
     JwPaginationComponent,
     EditVehicleComponent,
     AssignVehicleComponent,
-    AssignVehicleDetailsComponent
+    AssignVehicleDetailsComponent,
+    DailogBoxComponent
   ],
   providers: [
     VehicleService

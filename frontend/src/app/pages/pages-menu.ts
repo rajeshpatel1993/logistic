@@ -11,7 +11,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
     title: 'Vehicles',
-    icon: 'car-outline',
+    icon: {
+      icon: 'shuttle-van',
+      pack: 'solid'
+    },
     link: '/pages/vehicles/list',
     home: true,
   },

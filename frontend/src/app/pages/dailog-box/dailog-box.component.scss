@@ -1,0 +1,53 @@
+.dialogBox{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.5);
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    &_wrraper{
+        width: 400px;
+        height: 200px;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 15px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%,-50%);
+        -moz-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        &_common{
+            padding: 10px;
+            h4{
+                font-size: 24px;
+                line-height: 30px;
+                font-weight: 600;
+                text-align: center;
+                padding: 5px 0;
+            }
+            h6{
+                font-size: 16px;
+                line-height: 21px;
+                font-weight: 400;
+                text-align: center;
+                padding: 10px 0;
+            }
+        }
+        .close{
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            font-size: 24px;
+            color: red;
+            background-color: #fff;
+            opacity: 1;
+            border-radius: 15px;
+        }
+        @media (max-width: 575.98px){
+            width: 300px;
+        }
+    }
+}
