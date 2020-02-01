@@ -1,3 +1,4 @@
 node_modules/
 frontend/CHANGELOG.md
 .env
+frontend/dist/

@@ -283,23 +283,23 @@ export class AddVehicleComponent implements OnInit {
       model: ['', Validators.required],
       brand: ['', Validators.required],
       color: ['', Validators.required],
-      manufacture_year: [''],
-      engine_no: [''],
-      chasis_no: [''],
-      purchase_date: [''],
-      warranty_period:[''],
-      fuel_type:  [''],
-      fuelMeausrement: [''],
-      workLocation: ['']
+      manufacture_year: ['', Validators.required],
+      engine_no: ['', Validators.required],
+      chasis_no: ['', Validators.required],
+      purchase_date: ['', Validators.required],
+      warranty_period:['', Validators.required],
+      fuel_type:  ['', Validators.required],
+      fuelMeausrement: ['', Validators.required],
+      workLocation: ['', Validators.required]
     };
     if(showExtraField){
-      group["insurance_policy_no"] = [''];
-      group["insurance_amount"] = [''];
-      group["policy_expiry"] = [''];
-      group["insurance_agent"] = [''];
-      group["road_tax_no"] = [''];
-      group["road_tax_amount"] = [''];
-      group["road_tax_expiry"] = [''];
+      group["insurance_policy_no"] = ['', Validators.required];
+      group["insurance_amount"] = ['', Validators.required];
+      group["policy_expiry"] = ['', Validators.required];
+      group["insurance_agent"] = ['', Validators.required];
+      group["road_tax_no"] = ['', Validators.required];
+      group["road_tax_amount"] = ['', Validators.required];
+      group["road_tax_expiry"] = ['', Validators.required];
 
 
     }
@@ -308,8 +308,8 @@ export class AddVehicleComponent implements OnInit {
     group['bill_file_unique_id'] = [this.billfileuniqueid];
     group['image_file_unique_id'] = [this.imageFileUniqueId];
 
-    group["ownership_status"] = [''];
-    group["note"] = [''];
+    group["ownership_status"] = ['', Validators.required];
+    group["note"] = ['', Validators.required];
     group["vehicleStatus"] = [5];
     this.vehicleForm = this.fb.group(group);
   }
@@ -321,8 +321,8 @@ export class AddVehicleComponent implements OnInit {
 
   addVehicle(){
     this.submitted = true;
-    console.log(this.submitted);
     if (this.vehicleForm.invalid) {
+      alert("Please fill all required field");
       return;
     }
 

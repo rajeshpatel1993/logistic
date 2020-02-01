@@ -160,15 +160,25 @@ router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
 try{
 
-     let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
+    let imgUrl = "";
+    let billUrls = "";
+    let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
         fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
           bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
 
      let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
-     let imgUrl = vehicleImage[0].s3Urls[0];
+    //  console.log(vehicleImage)
+     if(vehicleImage.length > 0){
+        imgUrl = vehicleImage[0].s3Urls[0];
+     }
+     
+   
     
      let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
-     let billUrls = vehicleBills[0].s3Urls;
+
+     if(vehicleBills.length > 0){
+        billUrls = vehicleBills[0].s3Urls;
+    }
 
         const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
             yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
