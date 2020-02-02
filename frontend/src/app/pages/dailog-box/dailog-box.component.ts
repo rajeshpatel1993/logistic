@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'ngx-dailog-box',
@@ -8,8 +8,17 @@ import { Component, OnInit } from '@angular/core';
 export class DailogBoxComponent implements OnInit {
 
   constructor() { }
+  @Input() msgObj: any;
+  dialogBox:boolean = false;
+  @Output() messageToEmit = new EventEmitter<string>();
+  showDialog:string = 'false';
 
   ngOnInit() {
+    console.log(this.msgObj);
+  }
+
+  showDialogF(){
+    this.messageToEmit.emit(this.showDialog)
   }
 
 }

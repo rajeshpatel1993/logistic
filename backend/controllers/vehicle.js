@@ -498,9 +498,11 @@ router.get("/vehicleStatus", async(req,res)=>{
 });
 
 
-router.get("/models", async(req,res)=>{
+router.get("/models/:brandId", async(req,res)=>{
     try{
-        let modelsData = await Model.find().select("modelId , model , brandId");
+        let brandId = req.params.brandId;
+
+        let modelsData = await Model.find({"brandId" : brandId}).select("modelId , model , brandId");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = modelsData;
@@ -566,9 +568,10 @@ router.get("/colors", async(req,res)=>{
     }
 });
 
-router.get("/fueltype", async(req,res)=>{
+router.get("/fueltype/:fuelMeasureMentId", async(req,res)=>{
     try{
-        let fuelTypeData = await FuelType.find().select("fuelTypeId , fuelTypeName");
+        let fuelMeasureMentId = req.params.fuelMeasureMentId;
+        let fuelTypeData = await FuelType.find({"fuelMeasurementId":fuelMeasureMentId}).select("fuelTypeId , fuelTypeName");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = fuelTypeData;
@@ -598,9 +601,10 @@ router.get("/fuelMeasurement", async(req,res)=>{
 
 
 
-router.get("/details", async(req,res)=>{
+router.get("/details/:vehicleType", async(req,res)=>{
     try{
-        let vehicleDetailsData = await VehicleDetail.find().select("vehicleDetailsId , vehicleDetails");
+        let vehicleType = req.params.vehicleType;
+        let vehicleDetailsData = await VehicleDetail.find({"vehicleTypeId" : vehicleType}).select("vehicleDetailsId , vehicleDetails");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = vehicleDetailsData;

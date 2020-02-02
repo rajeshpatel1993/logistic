@@ -23,7 +23,8 @@ export class AddVehicleComponent implements OnInit {
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
   public workLocationsList: any[] = [];
-
+  public dialogBox : boolean = false;
+  public msgObj ={};
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder) { }
   public vehicleCode: String;
@@ -63,11 +64,9 @@ export class AddVehicleComponent implements OnInit {
     
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
-    this.loadVehicleDetails();
-    this.loadModelsData();
+    // this.loadVehicleDetails();
     this.loadBrandsData();
     this.loadColorsData();
-    this.loadFuelTypeData();
     this.loadFuelMesaurementData();
     this.loadAgentsData();
     this.loadOwnershipdata();
@@ -126,7 +125,10 @@ export class AddVehicleComponent implements OnInit {
     // console.log(imgFileName);
 
     this.vehicleService.uploadFile(fd).subscribe((data) => {
-      alert("successfully uploaded");
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully uploaded";
+      this.dialogBox = true;
+      // alert("successfully uploaded");
       this.imgSrc = [];
     },(err)=>{
       console.log(err);
@@ -154,8 +156,9 @@ export class AddVehicleComponent implements OnInit {
   
 
 
-  public loadVehicleDetails(){
-    this.vehicleService.loadVehicleDetails().subscribe((vehicleDetails:any) => {
+  public loadVehicleDetails(id?){
+    let velhicleType = this.selectedVehicleType.id;
+    this.vehicleService.loadVehicleDetails(id).subscribe((vehicleDetails:any) => {
       let vehicleDetailData = vehicleDetails.data;
       vehicleDetailData.forEach((item,index) => {
         let tmpObj = {};
@@ -169,8 +172,8 @@ export class AddVehicleComponent implements OnInit {
   }
 
 
-  public loadModelsData(){
-    this.vehicleService.loadModelsData().subscribe((modelData:any) => {
+  public loadModelsData(brandId){
+    this.vehicleService.loadModelsData(brandId).subscribe((modelData:any) => {
       let modelsData = modelData.data;
       modelsData.forEach((item,index) => {
         let tmpObj = {};
@@ -197,8 +200,8 @@ export class AddVehicleComponent implements OnInit {
 
   }
 
-  public loadFuelTypeData(){
-    this.vehicleService.loadFuelTypeData().subscribe((fuelTypeData:any) => {
+  public loadFuelTypeData(measureMentId){
+    this.vehicleService.loadFuelTypeData(measureMentId).subscribe((fuelTypeData:any) => {
       let fuelTypesData = fuelTypeData.data;
       fuelTypesData.forEach((item,index) => {
         let tmpObj = {};
@@ -334,6 +337,10 @@ export class AddVehicleComponent implements OnInit {
     // console.log(this.vehicleForm.value);
   }
 
+  getMsg(val){
+    this.dialogBox = false;
+    console.log(val);
+  }
   loadVehicleStatus(){
     this.vehicleService.loadVehicleStatus().subscribe((vehicleStatus)=>{
       let vehicleStatusData = vehicleStatus["data"];
@@ -379,15 +386,10 @@ export class AddVehicleComponent implements OnInit {
 public selectedVehicleType;
   selectEventD(item) {
     // console.log(item);
+    this.vehicleDetailsData = [];
     this.vehicleCode = item.code+" 001";
     this.selectedVehicleType = item;
-    // this.vehicleForm.patchValue({
-    //   vehicleTypef: item
-    // });
-    // this.vehicleForm.patchValue({
-    //   vehicleCode: this.vehicleCode
-    // });
-
+    this.loadVehicleDetails(item.id);
 
     if(item.id == 1 || item.id ==2){
       this.showExtraField = true;
@@ -400,6 +402,19 @@ public selectedVehicleType;
 
 
     // console.log(this.vehicleCode);
+  }
+
+  selectBrand(brand){
+    let brandId = brand.id;
+    this.modelsList = [];
+    this.loadModelsData(brandId);
+  }
+
+  selectMeasurement(fuelMeasurementId){
+    let measureMentId = fuelMeasurementId.id;
+    this.fuelTypeList = [];
+    this.loadFuelTypeData(measureMentId);
+    // this.loadFuelTypeData(measureMentId);
   }
 
   onFocused(e) {
@@ -433,7 +448,12 @@ public selectedVehicleType;
     }
 
     this.vehicleService.uploadFile(formD).subscribe((data) => {
-      alert("successfully uploaded");
+      // alert("successfully uploaded");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully uploaded";
+      this.dialogBox = true;
+
     },(err)=>{
       console.log(err);
     });
