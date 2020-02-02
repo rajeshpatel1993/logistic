@@ -141,9 +141,9 @@
                         <span class="working"><i class="fas fa-wrench"></i></span>
                       </div>
                     </td>
-                    <td>{{item.insuranceValid}}</td>
-                    <td>{{item.roadTaxValid}}</td>
-                    <td>{{item.warrantyPeriod}}</td>
+                    <td>{{getDateDifference(item.insuranceValid)}}</td>
+                    <td>{{getDateDifference(item.roadTaxValid)}}</td>
+                    <td>{{getDateDifference(item.warrantyPeriod)}}</td>
                     <td>{{item.workLocationArray[0].workLocation}}</td>
 
                     <td>
