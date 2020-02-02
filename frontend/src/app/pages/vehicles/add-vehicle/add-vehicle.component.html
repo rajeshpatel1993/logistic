@@ -44,7 +44,7 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div *ngIf="f.vehicledetails.invalid && (f.vehicledetails.dirty || f.vehicledetails.touched)">
+                <div class="errormsg" *ngIf="f.vehicledetails.invalid && (f.vehicledetails.dirty || f.vehicledetails.touched)">
                   Vehicle  Detail is required
                 </div>
 
@@ -64,7 +64,7 @@
               <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code"
                 formControlName="vehicleCode">
 
-                <div *ngIf="f.vehicleCode.invalid && (f.vehicleCode.dirty || f.vehicleCode.touched)">
+                <div class="errormsg" *ngIf="f.vehicleCode.invalid && (f.vehicleCode.dirty || f.vehicleCode.touched)">
                   Vehicle  Code is required
                 </div>
 
@@ -81,10 +81,8 @@
             <div class="col-sm-9">
               <input type="text" id="vehiclename" class="form-control" placeholder="Vehicle Name"
                 formControlName="vehicleName">
-                <div *ngIf="f.vehicleName.invalid && (f.vehicleName.dirty || f.vehicleName.touched)">
+                <div class="errormsg" *ngIf="f.vehicleName.invalid && (f.vehicleName.dirty || f.vehicleName.touched)">
                   Vehicle  Name is required
-
-
                 </div>
 
 
@@ -100,7 +98,7 @@
               <input type="text" id="regno" class="form-control" placeholder="Reg No" formControlName="regNo">
             </div>
 
-            <div *ngIf="f.regNo.invalid && (f.regNo.dirty || f.regNo.touched)">
+            <div class="errormsg" *ngIf="f.regNo.invalid && (f.regNo.dirty || f.regNo.touched)">
               Reg no is required
             </div>
 
@@ -124,7 +122,7 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
+                <div class="errormsg" *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
                   Brand is required
                 </div>
 
@@ -149,7 +147,7 @@
                 </ng-template>
               </div>
 
-              <div *ngIf="f.model.invalid && (f.model.dirty || f.model.touched)">
+              <div class="errormsg" *ngIf="f.model.invalid && (f.model.dirty || f.model.touched)">
                 Model is required
               </div>
             </div>
@@ -171,7 +169,7 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div *ngIf="f.color.invalid && (f.color.dirty || f.color.touched)">
+                <div class="errormsg" *ngIf="f.color.invalid && (f.color.dirty || f.color.touched)">
                   Color is required
                 </div>
 
@@ -184,7 +182,7 @@
               <input type="text" id="manufacture" placeholder="Manufacture Year" class="form-control"
                 formControlName="manufacture_year">
 
-                <div *ngIf="f.manufacture_year.invalid && (f.manufacture_year.dirty || f.manufacture_year.touched)">
+                <div class="errormsg" *ngIf="f.manufacture_year.invalid && (f.manufacture_year.dirty || f.manufacture_year.touched)">
                  Manufacture year is required
                 </div>
 
@@ -195,7 +193,7 @@
             <div class="col-sm-9">
               <input type="text" id="engine" class="form-control" placeholder="Engine No" formControlName="engine_no">
 
-              <div *ngIf="f.engine_no.invalid && (f.engine_no.dirty || f.engine_no.touched)">
+              <div class="errormsg" *ngIf="f.engine_no.invalid && (f.engine_no.dirty || f.engine_no.touched)">
                 Engine no is required
                </div>
 
@@ -206,7 +204,7 @@
             <div class="col-sm-9">
               <input type="text" id="chassis" class="form-control" placeholder="Chassis No" formControlName="chasis_no">
 
-              <div *ngIf="f.chasis_no.invalid && (f.chasis_no.dirty || f.chasis_no.touched)">
+              <div class="errormsg" *ngIf="f.chasis_no.invalid && (f.chasis_no.dirty || f.chasis_no.touched)">
                 Chassis no is required
                </div>
             </div>
@@ -220,7 +218,7 @@
                 <input class="form-control" nbInput placeholder="Purchase Date" [nbDatepicker]="purchasedate" formControlName="purchase_date">
                 <nb-datepicker #purchasedate></nb-datepicker>
 
-                <div *ngIf="f.purchase_date.invalid && (f.purchase_date.dirty || f.purchase_date.touched)">
+                <div class="errormsg" *ngIf="f.purchase_date.invalid && (f.purchase_date.dirty || f.purchase_date.touched)">
                   Purchase date is required
                  </div>
 
@@ -236,7 +234,7 @@
                 <nb-datepicker #warranty></nb-datepicker>
 
 
-                <div *ngIf="f.warranty_period.invalid && (f.warranty_period.dirty || f.warranty_period.touched)">
+                <div class="errormsg" *ngIf="f.warranty_period.invalid && (f.warranty_period.dirty || f.warranty_period.touched)">
                   Warranty Period is required
                  </div>
 
@@ -262,7 +260,7 @@
                 </ng-template>
 
 
-                <div *ngIf="f.fuelMeausrement.invalid && (f.fuelMeausrement.dirty || f.fuelMeausrement.touched)">
+                <div class="errormsg" *ngIf="f.fuelMeausrement.invalid && (f.fuelMeausrement.dirty || f.fuelMeausrement.touched)">
                   Fuel Measurement is required
                 </div>
 
@@ -288,7 +286,7 @@
                 </ng-template>
 
 
-                <div *ngIf="f.fuel_type.invalid && (f.fuel_type.dirty || f.fuel_type.touched)">
+                <div class="errormsg" *ngIf="f.fuel_type.invalid && (f.fuel_type.dirty || f.fuel_type.touched)">
                   Fuel Type is required
                 </div>
 
@@ -314,7 +312,7 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div *ngIf="f.workLocation.invalid && (f.workLocation.dirty || f.workLocation.touched)">
+                <div class="errormsg" *ngIf="f.workLocation.invalid && (f.workLocation.dirty || f.workLocation.touched)">
                  Work Location is required
                 </div>
               </div>
@@ -334,7 +332,7 @@
               </div>
 
 
-            <div *ngIf="f.insurance_policy_no.invalid && (f.insurance_policy_no.dirty || f.insurance_policy_no.touched)">
+            <div class="errormsg" *ngIf="f.insurance_policy_no.invalid && (f.insurance_policy_no.dirty || f.insurance_policy_no.touched)">
              Insurance Policy No is required
             </div>
 
@@ -347,7 +345,7 @@
                   formControlName="insurance_amount">
               </div>
 
-              <div *ngIf="f.insurance_amount.invalid && (f.insurance_amount.dirty || f.insurance_amount.touched)">
+              <div class="errormsg" *ngIf="f.insurance_amount.invalid && (f.insurance_amount.dirty || f.insurance_amount.touched)">
                 Insurance Amount is required
               </div>
 
@@ -366,7 +364,7 @@
 
               </div>
 
-              <div *ngIf="f.policy_expiry.invalid && (f.policy_expiry.dirty || f.policy_expiry.touched)">
+              <div class="errormsg" *ngIf="f.policy_expiry.invalid && (f.policy_expiry.dirty || f.policy_expiry.touched)">
                 Policy Expiry is required
               </div>
 
@@ -390,7 +388,7 @@
                     <div [innerHTML]="notFound"></div>
                   </ng-template>
 
-                  <div *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
+                  <div class="errormsg" *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
                     Insurance Agent is required
                   </div>
 
@@ -406,7 +404,7 @@
                   formControlName="road_tax_no">
               </div>
 
-              <div *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
+              <div class="errormsg" *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
                 Insurance Agent is required
               </div>
 
