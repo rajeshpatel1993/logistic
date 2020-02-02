@@ -74,10 +74,19 @@ export class ListComponent {
 
 
   public getDateDifference(expDate){
-    let today = moment();
-    let expDatem = moment(expDate, "YYYY-MM-DD").fromNow();
-    return expDatem;
+    let expDatemM = moment(expDate).fromNow();
+    return expDatemM;
   };
+
+  public getProgressBarValu(expDate){
+    let today = moment();
+    let exp = moment(expDate);
+    let noofdays = exp.diff(today, 'days');
+    let progress = 100 - (noofdays *100 / 365);
+    return progress;
+
+
+  }
   ngOnInit() {
     this.loadVehiclesTypes();
     this.loadVehicleDetails();

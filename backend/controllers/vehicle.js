@@ -183,9 +183,9 @@ try{
 
         const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
             yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
-            warrantyPeriod : +new Date(warranty_period),  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
-            insuranceValid: +new Date(policy_expiry), insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: +new Date(purchase_date),note: note,
-            insuranceCompanyId: insurance_agent.id, roadTaxValid : +new Date(road_tax_expiry), roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
+            warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
+            insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
+            insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
             vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls, bill_file_unique_id, image_file_unique_id
         
         });

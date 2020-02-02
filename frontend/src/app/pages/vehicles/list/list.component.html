@@ -148,7 +148,12 @@
                     <td>
                       {{getDateDifference(item.insuranceValid)}}
                       <div class="workStatus">
-                          <span class="success"></span>
+                          <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50" ></span>
+                          <span class="pendingy" *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) <= 75"></span>
+                          <span class="pending" *ngIf="getProgressBarValu(item.insuranceValid) > 75 && getProgressBarValu(item.insuranceValid) < 90"></span>
+                          <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90"></span>
+
+
                           <!-- <span class="pending"></span>
                           <span  class="danger"></span> -->
                       </div>
@@ -156,17 +161,30 @@
                     <td>
                       {{getDateDifference(item.roadTaxValid)}}
                       <div class="workStatus">
+
+                        <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50" ></span>
+                        <span class="pendingy" *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75"></span>
+                        <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90"></span>
+                        <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90"></span>
+
+
                         <!-- <span class="success"></span> -->
-                        <span class="pending"></span>
+                        <!-- <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid)"></span> -->
                         <!-- <span  class="danger"></span> -->
                     </div>
                     </td>
                     <td>
                       {{getDateDifference(item.warrantyPeriod)}}
                       <div class="workStatus">
+                        <span class="success" *ngIf="getProgressBarValu(item.warrantyPeriod) <= 50" ></span>
+                        <span class="pendingy" *ngIf="getProgressBarValu(item.warrantyPeriod) > 50 && getProgressBarValu(item.warrantyPeriod) <= 75"></span>
+                        <span class="pending" *ngIf="getProgressBarValu(item.warrantyPeriod) > 75 && getProgressBarValu(item.warrantyPeriod) < 90"></span>
+                        <span class="danger" *ngIf="getProgressBarValu(item.warrantyPeriod) >= 90"></span>
+
+
                         <!-- <span class="success"></span>
                         <span class="pending"></span> -->
-                        <span  class="danger"></span>
+                        <!-- <span  class="danger"></span> -->
                     </div>
                     </td>
                     <td>{{item.workLocationArray[0].workLocation}}</td>
