@@ -16,6 +16,7 @@ const {OwnerShip} = require("../models/ownership");
 const {WorkLocation} = require("../models/workLocation");
 
 const { upload } = require("../utils/upload_file_to_s3");
+
 const multer = require('multer');
 
 const paginate = require('jw-paginate');
@@ -634,6 +635,8 @@ router.get("/",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
+
+
     try {
        
 

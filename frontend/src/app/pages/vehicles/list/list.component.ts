@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
+import * as moment from 'moment';
 
 @Component({
   selector: 'ngx-vehicle-list',
@@ -72,7 +73,11 @@ export class ListComponent {
   public dropDownAction = false;
 
 
-
+  public getDateDifference(expDate){
+    let today = moment();
+    let expDatem = moment(expDate, "YYYY-MM-DD").fromNow();
+    return expDatem;
+  };
   ngOnInit() {
     this.loadVehiclesTypes();
     this.loadVehicleDetails();
