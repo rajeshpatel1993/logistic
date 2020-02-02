@@ -38,7 +38,7 @@ import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
     NbTabsetModule,
     AutocompleteLibModule,
     NgxImgModule.forRoot(),
-    NbDatepickerModule.forRoot(),
+    NbDatepickerModule,
   ],
   declarations: [
     VehicleComponent,

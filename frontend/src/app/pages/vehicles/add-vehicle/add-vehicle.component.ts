@@ -323,6 +323,9 @@ export class AddVehicleComponent implements OnInit {
 
 
   addVehicle(){
+    // console.log(this.vehicleForm.value);
+    // let purchaseDate = +new Date(this.vehicleForm.value.purchase_date);
+    // console.log(purchaseDate);
     this.submitted = true;
     if (this.vehicleForm.invalid) {
       alert("Please fill all required field");
