@@ -16,6 +16,7 @@ const {OwnerShip} = require("../models/ownership");
 const {WorkLocation} = require("../models/workLocation");
 
 const { upload } = require("../utils/upload_file_to_s3");
+
 const multer = require('multer');
 
 const paginate = require('jw-paginate');
@@ -182,9 +183,9 @@ try{
 
         const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
             yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
-            warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
-            insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
-            insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
+            warrantyPeriod : +new Date(warranty_period),  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
+            insuranceValid: +new Date(policy_expiry), insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: +new Date(purchase_date),note: note,
+            insuranceCompanyId: insurance_agent.id, roadTaxValid : +new Date(road_tax_expiry), roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
             vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls, bill_file_unique_id, image_file_unique_id
         
         });
@@ -498,9 +499,11 @@ router.get("/vehicleStatus", async(req,res)=>{
 });
 
 
-router.get("/models", async(req,res)=>{
+router.get("/models/:brandId", async(req,res)=>{
     try{
-        let modelsData = await Model.find().select("modelId , model , brandId");
+        let brandId = req.params.brandId;
+
+        let modelsData = await Model.find({"brandId" : brandId}).select("modelId , model , brandId");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = modelsData;
@@ -566,9 +569,10 @@ router.get("/colors", async(req,res)=>{
     }
 });
 
-router.get("/fueltype", async(req,res)=>{
+router.get("/fueltype/:fuelMeasureMentId", async(req,res)=>{
     try{
-        let fuelTypeData = await FuelType.find().select("fuelTypeId , fuelTypeName");
+        let fuelMeasureMentId = req.params.fuelMeasureMentId;
+        let fuelTypeData = await FuelType.find({"fuelMeasurementId":fuelMeasureMentId}).select("fuelTypeId , fuelTypeName");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = fuelTypeData;
@@ -598,9 +602,10 @@ router.get("/fuelMeasurement", async(req,res)=>{
 
 
 
-router.get("/details", async(req,res)=>{
+router.get("/details/:vehicleType", async(req,res)=>{
     try{
-        let vehicleDetailsData = await VehicleDetail.find().select("vehicleDetailsId , vehicleDetails");
+        let vehicleType = req.params.vehicleType;
+        let vehicleDetailsData = await VehicleDetail.find({"vehicleTypeId" : vehicleType}).select("vehicleDetailsId , vehicleDetails");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = vehicleDetailsData;
@@ -630,6 +635,8 @@ router.get("/",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
+
+
     try {
        
 
