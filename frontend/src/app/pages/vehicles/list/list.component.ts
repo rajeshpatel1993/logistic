@@ -44,6 +44,13 @@ export class ListComponent {
     }
   }
 
+
+  selectVehicleType(evt){
+    this.loadVehicleDetails(evt.id);
+
+    console.log(evt);
+  }
+
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
     this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
@@ -89,7 +96,6 @@ export class ListComponent {
   }
   ngOnInit() {
     this.loadVehiclesTypes();
-    this.loadVehicleDetails();
     this.loadVehicleRegistration();
     this.activeRoute.queryParams.subscribe(queryParams => {
       this.loadVehicles(queryParams.page);
@@ -146,8 +152,8 @@ export class ListComponent {
   }
 
 
-  public loadVehicleDetails(){
-    this.vehicleService.loadVehicleDetails().subscribe((vehicleDetails:any) => {
+  public loadVehicleDetails(vehicleTypeId){
+    this.vehicleService.loadVehicleDetails(vehicleTypeId).subscribe((vehicleDetails:any) => {
       let vehicleDetailData = vehicleDetails.data;
       vehicleDetailData.forEach((item,index) => {
         let tmpObj = {};

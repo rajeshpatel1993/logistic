@@ -26,7 +26,7 @@
               <div class="col-auto">
                 <div class="ng-autocomplete">
                   <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-                    (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
+                    (selected)='selectVehicleType($event)' (inputChanged)='onChangeSearch($event)'
                     (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
                     [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
@@ -136,21 +136,30 @@
                     <!-- <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td> -->
                     <td>
                       <div class="vehicleStatus">
-                        <!-- <span class="active text-success"><i class="fas fa-check-circle"></i></span> -->
-                        <!-- <span class="working text-success"><i class="fas fa-wrench"></i></span> -->
-                        <!-- <span class="service text-warning"><i class="fas fa-cog"></i></span> -->
-                        <!-- <span class="complain text-info"><i class="fas fa-file-signature"></i></span> -->
-                        <!-- <span class="accident text-danger"><i class="fas fa-car-crash"></i></span> -->
-                        <!-- <span class="notworking text-danger"><i class="fas fa-ban"></i></span> -->
-                        <span class="inactive text-danger"><i class="fas fa-times-circle"></i></span>
+                        <li class="text-info" ><i class="fas fa-wrench"></i>{{item.vehicleStatusArray[0].vehicleStatus}}</li>
+                        <li class="text-success"  ><i class="fas fa-check-circle"></i> Active</li>
+                        <li class="text-warning" ><i class="fas fa-cog"></i> In-Service</li>
+                        <li class="text-success" ><i class="fas fa-file-signature"></i> Complaint</li>
+                        <li class="text-danger" ><i class="fas fa-car-crash"></i> Accident</li>
+                        <li class="text-danger" ><i class="fas fa-car-crash"></i> Not Working</li>
+                        <li class="text-success" ><i class="fas fa-check-circle"></i> In Active</li>
+
+                        <!-- <li class="text-info" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Working'"><i class="fas fa-wrench"></i>{{item.vehicleStatusArray[0].vehicleStatus}}</li>
+                        <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Active'" ><i class="fas fa-check-circle"></i> Active</li>
+                        <li class="text-warning" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Service'"><i class="fas fa-cog"></i> In-Service</li>
+                        <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Complaint'"><i class="fas fa-file-signature"></i> Complaint</li>
+                        <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Accident'"><i class="fas fa-car-crash"></i> Accident</li>
+                        <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Not-Working'"><i class="fas fa-car-crash"></i> Not Working</li>
+                        <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Active'" ><i class="fas fa-check-circle"></i> In Active</li> -->
+
                       </div>
                     </td>
                     <td>
                       {{getDateDifference(item.insuranceValid)}}
                       <div class="workStatus">
                           <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50" ></span>
-                          <span class="pendingy" *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) <= 75"></span>
-                          <span class="pending" *ngIf="getProgressBarValu(item.insuranceValid) > 75 && getProgressBarValu(item.insuranceValid) < 90"></span>
+                          <span class="pendingy" *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75"></span>
+                          <span class="pending" *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90"></span>
                           <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90"></span>
 
 
@@ -236,12 +245,7 @@
             </div>
             <div class="Legends">
               <ul>
-                <li class="text-success"><i class="fas fa-check-circle"></i> Completed</li>
-                <li class="text-danger"><i class="fas fa-wrench"></i> Working</li>
-                <li class="text-warning"><i class="fas fa-cog"></i> Service</li>
-                <li class="text-success"><i class="fas fa-file-signature"></i> Complain</li>
-                <li class="text-danger"><i class="fas fa-car-crash"></i> Accident</li>
-                <li class="text-danger"><i class="fas fa-ban"></i> Not Working</li>
+            
                 <li class="text-danger"><i class="fas fa-user-times"></i> Unassigned</li>
                 <li class="text-success"><i class="fas fa-bell"></i> Reminder</li>
                 <li class="text-danger"><i class="fas fa-bell-slash"></i> Remind Later</li>
