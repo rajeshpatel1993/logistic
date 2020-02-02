@@ -145,9 +145,30 @@
                         <span class="inactive text-danger"><i class="fas fa-times-circle"></i></span>
                       </div>
                     </td>
-                    <td>{{getDateDifference(item.insuranceValid)}}</td>
-                    <td>{{getDateDifference(item.roadTaxValid)}}</td>
-                    <td>{{getDateDifference(item.warrantyPeriod)}}</td>
+                    <td>
+                      {{getDateDifference(item.insuranceValid)}}
+                      <div class="workStatus">
+                          <span class="success"></span>
+                          <!-- <span class="pending"></span>
+                          <span  class="danger"></span> -->
+                      </div>
+                    </td>
+                    <td>
+                      {{getDateDifference(item.roadTaxValid)}}
+                      <div class="workStatus">
+                        <!-- <span class="success"></span> -->
+                        <span class="pending"></span>
+                        <!-- <span  class="danger"></span> -->
+                    </div>
+                    </td>
+                    <td>
+                      {{getDateDifference(item.warrantyPeriod)}}
+                      <div class="workStatus">
+                        <!-- <span class="success"></span>
+                        <span class="pending"></span> -->
+                        <span  class="danger"></span>
+                    </div>
+                    </td>
                     <td>{{item.workLocationArray[0].workLocation}}</td>
 
                     <td>
