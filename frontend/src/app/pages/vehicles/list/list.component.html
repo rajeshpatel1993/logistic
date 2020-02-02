@@ -136,9 +136,13 @@
                     <!-- <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td> -->
                     <td>
                       <div class="vehicleStatus">
-                        <!-- <span class="pending"><i class="fas fa-exclamation-circle"></i></span> -->
-                        <!-- <span class="active"><i class="fas fa-check-circle"></i></span> -->
-                        <span class="working"><i class="fas fa-wrench"></i></span>
+                        <!-- <span class="active text-success"><i class="fas fa-check-circle"></i></span> -->
+                        <!-- <span class="working text-success"><i class="fas fa-wrench"></i></span> -->
+                        <!-- <span class="service text-warning"><i class="fas fa-cog"></i></span> -->
+                        <!-- <span class="complain text-info"><i class="fas fa-file-signature"></i></span> -->
+                        <!-- <span class="accident text-danger"><i class="fas fa-car-crash"></i></span> -->
+                        <!-- <span class="notworking text-danger"><i class="fas fa-ban"></i></span> -->
+                        <span class="inactive text-danger"><i class="fas fa-times-circle"></i></span>
                       </div>
                     </td>
                     <td>{{getDateDifference(item.insuranceValid)}}</td>
@@ -148,14 +152,14 @@
 
                     <td>
                       <div class="vehicleStatus">
-                        <span class="assigned"><i class="fas fa-user-check"></i></span>
-                        <span class="unassigned"><i class="fas fa-user-times"></i></span>
+                        <span class="assigned text-success"><i class="fas fa-user-check"></i></span>
+                        <span class="unassigned text-danger"><i class="fas fa-user-times"></i></span>
                       </div>
                     </td>
                     <td>
                       <div class="vehicleStatus">
-                        <span class="reminder"><i class="fas fa-bell"></i></span>
-                        <span class="reminderlater"><i class="fas fa-bell-slash"></i></span>
+                        <span class="reminder text-success"><i class="fas fa-bell"></i></span>
+                        <span class="reminderlater text-danger"><i class="fas fa-bell-slash"></i></span>
                       </div>
                     </td>
                     <td><button class="btn btn-default p-0" (click)="deleteVehicle(item._id)">
@@ -193,15 +197,18 @@
             </div>
             <div class="Legends">
               <ul>
-                <li class="text-warning"><i class="fas fa-exclamation-circle"></i> Pending</li>
                 <li class="text-success"><i class="fas fa-check-circle"></i> Completed</li>
                 <li class="text-danger"><i class="fas fa-wrench"></i> Working</li>
-                <li class="text-success"><i class="fas fa-user-check"></i> Assigned</li>
+                <li class="text-warning"><i class="fas fa-cog"></i> Service</li>
+                <li class="text-success"><i class="fas fa-file-signature"></i> Complain</li>
+                <li class="text-danger"><i class="fas fa-car-crash"></i> Accident</li>
+                <li class="text-danger"><i class="fas fa-ban"></i> Not Working</li>
                 <li class="text-danger"><i class="fas fa-user-times"></i> Unassigned</li>
                 <li class="text-success"><i class="fas fa-bell"></i> Reminder</li>
                 <li class="text-danger"><i class="fas fa-bell-slash"></i> Remind Later</li>
                 <li class="text-danger"><i class="fas fa-trash-alt text-danger"></i> Delete</li>
                 <li class="text-primary"><i class="fas fa-edit text-primary"></i> Edit</li>
+                
               </ul>
             </div>
           </nb-layout-column>
@@ -215,3 +222,5 @@
   </nb-card>
 
 </div>
+
+<!-- <ngx-dailog-box></ngx-dailog-box> -->

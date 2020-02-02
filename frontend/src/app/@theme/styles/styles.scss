@@ -190,15 +190,6 @@ a:focus{
 }
 .vehicleStatus{
   font-size: 21px;
-  .pending{
-    color: yellow;
-  }
-  .active,.assigned,.reminder{
-    color: green;
-  }
-  .working,.unassigned,.reminderlater{
-    color: red;
-  }
 }
 .Legends{
   width: 100%;
