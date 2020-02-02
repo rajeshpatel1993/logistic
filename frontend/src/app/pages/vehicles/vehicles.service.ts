@@ -28,8 +28,8 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/types");
   }
 
-  loadVehicleDetails(){
-    return this.http.get(this.baseUrl+"/vehicles/details");
+  loadVehicleDetails(vehicleId?){
+    return this.http.get(this.baseUrl+"/vehicles/details/"+vehicleId);
 
   }
 
@@ -41,8 +41,8 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/filtervehicle?"+querystring, page);
   }
 
-  loadModelsData(){
-    return this.http.get(this.baseUrl+"/vehicles/models");
+  loadModelsData(brandId?){
+    return this.http.get(this.baseUrl+"/vehicles/models/"+brandId);
   }
 
   loadBrandsData(){
@@ -53,8 +53,8 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/colors");
   }
   
-  loadFuelTypeData(){
-    return this.http.get(this.baseUrl+"/vehicles/fueltype");
+  loadFuelTypeData(measureMentId?){
+    return this.http.get(this.baseUrl+"/vehicles/fueltype/"+measureMentId);
   }
 
   loadFuelMesaurementData(){

@@ -107,6 +107,31 @@
 
             
           </div>
+
+          <div class="form-group row">
+            <label for="brand" class="col-sm-3 col-form-label">Brand<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="brandsList" [itemTemplate]="itemTemplate3" formControlName="brand"
+                  [notFoundTemplate]="notFoundTemplate3" [searchKeyword]="keyword" placeHolder="Enter the Brand" (selected)='selectBrand($event)'>
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate3 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate3 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+
+                <div *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
+                  Brand is required
+                </div>
+
+              </div>
+            </div>
+          </div>
+
           <div class="form-group row">
             <label for="make" class="col-sm-3 col-form-label">Model<span class="star">*</span></label>
             <div class="col-sm-9">
@@ -129,29 +154,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="brand" class="col-sm-3 col-form-label">Brand<span class="star">*</span></label>
-            <div class="col-sm-9">
-              <div class="ng-autocomplete">
-                <ng-autocomplete [data]="brandsList" [itemTemplate]="itemTemplate3" formControlName="brand"
-                  [notFoundTemplate]="notFoundTemplate3" [searchKeyword]="keyword" placeHolder="Enter the Brand">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate3 let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
-
-                <ng-template #notFoundTemplate3 let-notFound>
-                  <div [innerHTML]="notFound"></div>
-                </ng-template>
-
-                <div *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
-                  Brand is required
-                </div>
-
-              </div>
-            </div>
-          </div>
+        
           <div class="form-group row">
             <label for="color" class="col-sm-3 col-form-label">Color<span class="star">*</span></label>
             <div class="col-sm-9">
@@ -231,6 +234,35 @@
 
             </div>
           </div>
+
+
+          <div class="form-group row">
+            <label for="fuel-measurment" class="col-sm-3 col-form-label">Fuel Measurement<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="fuelMeasurementList" [itemTemplate]="itemTemplate6"
+                  formControlName="fuelMeausrement" [notFoundTemplate]="notFoundTemplate6" [searchKeyword]="keyword"
+                  placeHolder="Enter the Fuel Measurement" (selected)='selectMeasurement($event)'>
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate6 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate6 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+
+
+                <div *ngIf="f.fuelMeausrement.invalid && (f.fuelMeausrement.dirty || f.fuelMeausrement.touched)">
+                  Fuel Measurement is required
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
           <div class="form-group row">
             <label for="fuel" class="col-sm-3 col-form-label">Fuel type<span class="star">*</span></label>
             <div class="col-sm-9">
@@ -255,31 +287,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group row">
-            <label for="fuel-measurment" class="col-sm-3 col-form-label">Fuel Measurement<span class="star">*</span></label>
-            <div class="col-sm-9">
-              <div class="ng-autocomplete">
-                <ng-autocomplete [data]="fuelMeasurementList" [itemTemplate]="itemTemplate6"
-                  formControlName="fuelMeausrement" [notFoundTemplate]="notFoundTemplate6" [searchKeyword]="keyword"
-                  placeHolder="Enter the Fuel Measurement">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate6 let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
-
-                <ng-template #notFoundTemplate6 let-notFound>
-                  <div [innerHTML]="notFound"></div>
-                </ng-template>
-
-
-                <div *ngIf="f.fuelMeausrement.invalid && (f.fuelMeausrement.dirty || f.fuelMeausrement.touched)">
-                  Fuel Measurement is required
-                </div>
-
-              </div>
-            </div>
-          </div>
+  
 
           <div class="form-group row">
             <label for="fuel-measurment" class="col-sm-3 col-form-label">Work Location<span class="star">*</span></label>
@@ -345,6 +353,11 @@
                 <input type="text" id="policy_expiry" class="form-control" formControlName="policy_expiry"
                   placeholder="Policy expiry">
               </div>
+
+              <div *ngIf="f.policy_expiry.invalid && (f.policy_expiry.dirty || f.policy_expiry.touched)">
+                Policy Expiry is required
+              </div>
+
             </div>
 
 
@@ -364,6 +377,12 @@
                   <ng-template #notFoundTemplate6 let-notFound>
                     <div [innerHTML]="notFound"></div>
                   </ng-template>
+
+                  <div *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
+                    Insurance Agent is required
+                  </div>
+
+
                 </div>
               </div>
             </div>
@@ -374,6 +393,11 @@
                 <input type="text" id="roadtaxno" class="form-control" placeholder="Road Tax No"
                   formControlName="road_tax_no">
               </div>
+
+              <div *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
+                Insurance Agent is required
+              </div>
+
             </div>
 
             <div class="form-group row">
@@ -498,4 +522,8 @@
     </div>
 
   </form>
+</div>
+<div *ngIf="dialogBox">
+
+  <ngx-dailog-box (messageToEmit)="getMsg($event)" [msgObj]="msgObj"></ngx-dailog-box>
 </div>
