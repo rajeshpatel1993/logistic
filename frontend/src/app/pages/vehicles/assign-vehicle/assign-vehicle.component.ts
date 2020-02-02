@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-assign-vehicle',
@@ -9,7 +10,7 @@ export class AssignVehicleComponent implements OnInit {
 
   public vehicleTypes = [];
   keyword = 'name';
-  constructor() { }
+  constructor(private dialogService: NbDialogService) { }
 
   ngOnInit() {
   }
@@ -17,5 +18,9 @@ export class AssignVehicleComponent implements OnInit {
   selectEvent(){}
   onChangeSearch(){}
   onFocused(){}
+
+  open(dialog:any) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
+  }
 
 }

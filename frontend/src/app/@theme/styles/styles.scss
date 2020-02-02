@@ -36,6 +36,9 @@
   @include nb-overrides();
 };
 
+nb-sidebar .scrollable{
+  padding: 0 5px;
+}
 h5{
   font-size: 14px;
   line-height: 21px;
@@ -166,6 +169,48 @@ a:focus{
   nb-card-body{
     nb-card-body{
         padding: 0;
+    }
+  }
+}
+.popupImage{
+  width: 100%;
+  min-width: 420px;
+  img{
+    width: 100%;
+  }
+  .popupClose{
+    position: absolute;
+    top: 0px;
+    right: 0;
+    padding: 3px 3px !important;
+    border-radius: 4px;
+    background-color: red !important;
+    border-color: red !important;
+  }
+}
+.vehicleStatus{
+  font-size: 21px;
+  .pending{
+    color: yellow;
+  }
+  .active,.assigned,.reminder{
+    color: green;
+  }
+  .working,.unassigned,.reminderlater{
+    color: red;
+  }
+}
+.Legends{
+  width: 100%;
+  float: left;
+  margin: 20px 0;
+  ul{
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    li{
+      display: inline-block;
+      margin: 0 10px;
     }
   }
 }
