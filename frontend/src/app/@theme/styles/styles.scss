@@ -193,6 +193,10 @@ a:focus{
 }
 .vehicleStatus{
   font-size: 21px;
+  ul{
+    list-style: none;
+    padding: 0;
+  }
 }
 .Legends{
   width: 100%;

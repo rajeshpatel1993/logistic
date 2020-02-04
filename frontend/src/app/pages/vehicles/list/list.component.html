@@ -136,36 +136,55 @@
                     <!-- <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td> -->
                     <td>
                       <div class="vehicleStatus">
-                        <li class="text-info" ><i class="fas fa-wrench"></i>Working</li>
+                        <ul>
+                        <!-- <li class="text-info" ><i class="fas fa-wrench"></i> Working</li>
                         <li class="text-success"  ><i class="fas fa-check-circle"></i> Active</li>
-                        <li class="text-warning" ><i class="fas fa-cog"></i> In-Service</li>
+                        <li class="text-warning"><img src="assets/images/repair.png" alt=""> In-Service</li>
                         <li class="text-success" ><i class="fas fa-file-signature"></i> Complaint</li>
                         <li class="text-danger" ><i class="fas fa-car-crash"></i> Accident</li>
-                        <li class="text-danger" ><i class="fas fa-car-crash"></i> Not Working</li>
-                        <li class="text-success" ><i class="fas fa-check-circle"></i> In Active</li>
+                        <li class="text-danger" ><i class="fas fa-times-circle"></i> Not Working</li>
+                        <li class="text-success" ><i class="fas fa-check-circle"></i> In Active</li> -->
 
                         <!-- <li class="text-info" ><i class="fas fa-wrench"></i>{{item.vehicleStatusArray[0].vehicleStatus}}</li> -->
 
-                        <!-- <li class="text-info" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Working'"><i class="fas fa-wrench"></i>{{item.vehicleStatusArray[0].vehicleStatus}}</li>
+                        <li class="text-info" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Working'"><i class="fas fa-wrench"></i> {{item.vehicleStatusArray[0].vehicleStatus}}</li>
                         <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Active'" ><i class="fas fa-check-circle"></i> Active</li>
-                        <li class="text-warning" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Service'"><i class="fas fa-cog"></i> In-Service</li>
+                        <li class="text-warning" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Service'"><img src="assets/images/repair.png" alt=""> In-Service</li>
                         <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Complaint'"><i class="fas fa-file-signature"></i> Complaint</li>
                         <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Accident'"><i class="fas fa-car-crash"></i> Accident</li>
-                        <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Not-Working'"><i class="fas fa-car-crash"></i> Not Working</li>
-                        <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Active'" ><i class="fas fa-check-circle"></i> In Active</li> -->
-
+                        <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Not-Working'"><i class="fas fa-times-circle"></i> Not Working</li>
+                        <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Active'" ><i class="fas fa-check-circle"></i> In Active</li>
+                        </ul>
                       </div>
                     </td>
                     <td>
                       {{getDateDifference(item.insuranceValid)}}
                       <div class="workStatus">
-                          <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50" ></span>
-                          <span class="pendingy" *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75"></span>
-                          <span class="pending" *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90"></span>
-                          <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90"></span>
+                        <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="pendingy"
+                          *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="pending"
+                          *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
 
 
-                          <!-- <span class="pending"></span>
+                        <!-- <span class="pending"></span>
                           <span  class="danger"></span> -->
                       </div>
                     </td>
@@ -173,47 +192,83 @@
                       {{getDateDifference(item.roadTaxValid)}}
                       <div class="workStatus">
 
-                        <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50" ></span>
-                        <span class="pendingy" *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75"></span>
-                        <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90"></span>
-                        <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90"></span>
+                        <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="pendingy"
+                          *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="pending"
+                          *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
 
 
                         <!-- <span class="success"></span> -->
                         <!-- <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid)"></span> -->
                         <!-- <span  class="danger"></span> -->
-                    </div>
+                      </div>
                     </td>
                     <td>
                       {{getDateDifference(item.warrantyPeriod)}}
                       <div class="workStatus">
-                        <span class="success" *ngIf="getProgressBarValu(item.warrantyPeriod) <= 50" ></span>
-                        <span class="pendingy" *ngIf="getProgressBarValu(item.warrantyPeriod) > 50 && getProgressBarValu(item.warrantyPeriod) <= 75"></span>
-                        <span class="pending" *ngIf="getProgressBarValu(item.warrantyPeriod) > 75 && getProgressBarValu(item.warrantyPeriod) < 90"></span>
-                        <span class="danger" *ngIf="getProgressBarValu(item.warrantyPeriod) >= 90"></span>
+                        <span class="success" *ngIf="getProgressBarValu(item.warrantyPeriod) <= 50">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="pendingy"
+                          *ngIf="getProgressBarValu(item.warrantyPeriod) > 50 && getProgressBarValu(item.warrantyPeriod) <= 75">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="pending"
+                          *ngIf="getProgressBarValu(item.warrantyPeriod) > 75 && getProgressBarValu(item.warrantyPeriod) < 90">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
+                        <span class="danger" *ngIf="getProgressBarValu(item.warrantyPeriod) >= 90">
+                          <div class="toolTip">
+                            <p>26-Jan-2020</p>
+                          </div>
+                        </span>
 
 
                         <!-- <span class="success"></span>
                         <span class="pending"></span> -->
                         <!-- <span  class="danger"></span> -->
-                    </div>
+                      </div>
                     </td>
                     <td>{{item.workLocationArray[0].workLocation}}</td>
 
                     <td>
                       <div class="vehicleStatus">
                         <span class="assigned text-success"><i class="fas fa-user-check"></i></span>
-                        <span class="unassigned text-danger"><i class="fas fa-user-times"></i></span>
+                        <!-- <span class="unassigned text-danger"><i class="fas fa-user-times"></i></span> -->
                       </div>
                     </td>
                     <td>
                       <div class="vehicleStatus">
                         <span class="reminder text-success"><i class="fas fa-bell"></i></span>
-                        <span class="reminderlater text-danger"><i class="fas fa-bell-slash"></i></span>
+                        <!-- <span class="reminderlater text-danger"><i class="fas fa-bell-slash"></i></span> -->
                       </div>
                     </td>
                     <td><button class="btn btn-default p-0" (click)="deleteVehicle(item._id)">
-                      <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
+                        <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
                         (click)="editVehicle(item._id)"><i class="fas fa-edit text-primary"></i></button></td>
                   </tr>
                 </tbody>
@@ -247,13 +302,13 @@
             </div>
             <div class="Legends">
               <ul>
-            
+
                 <li class="text-danger"><i class="fas fa-user-times"></i> Unassigned</li>
                 <li class="text-success"><i class="fas fa-bell"></i> Reminder</li>
                 <li class="text-danger"><i class="fas fa-bell-slash"></i> Remind Later</li>
                 <li class="text-danger"><i class="fas fa-trash-alt text-danger"></i> Delete</li>
                 <li class="text-primary"><i class="fas fa-edit text-primary"></i> Edit</li>
-                
+
               </ul>
             </div>
           </nb-layout-column>
