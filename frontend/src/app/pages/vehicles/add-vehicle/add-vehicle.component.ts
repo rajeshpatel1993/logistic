@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import {Observable} from 'rxjs/Rx';
+
 import * as uuid from 'uuid';
 @Component({
   selector: 'ngx-add-vehicle',
@@ -26,7 +29,7 @@ export class AddVehicleComponent implements OnInit {
   public dialogBox : boolean = false;
   public msgObj ={};
   // public documentSpecification: FormArray;
-  constructor(private vehicleService: VehicleService, private fb: FormBuilder) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private router: Router) { }
   public vehicleCode: String;
   public vehicleTypes = [];
   public billfileuniqueid = uuid.v4();
@@ -323,21 +326,28 @@ export class AddVehicleComponent implements OnInit {
 
 
   addVehicle(){
-    // console.log(this.vehicleForm.value);
-    // let purchaseDate = +new Date(this.vehicleForm.value.purchase_date);
-    // console.log(purchaseDate);
     this.submitted = true;
     if (this.vehicleForm.invalid) {
       alert("Please fill all required field");
       return;
     }
-
     
     this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
       // console.log(data);
-      alert("Saved successfully");
+      // alert("Saved successfully");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully Added";
+      this.dialogBox = true;
+
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/vehicles/list');
+    }, 2000);
+
+
+
     },(error)=>{});
-    // console.log(this.vehicleForm.value);
+    console.log(this.vehicleForm.value);
   }
 
   getMsg(val){
