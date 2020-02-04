@@ -416,6 +416,11 @@
                 <input type="text" id="roataxamt" class="form-control" placeholder="Road Tax Amount"
                   formControlName="road_tax_amount">
               </div>
+
+              <div class="errormsg" *ngIf="f.road_tax_amount.invalid && (f.road_tax_amount.dirty || f.road_tax_amount.touched)">
+                Road Tax Amount is required
+              </div>
+
             </div>
 
             <div class="form-group row">
@@ -427,7 +432,14 @@
                   <input class="form-control" nbInput placeholder="Road Tax Expiry" [nbDatepicker]="roadtaxexpiry" formControlName="road_tax_expiry">
                   <nb-datepicker #roadtaxexpiry></nb-datepicker>
 
+                
+
               </div>
+
+              <div class="errormsg" *ngIf="f.road_tax_expiry.invalid && (f.road_tax_expiry.dirty || f.road_tax_expiry.touched)">
+                Road Tax Expiry is required
+              </div>
+
             </div>
 
 
@@ -452,6 +464,11 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
               </div>
+
+              <div class="errormsg" *ngIf="f.ownership_status.invalid && (f.ownership_status.dirty || f.ownership_status.touched)">
+                Ownership Status is required
+              </div>
+
             </div>
           </div>
 
@@ -460,6 +477,12 @@
             <div class="col-sm-9">
               <input type="text" id="note" class="form-control" placeholder="Note" formControlName="note">
             </div>
+
+            <div class="errormsg" *ngIf="f.note.invalid && (f.note.dirty || f.note.touched)">
+              Note is required
+            </div>
+
+
           </div>
 
           <div class="form-group row">
@@ -473,6 +496,10 @@
                 <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
               </select>
             </div>
+            <div class="errormsg" *ngIf="f.vehicleStatus.invalid && (f.vehicleStatus.dirty || f.vehicleStatus.touched)">
+              Vehicle Status is required
+            </div>
+
           </div>
 
           <div class="form-group row">
