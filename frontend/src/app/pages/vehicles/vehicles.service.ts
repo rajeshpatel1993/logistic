@@ -24,6 +24,10 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles?page="+page);
   }
 
+  loadAssignVehicles(page){
+    return this.http.get(this.baseUrl+"/vehicles/assign_vehicles?page="+page);
+  }
+
   loadVehiclesTypes(){
     return this.http.get(this.baseUrl+"/vehicles/types");
   }
@@ -94,5 +98,9 @@ export class VehicleService {
 
   updateVehicle(data){
     return this.http.post(this.baseUrl+"/vehicles/updateVehicle",data);
+  }
+
+  loadAssignedVehiclesById(vehicleId){
+    return this.http.get(this.baseUrl+"/vehicles/getAssignVehicle/"+vehicleId);
   }
 }

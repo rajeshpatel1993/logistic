@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 // const config = require('config');
 //const AWS = require('aws-sdk');
 const config = require("./config/config");
-
 let db_uri = config["db"].mongo_uri;
 let db_username = config["db"].db_username;
 let db_password = config["db"].db_password;
@@ -30,6 +29,8 @@ mongoose.set('useFindAndModify', false);
 
 
 const vehicleController = require("./controllers/vehicle");
+const employeeController = require("./controllers/employee");
+const projectController = require("./controllers/project");
 
 const app = express();
 app.use(cors());
@@ -38,7 +39,8 @@ app.use(morgan('tiny')); // logs reqs meta data in console
 app.use(bodyParser.json({limit: '10mb', extended: true}));
 
 app.use('/api/vehicles', vehicleController);
-
+app.use('/api/employees', employeeController);
+app.use('/api/project', projectController);
 
 
 // console.log(`Your port is ${process.env.PORT}`);

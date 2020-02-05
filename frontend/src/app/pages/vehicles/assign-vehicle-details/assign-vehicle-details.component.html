@@ -1,92 +1,69 @@
-<!-- <div class="VehicleAddTab">
+<div class="VehicleAddTab">
   <form>
-    <div class="form-group row m-0 mb-3 vehbgcolor">
-      <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
-      <div class="col-sm-9">
-        <div class="ng-autocomplete">
-          <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-            (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-          </ng-autocomplete>
 
-          <ng-template #itemTemplate let-item>
-            <a [innerHTML]="item.name"></a>
-          </ng-template>
-
-          <ng-template #notFoundTemplate let-notFound>
-            <div [innerHTML]="notFound"></div>
-          </ng-template>
-        </div>
-
-      </div>
-    </div>
     <div class="row no-gutters">
       <nb-tabset class="col-12">
         <nb-tab tabTitle="Identification" class="identification">
+
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Name<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Type </label>
             <div class="col-sm-9">
-              <div class="ng-autocomplete">
-                <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                  [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                </ng-autocomplete>
+              <input type="text" value="{{vehicleType}}" class="form-control" placeholder="Vehicle Type" readonly>
+      
+            </div>
+          </div>
+          
 
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Vehicle Name</label>
+            <div class="col-sm-9">
+              <input type="text" value="{{vehicleName}}" class="form-control" placeholder="Vehicle Name" readonly>
 
-                <ng-template #notFoundTemplate let-notFound>
-                  <div [innerHTML]="notFound"></div>
-                </ng-template>
-              </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Reg No<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Reg No</label>
             <div class="col-sm-9">
-              <input type="text" value="239423bde" class="form-control" disabled>
+              <input type="text" value="{{vehicleRegNo}}" class="form-control" placeholder="Vehicle Reg No" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Code<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Code</label>
             <div class="col-sm-9">
-              <input type="text" value="2392" class="form-control" disabled>
+              <input type="text" value="{{vehicleCode}}" class="form-control" placeholder="Vehicle Code" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Image<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Image</label>
             <div class="col-sm-9">
               <div class="assignImage">
-                <img src="assets/images/camera3.jpg" alt="" class="img-thumbnail">
+                <img [src]="vehicleImage" alt="" class="img-thumbnail">
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Barcode<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Barcode</label>
             <div class="col-sm-9">
-              
+              <div class="barcodeImage">
+                <img [src]="barCode" alt="" class="img-thumbnail">
+              </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Detail<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Detail</label>
             <div class="col-sm-9">
-              <input type="text" value="Car" class="form-control" disabled>
+              
+              <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" readonly>
             </div>
           </div>
         </nb-tab>
 
-        <nb-tab tabTitle="Specification">
+        <nb-tab tabTitle="Assignment Specification">
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Vehicle Name<span
                 class="star">*</span></label>
@@ -178,4 +155,4 @@
       </div>
     </div>
   </form>
-</div> -->
+</div>

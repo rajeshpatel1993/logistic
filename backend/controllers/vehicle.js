@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
+const qrCode = require('qrcode')
+
 const {Vehicle} = require("../models/vehicle");
 const {VehicleType} = require("../models/vechileType");
 const {VehicleDetail} = require("../models/vehicleDetail");
@@ -172,9 +174,12 @@ try{
      if(vehicleImage.length > 0){
         imgUrl = vehicleImage[0].s3Urls[0];
      }
+
+     //Vehicle code,type, reg no or serial no, name
+     let qrCodeString = `Vehicle code: ${vehicleCode}\n Vehicle type: ${vehicleTypef.name}\n Reg no: ${regNo}\n Name: ${vehicleName}`;
+    let qrcodeURl = await qrCode.toDataURL(qrCodeString);
      
    
-    
      let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
 
      if(vehicleBills.length > 0){
@@ -187,6 +192,7 @@ try{
             insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
             insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
             vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls, bill_file_unique_id, image_file_unique_id
+            ,qrCode:qrcodeURl
         
         });
     let saveData = await vehicle_instance.save();
@@ -631,6 +637,82 @@ router.get("/regnos", async(req,res)=>{
 });
 
 
+router.get("/assign_vehicles",async(req,res) => {
+    const resPerPage = 2; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+
+
+    try {
+       
+
+        const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
+        // console.log(nooitems);
+         // get pager object for specified page
+         const pager = paginate(nooitems, page,resPerPage);
+
+       let vehicleData = await Vehicle.aggregate([{
+
+        $match: {
+            "isDeleted":"0"
+        }
+       }
+        
+        // , {
+        //     $lookup: {
+        //         from: "vehicleDetails", // collection to join
+        //         let: { "vechDetId": "$vehicleDetailsId" },
+        //         pipeline: [
+        //             { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
+        //             { "$project": { "vehicleDetails": 1, "_id": 0 }}
+        //         ],
+        //         as: "vehicleDetailsArray"// output array field
+        //     }
+        // }, {
+        //     $lookup: {
+        //         from: "vehicleStatus", // from collection name
+        //         let: { "vechStatusId": "$vehicleStatusId" },
+        //         pipeline: [
+        //             { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vechStatusId"] }}},
+        //             { "$project": { "vehicleStatus": 1, "_id": 0 }}
+        //         ],
+        //         as: "vehicleStatusArray"
+        //     }
+        // },
+        // {
+        //     $lookup: {
+        //         from: "worklocation", // from collection name
+        //         let: { "worklocid": "$workLocationId" },
+        //         pipeline: [
+        //             { "$match": { "$expr": { "$eq": ["$workLocationId", "$$worklocid"] }}},
+        //             { "$project": { "workLocation": 1, "_id": 0 }}
+        //         ],
+        //         as: "workLocationArray"
+        //     }
+        // }
+        
+        ,
+        {
+            $skip: skipd
+        },
+        {
+            $limit:resPerPage
+        }
+       
+    
+    ]);
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = vehicleData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 router.get("/",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
@@ -702,6 +784,155 @@ router.get("/",async(req,res) => {
     } catch (error) {
         console.log(error);
     }
+});
+
+
+router.get("/getAssignVehicle/:id", async (req, res) => {
+    const id = req.params.id; //or use req.param('id')
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    const vehicle = await Vehicle.aggregate([{$match:filter},{
+        
+            $lookup: {
+                from: "vehicleDetails", // collection to join
+                let: { "vechDetId": "$vehicleDetailsId" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
+                    { "$project": { "vehicleDetails": 1, "_id": 0 }}
+                ],
+                as: "vehicleDetailsArray"// output array field
+            }
+        
+    },
+    {
+
+        $lookup: {
+            from: "vehicleType", // collection to join
+            let: { "vechTypeId": "$vehicle_typeId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
+                { "$project": { "vehicleType": 1, "_id": 0 }}
+            ],
+            as: "vehicleTypes"// output array field
+        }
+
+    },
+
+    // {
+
+    //     $lookup: {
+    //         from: "model", // collection to join
+    //         let: { "modelID": "$modelId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$modelId", "$$modelID"] }}},
+    //             { "$project": { "model": 1, "_id": 0 }}
+    //         ],
+    //         as: "vehicleModels"// output array field
+    //     }
+
+    // },
+
+    // {
+
+    //     $lookup: {
+    //         from: "brand", // collection to join
+    //         let: { "brandID": "$brandId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$brandId", "$$brandID"] }}},
+    //             { "$project": { "brand": 1, "_id": 0 }}
+    //         ],
+    //         as: "vehicleBrands"// output array field
+    //     }
+
+    // },
+
+    // {
+
+    //     $lookup: {
+    //         from: "fuelType", // collection to join
+    //         let: { "fuelTypeID": "$fuelTypeId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$fuelTypeId", "$$fuelTypeID"] }}},
+    //             { "$project": { "fuelTypeName": 1, "_id": 0 }}
+    //         ],
+    //         as: "fuelTypes"// output array field
+    //     }
+
+    // },
+
+    // {
+
+    //     $lookup: {
+    //         from: "fuelMeausrement", // collection to join
+    //         let: { "fuelMeausrementID": "$fuelMeausrementId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$fuelMeausrementId", "$$fuelMeausrementID"] }}},
+    //             { "$project": { "fuelMeausrement": 1, "_id": 0 }}
+    //         ],
+    //         as: "fuelMesaureMents"// output array field
+    //     }
+
+    // },
+
+    // {
+
+    //     $lookup: {
+    //         from: "worklocation", // collection to join
+    //         let: { "workLocationID": "$workLocationId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$workLocationId", "$$workLocationID"] }}},
+    //             { "$project": { "workLocation": 1, "_id": 0 }}
+    //         ],
+    //         as: "workLocations"// output array field
+    //     }
+
+    // },
+
+    // {
+
+    //     $lookup: {
+    //         from: "insuranceCompany", // collection to join
+    //         let: { "insuranceCompanyID": "$insuranceCompanyId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$insuranceCompanyId", "$$insuranceCompanyID"] }}},
+    //             { "$project": { "insuranceCompanyName": 1, "_id": 0 }}
+    //         ],
+    //         as: "insuranceAgents"// output array field
+    //     }
+
+    // },
+
+    // {
+
+    //     $lookup: {
+    //         from: "vehicleOwnership", // collection to join
+    //         let: { "vehicleOwnershipID": "$vehicleOwnershipId" },
+    //         pipeline: [
+    //             { "$match": { "$expr": { "$eq": ["$vehicleOwnershipId", "$$vehicleOwnershipID"] }}},
+    //             { "$project": { "vehicleOwnership": 1, "_id": 0 }}
+    //         ],
+    //         as: "vehicleOwnerships"// output array field
+    //     }
+
+    // },
+
+    
+
+
+
+
+
+
+
+
+]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
 });
 
 

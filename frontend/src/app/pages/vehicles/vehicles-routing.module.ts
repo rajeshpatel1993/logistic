@@ -67,7 +67,7 @@ const routes: Routes = [{
   component: AssignVehicleComponent
 },
 {
-  path: 'assign-vehicle-details',
+  path: 'assign-vehicle-details/:id',
   component: AssignVehicleDetailsComponent
 }
 ];
