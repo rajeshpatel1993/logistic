@@ -1,107 +1,84 @@
-<!-- <div class="VehicleAddTab">
-  <form>
-    <div class="form-group row m-0 mb-3 vehbgcolor">
-      <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
-      <div class="col-sm-9">
-        <div class="ng-autocomplete">
-          <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-            (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-          </ng-autocomplete>
+<div class="VehicleAddTab">
+  <form [formGroup]="assignVehicleForm" novalidate>
 
-          <ng-template #itemTemplate let-item>
-            <a [innerHTML]="item.name"></a>
-          </ng-template>
-
-          <ng-template #notFoundTemplate let-notFound>
-            <div [innerHTML]="notFound"></div>
-          </ng-template>
-        </div>
-
-      </div>
-    </div>
     <div class="row no-gutters">
       <nb-tabset class="col-12">
         <nb-tab tabTitle="Identification" class="identification">
+
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Name<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Type </label>
             <div class="col-sm-9">
-              <div class="ng-autocomplete">
-                <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                  [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                </ng-autocomplete>
+              <input type="text" value="{{vehicleType}}" class="form-control" placeholder="Vehicle Type" readonly>
+      
+            </div>
+          </div>
+          
 
-                <ng-template #itemTemplate let-item>
-                  <a [innerHTML]="item.name"></a>
-                </ng-template>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Vehicle Name</label>
+            <div class="col-sm-9">
+              <input type="text" value="{{vehicleName}}" class="form-control" placeholder="Vehicle Name" readonly>
 
-                <ng-template #notFoundTemplate let-notFound>
-                  <div [innerHTML]="notFound"></div>
-                </ng-template>
-              </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Reg No<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Reg No</label>
             <div class="col-sm-9">
-              <input type="text" value="239423bde" class="form-control" disabled>
+              <input type="text" value="{{vehicleRegNo}}" class="form-control" placeholder="Vehicle Reg No" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Code<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Code</label>
             <div class="col-sm-9">
-              <input type="text" value="2392" class="form-control" disabled>
+              <input type="text" value="{{vehicleCode}}" class="form-control" placeholder="Vehicle Code" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Image<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Image</label>
             <div class="col-sm-9">
               <div class="assignImage">
-                <img src="assets/images/camera3.jpg" alt="" class="img-thumbnail">
+                <img [src]="vehicleImage" alt="" class="img-thumbnail">
               </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Barcode<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Barcode</label>
             <div class="col-sm-9">
-              
+              <div class="barcodeImage">
+                <img [src]="barCode" alt="" class="img-thumbnail">
+              </div>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Detail<span
-                class="star">*</span></label>
+            <label class="col-sm-3 col-form-label">Vehicle Detail</label>
             <div class="col-sm-9">
-              <input type="text" value="Car" class="form-control" disabled>
+              
+              <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" readonly>
             </div>
           </div>
         </nb-tab>
 
-        <nb-tab tabTitle="Specification">
+        <nb-tab tabTitle="Assignment Specification">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Name<span
+            <label class="col-sm-3 col-form-label">Employee Name<span
                 class="star">*</span></label>
             <div class="col-sm-9">
               <div class="ng-autocomplete">
-                <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)'
-                  (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                  [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                placeHolder="Enter the Employee" formControlName="employee_name"
+                  [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
                 </ng-autocomplete>
 
-                <ng-template #itemTemplate let-item>
+                <ng-template #itemTemplate1 let-item>
                   <a [innerHTML]="item.name"></a>
                 </ng-template>
 
-                <ng-template #notFoundTemplate let-notFound>
+                <ng-template #notFoundTemplate1 let-notFound>
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
               </div>
@@ -109,11 +86,20 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Start Date<span
+            <label class="col-sm-3 col-form-label">Assignment Start Date<span
                 class="star">*</span></label>
             <div class="col-sm-9">
-              <input nbInput placeholder="Start Date" [nbDatepicker]="startdate" class="form-control">
+              <!-- <input nbInput placeholder="Start Date" [nbDatepicker]="startdate" class="form-control">
+              <nb-datepicker #startdate></nb-datepicker> -->
+
+              <input class="form-control" nbInput placeholder="Start Date" [nbDatepicker]="startdate" formControlName="assignment_start_date">
               <nb-datepicker #startdate></nb-datepicker>
+
+              <div class="errormsg" *ngIf="f.assignment_start_date.invalid && (f.assignment_start_date.dirty || f.assignment_start_date.touched)">
+                Start Date is required
+              </div>
+
+
             </div>
           </div>
 
@@ -121,61 +107,142 @@
             <label class="col-sm-3 col-form-label">End Date<span
                 class="star">*</span></label>
             <div class="col-sm-9">
-              <input nbInput placeholder="End Date" [nbDatepicker]="enddate" class="form-control">
+              <input class="form-control" nbInput placeholder="End Date" [nbDatepicker]="enddate" formControlName="assignment_end_date">
               <nb-datepicker #enddate></nb-datepicker>
+
+              <div class="errormsg" *ngIf="f.assignment_end_date.invalid && (f.assignment_end_date.dirty || f.assignment_end_date.touched)">
+                End Date is required
+              </div>
             </div>
           </div>
 
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Work Location<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control">
-            </div>
+              <div class="col-sm-9">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="workLocationsList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  placeHolder="Enter the Work Location" formControlName="work_location"
+                    [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate2 let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+  
+                  <ng-template #notFoundTemplate2 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+              </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Project Type<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control">
-            </div>
+              <div class="col-sm-9">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="projectTypeList" [searchKeyword]="keyword" (selected)='selectProjectType($event)'
+                  placeHolder="Enter the Project Type" formControlName="project_type"
+                    [itemTemplate]="itemTemplate3" [notFoundTemplate]="notFoundTemplate3">
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate3 let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+  
+                  <ng-template #notFoundTemplate3 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+              </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Project<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control">
-            </div>
+              <div class="col-sm-9">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="projectsList" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                  placeHolder="Enter the Projects" formControlName="project"
+                    [itemTemplate]="itemTemplate4" [notFoundTemplate]="notFoundTemplate4">
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate4 let-item>
+                    <a [innerHTML]="item.name"></a>
+                  </ng-template>
+  
+                  <ng-template #notFoundTemplate4 let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+              </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Fuel Limit/Month<span
                 class="star">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+
+              <input type="text" id="fuel_limit_per_month" class="form-control" placeholder="Fuel Limit " formControlName="fuel_limit_per_month">
+              <div class="errormsg" *ngIf="f.fuel_limit_per_month.invalid && (f.fuel_limit_per_month.dirty || f.fuel_limit_per_month.touched)">
+               Fuel Limit is required
+              </div>
+
+              <!-- <input type="text" class="form-control"> -->
             </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Driving License Valid<span
                 class="star">*</span></label>
+              <div class="col-sm-9">
+                <input class="form-control" nbInput placeholder="Driving License valid" [nbDatepicker]="drivinglicensevalid" formControlName="driving_license_valid">
+                <nb-datepicker #drivinglicensevalid></nb-datepicker>
+  
+                <div class="errormsg" *ngIf="f.driving_license_valid.invalid && (f.driving_license_valid.dirty || f.driving_license_valid.touched)">
+                  Driving license expiry is required
+                </div>
+              </div>
+          </div>
+
+
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Note<span
+                class="star">*</span></label>
             <div class="col-sm-9">
-              <input type="text" class="form-control">
+
+              <input type="text" id="note" class="form-control" placeholder="Note " formControlName="note">
+              <div class="errormsg" *ngIf="f.note.invalid && (f.note.dirty || f.note.touched)">
+               Note is required
+              </div>
+
+              <!-- <input type="text" class="form-control"> -->
             </div>
           </div>
+
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Attachments <span
                 class="star">*</span></label>
-            <div class="col-sm-9">
-              <input type="file">
-            </div>
+                <div class="col-sm-9">
+                  <input type="hidden" id="file_unique_id" class="form-control" formControlName="file_unique_id">
+
+                  <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
+                  <button (click)="uploadBills()" class="btn btn-primary float-right">Upload</button>
+                </div>
           </div>
+
+          <input type="hidden" id="vehicle_id" class="form-control" formControlName="vehicle_id">
+
 
         </nb-tab>
       </nb-tabset>
     </div>
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
-        <button type="submit" class="btn btn-primary float-right">Submit</button>
+        <button type="submit" (click)="assignVehicle()" class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
   </form>
-</div> -->
+</div>
+
+<div *ngIf="dialogBox">
+
+  <ngx-dailog-box (messageToEmit)="getMsg($event)" [msgObj]="msgObj"></ngx-dailog-box>
+</div>

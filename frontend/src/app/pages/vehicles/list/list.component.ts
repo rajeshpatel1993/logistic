@@ -20,6 +20,14 @@ export class ListComponent {
 
   keyword = 'name';
   public filterQueryString = "";
+
+    
+  public vehiclesList: any[] = [];
+  public totalItems: any;
+  public pager = {};
+  public pageOfItems = [];
+  public dropDownAction = false;
+
   constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router,private dialogService: NbDialogService ) {
 
   } 
@@ -29,6 +37,7 @@ export class ListComponent {
       case "vehicletype":
         this.selectedVehicleType = item.id;
         this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.loadVehicleDetails(item.id);
         break;
       case "vehicledetails":
         this.selectedVehicleDetail = item.id;
@@ -45,11 +54,9 @@ export class ListComponent {
   }
 
 
-  selectVehicleType(evt){
-    this.loadVehicleDetails(evt.id);
-
-    console.log(evt);
-  }
+  // selectVehicleType(evt){
+  //   this.loadVehicleDetails(evt.id);
+  // }
 
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
@@ -70,14 +77,7 @@ export class ListComponent {
     // do something
   }
 
-  
-  public vehiclesList: any[] = [];
-  // array of all items to be paged
-  totalItems: any;
 
-  pager = {};
-  pageOfItems = [];
-  public dropDownAction = false;
 
 
   public getDateDifference(expDate){

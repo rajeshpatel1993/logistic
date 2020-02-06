@@ -151,6 +151,13 @@ const vehicleSchema = new mongoose.Schema ({
     },
     image_file_unique_id: {
         type: String
+    },
+    qrCode:{
+        type: String
+    },
+    assignMentStatus: {
+        type: Number,
+        default: 0 
     }
 
 

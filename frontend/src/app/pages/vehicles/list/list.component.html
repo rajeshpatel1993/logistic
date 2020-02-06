@@ -26,7 +26,7 @@
               <div class="col-auto">
                 <div class="ng-autocomplete">
                   <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-                    (selected)='selectVehicleType($event)' (inputChanged)='onChangeSearch($event)'
+                  (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
                     (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
                     [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
