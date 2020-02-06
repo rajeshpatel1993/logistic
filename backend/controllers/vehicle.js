@@ -164,7 +164,7 @@ router.post("/add-assign", async (req, res)=> {
     // let {asset} = req.body;
     try{
 
-        console.log(req.body);
+        // console.log(req.body);
     
        
         
@@ -182,6 +182,8 @@ router.post("/add-assign", async (req, res)=> {
         );
 
         const query = {"vehicle":vehicle_id};
+        const query1 = {"_id":vehicle_id};
+        
         const update =     {
             employee:employee_name.id, 
             vehicle: vehicle_id,
@@ -195,8 +197,14 @@ router.post("/add-assign", async (req, res)=> {
             projects:project.id
 
         };
+
+        const update1 = {
+            $set: { 'assignMentStatus': 1} ,
+
+        };
         const options = { upsert: true, new: true, setDefaultsOnInsert: true };
         let saveData = await AssignVehicle.findOneAndUpdate(query, update, options);
+        let updateAssignmentVehicle = await Vehicle.findOneAndUpdate(query1,update1);
 
         // let saveData = await assign_vehicle_instance.save();
         if(saveData){
@@ -701,9 +709,7 @@ router.get("/assign_vehicles",async(req,res) => {
        
 
         const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
-        // console.log(nooitems);
-         // get pager object for specified page
-         const pager = paginate(nooitems, page,resPerPage);
+        const pager = paginate(nooitems, page,resPerPage);
 
        let vehicleData = await Vehicle.aggregate([{
 

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import * as uuid from 'uuid';
 
 @Component({
@@ -35,7 +37,7 @@ export class AssignVehicleDetailsComponent implements OnInit {
   keyword = 'name';
   public billfileuniqueid = uuid.v4();
 
-  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
     this.vehicleId = this.activeRoute.snapshot.params.id;
@@ -220,13 +222,13 @@ export class AssignVehicleDetailsComponent implements OnInit {
        console.log(data);
       // alert("Saved successfully");
 
-    //   this.msgObj["type"] = "success";
-    //   this.msgObj["message"] = "successfully Added";
-    //   this.dialogBox = true;
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully Assigned";
+      this.dialogBox = true;
 
-    //   setTimeout( ()=> {
-    //     this.router.navigateByUrl('/pages/vehicles/list');
-    // }, 2000);
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/vehicles/assign-vehicles');
+    }, 2000);
 
 
 

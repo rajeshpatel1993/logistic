@@ -96,17 +96,34 @@
                   </div>
                   <div class="VehicleDetail_name">
                     <h5>{{item.name}}</h5>
-                    <h6><b>Code:</b> 34759</h6>
-                    <p><b>Reg/Ser No.:</b> bk7687vjkk</p>
+                    <h6><b>Code:</b> {{item.vehicle_code}}</h6>
+                    <p><b>Reg/Ser No.:</b> {{item.regNo}}</p>
+                    <!-- <p><b>Status.:</b> {{item.regNo}}</p> -->
                   </div>
                 </div>
               </td>
               <td>{{ item.assignMentStatus == 1 ? 'Assigned' : 'Not Assigned' }}</td>
-              <td> Assigned to</td>
-              <td>Assignment Start Date</td>
-              <td>Work Location</td>
-              <td>Project</td>
-              <td>Fuel Limit</td>
+              <ng-container *ngIf="item.assign_data; then assignedContent else otherContent"></ng-container>
+
+              <ng-template #assignedContent >
+                
+                <td> {{item.assign_data.employee.firstName}}</td>
+                <td>{{item.assign_data.assignmentStartDate | date}}</td>
+                <td>{{item.assign_data.workLocations.workLocation}}</td>
+                <td>{{item.assign_data.projects.projectName}}</td>
+                <td>{{item.assign_data.fuelLimit}}</td>
+              
+              </ng-template>
+              <ng-template #otherContent >
+                
+                <td> </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              
+              </ng-template>
+            
               <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details/{{item._id}}">Assign</a></td>
             </tr>
             
