@@ -164,8 +164,10 @@ router.post("/add-assign", async (req, res)=> {
     // let {asset} = req.body;
     try{
 
-        console.log(req.body);
+        // console.log(req.body);
     
+       
+        
         let filesurls = [];
         let {employee_name, assignment_start_date, assignment_end_date,work_location,project_type, project, fuel_limit_per_month, 
             driving_license_valid, note, file_unique_id, vehicle_id} = req.body;
@@ -175,10 +177,17 @@ router.post("/add-assign", async (req, res)=> {
             filesurls = vehicleFiles[0].s3Urls; 
         }
     
-        const assign_vehicle_instance = new AssignVehicle({
-            employeeID:employee_name.id, 
-            vehicleID: vehicle_id,
-            workLocationID: work_location.id,
+        const assign_vehicle_instance = new AssignVehicle(
+        
+        );
+
+        const query = {"vehicle":vehicle_id};
+        const query1 = {"_id":vehicle_id};
+        
+        const update =     {
+            employee:employee_name.id, 
+            vehicle: vehicle_id,
+            workLocations: work_location.id,
             fuelLimit:fuel_limit_per_month,
             assignmentStartDate:assignment_start_date,
             assignmentEndDate: assignment_end_date,
@@ -187,8 +196,17 @@ router.post("/add-assign", async (req, res)=> {
             files:filesurls,
             projects:project.id
 
-        });
-        let saveData = await assign_vehicle_instance.save();
+        };
+
+        const update1 = {
+            $set: { 'assignMentStatus': 1} ,
+
+        };
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        let saveData = await AssignVehicle.findOneAndUpdate(query, update, options);
+        let updateAssignmentVehicle = await Vehicle.findOneAndUpdate(query1,update1);
+
+        // let saveData = await assign_vehicle_instance.save();
         if(saveData){
             res.status(200).json({"msg":"saved successfully"});
         }
@@ -685,15 +703,13 @@ router.get("/assign_vehicles",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
-
+    const modifiedData = [];
 
     try {
        
 
         const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
-        // console.log(nooitems);
-         // get pager object for specified page
-         const pager = paginate(nooitems, page,resPerPage);
+        const pager = paginate(nooitems, page,resPerPage);
 
        let vehicleData = await Vehicle.aggregate([{
 
@@ -745,11 +761,34 @@ router.get("/assign_vehicles",async(req,res) => {
        
     
     ]);
+    for(let i=0;i<vehicleData.length;i++){
+        let ele = {};
+        let elemId = vehicleData[i]._id;
+        let assignedVal = Object.assign(ele,vehicleData[i]);
+        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId}).populate('employee').populate('vehicle').populate('projects').populate('workLocations');
+
+        assignedVal["assign_data"] = assignVehicleCollection;
+        modifiedData.push(assignedVal);
+    }
+
+    // vehicleData.forEach(async (elem,index)=>{
+    //     // console.log(elem._id);
+    //     let ele = elem;
+    //     let elemId = elem._id;
+    //     let assignVehicleCollection = await  AssignVehicle.findOne({vehicleID:elemId}).populate('employeeID');
+    //     // console.log(assignVehicleCollection);
+    //     ele.employee = assignVehicleCollection;
+        
+    //      modifiedData.push(ele);
+
+    //     // console.log(elem._id);
+    // });
+    // console.log(modifiedData);
 
         let responseData = {};
         responseData["status"] = 200;
         responseData["page"] = pager;
-        responseData["data"] = vehicleData;
+        responseData["data"] = modifiedData;
         res.status(200).json(responseData);
     } catch (error) {
         console.log(error);
@@ -829,6 +868,9 @@ router.get("/",async(req,res) => {
         console.log(error);
     }
 });
+
+
+
 
 
 router.get("/getAssignVehicle/:id", async (req, res) => {
