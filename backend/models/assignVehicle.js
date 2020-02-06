@@ -6,8 +6,8 @@ const assignVechicleSchema = new mongoose.Schema ({
         type:Number,
         index: { unique: true }
     },
-    employeeID:{type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
-    vehicleID: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
+    employee:{type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
+    vehicle: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
     projects: {type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
     // vehicle_code: {
     //     type: String
@@ -21,7 +21,7 @@ const assignVechicleSchema = new mongoose.Schema ({
     // vechileTypeID: {
     //     type: String
     // },
-    workLocationID: {type: mongoose.Schema.Types.ObjectId, ref: 'WorkLocation'},
+    workLocations: {type: mongoose.Schema.Types.ObjectId, ref: 'WorkLocation'},
     fuelLimit: {
         type: String
     },

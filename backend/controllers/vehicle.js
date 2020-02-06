@@ -166,6 +166,8 @@ router.post("/add-assign", async (req, res)=> {
 
         console.log(req.body);
     
+       
+        
         let filesurls = [];
         let {employee_name, assignment_start_date, assignment_end_date,work_location,project_type, project, fuel_limit_per_month, 
             driving_license_valid, note, file_unique_id, vehicle_id} = req.body;
@@ -175,10 +177,15 @@ router.post("/add-assign", async (req, res)=> {
             filesurls = vehicleFiles[0].s3Urls; 
         }
     
-        const assign_vehicle_instance = new AssignVehicle({
-            employeeID:employee_name.id, 
-            vehicleID: vehicle_id,
-            workLocationID: work_location.id,
+        const assign_vehicle_instance = new AssignVehicle(
+        
+        );
+
+        const query = {"vehicle":vehicle_id};
+        const update =     {
+            employee:employee_name.id, 
+            vehicle: vehicle_id,
+            workLocations: work_location.id,
             fuelLimit:fuel_limit_per_month,
             assignmentStartDate:assignment_start_date,
             assignmentEndDate: assignment_end_date,
@@ -187,8 +194,11 @@ router.post("/add-assign", async (req, res)=> {
             files:filesurls,
             projects:project.id
 
-        });
-        let saveData = await assign_vehicle_instance.save();
+        };
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        let saveData = await AssignVehicle.findOneAndUpdate(query, update, options);
+
+        // let saveData = await assign_vehicle_instance.save();
         if(saveData){
             res.status(200).json({"msg":"saved successfully"});
         }
@@ -745,20 +755,34 @@ router.get("/assign_vehicles",async(req,res) => {
        
     
     ]);
+    for(let i=0;i<vehicleData.length;i++){
+        let ele = {};
+        let elemId = vehicleData[i]._id;
+        let assignedVal = Object.assign(ele,vehicleData[i]);
+        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId}).populate('employee').populate('vehicle').populate('projects').populate('workLocations');
 
-    let modifiedVehicleData = vehicleData.map(async (elem,index)=>{
-        console.log(elem._id);
-        let elemId = elem._id;
-        let assignVehicleCollection = await  AssignVehicle.findOne({vehicleID:elemId}).populate('employeeID');
-        elem.employee = assignVehicleCollection;
+        assignedVal["assign_data"] = assignVehicleCollection;
+        modifiedData.push(assignedVal);
+    }
 
-        // console.log(elem._id);
-    });
+    // vehicleData.forEach(async (elem,index)=>{
+    //     // console.log(elem._id);
+    //     let ele = elem;
+    //     let elemId = elem._id;
+    //     let assignVehicleCollection = await  AssignVehicle.findOne({vehicleID:elemId}).populate('employeeID');
+    //     // console.log(assignVehicleCollection);
+    //     ele.employee = assignVehicleCollection;
+        
+    //      modifiedData.push(ele);
+
+    //     // console.log(elem._id);
+    // });
+    // console.log(modifiedData);
 
         let responseData = {};
         responseData["status"] = 200;
         responseData["page"] = pager;
-        responseData["data"] = vehicleData;
+        responseData["data"] = modifiedData;
         res.status(200).json(responseData);
     } catch (error) {
         console.log(error);
