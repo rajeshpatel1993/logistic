@@ -22,7 +22,7 @@ router.get("/projecttypes", async(req,res)=>{
 router.get("/:projectTypeId", async(req,res)=>{
     let projectTypeId = req.params.projectTypeId;
     try{
-        let projectData = await Project.find({"_id" : ObjectId(projectTypeId)}).select("projectId  projectName");
+        let projectData = await Project.find({"projectTypeId" : projectTypeId}).select("projectId  projectName");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = projectData;

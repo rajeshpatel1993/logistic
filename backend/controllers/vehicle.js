@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const qrCode = require('qrcode')
 
 const {Vehicle} = require("../models/vehicle");
+const {AssignVehicle} = require("../models/assignVehicle");
+
 const {VehicleType} = require("../models/vechileType");
 const {VehicleDetail} = require("../models/vehicleDetail");
 const {Model} = require("../models/models");
@@ -16,7 +18,6 @@ const {File} = require("../models/files");
 const {VehicleStatus} = require("../models/vehicleStatus");
 const {OwnerShip} = require("../models/ownership");
 const {WorkLocation} = require("../models/workLocation");
-
 const { upload } = require("../utils/upload_file_to_s3");
 
 const multer = require('multer');
@@ -157,6 +158,49 @@ router.post("/updateVehicle", async (req, res)=> {
     
 });
 
+
+
+router.post("/add-assign", async (req, res)=> {
+    // let {asset} = req.body;
+    try{
+
+        console.log(req.body);
+    
+        let filesurls = [];
+        let {employee_name, assignment_start_date, assignment_end_date,work_location,project_type, project, fuel_limit_per_month, 
+            driving_license_valid, note, file_unique_id, vehicle_id} = req.body;
+    
+        let vehicleFiles = await File.find({fileId:file_unique_id }).select("s3Urls");
+        if(vehicleFiles){
+            filesurls = vehicleFiles[0].s3Urls; 
+        }
+    
+        const assign_vehicle_instance = new AssignVehicle({
+            employeeID:employee_name.id, 
+            vehicleID: vehicle_id,
+            workLocationID: work_location.id,
+            fuelLimit:fuel_limit_per_month,
+            assignmentStartDate:assignment_start_date,
+            assignmentEndDate: assignment_end_date,
+            driving_license_valid,
+            note,
+            files:filesurls,
+            projects:project.id
+
+        });
+        let saveData = await assign_vehicle_instance.save();
+        if(saveData){
+            res.status(200).json({"msg":"saved successfully"});
+        }
+        
+     
+        // res.status(200).json(req.body);
+    }catch(err){
+        console.log(err);
+    }
+    
+    
+    });
 
 
 router.post("/add", async (req, res)=> {
@@ -478,7 +522,7 @@ router.get("/types", async(req,res)=>{
 
 router.get("/workLocations", async(req,res)=>{
     try{
-        let workLocationData = await WorkLocation.find().select("workLocationId  workLocation -_id");
+        let workLocationData = await WorkLocation.find().select("workLocationId  workLocation");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = workLocationData;

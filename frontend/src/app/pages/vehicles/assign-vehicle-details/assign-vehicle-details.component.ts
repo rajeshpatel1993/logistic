@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'ngx-assign-vehicle-details',
@@ -9,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AssignVehicleDetailsComponent implements OnInit {
 
+  public assignVehicleForm: FormGroup;
   public vehicleId : string;
   public vehicleData:any[] = [];
   public vehicleTypesData = [];
@@ -17,29 +20,79 @@ export class AssignVehicleDetailsComponent implements OnInit {
   public vehicleRegNo:String;
   public vehicleCode: String;
   public vehicleImage: String;
+  public selectedFiles: any[] = [];
   public barCode: String;
   public vehicleDetail:String;
+  public workLocationsList: any[] = [];
+  public projectTypeList: any[] = [];
+  public projectsList: any[] = [];
+  public employeeLists:any = [];
+  public msgObj ={};
+  public dialogBox : boolean = false;
+  public submitted = false;
+
 
   keyword = 'name';
-  data = [
-     {
-       id: 1,
-       name: 'Usa'
-     },
-     {
-       id: 2,
-       name: 'England'
-     }
-  ];
+  public billfileuniqueid = uuid.v4();
 
-  constructor(private vehicleService: VehicleService, private activeRoute: ActivatedRoute) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehicle();
+    this.createForm();
+    this.loadEmployee();
+    this.loadWorkLocations();
+    this.loadProjectType();
+  }
+
+  getMsg(val){
+    this.dialogBox = false;
+    console.log(val);
+  }
+
+  loadWorkLocations(){
+    this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
+      let workLocationsData = workLocations["data"];
+      workLocationsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.workLocation;
+        this.workLocationsList.push(tmpObj);
+       
+
+      });
+
+
+    },
+    (error) => {
+      
+    });
+  }
+
+
+  loadProjectType(){
+    this.vehicleService.loadProjectType().subscribe((projectTypesData)=>{
+      let projectTypeData = projectTypesData["data"];
+      projectTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = +item.projectTypeId;
+        tmpObj["name"] = item.projectTypeName;
+        this.projectTypeList.push(tmpObj);
+       
+
+      });
+
+
+    },
+    (error) => {
+      
+    });
   }
 
   
+
+
   loadVehicle(){
     this.vehicleService.loadAssignedVehiclesById(this.vehicleId).subscribe((d) => {
       this.vehicleData = d['data'][0];
@@ -52,82 +105,62 @@ export class AssignVehicleDetailsComponent implements OnInit {
       this.vehicleDetail = this.vehicleData["vehicleDetailsArray"][0].vehicleDetails;
 
 
-      // this.selectedVehicleType = this.vehicleData['vehicle_code'];
-      // this.selectedVehicleT = this.vehicleData['vehicle_type'];
-      // this.vehDetail = this.vehicleData['vehicleDetailsArray'][0].vehicleDetails;
-      // this.vehName = this.vehicleData['name'];
-      // this.regName = this.vehicleData['regNo'];
-      // this.vehicleModel = this.vehicleData['vehicleModels'][0].model;
-      // this.vehicleBrand = this.vehicleData['vehicleBrands'][0].brand;
-      // this.vehicleColor = this.vehicleData['color'];
-      // this.manufactureYear = this.vehicleData['yearofManufacturer'];
-      // this.engineNo = this.vehicleData['engineNo'];
-      // this.chasisNo = this.vehicleData['chassisNo'];
-      // this.purchaseDate = new Date(this.vehicleData['purchase_date']);
-      // this.warrantyPeriod = new Date(this.vehicleData['warrantyPeriod']);
-      // this.fuelType = this.vehicleData['fuelTypes'][0].fuelTypeName;
-      // this.fuelMeasureMent = this.vehicleData['fuelMesaureMents'][0].fuelMeausrement;
-      // this.workLocation = this.vehicleData['workLocations'][0].workLocation;
-      // this.insurancePolicy = this.vehicleData['insuranceNo'];
-      // this.insuranceAmount = this.vehicleData['insuranceAmt'];
-      // this.policyExpiry = new Date(this.vehicleData['insuranceValid']);
-      // this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
-      // this.roadTaxNo = this.vehicleData['roadTaxNo'];
-      // this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
-      // this.roadTaxExpiry = new Date(this.vehicleData['roadTaxValid']);
-      // this.ownershipStatus = this.vehicleData['vehicleOwnerships'][0].vehicleOwnership;
-      // this.status = +this.vehicleData['vehicleStatusId'];
-      // this.note = this.vehicleData['note'];
-      // this.uniqueFileId = this.vehicleData['bill_file_unique_id'];
-      // this.uniqueImageId = this.vehicleData['image_file_unique_id'];
 
-
-
-
-
-
-
-
-
-      // this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
-      // this.vehicleForm.get("vehicleTypef").patchValue(this.selectedVehicleT);
-
-      // this.vehicleForm.get("vehicledetails").patchValue(this.vehDetail);
-      // this.vehicleForm.get("vehicleName").patchValue(this.vehName);
-      // this.vehicleForm.get("regNo").patchValue(this.regName);
-      // this.vehicleForm.get("model").patchValue(this.vehicleModel);
-      // this.vehicleForm.get("brand").patchValue(this.vehicleBrand);
-      // this.vehicleForm.get("color").patchValue(this.vehicleColor);
-      // this.vehicleForm.get("manufacture_year").patchValue(this.manufactureYear);
-      // this.vehicleForm.get("engine_no").patchValue(this.engineNo);
-      // this.vehicleForm.get("chasis_no").patchValue(this.chasisNo);
-      // this.vehicleForm.get("purchase_date").patchValue(this.purchaseDate);
-      // this.vehicleForm.get("warranty_period").patchValue(this.warrantyPeriod);
-      // this.vehicleForm.get("fuel_type").patchValue(this.fuelType);
-      // this.vehicleForm.get("fuelMeausrement").patchValue(this.fuelMeasureMent);
-      // this.vehicleForm.get("workLocation").patchValue(this.workLocation);
-      // this.vehicleForm.get("insurance_policy_no").patchValue(this.insurancePolicy);
-      // this.vehicleForm.get("insurance_amount").patchValue(this.insuranceAmount);
-      // this.vehicleForm.get("policy_expiry").patchValue(this.policyExpiry);
-      // this.vehicleForm.get("insurance_agent").patchValue(this.insuranceAgent);
-      // this.vehicleForm.get("road_tax_no").patchValue(this.roadTaxNo);
-      // this.vehicleForm.get("road_tax_amount").patchValue(this.roadTaxAmount);
-      // this.vehicleForm.get("road_tax_expiry").patchValue(this.roadTaxExpiry);
-      // this.vehicleForm.get("ownership_status").patchValue(this.ownershipStatus);
-      // this.vehicleForm.get("vehicleStatus").patchValue(this.status);
-      //  this.vehicleForm.get("note").patchValue(this.note);
-
-      //  this.vehicleForm.get("image_file_unique_id").patchValue(this.uniqueImageId);
-      //  this.vehicleForm.get("bill_file_unique_id").patchValue(this.uniqueFileId);
-
-
-
-
-
-      // console.log(d);
     }, (error) => {
   
     });
+  }
+
+  get f() { return this.assignVehicleForm.controls; }
+
+  createForm() {
+    let group = {
+      employee_name: ['', Validators.required],
+      assignment_start_date: ['', Validators.required],
+      assignment_end_date: ['', Validators.required],
+      work_location: ['',Validators.required],
+      project_type: ['', Validators.required],
+      project: ['', Validators.required],
+      fuel_limit_per_month: ['', Validators.required],
+      driving_license_valid: ['', Validators.required],
+      note: ['', Validators.required],
+      file_unique_id : [this.billfileuniqueid],
+      vehicle_id: [this.vehicleId]
+
+    }
+    this.assignVehicleForm = this.fb.group(group);
+  }
+
+
+  uploadBills(){
+    // console.log(this.selectedFiles);
+
+   let formD = new FormData();
+   formD.append('fileId', this.billfileuniqueid);
+   formD.append('typeoffile', "bills");
+    if(this.selectedFiles.length){
+      for(let i=0 ; i < this.selectedFiles.length ; i++){
+        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
+      }
+    }
+
+    this.vehicleService.uploadFile(formD).subscribe((data) => {
+      // alert("successfully uploaded");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully uploaded";
+      this.dialogBox = true;
+
+    },(err)=>{
+      console.log(err);
+    });
+
+  }
+
+  selectProjectType(projectTypeId){
+    let projectId = projectTypeId.id;
+    this.projectTypeList = [];
+    this.loadProjects(projectId);
   }
 
 
@@ -138,6 +171,67 @@ export class AssignVehicleDetailsComponent implements OnInit {
   }
   
   onFocused(e){
+  }
+
+  loadEmployee(){
+    this.vehicleService.loadEmployee().subscribe((employeesData:any) => {
+      let employeeData = employeesData.data;
+      employeeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.firstName;
+        this.employeeLists.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+  loadProjects(projectTypeId){
+    this.vehicleService.loadProjects(projectTypeId).subscribe((projectsData:any) => {
+      let projectData = projectsData.data;
+      projectData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.projectName;
+        this.projectsList.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+  fileAdded(event) {
+    if(event.target.files.length){
+      for(let i=0 ; i < event.target.files.length ;i++){ 
+        this.selectedFiles.push(<File>event.target.files[i]);
+      }
+    }
+  }
+  
+  assignVehicle(){
+    this.submitted = true;
+    if (this.assignVehicleForm.invalid) {
+      alert("Please fill all required field");
+      return;
+    }
+    
+    this.vehicleService.addAssignVehicle(this.assignVehicleForm.value).subscribe((data)=>{
+       console.log(data);
+      // alert("Saved successfully");
+
+    //   this.msgObj["type"] = "success";
+    //   this.msgObj["message"] = "successfully Added";
+    //   this.dialogBox = true;
+
+    //   setTimeout( ()=> {
+    //     this.router.navigateByUrl('/pages/vehicles/list');
+    // }, 2000);
+
+
+
+    },(error)=>{});
+    console.log(this.assignVehicleForm.value);
   }
 
 }

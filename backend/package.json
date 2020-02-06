@@ -17,6 +17,7 @@
     "helmet": "^3.21.2",
     "jw-paginate": "^1.0.4",
     "mongoose": "^5.8.7",
+    "mongoose-sequence": "^5.2.2",
     "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "qrcode": "^1.4.4"

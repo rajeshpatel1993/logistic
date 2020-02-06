@@ -154,6 +154,10 @@ const vehicleSchema = new mongoose.Schema ({
     },
     qrCode:{
         type: String
+    },
+    assignMentStatus: {
+        type: Number,
+        default: 0 
     }
 
 

@@ -81,6 +81,10 @@ export class VehicleService {
     return this.http.post(this.baseUrl+"/vehicles/add",data);
   }
 
+  addAssignVehicle(data){
+    return this.http.post(this.baseUrl+"/vehicles/add-assign",data);
+  }
+
   loadVehicleStatus(){
     return this.http.get(this.baseUrl+"/vehicles/vehicleStatus");
   }
@@ -102,5 +106,17 @@ export class VehicleService {
 
   loadAssignedVehiclesById(vehicleId){
     return this.http.get(this.baseUrl+"/vehicles/getAssignVehicle/"+vehicleId);
+  }
+
+  loadEmployee(){
+    return this.http.get(this.baseUrl+"/employees");
+  }
+
+  loadProjectType(){
+    return this.http.get(this.baseUrl+"/project/projecttypes");
+  }
+
+  loadProjects(projectTypeId){
+    return this.http.get(this.baseUrl+"/project/"+projectTypeId);
   }
 }
