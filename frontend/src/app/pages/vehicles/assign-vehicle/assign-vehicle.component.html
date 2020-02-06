@@ -68,9 +68,7 @@
         <table class="table table-responsive table-hover mt-3">
           <thead>
             <tr>
-              <th>Vehicle Name</th>
-              <th> vehicle Status color</th>
-              <th> Vehicle details type </th>
+              <th>Vehicle</th>
               <th>Assignment Status </th>
               <th>Assigned to </th>
               <th>Assignment Date </th>
@@ -103,11 +101,9 @@
                   </div>
                 </div>
               </td>
-              <td>Black</td>
-              <td>Heavy</td>
-              <td>Status</td>
-              <td>Assigned</td>
-              <td>Start Date</td>
+              <td>{{ item.assignMentStatus == 1 ? 'Assigned' : 'Not Assigned' }}</td>
+              <td> Assigned to</td>
+              <td>Assignment Start Date</td>
               <td>Work Location</td>
               <td>Project</td>
               <td>Fuel Limit</td>

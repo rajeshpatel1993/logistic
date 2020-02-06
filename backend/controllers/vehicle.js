@@ -685,7 +685,7 @@ router.get("/assign_vehicles",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
-
+    const modifiedData = [];
 
     try {
        
@@ -745,6 +745,15 @@ router.get("/assign_vehicles",async(req,res) => {
        
     
     ]);
+
+    let modifiedVehicleData = vehicleData.map(async (elem,index)=>{
+        console.log(elem._id);
+        let elemId = elem._id;
+        let assignVehicleCollection = await  AssignVehicle.findOne({vehicleID:elemId}).populate('employeeID');
+        elem.employee = assignVehicleCollection;
+
+        // console.log(elem._id);
+    });
 
         let responseData = {};
         responseData["status"] = 200;
@@ -829,6 +838,9 @@ router.get("/",async(req,res) => {
         console.log(error);
     }
 });
+
+
+
 
 
 router.get("/getAssignVehicle/:id", async (req, res) => {
