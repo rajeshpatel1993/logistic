@@ -1,17 +1,17 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { VehicleService } from '../../vehicles/vehicles.service';
-import { VehicleservService } from '../vehicleserv.service';
+import { VehicleExpenseService } from '../vehicleexpense.service';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-  selector: 'ngx-vehicle-service',
-  templateUrl: './vehicle-service.component.html',
-  styleUrls: ['./vehicle-service.component.scss']
+  selector: 'ngx-vehicle-expense-list',
+  templateUrl: './vehicle-expense-list.component.html',
+  styleUrls: ['./vehicle-expense-list.component.scss']
 })
-export class VehicleServiceComponent implements OnInit {
+export class VehicleExpenseListComponent implements OnInit {
 
   public vehicleTypes = [];
   public vehicleDetails = [];
@@ -31,7 +31,7 @@ export class VehicleServiceComponent implements OnInit {
   public dropDownAction = false;
 
 
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
+  constructor(private vehicleService: VehicleService, private vehicleExpenseService: VehicleExpenseService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
 
   ngOnInit() {
     this.loadVehiclesTypes();

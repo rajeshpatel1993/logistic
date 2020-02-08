@@ -16,12 +16,13 @@ import { VehicleRoutingModule } from './vehicles-routing.module';
 import { ListComponent } from './list/list.component';
 import { VehicleService } from './vehicles.service';
 import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
-import { JwPaginationComponent } from 'jw-angular-pagination';
+// import { JwPaginationComponent } from 'jw-angular-pagination';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
 import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component';
 import { AssignVehicleDetailsComponent } from './assign-vehicle-details/assign-vehicle-details.component'
-import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
+import { CustomCommonModule} from '../custom-common.module';
+// import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
 
 @NgModule({
   imports: [
@@ -39,16 +40,17 @@ import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
     AutocompleteLibModule,
     NgxImgModule.forRoot(),
     NbDatepickerModule,
+    CustomCommonModule
   ],
   declarations: [
     VehicleComponent,
     ListComponent,
     AddVehicleComponent,
-    JwPaginationComponent,
+    // JwPaginationComponent,
     EditVehicleComponent,
     AssignVehicleComponent,
     AssignVehicleDetailsComponent,
-    DailogBoxComponent
+    // DailogBoxComponent
   ],
   providers: [
     VehicleService

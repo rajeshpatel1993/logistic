@@ -14,7 +14,7 @@ import { environment } from '../../../environments/environment';
 // }
 
 @Injectable()
-export class VehicleService {
+export class VehicleExpenseService {
 
   constructor(private http: HttpClient) {}
 

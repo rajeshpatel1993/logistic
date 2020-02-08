@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {VehicleServiceComponent} from './vehicle-service/vehicle-service.component'
-import { VehicleServiceDetailsComponent } from './vehicle-service-details/vehicle-service-details.component'
-import { ServiceComponent } from './service.component';
+import {VehicleExpenseListComponent} from './vehicle-expense-list/vehicle-expense-list.component'
+import { VehicleServiceDetailsComponent } from './vehicle-expense-details/vehicle-service-details.component'
+import { ExpenseComponent } from './expense.component';
 
 const routes: Routes = [{
   path: '',
-  component: ServiceComponent,
+  component: ExpenseComponent,
   children: [
       {
         path: 'list',
-        component: VehicleServiceComponent
+        component: VehicleExpenseListComponent
       },
       // {
       //   path: 'add-vehicle',

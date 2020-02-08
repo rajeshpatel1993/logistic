@@ -31,7 +31,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: {
       icon: 'headset',
       pack: 'solid'},
-    link: '/pages/services',
+    link: '/pages/services/list',
+    home: true,
+  },
+
+  {
+    title: 'Expenses',
+    icon: {
+      icon: 'headset',
+      pack: 'solid'},
+    link: '/pages/expenses/list',
     home: true,
   },
   {
