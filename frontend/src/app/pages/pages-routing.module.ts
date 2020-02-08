@@ -23,6 +23,18 @@ const routes: Routes = [{
       loadChildren: () => import('./vehicles/vehicles.module')
         .then(m => m.VehicleModule),
     },
+
+    {
+      path:'services',
+      loadChildren: () => import('./vehicle-service/vehicles-service.module')
+        .then(m => m.VehicleServiceModule),
+    },
+
+    {
+      path:'expenses',
+      loadChildren: () => import('./vehicle-expense/vehicles-expense.module')
+        .then(m => m.VehicleExpenseModule),
+    },
     {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')

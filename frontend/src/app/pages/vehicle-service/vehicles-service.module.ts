@@ -11,18 +11,15 @@ import {
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
-import { VehicleComponent } from './vehicles.component';
-import { VehicleRoutingModule } from './vehicles-routing.module';
-import { ListComponent } from './list/list.component';
-import { VehicleService } from './vehicles.service';
-import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
+import { VehicleServiceComponent } from './vehicle-service/vehicle-service.component';
+import { VehicleRoutingModule } from './vehicles-service-routing.module';
+import { VehicleservService } from './vehicleserv.service';
 // import { JwPaginationComponent } from 'jw-angular-pagination';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
-import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
-import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component';
-import { AssignVehicleDetailsComponent } from './assign-vehicle-details/assign-vehicle-details.component'
-import { CustomCommonModule} from '../custom-common.module';
+import { VehicleServiceDetailsComponent } from './vehicle-service-details/vehicle-service-details.component'
 // import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
+import { ServiceComponent } from './service.component';
+import { CustomCommonModule } from '../custom-common.module';
 
 @NgModule({
   imports: [
@@ -43,17 +40,14 @@ import { CustomCommonModule} from '../custom-common.module';
     CustomCommonModule
   ],
   declarations: [
-    VehicleComponent,
-    ListComponent,
-    AddVehicleComponent,
+    VehicleServiceComponent,
+    ServiceComponent,
     // JwPaginationComponent,
-    EditVehicleComponent,
-    AssignVehicleComponent,
-    AssignVehicleDetailsComponent,
+    VehicleServiceDetailsComponent
     // DailogBoxComponent
   ],
   providers: [
-    VehicleService
+    VehicleservService
   ],
 })
-export class VehicleModule { }
+export class VehicleServiceModule { }
