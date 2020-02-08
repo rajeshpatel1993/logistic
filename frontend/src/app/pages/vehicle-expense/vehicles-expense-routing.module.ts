@@ -59,14 +59,7 @@ const routes: Routes = [{
     // },
   ],
 },
-// {
-//   path: 'assign-vehicles',
-//   component: AssignVehicleComponent
-// },
-// {
-//   path: 'assign-vehicle-details/:id',
-//   component: AssignVehicleDetailsComponent
-// }
+
 ];
 
 @NgModule({
