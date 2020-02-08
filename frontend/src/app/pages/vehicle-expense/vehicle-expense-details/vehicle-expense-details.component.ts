@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleservService } from '../vehicleexpense.service';
+import { VehicleExpenseService } from '../vehicleexpense.service';
 import {VehicleService} from '../../vehicles/vehicles.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 import * as uuid from 'uuid';
 
 @Component({
-  selector: 'ngx-vehicle-service-details',
-  templateUrl: './vehicle-service-details.component.html',
-  styleUrls: ['./vehicle-service-details.component.scss']
+  selector: 'ngx-vehicle-expense-details',
+  templateUrl: './vehicle-expense-details.component.html',
+  styleUrls: ['./vehicle-expense-details.component.scss']
 })
-export class VehicleServiceDetailsComponent implements OnInit {
+export class VehicleExpenseDetailsComponent implements OnInit {
 
   public assignVehicleForm: FormGroup;
   public vehicleId : string;
@@ -38,7 +38,7 @@ export class VehicleServiceDetailsComponent implements OnInit {
   keyword = 'name';
   public billfileuniqueid = uuid.v4();
 
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
     this.vehicleId = this.activeRoute.snapshot.params.id;

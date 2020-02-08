@@ -36,7 +36,7 @@ export class VehicleServiceComponent implements OnInit {
   ngOnInit() {
     this.loadVehiclesTypes();
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadVehicles(queryParams.page);
+      this.loadServicesData(queryParams.page);
     });
 
   }
@@ -76,6 +76,23 @@ export class VehicleServiceComponent implements OnInit {
     },(error)=>{
 
     });
+  }
+
+
+  public loadServicesData(page?){
+
+    let p = page || 1;
+    this.vehicleservService.loadVehicleServices(p).subscribe((vehicleData:any)=>{
+     this.vehiclesList = vehicleData.data;
+     
+     this.totalItems, this.pageOfItems = vehicleData.data; 
+     this.pager = vehicleData.page;
+    //  this.pageOfItems = vehicleData.data;
+
+    },(error)=>{
+
+    });
+
   }
 
 

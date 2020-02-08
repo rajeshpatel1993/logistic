@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import {VehicleExpenseListComponent} from './vehicle-expense-list/vehicle-expense-list.component'
-import { VehicleServiceDetailsComponent } from './vehicle-expense-details/vehicle-service-details.component'
+import { VehicleExpenseDetailsComponent } from './vehicle-expense-details/vehicle-expense-details.component'
 import { ExpenseComponent } from './expense.component';
 
 const routes: Routes = [{

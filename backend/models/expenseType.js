@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-const assignVechicleSchema = new mongoose.Schema ({
-    assignVehicleID:{
-        type:Number,
-        // index: { unique: true }
-    },
-    employee:{type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
+const serviceTypeSchema = new mongoose.Schema ({
+    taskid:{type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
     vehicle: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
     projects: {type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
     // vehicle_code: {

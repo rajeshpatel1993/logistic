@@ -13,10 +13,10 @@ const routes: Routes = [{
         path: 'list',
         component: VehicleServiceComponent
       },
-      // {
-      //   path: 'add-vehicle',
-      //   component: AddVehicleComponent
-      // },
+       {
+        path: 'add-service',
+        component: VehicleServiceDetailsComponent
+      },
       // {
       //   path: 'edit-vehicle/:id',
       //   component: EditVehicleComponent
