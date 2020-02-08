@@ -14,10 +14,13 @@ import * as uuid from 'uuid';
 })
 export class VehicleServiceDetailsComponent implements OnInit {
 
-  public assignVehicleForm: FormGroup;
+  public vehicleServiceForm: FormGroup;
   public vehicleId : string;
   public vehicleData:any[] = [];
-  public vehicleTypesData = [];
+  public vehicleTypesData:any[] = [];
+  public vehicleNamesData:any[] = [];
+  public serviceTypesData:any[] = [];
+  public employeesData:any[]=[];
   public vehicleType:String;
   public vehicleName:String;
   public vehicleRegNo:String;
@@ -37,22 +40,26 @@ export class VehicleServiceDetailsComponent implements OnInit {
 
   keyword = 'name';
   public billfileuniqueid = uuid.v4();
+  public imageuniqueid = uuid.v4();
 
   constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
     this.vehicleId = this.activeRoute.snapshot.params.id;
-    this.loadVehicle();
+    this.loadVehiclesTypes();
     this.createForm();
     this.loadEmployee();
     this.loadWorkLocations();
-    this.loadProjectType();
+    this.loadServiceType();
   }
 
   getMsg(val){
     this.dialogBox = false;
     console.log(val);
   }
+
+
+
 
   loadWorkLocations(){
     this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
@@ -96,42 +103,29 @@ export class VehicleServiceDetailsComponent implements OnInit {
   
 
 
-  loadVehicle(){
-    this.vehicleService.loadAssignedVehiclesById(this.vehicleId).subscribe((d) => {
-      this.vehicleData = d['data'][0];
-      this.vehicleType = this.vehicleData["vehicleTypes"][0].vehicleType;
-      this.vehicleName = this.vehicleData["name"];
-      this.vehicleRegNo = this.vehicleData["regNo"];
-      this.vehicleCode = this.vehicleData["vehicle_code"];
-      this.vehicleImage = this.vehicleData["vehicleImage"];
-      this.barCode = this.vehicleData["qrCode"];
-      this.vehicleDetail = this.vehicleData["vehicleDetailsArray"][0].vehicleDetails;
 
 
-
-    }, (error) => {
-  
-    });
-  }
-
-  get f() { return this.assignVehicleForm.controls; }
+  get f() { return this.vehicleServiceForm.controls; }
 
   createForm() {
     let group = {
-      employee_name: ['', Validators.required],
-      assignment_start_date: ['', Validators.required],
-      assignment_end_date: ['', Validators.required],
-      work_location: ['',Validators.required],
-      project_type: ['', Validators.required],
-      project: ['', Validators.required],
-      fuel_limit_per_month: ['', Validators.required],
-      driving_license_valid: ['', Validators.required],
-      note: ['', Validators.required],
-      file_unique_id : [this.billfileuniqueid],
-      vehicle_id: [this.vehicleId]
+      vehicle_type: ['', Validators.required],
+      vehicle: ['', Validators.required],
+      service_type: ['', Validators.required],
+      odometer: [''],
+      completion_date_time: ['', Validators.required],
+      start_date: [''],
+      vendor: [''],
+      reference: [''],
+      description: ['', Validators.required],
+      amount: ['', Validators.required],
+      attachments : [this.billfileuniqueid],
+      images: [this.imageuniqueid],
+      in_charge: ['', Validators.required],
+      comment: ['']
 
     }
-    this.assignVehicleForm = this.fb.group(group);
+    this.vehicleServiceForm = this.fb.group(group);
   }
 
 
@@ -160,14 +154,65 @@ export class VehicleServiceDetailsComponent implements OnInit {
 
   }
 
-  selectProjectType(projectTypeId){
-    let projectId = projectTypeId.id;
-    this.projectTypeList = [];
-    this.loadProjects(projectId);
+
+  uploadImages(){
+    // console.log(this.selectedFiles);
+
+   let formD = new FormData();
+   formD.append('fileId', this.billfileuniqueid);
+   formD.append('typeoffile', "images");
+    if(this.selectedFiles.length){
+      for(let i=0 ; i < this.selectedFiles.length ; i++){
+        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
+      }
+    }
+
+    this.vehicleService.uploadFile(formD).subscribe((data) => {
+      // alert("successfully uploaded");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully uploaded";
+      this.dialogBox = true;
+
+    },(err)=>{
+      console.log(err);
+    });
+
   }
 
 
-  selectEvent(item) {
+
+
+
+  selectEventVehicle(item) {
+    this.vehicleService.loadVehicle(item.id).subscribe((vehData) => {
+      let veData = vehData["data"][0];
+      this.vehicleRegNo = veData.regNo;
+      this.vehicleCode = veData.vehicle_code;
+      this.vehicleImage = veData.vehicleImage;
+      this.vehicleDetail = veData.vehicleDetailsArray[0].vehicleDetails;    },
+    (error)=>{
+      console.log(error);
+    });
+
+  }
+
+  selectVehicleType(item){
+    let vehicleTypeId = item.id;
+    this.vehicleservService.loadVehiclesByTypeId(vehicleTypeId).subscribe((vehicleData)=>{
+      let vehcilesData = vehicleData["data"];
+      vehcilesData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.name;
+        this.vehicleNamesData.push(tmpObj);
+      });
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+    
   }
  
   onChangeSearch(val: string) {
@@ -190,19 +235,23 @@ export class VehicleServiceDetailsComponent implements OnInit {
   }
 
 
-  loadProjects(projectTypeId){
-    this.vehicleService.loadProjects(projectTypeId).subscribe((projectsData:any) => {
-      let projectData = projectsData.data;
-      projectData.forEach((item,index) => {
+  loadServiceType(){
+    this.vehicleservService.loadServiceType().subscribe((serviceTyData:any) => {
+      let serviceTypeData = serviceTyData.data;
+      serviceTypeData.forEach((item,index) => {
         let tmpObj = {};
         tmpObj["id"] = item._id;
-        tmpObj["name"] = item.projectName;
-        this.projectsList.push(tmpObj);
+        tmpObj["name"] = item.serviceTaskName;
+        this.serviceTypesData.push(tmpObj);
       });
       // console.log(vehicleTypeData);
     });
   }
 
+
+  selectEvent($event){
+
+  }
 
   fileAdded(event) {
     if(event.target.files.length){
@@ -211,16 +260,33 @@ export class VehicleServiceDetailsComponent implements OnInit {
       }
     }
   }
+
+  public loadVehiclesTypes(){
+    this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
+      let vehicleTypeData = vehicleType.data;
+      vehicleTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.vehicleTypeId;
+        tmpObj["name"] = item.vehicleType;
+         tmpObj["code"] = item.vehicleTypeCode;
+         tmpObj["_id"] = item._id;
+        this.vehicleTypesData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
   
-  assignVehicle(){
+  
+  addService(){
     this.submitted = true;
-    if (this.assignVehicleForm.invalid) {
+    if (this.vehicleServiceForm.invalid) {
       alert("Please fill all required field");
       return;
     }
     
-    this.vehicleService.addAssignVehicle(this.assignVehicleForm.value).subscribe((data)=>{
-       console.log(data);
+    // console.log(this.vehicleServiceForm.value);
+    this.vehicleservService.addService(this.vehicleServiceForm.value).subscribe((data)=>{
+      //  console.log(data);
       // alert("Saved successfully");
 
       this.msgObj["type"] = "success";
@@ -228,13 +294,13 @@ export class VehicleServiceDetailsComponent implements OnInit {
       this.dialogBox = true;
 
       setTimeout( ()=> {
-        this.router.navigateByUrl('/pages/vehicles/assign-vehicles');
+        this.router.navigateByUrl('/pages/services/list');
     }, 2000);
 
 
 
     },(error)=>{});
-    console.log(this.assignVehicleForm.value);
+  
   }
 
 }

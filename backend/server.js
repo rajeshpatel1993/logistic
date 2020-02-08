@@ -31,7 +31,7 @@ mongoose.set('useFindAndModify', false);
 const vehicleController = require("./controllers/vehicle");
 const employeeController = require("./controllers/employee");
 const projectController = require("./controllers/project");
-
+const serviceController = require("./controllers/service");
 const app = express();
 app.use(cors());
 app.use(helmet()); // better status code
@@ -41,6 +41,8 @@ app.use(bodyParser.json({limit: '10mb', extended: true}));
 app.use('/api/vehicles', vehicleController);
 app.use('/api/employees', employeeController);
 app.use('/api/project', projectController);
+app.use('/api/service', serviceController);
+
 
 
 // console.log(`Your port is ${process.env.PORT}`);

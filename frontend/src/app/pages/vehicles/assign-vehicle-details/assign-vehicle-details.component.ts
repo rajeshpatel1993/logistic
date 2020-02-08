@@ -119,10 +119,10 @@ export class AssignVehicleDetailsComponent implements OnInit {
     let group = {
       employee_name: ['', Validators.required],
       assignment_start_date: ['', Validators.required],
-      assignment_end_date: ['', Validators.required],
+      assignment_end_date: [''],
       work_location: ['',Validators.required],
-      project_type: ['', Validators.required],
-      project: ['', Validators.required],
+      project_type: [''],
+      project: [''],
       fuel_limit_per_month: ['', Validators.required],
       driving_license_valid: ['', Validators.required],
       note: ['', Validators.required],

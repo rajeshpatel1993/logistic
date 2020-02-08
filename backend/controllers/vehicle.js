@@ -685,6 +685,23 @@ router.get("/details/:vehicleType", async(req,res)=>{
 });
 
 
+
+
+
+router.get("/vech-details/:vehicleTypeId", async (req, res) => {
+    const vehicleTypeId = req.params.vehicleTypeId; //or use req.param('id')
+    const filter = {$and: [{ vehicle_typeId: vehicleTypeId},{"isDeleted":"0"}] };
+    const vehicle = await Vehicle.aggregate([{$match:filter}, { $project : { name : 1  } }]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
+
 router.get("/regnos", async(req,res)=>{
     try{
         let regData = await Vehicle.find().distinct('regNo');
