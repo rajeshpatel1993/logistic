@@ -520,11 +520,11 @@
               <input type="hidden" id="image_file_unique_id" class="form-control" formControlName="image_file_unique_id">
 
               <div class="row no-gutters">
-                <div class="col-8">
+                <div class="col-xs-12 col-sm-12 col-md-8">
                   <ngx-img (onSelect)="onSelect($event)" (onReset)="onReset()" [config]="{ crop: [ { ratio: 1.5 } ] }">
                   </ngx-img>
                 </div>
-                <div class="col-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 mt-1">
                   <div *ngIf="imgSrc.length" class="container mb-3">
                     <h5>Preview</h5>
                     <div class="row">
