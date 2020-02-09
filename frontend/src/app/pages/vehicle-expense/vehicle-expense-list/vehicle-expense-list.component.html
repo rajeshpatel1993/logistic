@@ -4,7 +4,7 @@
       <h5 class="pb-3"> Vehicles Expenses</h5>
       <form class="formbg-light">
         <div class="form-row">
-          <div class="col-auto">
+          <div class="col-xs-12 col-sm-3">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
@@ -21,12 +21,11 @@
               </ng-template>
             </div>
           </div>
-          <div class="col-auto">
+          <div class="col-xs-12 col-sm-3">
             <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword"
-                placeHolder="Enter the Vehicle Details" (selected)='selectEvent($event, "vehicledetails")'
-                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
+              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
+                (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
                 [notFoundTemplate]="notFoundTemplate1">
               </ng-autocomplete>
 
@@ -40,7 +39,7 @@
             </div>
 
           </div>
-          <div class="col-auto">
+          <div class="col-xs-12 col-sm-3">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
                 placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
@@ -58,9 +57,9 @@
               </ng-template>
             </div>
           </div>
-          <div class="col-auto">
-            <button type="button" nbButton status="Filter" (click)="filterData()"
-              class="btn btn-primary ml-2 mr-2"><i class="fas fa-search"></i> Search</button>
+          <div class="col-xs-12 col-sm-3">
+            <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary ml-2 mr-2"><i
+                class="fas fa-search"></i> Search</button>
           </div>
         </div>
       </form>
@@ -126,9 +125,27 @@
           </tbody>
         </table>
 
+                </ng-template>
+                <ng-template #otherContent>
+
+                  <td> </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+
+                </ng-template>
+
+                <td><a class="btn btn-primary" href="javascript:void(0)"
+                    routerLink="/pages/vehicles/vehicle-service-details/{{item._id}}">Service</a></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
 
         <div class="card-footer pb-0 pt-3 pb-3">
-          <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination">
+          <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
               <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{page: 1}" class="page-link"><i
                   class="fas fa-angle-double-left"></i></a>

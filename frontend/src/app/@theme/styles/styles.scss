@@ -54,6 +54,21 @@ h6{
   line-height: 20px;
   margin: 0;
   font-weight: 600;
+  @media (max-width: 479px) {
+    padding: 5px 10px;
+  }
+}
+@media (max-width: 479px){
+  .btn-primary{
+    margin-right: 10px;
+  }
+  
+}
+@media (max-width: 575.98px){
+  .row{
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 a:focus{
   color: #fff;
@@ -84,6 +99,9 @@ a:focus{
         .columns{
           nb-layout-column{
             padding: var(--layout-small-padding);
+            @media (max-width: 479px){
+              padding: var(--layout-no-padding);
+            }
           }
         }
       }
@@ -104,6 +122,17 @@ a:focus{
         top: 0;
         bottom: inherit!important;
         width: 2px!important;
+      }
+    }
+    @media (max-width: 767px) {
+      width: 100%;
+      .tab{
+        font-size: 12px !important;
+      }
+      .tab-link{
+        font-size: 12px !important;
+        padding: 15px 8px !important;
+        text-align: left;
       }
     }
   }

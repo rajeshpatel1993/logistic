@@ -8,6 +8,10 @@
         width: 70%;
         float: left;
         min-height: 355px;
+        @media (max-width: 767px) {
+            width: 100%;
+            padding: 20px 0;
+        }
     }
 
     .col-form-label {
