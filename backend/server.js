@@ -32,6 +32,8 @@ const vehicleController = require("./controllers/vehicle");
 const employeeController = require("./controllers/employee");
 const projectController = require("./controllers/project");
 const serviceController = require("./controllers/service");
+const expenseController = require("./controllers/expense");
+
 const app = express();
 app.use(cors());
 app.use(helmet()); // better status code
@@ -42,6 +44,7 @@ app.use('/api/vehicles', vehicleController);
 app.use('/api/employees', employeeController);
 app.use('/api/project', projectController);
 app.use('/api/service', serviceController);
+app.use('/api/expenses', expenseController);
 
 
 

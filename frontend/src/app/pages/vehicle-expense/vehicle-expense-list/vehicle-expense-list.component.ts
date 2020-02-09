@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { VehicleExpenseService } from '../vehicleexpense.service';
-
+import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 
@@ -31,12 +31,12 @@ export class VehicleExpenseListComponent implements OnInit {
   public dropDownAction = false;
 
 
-  constructor(private vehicleService: VehicleService, private vehicleExpenseService: VehicleExpenseService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
+  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
 
   ngOnInit() {
     this.loadVehiclesTypes();
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadVehicles(queryParams.page);
+      this.loadExpensesData(queryParams.page);
     });
 
   }
@@ -76,6 +76,23 @@ export class VehicleExpenseListComponent implements OnInit {
     },(error)=>{
 
     });
+  }
+
+
+  public loadExpensesData(page?){
+
+    let p = page || 1;
+    this.vehicleservService.loadVehicleExpenses(p).subscribe((vehicleData:any)=>{
+     this.vehiclesList = vehicleData.data;
+     
+     this.totalItems, this.pageOfItems = vehicleData.data; 
+     this.pager = vehicleData.page;
+    //  this.pageOfItems = vehicleData.data;
+
+    },(error)=>{
+
+    });
+
   }
 
 

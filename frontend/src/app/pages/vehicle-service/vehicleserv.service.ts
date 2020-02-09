@@ -28,11 +28,29 @@ export class VehicleservService {
     return this.http.get(this.baseUrl+"/service/types");
   }
 
+  loadExpenseType(){
+    return this.http.get(this.baseUrl+"/expenses/types");
+  }
+
+
   addService(data){
     return this.http.post(this.baseUrl+"/service/add", data);
   }
 
+  addExpense(data){
+    return this.http.post(this.baseUrl+"/expenses/add", data);
+  }
+
+
   loadVehicleServices(page){
     return this.http.get(this.baseUrl+"/service/vehicle_services?page="+page);
+  }
+
+  loadVehicleExpenses(page){
+    return this.http.get(this.baseUrl+"/expenses/vehicle_expenses?page="+page);
+  }
+
+  loadVehicleIssueStatus(){
+    return this.http.get(this.baseUrl+"/expenses/vehicleIssueStatus");
   }
 }
