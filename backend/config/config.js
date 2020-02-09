@@ -6,7 +6,10 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
 
 const dev = {
     app: {
-        port: parseInt(process.env.DEV_APP_PORT) || ''
+        port: parseInt(process.env.DEV_APP_PORT) || '',
+        mail: process.env.MAIL,
+        pwd: process.env.PASS,
+        cron_to_email: process.env.CRON_TO_MAIL
     },
     db: {
         mongo_uri: process.env.MONGO_URI,
@@ -26,7 +29,13 @@ const dev = {
 const prod = {
 
     app: {
-        port: parseInt(process.env.PROD_APP_PORT) || ''
+        port: parseInt(process.env.PROD_APP_PORT) || '',
+        mail: process.env.MAIL,
+        pwd: process.env.PASS,
+        cron_to_email: process.env.CRON_TO_MAIL
+
+
+
     },
     db: {
         mongo_uri: process.env.MONGO_URI,
