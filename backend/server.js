@@ -5,8 +5,11 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const config = require("./config/config");
+
 
 require('./connection');
+let server_port = config["app"].port;
 
 // import {orderUpdate} from "./controllers/orderUpdate";
 // const config = require('config');
