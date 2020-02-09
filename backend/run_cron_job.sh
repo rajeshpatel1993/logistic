@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /home/mani/Documents/logistic/backend
-node cronjob.js >> /home/mani/Documents/logistic/backend/logs/cron.log
+cd /home/ubuntu/app/logistic/backend
+node cronjob.js >> /home/ubuntu/app/logistic/backend/logs/cron.log
 
