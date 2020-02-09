@@ -86,6 +86,15 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
 
+  {
+    title: 'Reports',
+    icon: {
+      icon: 'bell',
+      pack: 'regular'},
+    link: '/pages/reports/list',
+    home: true,
+  }
+
 
 ];
 
