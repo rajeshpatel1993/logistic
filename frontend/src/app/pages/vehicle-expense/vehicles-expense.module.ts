@@ -18,6 +18,8 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { ExpenseComponent } from './expense.component';
 import { VehicleExpenseDetailsComponent } from './vehicle-expense-details/vehicle-expense-details.component';
 import { CustomCommonModule } from '../custom-common.module';
+import { VehicleservService } from '../vehicle-service/vehicleserv.service';
+
 
 @NgModule({
   imports: [
@@ -45,7 +47,8 @@ import { CustomCommonModule } from '../custom-common.module';
     // VehicleServiceDetailsComponent
   ],
   providers: [
-    VehicleExpenseService
+    VehicleExpenseService,
+    VehicleservService
   ],
 })
 export class VehicleExpenseModule { }
