@@ -1,0 +1,58 @@
+[0;36mMongoose:[0m vehicle.find({ insuranceValid: { [32m'$gte'[39m: [32m'2020-02-08T18:30:00.000Z'[39m, [32m'$lt'[39m: [32m'2020-02-13T18:30:00.000Z'[39m }}, { limit: [33m1[39m, projection: {} })
+[0;36mMongoose:[0m vehicle.find({ roadTaxValid: { [32m'$gte'[39m: [32m'2020-02-08T18:30:00.000Z'[39m, [32m'$lt'[39m: [32m'2020-02-13T18:30:00.000Z'[39m }}, { limit: [33m1[39m, projection: {} })
+connected to Mongodb..
+{
+  accepted: [ 'rajesh.patelp3034@gmail.com' ],
+  rejected: [],
+  envelopeTime: 1238,
+  messageTime: 1178,
+  messageSize: 1155,
+  response: '250 2.0.0 OK  1581249265 c1sm9069114pfa.51 - gsmtp',
+  envelope: {
+    from: 'tms.digitechocean@gmail.com',
+    to: [ 'rajesh.patelp3034@gmail.com' ]
+  },
+  messageId: '<8c51209c-bbe5-9c27-e3d5-12e6b5cbf352@gmail.com>'
+}
+{
+  accepted: [ 'rajesh.patelp3034@gmail.com' ],
+  rejected: [],
+  envelopeTime: 1142,
+  messageTime: 1141,
+  messageSize: 1147,
+  response: '250 2.0.0 OK  1581249267 c15sm8655665pja.30 - gsmtp',
+  envelope: {
+    from: 'tms.digitechocean@gmail.com',
+    to: [ 'rajesh.patelp3034@gmail.com' ]
+  },
+  messageId: '<ac971a82-b14f-e9c2-b255-92ef66b0909a@gmail.com>'
+}
+[0;36mMongoose:[0m vehicle.find({ insuranceValid: { [32m'$gte'[39m: [32m'2020-02-08T18:30:00.000Z'[39m, [32m'$lt'[39m: [32m'2020-02-13T18:30:00.000Z'[39m }}, { limit: [33m1[39m, projection: {} })
+[0;36mMongoose:[0m vehicle.find({ roadTaxValid: { [32m'$gte'[39m: [32m'2020-02-08T18:30:00.000Z'[39m, [32m'$lt'[39m: [32m'2020-02-13T18:30:00.000Z'[39m }}, { limit: [33m1[39m, projection: {} })
+connected to Mongodb..
+{
+  accepted: [ 'vivek.mag@gmail.com' ],
+  rejected: [],
+  envelopeTime: 1054,
+  messageTime: 1124,
+  messageSize: 1147,
+  response: '250 2.0.0 OK  1581249316 f81sm8879840pfa.118 - gsmtp',
+  envelope: {
+    from: 'tms.digitechocean@gmail.com',
+    to: [ 'vivek.mag@gmail.com' ]
+  },
+  messageId: '<e1fbf205-4b1c-cdcb-e62b-b9dbf66e589b@gmail.com>'
+}
+{
+  accepted: [ 'vivek.mag@gmail.com' ],
+  rejected: [],
+  envelopeTime: 1076,
+  messageTime: 1147,
+  messageSize: 1139,
+  response: '250 2.0.0 OK  1581249318 w17sm8887556pfi.56 - gsmtp',
+  envelope: {
+    from: 'tms.digitechocean@gmail.com',
+    to: [ 'vivek.mag@gmail.com' ]
+  },
+  messageId: '<d9f70c2f-75dc-7402-f39f-3c64e959b0ec@gmail.com>'
+}
