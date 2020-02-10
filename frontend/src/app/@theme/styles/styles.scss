@@ -241,3 +241,18 @@ a:focus{
     }
   }
 }
+.pagination{
+  nb-select.appearance-outline .select-button{
+      background-color: white!important;
+      padding: 6px 15px !important;
+      margin-left: 20px;
+  }
+}
+.Reports{
+  nb-tabset .tab-link {
+    padding: 20px 10px!important;
+    font-size: 14px!important;
+    font-weight: 400!important;
+    text-transform: none!important;
+}
+}
