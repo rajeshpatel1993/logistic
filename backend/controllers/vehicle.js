@@ -567,6 +567,47 @@ router.get("/vehicleStatus", async(req,res)=>{
 });
 
 
+router.get("/vehicleStatusWithCount", async(req,res)=>{
+    let statusArr = [];
+    try{
+        let vehicleStatusData = await VehicleStatus.find().select("vehicleStatusId  vehicleStatus -_id");
+        for(let i=0;i<vehicleStatusData.length;i++){
+            let vehStatus =  {};
+            vehStatus["name"] = vehicleStatusData[i].vehicleStatus;
+            let countofstatus = await Vehicle.find({"vehicleStatusId":vehicleStatusData[i].vehicleStatusId, isDeleted: "0"}).countDocuments();
+            vehStatus["totalcount"] = countofstatus;
+            statusArr.push(vehStatus);
+        }
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = statusArr;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+router.get("/vehicleAssignNotAssignCount", async(req,res)=>{
+    let statusArr = [];
+    let aggregate = [
+        {"$group":{_id:"$assignMentStatus", count: {$sum:1}}}
+    ];
+    try{
+        let vehicleData = await Vehicle.aggregate(aggregate);
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = vehicleData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+
+
 router.get("/models/:brandId", async(req,res)=>{
     try{
         let brandId = req.params.brandId;
@@ -844,7 +885,23 @@ router.get("/",async(req,res) => {
                 ],
                 as: "vehicleDetailsArray"// output array field
             }
-        }, {
+        },{
+
+
+            
+                $lookup: {
+                    from: "vehicleType", // from collection name
+                    let: { "vechTypeId": "$vehicle_typeId" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
+                        { "$project": { "vehicleType": 1, "_id": 0 }}
+                    ],
+                    as: "vehicleTypesArray"
+                }
+            
+        },
+        
+        {
             $lookup: {
                 from: "vehicleStatus", // from collection name
                 let: { "vechStatusId": "$vehicleStatusId" },
