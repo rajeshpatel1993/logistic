@@ -2,15 +2,34 @@
   <nb-card>
     <nb-card-body>
       <div class="row no-gutters">
-        <div class="col-6">
+        <div class="col-xs-12 col-sm-12 col-md-5">
           <h5 class="pb-3"> Reports</h5>
         </div>
 
-        <div class="col-sm-4">
+        <div class="col-xs-12 col-sm-12 col-md-3">
           <input nbInput placeholder="Date Range Filters" [nbDatepicker]="formpicker" class="form-control">
           <nb-rangepicker #formpicker></nb-rangepicker>
         </div>
-        <div class="col-2 text-right">
+        <div class="col-xs-6 col-sm-6 col-md-2">
+          <nb-select placeholder="Select" class="w-100 ml-2 mr-2">
+            <nb-option value="" disabled>Select</nb-option>
+            <nb-option value="0">All</nb-option>
+            <nb-option value="1">Yesterday</nb-option>
+            <nb-option value="2">Today</nb-option>
+            <nb-option value="3">Last 7 days</nb-option>
+            <nb-option value="4">Last 30 days</nb-option>
+            <nb-option value="5">This month</nb-option>
+            <nb-option value="6">Last month</nb-option>
+            <nb-option value="7">Last 3 month</nb-option>
+            <nb-option value="8">Last 6 month</nb-option>
+            <nb-option value="9">This year</nb-option>
+            <nb-option value="10">Last year</nb-option>
+            <nb-option value="11">Last 3 year</nb-option>
+            <nb-option value="12">Last 5 year</nb-option>
+            <nb-option value="13">Last 10 year</nb-option>
+          </nb-select>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-2 text-right">
           <nb-select placeholder="Select Showcase" [(selected)]="selectedItem">
             <nb-option value="" disabled>Export</nb-option>
             <nb-option value="0">PDF</nb-option>
