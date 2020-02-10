@@ -1097,5 +1097,24 @@ router.get("/getAssignVehicle/:id", async (req, res) => {
 
 
 
+router.get("/getAssignedVehicle/:vehichleid", async (req, res) => {
+    const id = req.params.vehichleid; //or use req.param('id')
+    const filter = { vehicle: mongoose.Types.ObjectId(id) };
+
+    
+    let assignVehicleCollection = await AssignVehicle.findOne(filter).populate('employee');
+
+
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = assignVehicleCollection;
+    res.status(200).json(responseData);
+    
+
+
+});
+
+
+
 
 module.exports = router;

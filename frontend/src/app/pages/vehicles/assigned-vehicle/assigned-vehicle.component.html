@@ -1,0 +1,11 @@
+<div>
+  
+  <div *ngIf="!isAssigned">
+      <p> Unassigned</p>
+  </div>
+
+  <div *ngIf="isAssigned">
+      <img [src]="vehicleEmpData.empImage" width="200"/>
+      <p>{{vehicleEmpData.firstName}}</p>
+  </div>
+</div>
