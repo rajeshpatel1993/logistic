@@ -7,7 +7,7 @@ import {
   NbCardModule,
   NbRouteTabsetModule,
   NbStepperModule,
-  NbLayoutModule, NbUserModule,NbTabsetModule,NbDatepickerModule,
+  NbLayoutModule, NbUserModule,NbTabsetModule,NbDatepickerModule,NbSelectModule,
 } from '@nebular/theme';
 
 import { ThemeModule } from '../../@theme/theme.module';
@@ -36,7 +36,8 @@ import { VehicleservService } from '../vehicle-service/vehicleserv.service';
     AutocompleteLibModule,
     NgxImgModule.forRoot(),
     NbDatepickerModule,
-    CustomCommonModule
+    CustomCommonModule,
+    NbSelectModule
   ],
   declarations: [
     ReportsListComponent,

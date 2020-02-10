@@ -29,7 +29,8 @@ export class ReportsListComponent implements OnInit {
   public pager = {};
   public pageOfItems = [];
   public dropDownAction = false;
-
+  public selectedItem = '';
+  public selectedPage = '';
 
   constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
 
