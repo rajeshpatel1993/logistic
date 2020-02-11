@@ -1,70 +1,180 @@
-<div class="row">
-  <div class="col-xxl-12">
-    <nb-card>
-      <nb-card-header>Vehicle Status</nb-card-header>
-      <nb-card-body>
-        <nb-list>
-          <nb-list-item *ngFor="let item of vehicleStatusWithCountData">
-            {{ item.name }} || {{ item.totalcount}}
-          </nb-list-item>
-        </nb-list>
-      </nb-card-body>
-    </nb-card>
-    <div class="card-row">
-      <div class="card-col">
-        <nb-card size="tiny">
-          <div *ngFor="let item of vehicleAssignCountData">
-            <div *ngIf="item._id === 0">
-              <h2>Unassigned</h2> {{item.count}}
-            </div>
-  
-            <div *ngIf="item._id === 1">
-              <h2>Assigned</h2> {{item.count}}
-            </div>
-  
-          </div>
+<div class="ecommerce">
+  <div class="row">
+    <div class="col-12">
+      <h2>My Dashboard</h2>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Left Side column -->
+    <div class="col-xs-12 col-sm-12 col-md-3">
+      <div class="EcommerceCol1">
+        <nb-card>
+          <nb-card-header>Vehicle Status <a class="float-right" href="#">Details <i class="fas fa-angle-right"></i></a>
+          </nb-card-header>
+          <nb-card-body class="p-0">
+            <nb-list class="statusHeight">
+              <nb-list-item *ngFor="let item of vehicleStatusWithCountData">
+                <div class="itemName">{{ item.name }}</div>
+                <div class="itemCount">{{ item.totalcount}}</div>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
         </nb-card>
       </div>
-  
+    </div>
+
+    <!-- Middle column -->
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="EcommerceCol2">
+        <div class="card-row">
+          <div class="card-col">
+            <nb-card size="medium">
+              <nb-card-header>Total vehicle assigned </nb-card-header>
+            </nb-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Last Column -->
+    <div class="col-xs-12 col-sm-12 col-md-3">
+      <div class="EcommerceCol3">
+        <nb-card>
+          <nb-card-header>Vehicle Assignments</nb-card-header>
+          <nb-card-body>
+            <div class="row no-gutters">
+              <div class="col-col" *ngFor="let item of vehicleAssignCountData">
+                <div class="unassign" *ngIf="item._id === 0">
+                  <h3>{{item.count}}</h3>
+                  <h5>Unassigned</h5>
+                </div>
+                <div class="assign" *ngIf="item._id === 1">
+                  <h3>{{item.count}}</h3>
+                  <h5>Assigned</h5>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card>
+          <nb-card-header>Total Vehicle</nb-card-header>
+          <nb-card-body class="p-0">
+            <nb-list class="statusHeight">
+              <nb-list-item>
+                Total vehicle
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <div class="ServiceReminder">
+        <nb-card>
+          <nb-card-header>Vehicle Service Reminders</nb-card-header>
+          <nb-card-body>
+            <div class="row no-gutters">
+              <div class="col-6 overdue">
+                <h3>5</h3>
+                <h5>Overdue</h5>
+              </div>
+              <div class="col-6 duesoon zero">
+                <h3>0</h3>
+                <h5>Due Soon</h5>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <div class="RenewalReminder">
+        <nb-card>
+          <nb-card-header>Vehicle Renewal Reminders</nb-card-header>
+          <nb-card-body>
+            <div class="row no-gutters">
+              <div class="col-6 overdue">
+                <h3>1</h3>
+                <h5>Overdue</h5>
+              </div>
+              <div class="col-6 duesoon">
+                <h3>4</h3>
+                <h5>Due Soon</h5>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <div class="RenewalReminder">
+        <nb-card>
+          <nb-card-header>Vehicle Renewal Reminders</nb-card-header>
+          <nb-card-body>
+            <div class="row no-gutters">
+              <div class="col-6 overdue">
+                <h3>1</h3>
+                <h5>Overdue</h5>
+              </div>
+              <div class="col-6 duesoon">
+                <h3>4</h3>
+                <h5>Due Soon</h5>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h4>Overdue Count</h4>
+      <div class="overDue">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6">
+            <nb-card>
+              <nb-card-header>Urgent Remainer</nb-card-header>
+              <nb-card-body class="p-0">
+                <nb-card-body>
+                  <div class="row no-gutters">
+                    <div class="col-4 overdue">
+                      <h3>1</h3>
+                      <h5> Insurance Expired</h5>
+                    </div>
+                    <div class="col-4 duesoon">
+                      <h3>4</h3>
+                      <h5>Road Tax</h5>
+                    </div>
+                    <div class="col-4 complain">
+                      <h3>4</h3>
+                      <h5>Now working vehicle complaint </h5>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card-body>
+            </nb-card>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-6">
+            <nb-card>
+              <nb-card-header>Total Costs</nb-card-header>
+              <nb-card-body class="p-0">
+                <nb-list class="statusHeight">
+                  <nb-list-item>
+                    Graph
+                  </nb-list-item>
+                </nb-list>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="row">
-  <div class="col-xxl-5">
-    <div class="row">
-      <div class="col-md-6">
-        <ngx-profit-card></ngx-profit-card>
-      </div>
-      <div class="col-md-6">
-        <ngx-earning-card></ngx-earning-card>
-      </div>
-    </div>
-
-    <ngx-traffic-reveal-card></ngx-traffic-reveal-card>
-  </div>
-
-  <div class="col-xxl-7">
-    <ngx-ecommerce-charts></ngx-ecommerce-charts>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xxl-9">
-    <ngx-country-orders></ngx-country-orders>
-  </div>
-
-  <div class="col-xxl-3">
-    <ngx-progress-section></ngx-progress-section>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xxl-9">
-    <ngx-ecommerce-visitors-analytics></ngx-ecommerce-visitors-analytics>
-  </div>
-
-  <div class="col-xxl-3">
-    <ngx-user-activity></ngx-user-activity>
-  </div>
-</div> -->
