@@ -19,7 +19,7 @@
 
       </div>
     </div>
-    <div class="row no-gutters">
+    <div class="row no-gutters" *ngIf="showallfields">
       <nb-tabset class="col-12">
 
         <nb-tab tabTitle="Identification" class="identification">
@@ -30,7 +30,7 @@
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleDetailsData" [itemTemplate]="itemTemplate1"
                   formControlName="vehicledetails" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword"
-                  placeHolder="Enter the Vehicle Details">
+                  placeHolder="Enter the Vehicle Details" readonly>
 
                
                 </ng-autocomplete>
@@ -62,11 +62,11 @@
             <label for="vehiclecode" class="col-sm-3 col-form-label">Vehicle Code<span class="star">*</span></label>
             <div class="col-sm-9">
               <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code"
-                formControlName="vehicleCode">
+                formControlName="vehicleCode" readonly>
 
-                <div class="errormsg" *ngIf="f.vehicleCode.invalid && (f.vehicleCode.dirty || f.vehicleCode.touched)">
+                <!-- <div class="errormsg" *ngIf="f.vehicleCode.invalid && (f.vehicleCode.dirty || f.vehicleCode.touched)">
                   Vehicle  Code is required
-                </div>
+                </div> -->
 
             </div>
           </div>

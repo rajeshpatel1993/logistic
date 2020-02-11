@@ -1,5 +1,5 @@
 <div class="Vehicle">
-  <nb-card>
+  <nb-card >
     <nb-card-body>
       <nb-tabset>
         <nb-tab tabTitle=" Vehicle List">
@@ -74,20 +74,20 @@
               </div>
             </div>
           </form>
-          <nb-layout-column class="p-0">
+          <nb-layout-column class="p-0" *ngIf="!norecord">
             <div class="table-responsive">
               <table class="table table-hover mt-4">
                 <thead>
                   <tr>
 
-                    <th scope="col">Name</th>
+                    <th scope="col">Vehicle</th>
                     <th scope="col">Type</th>
                     <th scope="col">Status</th>
                     <th scope="col">Insurance Expiry</th>
                     <th scope="col">Road Tax</th>
                     <th scope="col">Warranty</th>
                     <th scope="col">Work Location</th>
-                    <th scope="col">Unasigned</th>
+                    <th scope="col">Driver Name</th>
                     <th scope="col">Remainders</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -111,10 +111,12 @@
                           <img nbButton (click)="open(dialog)" src="{{item.vehicleImage}}" width="80">
                         </div>
                         <div class="VehicleDetail_name">
-                          <h5>{{item.name}}</h5>
-                          <p>{{item.regNo}}</p>
+                          <h5>Name:- {{item.name}}</h5>
+                          <p>Reg no:- {{item.regNo}}</p>
                         </div>
                       </div>
+                      <h6>{{item.vehicleTypesArray[0].vehicleType}} - {{item.vehicleDetailsArray[0].vehicleDetails}}</h6>
+
                       <!-- <div class="VehicleType">
                       <h6><b>R/S No.</b>: fhiqf</h6>
                       <h6><b>Type</b>: 6r23</h6>
@@ -122,7 +124,7 @@
                     </td>
                     <td>
                       <!-- <h5>Car</h5> -->
-                      <p>{{item.vehicleDetailsArray[0].vehicleDetails}}</p>
+                      <!-- <p>{{item.vehicleDetailsArray[0].vehicleDetails}}</p> -->
                     </td>
                     <!-- <td>{{item.vehicleStatusArray[0].vehicleStatus}}</td> -->
                     <td>
@@ -153,24 +155,25 @@
                       <div class="workStatus">
                         <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.insuranceValid | date}}</p>
                           </div>
                         </span>
                         <span class="pendingy"
                           *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.insuranceValid | date}}</p>
                           </div>
                         </span>
                         <span class="pending"
                           *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.insuranceValid | date}}</p>
+
                           </div>
                         </span>
                         <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.insuranceValid | date}}</p>
                           </div>
                         </span>
 
@@ -185,24 +188,24 @@
 
                         <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.roadTaxValid | date}}</p>
                           </div>
                         </span>
                         <span class="pendingy"
                           *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.roadTaxValid | date}}</p>
                           </div>
                         </span>
                         <span class="pending"
                           *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.roadTaxValid | date}}</p>
                           </div>
                         </span>
                         <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.roadTaxValid | date}}</p>
                           </div>
                         </span>
 
@@ -217,24 +220,24 @@
                       <div class="workStatus">
                         <span class="success" *ngIf="getProgressBarValu(item.warrantyPeriod) <= 50">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.warrantyPeriod | date}}</p>
                           </div>
                         </span>
                         <span class="pendingy"
                           *ngIf="getProgressBarValu(item.warrantyPeriod) > 50 && getProgressBarValu(item.warrantyPeriod) <= 75">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.warrantyPeriod | date}}</p>
                           </div>
                         </span>
                         <span class="pending"
                           *ngIf="getProgressBarValu(item.warrantyPeriod) > 75 && getProgressBarValu(item.warrantyPeriod) < 90">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.warrantyPeriod | date}}</p>
                           </div>
                         </span>
                         <span class="danger" *ngIf="getProgressBarValu(item.warrantyPeriod) >= 90">
                           <div class="toolTip">
-                            <p>26-Jan-2020</p>
+                            <p>{{item.warrantyPeriod | date}}</p>
                           </div>
                         </span>
 
@@ -248,13 +251,19 @@
 
                     <td>
                       <div class="vehicleStatus">
-                        <span class="assigned text-success"><i class="fas fa-user-check"></i></span>
+                        <ngx-assigned-vehicle [vehicleId]="item._id"></ngx-assigned-vehicle>
+
+                        <!-- <span cl"ass="assigned text-success"><i class="fas fa-user-check"></i></span> -->
                         <!-- <span class="unassigned text-danger"><i class="fas fa-user-times"></i></span> -->
                       </div>
                     </td>
                     <td>
                       <div class="vehicleStatus">
-                        <span class="reminder text-success"><i class="fas fa-bell"></i></span>
+                        <p>
+                          <span>Symbol <span>Insurance </span><span>1</span></span>
+                          <span>Symbol <span>Road Tax </span><span>1</span></span>
+                        </p>
+                        <!-- <span class="reminder text-success"><i class="fas fa-bell"></i></span> -->
                         <!-- <span class="reminderlater text-danger"><i class="fas fa-bell-slash"></i></span> -->
                       </div>
                     </td>
@@ -312,6 +321,10 @@
     </nb-card-body>
   </nb-card>
 
+
+  <nb-card *ngIf="norecord">
+      <h5> No records Found</h5>
+  </nb-card>
 </div>
 
 <!-- <ngx-dailog-box></ngx-dailog-box> -->

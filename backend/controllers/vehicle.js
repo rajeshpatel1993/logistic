@@ -456,6 +456,8 @@ router.get("/filtervehicle", async(req,res)=>{
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+
     try {
        
 
@@ -463,7 +465,13 @@ router.get("/filtervehicle", async(req,res)=>{
             {$match: {$and: matchCondition}},
             {$count : "noofitems"}
         ]);
-        const nooitems = nooitemsAggregate[0].noofitems;
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
         const pager = paginate(nooitems, page,resPerPage);
 
 
@@ -565,6 +573,47 @@ router.get("/vehicleStatus", async(req,res)=>{
         console.log(error);
     }
 });
+
+
+router.get("/vehicleStatusWithCount", async(req,res)=>{
+    let statusArr = [];
+    try{
+        let vehicleStatusData = await VehicleStatus.find().select("vehicleStatusId  vehicleStatus -_id");
+        for(let i=0;i<vehicleStatusData.length;i++){
+            let vehStatus =  {};
+            vehStatus["name"] = vehicleStatusData[i].vehicleStatus;
+            let countofstatus = await Vehicle.find({"vehicleStatusId":vehicleStatusData[i].vehicleStatusId, isDeleted: "0"}).countDocuments();
+            vehStatus["totalcount"] = countofstatus;
+            statusArr.push(vehStatus);
+        }
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = statusArr;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+router.get("/vehicleAssignNotAssignCount", async(req,res)=>{
+    let statusArr = [];
+    let aggregate = [
+        {"$group":{_id:"$assignMentStatus", count: {$sum:1}}}
+    ];
+    try{
+        let vehicleData = await Vehicle.aggregate(aggregate);
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = vehicleData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
 
 
 router.get("/models/:brandId", async(req,res)=>{
@@ -686,6 +735,21 @@ router.get("/details/:vehicleType", async(req,res)=>{
 
 
 
+
+
+router.get("/last-vech-id/:vehicleTypeId", async (req, res) => {
+    const vehicleTypeId = req.params.vehicleTypeId; //or use req.param('id')
+    const filter = {$and: [{ vehicle_typeId: vehicleTypeId},{"isDeleted":"0"}] };
+    const vehicle = await Vehicle.aggregate([{$match:filter}, { $project : { name : 1  } }]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
 
 
 router.get("/vech-details/:vehicleTypeId", async (req, res) => {
@@ -844,7 +908,23 @@ router.get("/",async(req,res) => {
                 ],
                 as: "vehicleDetailsArray"// output array field
             }
-        }, {
+        },{
+
+
+            
+                $lookup: {
+                    from: "vehicleType", // from collection name
+                    let: { "vechTypeId": "$vehicle_typeId" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
+                        { "$project": { "vehicleType": 1, "_id": 0 }}
+                    ],
+                    as: "vehicleTypesArray"
+                }
+            
+        },
+        
+        {
             $lookup: {
                 from: "vehicleStatus", // from collection name
                 let: { "vechStatusId": "$vehicleStatusId" },
@@ -1032,6 +1112,25 @@ router.get("/getAssignVehicle/:id", async (req, res) => {
     let responseData = {};
     responseData["status"] = 200;
     responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
+
+
+
+router.get("/getAssignedVehicle/:vehichleid", async (req, res) => {
+    const id = req.params.vehichleid; //or use req.param('id')
+    const filter = { vehicle: mongoose.Types.ObjectId(id) };
+
+    
+    let assignVehicleCollection = await AssignVehicle.findOne(filter).populate('employee');
+
+
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = assignVehicleCollection;
     res.status(200).json(responseData);
     
 

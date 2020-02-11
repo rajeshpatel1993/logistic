@@ -108,6 +108,11 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/getAssignVehicle/"+vehicleId);
   }
 
+  loadAssignedVehicleDetail(vehicleId){
+    return this.http.get(this.baseUrl+"/vehicles/getAssignedVehicle/"+vehicleId);
+
+  }
+
   loadEmployee(){
     return this.http.get(this.baseUrl+"/employees");
   }

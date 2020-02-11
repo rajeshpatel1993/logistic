@@ -20,6 +20,8 @@ import { AddVehicleComponent } from './add-vehicle/add-vehicle.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { EditVehicleComponent } from './edit-vehicle/edit-vehicle.component';
 import {AssignVehicleComponent} from './assign-vehicle/assign-vehicle.component';
+import {AssignedVehicleComponent} from './assigned-vehicle/assigned-vehicle.component';
+
 import { AssignVehicleDetailsComponent } from './assign-vehicle-details/assign-vehicle-details.component'
 import { CustomCommonModule} from '../custom-common.module';
 // import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
@@ -50,6 +52,7 @@ import { CustomCommonModule} from '../custom-common.module';
     EditVehicleComponent,
     AssignVehicleComponent,
     AssignVehicleDetailsComponent,
+    AssignedVehicleComponent
     // DailogBoxComponent
   ],
   providers: [
