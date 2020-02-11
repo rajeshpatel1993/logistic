@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV; // 'dev' or 'test'
 const dev = {
     app: {
         port: parseInt(process.env.DEV_APP_PORT) || '',
-        mail: process.env.MAIL,
+        mail: process.env.MAIL_ID,
         pwd: process.env.PASS,
         cron_to_email: process.env.CRON_TO_MAIL
     },
@@ -30,7 +30,7 @@ const prod = {
 
     app: {
         port: parseInt(process.env.PROD_APP_PORT) || '',
-        mail: process.env.MAIL,
+        mail: process.env.MAIL_ID,
         pwd: process.env.PASS,
         cron_to_email: process.env.CRON_TO_MAIL
 
