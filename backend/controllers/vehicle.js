@@ -456,6 +456,8 @@ router.get("/filtervehicle", async(req,res)=>{
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+
     try {
        
 
@@ -463,7 +465,13 @@ router.get("/filtervehicle", async(req,res)=>{
             {$match: {$and: matchCondition}},
             {$count : "noofitems"}
         ]);
-        const nooitems = nooitemsAggregate[0].noofitems;
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
         const pager = paginate(nooitems, page,resPerPage);
 
 
@@ -727,6 +735,21 @@ router.get("/details/:vehicleType", async(req,res)=>{
 
 
 
+
+
+router.get("/last-vech-id/:vehicleTypeId", async (req, res) => {
+    const vehicleTypeId = req.params.vehicleTypeId; //or use req.param('id')
+    const filter = {$and: [{ vehicle_typeId: vehicleTypeId},{"isDeleted":"0"}] };
+    const vehicle = await Vehicle.aggregate([{$match:filter}, { $project : { name : 1  } }]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
 
 
 router.get("/vech-details/:vehicleTypeId", async (req, res) => {

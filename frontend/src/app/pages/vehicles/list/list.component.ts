@@ -23,6 +23,7 @@ export class ListComponent {
 
     
   public vehiclesList: any[] = [];
+  public norecord : boolean = false;
   public totalItems: any;
   public pager = {};
   public pageOfItems = [];
@@ -62,6 +63,11 @@ export class ListComponent {
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
     this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
       this.vehiclesList = filterData.data;
+      if(filterData.page.totalItems == 0){
+        this.norecord = true;
+      }else{
+        this.norecord = false;
+      }
       this.totalItems, this.pageOfItems = filterData.data; 
       this.pager = filterData.page;
       // console.log(filterData);

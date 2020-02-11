@@ -1,5 +1,5 @@
 <div class="Vehicle">
-  <nb-card>
+  <nb-card >
     <nb-card-body>
       <nb-tabset>
         <nb-tab tabTitle=" Vehicle List">
@@ -74,7 +74,7 @@
               </div>
             </div>
           </form>
-          <nb-layout-column class="p-0">
+          <nb-layout-column class="p-0" *ngIf="!norecord">
             <div class="table-responsive">
               <table class="table table-hover mt-4">
                 <thead>
@@ -321,6 +321,10 @@
     </nb-card-body>
   </nb-card>
 
+
+  <nb-card *ngIf="norecord">
+      <h5> No records Found</h5>
+  </nb-card>
 </div>
 
 <!-- <ngx-dailog-box></ngx-dailog-box> -->

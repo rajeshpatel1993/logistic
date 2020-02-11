@@ -22,6 +22,7 @@ export class AddVehicleComponent implements OnInit {
   public agentsList: any = [];
   public ownershipList:any=[];
   public fuelTypeList:any = [];
+  public showallfields = false;
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
@@ -399,6 +400,7 @@ export class AddVehicleComponent implements OnInit {
 public selectedVehicleType;
   selectEventD(item) {
     // console.log(item);
+    this.showallfields = true;
     this.vehicleDetailsData = [];
     this.vehicleCode = item.code+" 001";
     this.selectedVehicleType = item;
