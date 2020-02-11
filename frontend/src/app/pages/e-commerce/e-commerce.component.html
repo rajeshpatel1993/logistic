@@ -1,32 +1,33 @@
 <div class="row">
-  <nb-card [size]="'large'">
-    <nb-card-header>Vehicle Status</nb-card-header>
-    <nb-card-body>
-      <nb-list>
-        <nb-list-item *ngFor="let item of vehicleStatusWithCountData">
-          {{ item.name }}  || {{ item.totalcount}}
-        </nb-list-item>
-      </nb-list>
-    </nb-card-body>
-  </nb-card>
-
-
-  <div class="card-row">
-    <div class="card-col">
-      <nb-card size="tiny">
-      <div *ngFor="let item of vehicleAssignCountData">
-          <div *ngIf="item._id === 0">
-            <h2>Unassigned</h2> {{item.count}}
+  <div class="col-xxl-12">
+    <nb-card>
+      <nb-card-header>Vehicle Status</nb-card-header>
+      <nb-card-body>
+        <nb-list>
+          <nb-list-item *ngFor="let item of vehicleStatusWithCountData">
+            {{ item.name }} || {{ item.totalcount}}
+          </nb-list-item>
+        </nb-list>
+      </nb-card-body>
+    </nb-card>
+    <div class="card-row">
+      <div class="card-col">
+        <nb-card size="tiny">
+          <div *ngFor="let item of vehicleAssignCountData">
+            <div *ngIf="item._id === 0">
+              <h2>Unassigned</h2> {{item.count}}
+            </div>
+  
+            <div *ngIf="item._id === 1">
+              <h2>Assigned</h2> {{item.count}}
+            </div>
+  
           </div>
-
-          <div *ngIf="item._id === 1">
-            <h2>Assigned</h2> {{item.count}}
-          </div>
-
+        </nb-card>
       </div>
-</nb-card>
+  
+    </div>
   </div>
-
 </div>
 
 <!-- <div class="row">
