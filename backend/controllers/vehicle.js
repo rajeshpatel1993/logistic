@@ -61,7 +61,7 @@ router.post("/updateVehicle", async (req, res)=> {
 
          let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
             fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
-              bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation, vehicleId} = req.body;
+              bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation, vehicleId, vehType} = req.body;
 
             
               updateField["vehicleStatusId"] = vehicleStatus;
@@ -84,12 +84,12 @@ router.post("/updateVehicle", async (req, res)=> {
               updateField["note"] = note;
 
 
-            if(typeof vehicleTypef != "string"){
-                updateField["vehicle_type"] = vehicleTypef.name;
-                updateField["vehicle_typeId"] =  vehicleTypef.id;
+            if(typeof vehType != "string"){
+                updateField["vehicle_type"] = vehType.name;
+                updateField["vehicle_typeId"] =  vehType.id;
 
             }else{
-                updateField["vehicle_type"] = vehicleTypef.name;
+                updateField["vehicle_type"] = vehType.name;
 
             }
 
@@ -152,7 +152,8 @@ router.post("/updateVehicle", async (req, res)=> {
         }
 
     }catch(err){
-        console.log(err);
+        res.status(400).send(err);
+
     }
     
     
@@ -173,8 +174,10 @@ router.post("/add-assign", async (req, res)=> {
             driving_license_valid, note, file_unique_id, vehicle_id} = req.body;
     
         let vehicleFiles = await File.find({fileId:file_unique_id }).select("s3Urls");
-        if(vehicleFiles){
+        if(vehicleFiles.length > 0){
             filesurls = vehicleFiles[0].s3Urls; 
+        }else{
+            filesurls = [];
         }
     
         const assign_vehicle_instance = new AssignVehicle(
@@ -194,7 +197,8 @@ router.post("/add-assign", async (req, res)=> {
             driving_license_valid,
             note,
             files:filesurls,
-            projects:project.id
+            projects:project.id,
+            projectsType: project_type
 
         };
 
@@ -305,6 +309,22 @@ router.get("/getvehicle/:id", async (req, res) => {
             }
         
     },
+
+
+    {
+
+        $lookup: {
+            from: "vehicleType", // collection to join
+            let: { "vechTId": "$vehicle_typeId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTId"] }}},
+                { "$project": { "vehicleType": 1, "_id": 0 }}
+            ],
+            as: "vehicleTypes"// output array field
+        }
+
+    },
+
     {
 
         $lookup: {
@@ -845,7 +865,7 @@ router.get("/assign_vehicles",async(req,res) => {
         let ele = {};
         let elemId = vehicleData[i]._id;
         let assignedVal = Object.assign(ele,vehicleData[i]);
-        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId}).populate('employee').populate('vehicle').populate('projects').populate('workLocations');
+        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
 
         assignedVal["assign_data"] = assignVehicleCollection;
         modifiedData.push(assignedVal);

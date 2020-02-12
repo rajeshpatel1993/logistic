@@ -4,8 +4,7 @@
       <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE</label>
       <div class="col-sm-9">
         <div class="ng-autocomplete">
-          {{ vehicleTypesData | json }}
-          <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword"  [(ngModel)]="selectedVehicleT" #ctrl="ngModel" [ngModelOptions]="{standalone: true}" placeHolder="Enter the Vehicle Types"
+          <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword"  formControlName="vehType" placeHolder="Enter the Vehicle Types"
             (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
           </ng-autocomplete>
 
@@ -111,7 +110,7 @@
             <div class="col-sm-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="brandsList" [itemTemplate]="itemTemplate3" formControlName="brand"
-                  [notFoundTemplate]="notFoundTemplate3" [searchKeyword]="keyword" placeHolder="Enter the Brand">
+                  [notFoundTemplate]="notFoundTemplate3" [searchKeyword]="keyword" placeHolder="Enter the Brand" (selected)='selectBrand($event)'>
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate3 let-item>
@@ -207,7 +206,7 @@
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="fuelMeasurementList" [itemTemplate]="itemTemplate6"
                   formControlName="fuelMeausrement" [notFoundTemplate]="notFoundTemplate6" [searchKeyword]="keyword"
-                  placeHolder="Enter the Fuel Measurement">
+                  placeHolder="Enter the Fuel Measurement" (selected)='selectMeasurement($event)'>
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate6 let-item>
@@ -430,4 +429,12 @@
     </div>
 
   </form>
+
+
+
+  <div *ngIf="dialogBox">
+
+    <ngx-dailog-box (messageToEmit)="getMsg($event)" [msgObj]="msgObj"></ngx-dailog-box>
+  </div>
+  
 </div>

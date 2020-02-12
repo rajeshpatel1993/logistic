@@ -78,7 +78,8 @@ export class AssignVehicleDetailsComponent implements OnInit {
       let projectTypeData = projectTypesData["data"];
       projectTypeData.forEach((item,index) => {
         let tmpObj = {};
-        tmpObj["id"] = +item.projectTypeId;
+        tmpObj["id"] = item.projectTypeId;
+        tmpObj["_id"] = item._id;
         tmpObj["name"] = item.projectTypeName;
         this.projectTypeList.push(tmpObj);
        
