@@ -124,4 +124,9 @@ export class VehicleService {
   loadProjects(projectTypeId){
     return this.http.get(this.baseUrl+"/project/"+projectTypeId);
   }
+
+  lastVehicleCode(vehicleType){
+    return this.http.get(this.baseUrl+"/vehicles/last-vech-id/"+vehicleType);
+    
+  }
 }

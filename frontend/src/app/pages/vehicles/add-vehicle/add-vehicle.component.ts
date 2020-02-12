@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {Observable} from 'rxjs/Rx';
+import {Observable, Subscription} from 'rxjs/Rx';
 
 import * as uuid from 'uuid';
 @Component({
@@ -23,12 +23,14 @@ export class AddVehicleComponent implements OnInit {
   public ownershipList:any=[];
   public fuelTypeList:any = [];
   public showallfields = false;
+  public lastVehicleCodeSubscription: Subscription;
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
   public workLocationsList: any[] = [];
   public dialogBox : boolean = false;
   public msgObj ={};
+  public lastVehcileCodeN;
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder, private router: Router) { }
   public vehicleCode: String;
@@ -284,7 +286,7 @@ export class AddVehicleComponent implements OnInit {
     let group = {
       vehicleTypef: [this.selectedVehicleType],
       vehicledetails: ['', Validators.required],
-      vehicleCode: [this.vehicleCode, Validators.required],
+      vehicleCode: ['', Validators.required],
       vehicleName: ['',Validators.required],
       regNo: ['', Validators.required],
       model: ['', Validators.required],
@@ -293,8 +295,8 @@ export class AddVehicleComponent implements OnInit {
       manufacture_year: ['', Validators.required],
       engine_no: ['', Validators.required],
       chasis_no: ['', Validators.required],
-      purchase_date: ['', Validators.required],
-      warranty_period:['', Validators.required],
+      purchase_date: [''],
+      warranty_period:[''],
       fuel_type:  ['', Validators.required],
       fuelMeausrement: ['', Validators.required],
       workLocation: ['', Validators.required]
@@ -316,7 +318,7 @@ export class AddVehicleComponent implements OnInit {
     group['image_file_unique_id'] = [this.imageFileUniqueId];
 
     group["ownership_status"] = ['', Validators.required];
-    group["note"] = ['', Validators.required];
+    group["note"] = [''];
     group["vehicleStatus"] = [5];
     this.vehicleForm = this.fb.group(group);
   }
@@ -397,14 +399,25 @@ export class AddVehicleComponent implements OnInit {
     });
   }
 
+public formatNumber(num){
+  let tmpNum;
+  if(num < 10){
+    tmpNum = `00${num}`;
+  }else{
+    tmpNum = `0${num}`;
+  }
+
+  return tmpNum;
+}
 public selectedVehicleType;
   selectEventD(item) {
-    // console.log(item);
+    this.loadLastVehicleCode(item.id, item.code);
     this.showallfields = true;
     this.vehicleDetailsData = [];
-    this.vehicleCode = item.code+" 001";
+
     this.selectedVehicleType = item;
     this.loadVehicleDetails(item.id);
+
 
     if(item.id == 1 || item.id ==2){
       this.showExtraField = true;
@@ -473,6 +486,35 @@ public selectedVehicleType;
       console.log(err);
     });
 
+  }
+
+
+  loadLastVehicleCode(vehicleTypeId, vehCode){
+ 
+    this.lastVehicleCodeSubscription = this.vehicleService.lastVehicleCode(vehicleTypeId).subscribe((d)=>{
+      let fnnumber;
+      if(d["data"].length > 0){
+        let dat = d["data"][0].vehicle_code;
+        let fn = dat.split(" ")[1];
+        fnnumber = +fn + 1;
+
+      }else{
+        fnnumber = 1;
+      }
+
+      this.lastVehcileCodeN = fnnumber;
+
+      let num = this.formatNumber(this.lastVehcileCodeN);
+      this.vehicleCode = vehCode+" "+num;
+      console.log(this.vehicleCode)
+
+      this.vehicleForm.patchValue({"vehicleCode":this.vehicleCode});
+      // console.log(this.vehicleCode);
+      // console.log(fnnumber);
+    },
+    (error)=>{
+
+    });
   }
 
 
