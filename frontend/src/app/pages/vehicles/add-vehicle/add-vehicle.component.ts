@@ -71,7 +71,6 @@ export class AddVehicleComponent implements OnInit {
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
     // this.loadVehicleDetails();
-    this.loadBrandsData();
     this.loadColorsData();
     this.loadFuelMesaurementData();
     this.loadAgentsData();
@@ -192,8 +191,8 @@ export class AddVehicleComponent implements OnInit {
 
   }
 
-  public loadBrandsData(){
-    this.vehicleService.loadBrandsData().subscribe((brandData:any) => {
+  public loadBrandsData(vehicleTypeId){
+    this.vehicleService.loadBrandsData(vehicleTypeId).subscribe((brandData:any) => {
       let brandsData = brandData.data;
       brandsData.forEach((item,index) => {
         let tmpObj = {};
@@ -349,8 +348,13 @@ export class AddVehicleComponent implements OnInit {
 
 
 
-    },(error)=>{});
-    console.log(this.vehicleForm.value);
+    },(error)=>{
+      // console.log(error.error.errmsg);
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] =error.error.errmsg;
+      this.dialogBox = true;
+
+    });
   }
 
   getMsg(val){
@@ -416,6 +420,7 @@ public selectedVehicleType;
     this.vehicleDetailsData = [];
 
     this.selectedVehicleType = item;
+    this.loadBrandsData(item.id);
     this.loadVehicleDetails(item.id);
 
 

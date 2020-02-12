@@ -14,7 +14,7 @@ const vehicleSchema = new mongoose.Schema ({
         type: String
     },
     name: {
-        type: String
+        type : String , unique : true, required : true      
     },
     yearofManufacturer: {
         type: String

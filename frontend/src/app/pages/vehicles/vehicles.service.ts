@@ -49,8 +49,8 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/models/"+brandId);
   }
 
-  loadBrandsData(){
-    return this.http.get(this.baseUrl+"/vehicles/brands");
+  loadBrandsData(vehicleTypeId){
+    return this.http.get(this.baseUrl+"/vehicles/brands/"+vehicleTypeId);
   }
 
   loadColorsData(){

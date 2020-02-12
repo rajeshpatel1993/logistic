@@ -54,9 +54,19 @@
             <label for="vehiclecode" class="col-sm-3 col-form-label">Vehicle Code</label>
             <div class="col-sm-9">
               <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code"
-                formControlName="vehicleCode">
+                formControlName="vehicleCode" readonly>
             </div>
           </div>
+
+          <div class="form-group row">
+            <label for="vehiclecode" class="col-sm-3 col-form-label">Qr Code</label>
+            <div class="col-sm-9">
+              <img [src]="vehicleData.qrCode">
+            </div>
+          </div>
+
+
+
 
           <input type="hidden" id="vehicleId" class="form-control" formControlName="vehicleId">
 

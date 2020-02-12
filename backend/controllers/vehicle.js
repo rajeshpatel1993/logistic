@@ -258,14 +258,13 @@ try{
         
         });
     let saveData = await vehicle_instance.save();
-    if(saveData){
-        res.status(200).json({"msg":"saved successfully"});
-    }
+    res.status(200).send(saveData);
     
  
     // res.status(200).json(req.body);
 }catch(err){
-    console.log(err);
+    res.status(400).send(err);
+    // console.log(err);
 }
 
 
@@ -660,9 +659,10 @@ router.get("/ownerships", async(req,res)=>{
 });
 
 
-router.get("/brands", async(req,res)=>{
+router.get("/brands/:vehTypeId", async(req,res)=>{
     try{
-        let brandsData = await Brand.find().select("brandId , brand");
+        let vehTypeId = req.params.vehTypeId;
+        let brandsData = await Brand.find({"fk_VechileType":vehTypeId}).select("brandId , brand");
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = brandsData;
