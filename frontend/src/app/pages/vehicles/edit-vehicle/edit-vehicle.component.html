@@ -4,6 +4,7 @@
       <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE</label>
       <div class="col-sm-9">
         <div class="ng-autocomplete">
+          {{ vehicleTypesData | json }}
           <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword"  [(ngModel)]="selectedVehicleT" #ctrl="ngModel" [ngModelOptions]="{standalone: true}" placeHolder="Enter the Vehicle Types"
             (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
           </ng-autocomplete>

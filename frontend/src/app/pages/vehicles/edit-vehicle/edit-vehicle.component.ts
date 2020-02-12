@@ -65,9 +65,7 @@ export class EditVehicleComponent implements OnInit {
     this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
-    this.loadVehicleDetails();
     this.loadModelsData();
-    this.loadBrandsData();
     this.loadColorsData();
     this.loadFuelTypeData();
     this.loadFuelMesaurementData();
@@ -170,8 +168,8 @@ uploadImage(){
   
 
 
-  public loadVehicleDetails(){
-    this.vehicleService.loadVehicleDetails().subscribe((vehicleDetails:any) => {
+  public loadVehicleDetails(id?){
+    this.vehicleService.loadVehicleDetails(id).subscribe((vehicleDetails:any) => {
       let vehicleDetailData = vehicleDetails.data;
       vehicleDetailData.forEach((item,index) => {
         let tmpObj = {};
@@ -199,8 +197,8 @@ uploadImage(){
 
   }
 
-  public loadBrandsData(){
-    this.vehicleService.loadBrandsData().subscribe((brandData:any) => {
+  public loadBrandsData(vehicleTypeId){
+    this.vehicleService.loadBrandsData(vehicleTypeId).subscribe((brandData:any) => {
       let brandsData = brandData.data;
       brandsData.forEach((item,index) => {
         let tmpObj = {};
@@ -394,6 +392,8 @@ uploadImage(){
 
 
 
+       this.loadBrandsData(this.vehicleData['vehicle_type']);
+       this.loadVehicleDetails(this.vehicleData['vehicle_type']);
 
 
       console.log(d);
@@ -511,12 +511,12 @@ uploadImage(){
     // console.log(item);
     this.vehicleCode = item.code+" 001";
     this.selectedVehicleType = item;
-    console.log(this.vehicleCode);
     this.selectedVehicleType = this.vehicleCode;
 
     this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
     this.vehicleForm.get("vehicleTypef").patchValue(item);
 
+    this.loadVehicleDetails(item.id);
 
     if(item.id == 1 || item.id ==2){
       this.showExtraField = true;
