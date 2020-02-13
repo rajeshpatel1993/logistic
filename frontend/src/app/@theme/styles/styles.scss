@@ -293,6 +293,16 @@ a:focus {
     font-weight: 400 !important;
     text-transform: none !important;
   }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .md-drppicker.double{
+        width: 600px;
+    }
+  }
+  @media (min-width: 479px) and (max-width: 568px) {
+    .md-drppicker.double{
+        width: 500px;
+    }
+  }
 }
 
 .ecommerce {
@@ -419,4 +429,23 @@ a:focus {
       }
     }
   }
+}
+.VehicleDriver{
+  width: 100%;
+  float: left;
+  &_image{
+      width: 55px;
+      float: left;
+      margin-right: 5px;
+      .ng-star-inserted{
+        padding: 0px;
+        img{
+          width: 100%;
+        }
+      }
+      p{
+        text-align: center;
+      }
+  }
+  
 }
