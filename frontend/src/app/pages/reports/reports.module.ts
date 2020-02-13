@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxImgModule } from 'ngx-img';
 
+
 import {
   NbButtonModule,
   NbCardModule,
@@ -18,6 +19,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { ReportsComponent } from './reports.component';
 import { CustomCommonModule } from '../custom-common.module';
 import { VehicleservService } from '../vehicle-service/vehicleserv.service';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 
 @NgModule({
@@ -37,7 +39,8 @@ import { VehicleservService } from '../vehicle-service/vehicleserv.service';
     NgxImgModule.forRoot(),
     NbDatepickerModule,
     CustomCommonModule,
-    NbSelectModule
+    NbSelectModule,
+    NgxDaterangepickerMd.forRoot()
   ],
   declarations: [
     ReportsListComponent,
