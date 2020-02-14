@@ -172,7 +172,7 @@ export class AssignVehicleDetailsComponent implements OnInit {
       project: [''],
       fuel_limit_per_month: ['', Validators.required],
       driving_license_valid: ['', Validators.required],
-      note: ['', Validators.required],
+      note: [''],
       file_unique_id : [this.billfileuniqueid],
       vehicle_id: [this.vehicleId],
       isReassigned: [this.isReassigned]
