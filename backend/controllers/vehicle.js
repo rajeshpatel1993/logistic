@@ -5,6 +5,7 @@ const qrCode = require('qrcode')
 
 const {Vehicle} = require("../models/vehicle");
 const {AssignVehicle} = require("../models/assignVehicle");
+const {AssignVehicleHistory} = require("../models/assignVehicleHistory");
 
 const {VehicleType} = require("../models/vechileType");
 const {VehicleDetail} = require("../models/vehicleDetail");
@@ -165,13 +166,11 @@ router.post("/add-assign", async (req, res)=> {
     // let {asset} = req.body;
     try{
 
-        // console.log(req.body);
-    
-       
-        
+     
+
         let filesurls = [];
         let {employee_name, assignment_start_date, assignment_end_date,work_location,project_type, project, fuel_limit_per_month, 
-            driving_license_valid, note, file_unique_id, vehicle_id} = req.body;
+            driving_license_valid, note, file_unique_id, vehicle_id, isReassigned} = req.body;
     
         let vehicleFiles = await File.find({fileId:file_unique_id }).select("s3Urls");
         if(vehicleFiles.length > 0){
@@ -188,26 +187,58 @@ router.post("/add-assign", async (req, res)=> {
         const query1 = {"_id":vehicle_id};
         
         const update =     {
-            employee:employee_name.id, 
+            // employee:employee_name.id, 
             vehicle: vehicle_id,
-            workLocations: work_location.id,
+            // workLocations: work_location.id,
             fuelLimit:fuel_limit_per_month,
             assignmentStartDate:assignment_start_date,
             assignmentEndDate: assignment_end_date,
             driving_license_valid,
             note,
             files:filesurls,
-            projects:project.id,
-            projectsType: project_type
+            // projects:project.id,
+            // projectsType: project_type,
+            isDeleted: 0
 
         };
+
+        if(project_type && typeof project_type != "string"){
+            update["projectsType"] = project_type._id;
+        }
+
+        if(project && typeof project != "string"){
+            update["projects"] = project.id;
+        }
+
+        if(work_location && typeof work_location != "string"){
+            update["workLocations"] = work_location.id;
+        }
+
+        if(employee_name && typeof employee_name != "string"){
+            update["employee"] = employee_name.id;
+        }
+
+
+       
+        if(isReassigned== 1){
+            update["isReassigned"] = 1;
+        }else{
+            update["isReassigned"] = 0;
+
+        }
 
         const update1 = {
             $set: { 'assignMentStatus': 1} ,
 
         };
+        console.log(update);
         const options = { upsert: true, new: true, setDefaultsOnInsert: true };
         let saveData = await AssignVehicle.findOneAndUpdate(query, update, options);
+        if(isReassigned == 1){
+            const vehicle_history_instance = new AssignVehicleHistory(update);
+            let saveDataAssignHistory = await vehicle_history_instance.save(update);
+
+        }
         let updateAssignmentVehicle = await Vehicle.findOneAndUpdate(query1,update1);
 
         // let saveData = await assign_vehicle_instance.save();
@@ -818,38 +849,7 @@ router.get("/assign_vehicles",async(req,res) => {
         }
        }
         
-        // , {
-        //     $lookup: {
-        //         from: "vehicleDetails", // collection to join
-        //         let: { "vechDetId": "$vehicleDetailsId" },
-        //         pipeline: [
-        //             { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
-        //             { "$project": { "vehicleDetails": 1, "_id": 0 }}
-        //         ],
-        //         as: "vehicleDetailsArray"// output array field
-        //     }
-        // }, {
-        //     $lookup: {
-        //         from: "vehicleStatus", // from collection name
-        //         let: { "vechStatusId": "$vehicleStatusId" },
-        //         pipeline: [
-        //             { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vechStatusId"] }}},
-        //             { "$project": { "vehicleStatus": 1, "_id": 0 }}
-        //         ],
-        //         as: "vehicleStatusArray"
-        //     }
-        // },
-        // {
-        //     $lookup: {
-        //         from: "worklocation", // from collection name
-        //         let: { "worklocid": "$workLocationId" },
-        //         pipeline: [
-        //             { "$match": { "$expr": { "$eq": ["$workLocationId", "$$worklocid"] }}},
-        //             { "$project": { "workLocation": 1, "_id": 0 }}
-        //         ],
-        //         as: "workLocationArray"
-        //     }
-        // }
+
         
         ,
         {
@@ -865,25 +865,13 @@ router.get("/assign_vehicles",async(req,res) => {
         let ele = {};
         let elemId = vehicleData[i]._id;
         let assignedVal = Object.assign(ele,vehicleData[i]);
-        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
+        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId, isDeleted:0}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
 
         assignedVal["assign_data"] = assignVehicleCollection;
         modifiedData.push(assignedVal);
     }
 
-    // vehicleData.forEach(async (elem,index)=>{
-    //     // console.log(elem._id);
-    //     let ele = elem;
-    //     let elemId = elem._id;
-    //     let assignVehicleCollection = await  AssignVehicle.findOne({vehicleID:elemId}).populate('employeeID');
-    //     // console.log(assignVehicleCollection);
-    //     ele.employee = assignVehicleCollection;
-        
-    //      modifiedData.push(ele);
 
-    //     // console.log(elem._id);
-    // });
-    // console.log(modifiedData);
 
         let responseData = {};
         responseData["status"] = 200;
@@ -992,7 +980,7 @@ router.get("/",async(req,res) => {
 router.get("/getAssignVehicle/:id", async (req, res) => {
     const id = req.params.id; //or use req.param('id')
     const filter = { _id: mongoose.Types.ObjectId(id) };
-    const vehicle = await Vehicle.aggregate([{$match:filter},{
+    const vehicleData = await Vehicle.aggregate([{$match:filter},{
         
             $lookup: {
                 from: "vehicleDetails", // collection to join
@@ -1018,119 +1006,20 @@ router.get("/getAssignVehicle/:id", async (req, res) => {
         }
 
     },
-
-    // {
-
-    //     $lookup: {
-    //         from: "model", // collection to join
-    //         let: { "modelID": "$modelId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$modelId", "$$modelID"] }}},
-    //             { "$project": { "model": 1, "_id": 0 }}
-    //         ],
-    //         as: "vehicleModels"// output array field
-    //     }
-
-    // },
-
-    // {
-
-    //     $lookup: {
-    //         from: "brand", // collection to join
-    //         let: { "brandID": "$brandId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$brandId", "$$brandID"] }}},
-    //             { "$project": { "brand": 1, "_id": 0 }}
-    //         ],
-    //         as: "vehicleBrands"// output array field
-    //     }
-
-    // },
-
-    // {
-
-    //     $lookup: {
-    //         from: "fuelType", // collection to join
-    //         let: { "fuelTypeID": "$fuelTypeId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$fuelTypeId", "$$fuelTypeID"] }}},
-    //             { "$project": { "fuelTypeName": 1, "_id": 0 }}
-    //         ],
-    //         as: "fuelTypes"// output array field
-    //     }
-
-    // },
-
-    // {
-
-    //     $lookup: {
-    //         from: "fuelMeausrement", // collection to join
-    //         let: { "fuelMeausrementID": "$fuelMeausrementId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$fuelMeausrementId", "$$fuelMeausrementID"] }}},
-    //             { "$project": { "fuelMeausrement": 1, "_id": 0 }}
-    //         ],
-    //         as: "fuelMesaureMents"// output array field
-    //     }
-
-    // },
-
-    // {
-
-    //     $lookup: {
-    //         from: "worklocation", // collection to join
-    //         let: { "workLocationID": "$workLocationId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$workLocationId", "$$workLocationID"] }}},
-    //             { "$project": { "workLocation": 1, "_id": 0 }}
-    //         ],
-    //         as: "workLocations"// output array field
-    //     }
-
-    // },
-
-    // {
-
-    //     $lookup: {
-    //         from: "insuranceCompany", // collection to join
-    //         let: { "insuranceCompanyID": "$insuranceCompanyId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$insuranceCompanyId", "$$insuranceCompanyID"] }}},
-    //             { "$project": { "insuranceCompanyName": 1, "_id": 0 }}
-    //         ],
-    //         as: "insuranceAgents"// output array field
-    //     }
-
-    // },
-
-    // {
-
-    //     $lookup: {
-    //         from: "vehicleOwnership", // collection to join
-    //         let: { "vehicleOwnershipID": "$vehicleOwnershipId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$vehicleOwnershipId", "$$vehicleOwnershipID"] }}},
-    //             { "$project": { "vehicleOwnership": 1, "_id": 0 }}
-    //         ],
-    //         as: "vehicleOwnerships"// output array field
-    //     }
-
-    // },
-
-    
-
-
-
-
-
-
-
-
 ]);
     
+   
+        let ele = {};
+        let elemId = vehicleData[0]._id;
+        let assignedVal = Object.assign(ele,vehicleData[0]);
+        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId, isDeleted:0}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
+
+        vehicleData[0]["assign_data"] = assignVehicleCollection;
+    
+
     let responseData = {};
     responseData["status"] = 200;
-    responseData["data"] = vehicle;
+    responseData["data"] = vehicleData;
     res.status(200).json(responseData);
     
 
@@ -1153,6 +1042,21 @@ router.get("/getAssignedVehicle/:vehichleid", async (req, res) => {
     res.status(200).json(responseData);
     
 
+
+});
+
+
+router.post("/assignVehicle/delete",async(req,res)=>{
+    let {id} = req.body;
+    const filter = { vehicle: mongoose.Types.ObjectId(id) };
+    const update = { isDeleted: 1 };
+    try{
+        let updateVehicle = await AssignVehicle.findOneAndUpdate(filter, update);
+        res.status(200).json({"msg":"deleted successfully"});
+    }catch(error){
+        res.send(error);
+    }
+   
 
 });
 

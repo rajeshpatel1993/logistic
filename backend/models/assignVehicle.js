@@ -39,9 +39,11 @@ const assignVechicleSchema = new mongoose.Schema ({
     },
     note: {
         type: String
+    }, 
+    isDeleted: {
+        type: Number,
+        default: 0
     }
-    
-    
     // ,
     // statusId :{
     //     type: String,

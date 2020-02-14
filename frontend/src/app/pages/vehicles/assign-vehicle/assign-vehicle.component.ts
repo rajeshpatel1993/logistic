@@ -132,4 +132,18 @@ export class AssignVehicleComponent implements OnInit {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
 
+
+  deleteAssignVehicle(vehicleId){
+      this.vehicleService.deleteAssignVehicle(vehicleId).subscribe((d)=>{
+        this.activeRoute.queryParams.subscribe(queryParams => {
+          this.loadVehicles(queryParams.page);
+        });
+
+      },(error)=>{
+
+      })
+
+    console.log(vehicleId);
+  }
+
 }
