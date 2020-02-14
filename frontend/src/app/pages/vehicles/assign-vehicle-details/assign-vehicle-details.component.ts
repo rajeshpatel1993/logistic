@@ -32,6 +32,17 @@ export class AssignVehicleDetailsComponent implements OnInit {
   public msgObj ={};
   public dialogBox : boolean = false;
   public submitted = false;
+  public isReassigned=0;
+
+  public employee;
+  public assignmentStartDate;
+  public endDate;
+  public workLocation;
+  public projectType;
+  public project;
+  public fuelLimitMonth;
+  public drivingLicenseValid;
+  public note;
 
 
   keyword = 'name';
@@ -40,9 +51,12 @@ export class AssignVehicleDetailsComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
+   this.isReassigned = this.activeRoute.snapshot.params.isReassigned;
     this.vehicleId = this.activeRoute.snapshot.params.id;
-    this.loadVehicle();
     this.createForm();
+
+    this.loadVehicle();
+    
     this.loadEmployee();
     this.loadWorkLocations();
     this.loadProjectType();
@@ -78,7 +92,8 @@ export class AssignVehicleDetailsComponent implements OnInit {
       let projectTypeData = projectTypesData["data"];
       projectTypeData.forEach((item,index) => {
         let tmpObj = {};
-        tmpObj["id"] = +item.projectTypeId;
+        tmpObj["id"] = item.projectTypeId;
+        tmpObj["_id"] = item._id;
         tmpObj["name"] = item.projectTypeName;
         this.projectTypeList.push(tmpObj);
        
@@ -106,7 +121,39 @@ export class AssignVehicleDetailsComponent implements OnInit {
       this.barCode = this.vehicleData["qrCode"];
       this.vehicleDetail = this.vehicleData["vehicleDetailsArray"][0].vehicleDetails;
 
+      if(this.isReassigned == 1){
+        this.employee = this.vehicleData['assign_data'].employee.firstName;
+        this.assignmentStartDate = new Date(this.vehicleData['assign_data']['assignmentStartDate']);
+        this.endDate = new Date(this.vehicleData['assign_data']['assignmentEndDate']);
+        this.workLocation = this.vehicleData['assign_data'].workLocations.workLocation;
+        this.projectType = this.vehicleData['assign_data'].projectsType.projectTypeName;
+        this.project = this.vehicleData['assign_data'].projects.projectName;
+        this.fuelLimitMonth = this.vehicleData['assign_data'].fuelLimit;
+        this.drivingLicenseValid = new Date(this.vehicleData['assign_data'].driving_license_valid);
+        this.note = this.vehicleData['assign_data'].note;
 
+
+        this.assignVehicleForm.get("employee_name").patchValue(this.employee);
+        this.assignVehicleForm.get("assignment_start_date").patchValue(this.assignmentStartDate);
+        this.assignVehicleForm.get("assignment_end_date").patchValue(this.endDate);
+        this.assignVehicleForm.get("work_location").patchValue(this.workLocation);
+        this.assignVehicleForm.get("project_type").patchValue(this.projectType);
+        this.assignVehicleForm.get("project").patchValue(this.project);
+        this.assignVehicleForm.get("fuel_limit_per_month").patchValue(this.fuelLimitMonth);
+        this.assignVehicleForm.get("driving_license_valid").patchValue(this.drivingLicenseValid);
+        this.assignVehicleForm.get("driving_license_valid").patchValue(this.drivingLicenseValid);
+        this.assignVehicleForm.get("note").patchValue(this.note);
+        // this.assignVehicleForm.get("vehicle_id").patchValue(this.vehicleData['assign_data'].vehicle._id);
+        // this.assignVehicleForm.get("isReassigned").patchValue(this.vehicleData['assign_data'].vehicle._id);
+
+
+
+
+
+
+
+
+      }
 
     }, (error) => {
   
@@ -125,9 +172,10 @@ export class AssignVehicleDetailsComponent implements OnInit {
       project: [''],
       fuel_limit_per_month: ['', Validators.required],
       driving_license_valid: ['', Validators.required],
-      note: ['', Validators.required],
+      note: [''],
       file_unique_id : [this.billfileuniqueid],
-      vehicle_id: [this.vehicleId]
+      vehicle_id: [this.vehicleId],
+      isReassigned: [this.isReassigned]
 
     }
     this.assignVehicleForm = this.fb.group(group);
@@ -213,13 +261,14 @@ export class AssignVehicleDetailsComponent implements OnInit {
   
   assignVehicle(){
     this.submitted = true;
+   
     if (this.assignVehicleForm.invalid) {
       alert("Please fill all required field");
       return;
     }
     
     this.vehicleService.addAssignVehicle(this.assignVehicleForm.value).subscribe((data)=>{
-       console.log(data);
+      //  console.log(data);
       // alert("Saved successfully");
 
       this.msgObj["type"] = "success";

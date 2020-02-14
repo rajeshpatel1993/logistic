@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import * as uuid from 'uuid';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'ngx-edit-vehicle',
   templateUrl: './edit-vehicle.component.html',
@@ -25,9 +25,11 @@ export class EditVehicleComponent implements OnInit {
   public selectedFiles: any[] = [];
   public workLocationsList: any[] = [];
   public vehicleData:any[] = [];
+  public msgObj ={};
+  public dialogBox : boolean = false;
 
   // public documentSpecification: FormArray;
-  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute) { }
+  constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute, private router: Router) { }
   public vehicleCode: String;
   public vehicleTypes = [];
   public billfileuniqueid = uuid.v4();
@@ -65,9 +67,7 @@ export class EditVehicleComponent implements OnInit {
     this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehiclesTypes();
     this.createForm(this.showExtraField);
-    this.loadModelsData();
     this.loadColorsData();
-    this.loadFuelTypeData();
     this.loadFuelMesaurementData();
     this.loadAgentsData();
     this.loadOwnershipdata();
@@ -183,8 +183,16 @@ uploadImage(){
   }
 
 
-  public loadModelsData(){
-    this.vehicleService.loadModelsData().subscribe((modelData:any) => {
+
+  selectMeasurement(fuelMeasurementId){
+    let measureMentId = fuelMeasurementId.id;
+    this.fuelTypeList = [];
+    this.loadFuelTypeData(measureMentId);
+    // this.loadFuelTypeData(measureMentId);
+  }
+
+  public loadModelsData(brandId){
+    this.vehicleService.loadModelsData(brandId).subscribe((modelData:any) => {
       let modelsData = modelData.data;
       modelsData.forEach((item,index) => {
         let tmpObj = {};
@@ -211,8 +219,8 @@ uploadImage(){
 
   }
 
-  public loadFuelTypeData(){
-    this.vehicleService.loadFuelTypeData().subscribe((fuelTypeData:any) => {
+  public loadFuelTypeData(measureMentId){
+    this.vehicleService.loadFuelTypeData(measureMentId).subscribe((fuelTypeData:any) => {
       let fuelTypesData = fuelTypeData.data;
       fuelTypesData.forEach((item,index) => {
         let tmpObj = {};
@@ -316,7 +324,7 @@ uploadImage(){
  public image;
  public uniqueFileId;
  public uniqueImageId;
-
+ public currentVehcileType;
 
 
   loadVehicle(){
@@ -350,7 +358,7 @@ uploadImage(){
       this.note = this.vehicleData['note'];
       this.uniqueFileId = this.vehicleData['bill_file_unique_id'];
       this.uniqueImageId = this.vehicleData['image_file_unique_id'];
-
+      this.currentVehcileType = this.vehicleData['vehicleTypes'][0].vehicleType;
 
 
 
@@ -390,10 +398,9 @@ uploadImage(){
        this.vehicleForm.get("image_file_unique_id").patchValue(this.uniqueImageId);
        this.vehicleForm.get("bill_file_unique_id").patchValue(this.uniqueFileId);
 
+      this.vehicleForm.get("vehType").patchValue(this.currentVehcileType);
 
-
-       this.loadBrandsData(this.vehicleData['vehicle_type']);
-       this.loadVehicleDetails(this.vehicleData['vehicle_type']);
+      //  this.loadBrandsData(this.vehicleData['vehicle_type']);
 
 
       console.log(d);
@@ -406,6 +413,7 @@ uploadImage(){
   createForm(showExtraField) {
     let group = {
       // vehicleT:[],
+      vehType: [],
       vehicleId: [this.vehicleId],
       vehicleTypef: [],
       vehicledetails: [],
@@ -453,14 +461,23 @@ uploadImage(){
 
 
   updateVehicle(){
-    console.log(this.selectedVehicleT);
 
-    console.log(this.vehicleForm.value);
 
    this.vehicleService.updateVehicle(this.vehicleForm.value).subscribe((data)=>{
-       console.log(data);
-      alert("Saved successfully");
-    },(error)=>{});
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully Updated";
+      this.dialogBox = true;
+
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/vehicles/list');
+    }, 2000);
+    
+    },(error)=>{
+
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] =error.error.errmsg;
+      this.dialogBox = true;
+    });
     // console.log(this.vehicleForm.value);
   }
 
@@ -517,6 +534,8 @@ uploadImage(){
     this.vehicleForm.get("vehicleTypef").patchValue(item);
 
     this.loadVehicleDetails(item.id);
+    this.loadBrandsData(item.id);
+
 
     if(item.id == 1 || item.id ==2){
       this.showExtraField = true;
@@ -565,6 +584,13 @@ uploadImage(){
       console.log(err);
     });
 
+  }
+
+
+  selectBrand(brand){
+    let brandId = brand.id;
+    this.modelsList = [];
+    this.loadModelsData(brandId);
   }
 
 

@@ -77,6 +77,7 @@
                 <th> Project </th>
                 <th>Fuel Limit </th>
                 <th>Action</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -103,29 +104,51 @@
                     </div>
                   </div>
                 </td>
-                <td>{{ item.assignMentStatus == 1 ? 'Assigned' : 'Not Assigned' }}</td>
                 <ng-container *ngIf="item.assign_data; then assignedContent else otherContent"></ng-container>
 
                 <ng-template #assignedContent >
-                  
-                  <td> {{item.assign_data.employee.firstName}}</td>
+                  <td>Assigned</td>
+
+                  <td> {{item.assign_data.employee?.firstName}}</td>
                   <td>{{item.assign_data.assignmentStartDate | date}}</td>
-                  <td>{{item.assign_data.workLocations.workLocation}}</td>
-                  <td>{{item.assign_data.projects.projectName}}</td>
+                  <td>{{item.assign_data.workLocations?.workLocation}}</td>
+                  <td>{{item.assign_data.projectsType.projectTypeName}}</td>
                   <td>{{item.assign_data.fuelLimit}}</td>
-                
+                  <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details/{{item._id}}/1">Reassign</a></td>
+
                 </ng-template>
                 <ng-template #otherContent >
-                  
+                  <td>Unassigned</td>
+
                   <td> </td>
                   <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
+                  <td>
+                    <a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details/{{item._id}}/0">Assign</a>
+                  
+                  
+                      
+                      
+                  </td>
+
+
                 
                 </ng-template>
-              
-                <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details/{{item._id}}">Assign</a></td>
+                
+
+
+                <td>
+                  <button class="btn btn-default p-0" (click)="deleteAssignVehicle(item._id)">
+
+                    <i class="fas fa-trash-alt text-danger">
+                      <!-- Delete -->
+
+                    </i>
+                  </button>
+                </td>
+                
               </tr>
               
             </tbody>

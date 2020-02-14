@@ -9,6 +9,8 @@ const assignVechicleSchema = new mongoose.Schema ({
     employee:{type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
     vehicle: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
     projects: {type: mongoose.Schema.Types.ObjectId, ref: 'Project'},
+    projectsType: {type: mongoose.Schema.Types.ObjectId, ref: 'ProjectType'},
+
     // vehicle_code: {
     //     type: String
     // },
@@ -37,9 +39,11 @@ const assignVechicleSchema = new mongoose.Schema ({
     },
     note: {
         type: String
+    }, 
+    isDeleted: {
+        type: Number,
+        default: 0
     }
-    
-    
     // ,
     // statusId :{
     //     type: String,
