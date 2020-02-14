@@ -67,7 +67,7 @@ const routes: Routes = [{
   component: AssignVehicleComponent
 },
 {
-  path: 'assign-vehicle-details/:id',
+  path: 'assign-vehicle-details/:id/:isReassigned',
   component: AssignVehicleDetailsComponent
 }
 ];

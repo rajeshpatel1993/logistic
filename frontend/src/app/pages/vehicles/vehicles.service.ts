@@ -129,4 +129,9 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/last-vech-id/"+vehicleType);
     
   }
+
+  deleteAssignVehicle(vehicleId){
+    return this.http.post(this.baseUrl+"/vehicles/assignVehicle/delete", {"id":vehicleId});
+
+  }
 }
