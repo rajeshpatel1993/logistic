@@ -89,8 +89,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Reports',
     icon: {
-      icon: 'bell',
-      pack: 'regular'},
+      icon: 'file-contract',
+      pack: 'solid'},
     link: '/pages/reports/list',
     home: true,
   }
