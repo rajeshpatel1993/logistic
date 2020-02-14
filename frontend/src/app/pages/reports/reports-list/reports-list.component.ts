@@ -4,6 +4,7 @@ import { VehicleService } from '../../vehicles/vehicles.service';
 import { VehicleExpenseService } from '../../vehicle-expense/vehicleexpense.service';
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 
 
 @Component({
@@ -32,7 +33,49 @@ export class ReportsListComponent implements OnInit {
   public selectedItem = '';
   public selectedPage = '';
 
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
+  selected: any;
+  alwaysShowCalendars: boolean;
+  showRangeLabelOnInput: boolean;
+  keepCalendarOpeningWithRange: boolean;
+  maxDate: moment.Moment;
+  minDate: moment.Moment;
+  invalidDates: moment.Moment[] = [];
+  ranges: any = {
+    Today: [moment(), moment()],
+    Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+    'This Month': [moment().startOf('month'), moment().endOf('month')],
+    'Last Month': [
+      moment()
+        .subtract(1, 'month')
+        .startOf('month'),
+      moment()
+        .subtract(1, 'month')
+        .endOf('month')
+    ],
+    'Last 3 Month': [
+      moment()
+        .subtract(3, 'month')
+        .startOf('month'),
+      moment()
+        .subtract(1, 'month')
+        .endOf('month')
+    ]
+  };
+
+  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { 
+    this.maxDate = moment().add(2,  'weeks');
+    this.minDate = moment().subtract(3, 'days');
+
+    this.alwaysShowCalendars = true;
+    this.keepCalendarOpeningWithRange = true;
+    this.showRangeLabelOnInput = true;
+    this.selected = {startDate: moment().subtract(1, 'days'), endDate: moment().subtract(1, 'days')};
+    setTimeout(() => {
+      this.invalidDates = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
+    }, 5000);
+  }
 
   ngOnInit() {
     this.loadVehiclesTypes();
@@ -153,5 +196,21 @@ export class ReportsListComponent implements OnInit {
   open(dialog:any) {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
+
+
+
+
+
+  isInvalidDate = (m: moment.Moment) =>  {
+    return this.invalidDates.some(d => d.isSame(m, 'day') );
+  }
+
+  rangeClicked(range) {
+    console.log('[rangeClicked] range is : ', range);
+  }
+  datesUpdated(range) {
+    console.log('[datesUpdated] range is : ', range);
+  }
+
 
 }
