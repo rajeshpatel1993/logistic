@@ -107,9 +107,9 @@
                 <ng-container *ngIf="item.assign_data; then assignedContent else otherContent"></ng-container>
 
                 <ng-template #assignedContent >
-                  <td>Assigned</td>
+                  <td style="color:green;">Assigned</td>
 
-                  <td> {{item.assign_data.employee?.firstName}}</td>
+                  <td><img [src]="item['assign_data']['employee']['empImage']" width="200"/> Emp name:- {{item.assign_data.employee?.firstName}} Emp Code:- {{item.assign_data.employee?.employeeCode}}</td>
                   <td>{{item.assign_data.assignmentStartDate | date}}</td>
                   <td>{{item.assign_data.workLocations?.workLocation}}</td>
                   <td>{{item.assign_data.projectsType.projectTypeName}}</td>
@@ -118,7 +118,7 @@
 
                 </ng-template>
                 <ng-template #otherContent >
-                  <td>Unassigned</td>
+                  <td style="color: orange;">Unassigned</td>
 
                   <td> </td>
                   <td></td>
