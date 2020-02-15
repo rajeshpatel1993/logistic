@@ -38,7 +38,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Expenses',
     icon: {
-      icon: 'headset',
+      icon: 'file-invoice-dollar',
       pack: 'solid'},
     link: '/pages/expenses/list',
     home: true,
