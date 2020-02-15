@@ -38,7 +38,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Expenses',
     icon: {
-      icon: 'headset',
+      icon: 'file-invoice-dollar',
       pack: 'solid'},
     link: '/pages/expenses/list',
     home: true,
@@ -89,8 +89,8 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Reports',
     icon: {
-      icon: 'bell',
-      pack: 'regular'},
+      icon: 'file-contract',
+      pack: 'solid'},
     link: '/pages/reports/list',
     home: true,
   }
