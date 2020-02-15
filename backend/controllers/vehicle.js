@@ -649,6 +649,11 @@ router.get("/vehicleStatusWithCount", async(req,res)=>{
 router.get("/vehicleAssignNotAssignCount", async(req,res)=>{
     let statusArr = [];
     let aggregate = [
+        {
+            $match: {
+                "isDeleted":"0"
+            }
+        },
         {"$group":{_id:"$assignMentStatus", count: {$sum:1}}}
     ];
     try{
