@@ -21,6 +21,7 @@ import { VehicleServiceDetailsComponent } from './vehicle-service-details/vehicl
 import { ServiceComponent } from './service.component';
 import { CustomCommonModule } from '../custom-common.module';
 import { VehicleDetailSComponent } from './vehicle-detail/vehicle-details-s.component';
+import { EditVehicleServiceComponent } from './edit-vehicle-service/edit-vehicle-service.component';
 
 @NgModule({
   imports: [
@@ -45,8 +46,8 @@ import { VehicleDetailSComponent } from './vehicle-detail/vehicle-details-s.comp
     ServiceComponent,
     // JwPaginationComponent,
     VehicleServiceDetailsComponent,
-    VehicleDetailSComponent
-    // DailogBoxComponent
+    VehicleDetailSComponent,
+    EditVehicleServiceComponent
   ],
   providers: [
     VehicleservService

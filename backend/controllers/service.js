@@ -20,6 +20,80 @@ router.get("/types", async(req,res)=>{
     }
 });
 
+
+router.post("/update-service/:serviceId", async (req, res)=> {
+    let serviceID = req.params.serviceId;
+    try{
+        // console.log(req.body);
+        let filesurls = [];
+        let imageurls = [];
+        let {vehicle_type, vehicle, service_type,odometer,completion_date_time, start_date, vendor, 
+            reference, description, amount, attachments, images, in_charge, comment} = req.body;
+    
+        let serviceFiles = await File.find({fileId:attachments }).select("s3Urls");
+        if(serviceFiles.length > 0){
+            filesurls = serviceFiles[0].s3Urls; 
+        }
+
+        let imageFiles = await File.find({fileId:images }).select("s3Urls");
+        // console.log(imageFiles);
+        if(imageFiles.length > 0){
+            imageurls = imageFiles[0].s3Urls; 
+        }
+
+
+        const query = {"_id":serviceID};
+
+        
+        const update = {
+            odometer: odometer,
+            completion_date_time : completion_date_time , 
+            start_date : start_date, vendor :vendor, reference : reference, description:description, amount: amount, attachments : filesurls , images : imageurls,
+           comments: comment
+       
+       };
+
+        if(vehicle_type && typeof vehicle_type != "string"){
+            update["vehicleType"] = vehicle_type._id;
+        }
+
+        if(vehicle && typeof vehicle != "string"){
+            update["vehicle"] = vehicle.id;
+        }
+
+        if(service_type && typeof service_type != "string"){
+            update["serviceType"] = service_type.id;
+        }
+
+        if(in_charge && typeof in_charge != "string"){
+            update["employee"] = in_charge.id;
+        }
+
+        const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+        let saveData = await ServiceTask.findOneAndUpdate(query, update, options);
+
+
+        // const vehicle_service_instance = new ServiceTask({vehicleType:vehicle_type._id, vehicle: vehicle.id, serviceType : service_type.id , odometer: odometer,
+        //      completion_date_time : completion_date_time , 
+        //      start_date : start_date, vendor :vendor, reference : reference, description:description, amount: amount, attachments : filesurls , images : imageurls,
+        //      employee : in_charge.id,  comments: comment
+        
+        // });
+        // let saveData = await vehicle_service_instance.save();
+        if(saveData){
+            res.status(200).json({"msg":"saved successfully"});
+        }
+
+
+    }catch(err){
+        console.log(err);
+    }
+    
+    
+});
+
+
+
 router.post("/add", async (req, res)=> {
     try{
         // console.log(req.body);
@@ -40,12 +114,14 @@ router.post("/add", async (req, res)=> {
         }
 
 
-        const vehicle_service_instance = new ServiceTask({vehicleType:vehicle_type._id, vehicle: vehicle.id, serviceType : service_type.id , odometer: odometer,
+        const vehicle_service_instance = new ServiceTask(
+            {vehicleType:vehicle_type._id, vehicle: vehicle.id, serviceType : service_type.id , odometer: odometer,
              completion_date_time : completion_date_time , 
              start_date : start_date, vendor :vendor, reference : reference, description:description, amount: amount, attachments : filesurls , images : imageurls,
              employee : in_charge.id,  comments: comment
         
-        });
+        }
+        );
         let saveData = await vehicle_service_instance.save();
         if(saveData){
             res.status(200).json({"msg":"saved successfully"});
@@ -94,6 +170,21 @@ router.post("/deleteService", async (req, res) => {
         console.log(error);
     }
 });
+
+
+router.get("/vehicleService/:serviceId", async (req, res) => {
+    const id = req.params.serviceId; //or use req.param('id')
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    let vehicleServiceData = await ServiceTask.findOne(filter).populate('employee').populate('vehicleType').populate('vehicle').populate('serviceType');
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicleServiceData;
+    res.status(200).json(responseData);
+    
+
+
+});
+
 
 
 

@@ -165,6 +165,10 @@ export class VehicleServiceComponent implements OnInit {
     }
     );
   }
+  editService(vehicleId){
+    
+    this.router.navigateByUrl('/pages/services/edit-vehicle-service/'+vehicleId);
+  }
 
 
 }

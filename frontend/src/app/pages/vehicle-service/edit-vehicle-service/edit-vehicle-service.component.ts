@@ -6,16 +6,17 @@ import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import * as uuid from 'uuid';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'ngx-vehicle-service-details',
-  templateUrl: './vehicle-service-details.component.html',
-  styleUrls: ['./vehicle-service-details.component.scss']
+  selector: 'ngx-edit-vehicle-service-details',
+  templateUrl: './edit-vehicle-service.component.html',
+  styleUrls: ['./edit-vehicle-service.component.scss']
 })
-export class VehicleServiceDetailsComponent implements OnInit {
+export class EditVehicleServiceComponent implements OnInit {
 
   public vehicleServiceForm: FormGroup;
-  public vehicleId : string;
+  public serviceId : string;
   public vehicleData:any[] = [];
   public vehicleTypesData:any[] = [];
   public vehicleNamesData:any[] = [];
@@ -36,7 +37,7 @@ export class VehicleServiceDetailsComponent implements OnInit {
   public msgObj ={};
   public dialogBox : boolean = false;
   public submitted = false;
-
+  public serviceSubscription: Subscription;
 
   keyword = 'name';
   public billfileuniqueid = uuid.v4();
@@ -45,12 +46,14 @@ export class VehicleServiceDetailsComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
-    this.vehicleId = this.activeRoute.snapshot.params.id;
+    this.serviceId = this.activeRoute.snapshot.params.id;
     this.loadVehiclesTypes();
     this.createForm();
     this.loadEmployee();
     this.loadWorkLocations();
     this.loadServiceType();
+
+    this.loadVehicleServiceD(this.serviceId);
   }
 
   getMsg(val){
@@ -60,6 +63,35 @@ export class VehicleServiceDetailsComponent implements OnInit {
 
 
 
+  loadVehicleServiceD(serviceId){
+
+    this.serviceSubscription = this.vehicleservService.loadServiceData(this.serviceId).subscribe((d)=>{
+      let serviceData = d["data"];
+      this.vehicleServiceForm.get("vehicle_type").patchValue(serviceData.vehicleType.vehicleType);
+      this.vehicleServiceForm.get("vehicle").patchValue(serviceData.vehicle.name);
+      this.vehicleServiceForm.get("service_type").patchValue(serviceData.serviceType.serviceTaskName);
+      this.selectEventVehicle({id: serviceData.vehicle._id});
+      this.vehicleServiceForm.get("odometer").patchValue(serviceData.odometer);
+      this.vehicleServiceForm.get("completion_date_time").patchValue(new Date(serviceData.completion_date_time));
+      this.vehicleServiceForm.get("start_date").patchValue(new Date(serviceData.start_date));
+      this.vehicleServiceForm.get("vendor").patchValue(serviceData.vendor);
+      this.vehicleServiceForm.get("reference").patchValue(serviceData.reference);
+      this.vehicleServiceForm.get("description").patchValue(serviceData.description);
+      this.vehicleServiceForm.get("amount").patchValue(serviceData.amount);
+      this.vehicleServiceForm.get("in_charge").patchValue(serviceData.employee.firstName);
+      this.vehicleServiceForm.get("comment").patchValue(serviceData.comments);
+
+
+
+
+
+
+
+    },(error)=>{
+
+    });
+
+  }
 
   loadWorkLocations(){
     this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
@@ -277,7 +309,7 @@ export class VehicleServiceDetailsComponent implements OnInit {
   }
   
   
-  addService(){
+  updateService(){
     this.submitted = true;
     if (this.vehicleServiceForm.invalid) {
       alert("Please fill all required field");
@@ -285,12 +317,12 @@ export class VehicleServiceDetailsComponent implements OnInit {
     }
     
     // console.log(this.vehicleServiceForm.value);
-    this.vehicleservService.addService(this.vehicleServiceForm.value).subscribe((data)=>{
+    this.vehicleservService.updateService(this.vehicleServiceForm.value, this.serviceId).subscribe((data)=>{
       //  console.log(data);
       // alert("Saved successfully");
 
       this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully Added";
+      this.msgObj["message"] = "successfully Updated";
       this.dialogBox = true;
 
       setTimeout( ()=> {

@@ -126,7 +126,7 @@
 
                 <td><button class="btn btn-default p-0" (click)="deleteVehicle(item._id)">
                   <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
-                  (click)="editVehicle(item._id)"><i class="fas fa-edit text-primary"></i></button>
+                  (click)="editService(item._id)"><i class="fas fa-edit text-primary"></i></button>
                 </td>
 
                 <!-- <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/vehicle-service-details/{{item._id}}">Service</a></td> -->
@@ -156,7 +156,7 @@
                 class="page-link"><i class="fas fa-angle-right"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-              <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{ page: pager.totalPages }"
+              <a [routerLink]="['/pages/services/list']" [queryParams]="{ page: pager.totalPages }"
                 class="page-link"><i class="fas fa-angle-double-right"></i></a>
             </li>
           </ul>
