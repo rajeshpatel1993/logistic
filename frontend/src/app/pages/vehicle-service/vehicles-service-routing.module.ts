@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {VehicleServiceComponent} from './vehicle-service/vehicle-service.component'
 import { VehicleServiceDetailsComponent } from './vehicle-service-details/vehicle-service-details.component'
 import { ServiceComponent } from './service.component';
+import { EditVehicleServiceComponent } from './edit-vehicle-service/edit-vehicle-service.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,10 +18,10 @@ const routes: Routes = [{
         path: 'add-service',
         component: VehicleServiceDetailsComponent
       },
-      // {
-      //   path: 'edit-vehicle/:id',
-      //   component: EditVehicleComponent
-      // }
+      {
+        path: 'edit-vehicle-service/:id',
+        component: EditVehicleServiceComponent
+      }
       
     // {
     //   path: 'stepper',

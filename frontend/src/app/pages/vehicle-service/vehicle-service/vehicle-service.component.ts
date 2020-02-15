@@ -66,9 +66,7 @@ export class VehicleServiceComponent implements OnInit {
   public loadVehicles(page?){
     let p = page || 1;
     this.vehicleService.loadAssignVehicles(p).subscribe((vehicleData:any)=>{
-     this.vehiclesList = vehicleData.data;
-     console.log(this.vehiclesList);
-     
+     this.vehiclesList = vehicleData.data;     
      this.totalItems, this.pageOfItems = vehicleData.data; 
      this.pager = vehicleData.page;
     //  this.pageOfItems = vehicleData.data;
@@ -152,5 +150,25 @@ export class VehicleServiceComponent implements OnInit {
   open(dialog:any) {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
+
+
+
+  deleteVehicle(vehicleId){
+    this.vehicleservService.deleteVehicle({id:vehicleId}).subscribe((d) =>{
+      this.activeRoute.queryParams.subscribe(queryParams => {
+        this.loadServicesData(queryParams.page);
+      });
+
+     
+    },(error) => {
+      console.log(error);
+    }
+    );
+  }
+  editService(vehicleId){
+    
+    this.router.navigateByUrl('/pages/services/edit-vehicle-service/'+vehicleId);
+  }
+
 
 }

@@ -53,4 +53,16 @@ export class VehicleservService {
   loadVehicleIssueStatus(){
     return this.http.get(this.baseUrl+"/expenses/vehicleIssueStatus");
   }
+
+  loadServiceData(serviceid){
+    return this.http.get(this.baseUrl+"/service/vehicleService/"+serviceid);
+  }
+
+  deleteVehicle(data) {
+    return this.http.post(this.baseUrl+"/service/deleteService", data);
+  }
+
+  updateService(data,id){
+    return this.http.post(this.baseUrl+"/service/update-service/"+id, data);
+  }
 }
