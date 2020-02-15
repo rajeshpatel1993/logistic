@@ -23,6 +23,10 @@ const serviceTaskSchema = new mongoose.Schema ({
     amount: {
         type: String
     },
+    isDeleted: {
+        type: Number,
+        default: 0
+    },
     attachments:[],
     images: [],
     employee:{type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},

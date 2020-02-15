@@ -69,7 +69,7 @@ router.get("/vehicle_services",async(req,res) => {
        
         const nooitems = await ServiceTask.countDocuments();
         const pager = paginate(nooitems, page,resPerPage);
-        let serviceTaskData = await ServiceTask.find().populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType').skip(skipd).limit(resPerPage);
+        let serviceTaskData = await ServiceTask.find({"isDeleted": 0}).populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType').skip(skipd).limit(resPerPage);
         let responseData = {};
         responseData["status"] = 200;
         responseData["page"] = pager;
@@ -80,6 +80,20 @@ router.get("/vehicle_services",async(req,res) => {
     }
 });
 
+router.post("/deleteService", async (req, res) => {
+    try{
+
+        let {id} = req.body;
+        const filter = { _id: mongoose.Types.ObjectId(id) };
+        const update = { "isDeleted": 1 };
+        let updateVehicle = await ServiceTask.findOneAndUpdate(filter, update);
+        res.status(200).json({"msg":"saved successfully"});
+        // console.log(updateVehicle);
+
+    }catch(error){
+        console.log(error);
+    }
+});
 
 
 
