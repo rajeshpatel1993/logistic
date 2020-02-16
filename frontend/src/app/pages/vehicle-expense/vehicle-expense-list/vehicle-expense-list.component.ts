@@ -130,6 +130,20 @@ export class VehicleExpenseListComponent implements OnInit {
   }
 
 
+  deleteVehicleExpense(expenseId){
+    this.vehicleservService.deleteExpense({id:expenseId}).subscribe((d) =>{
+      this.activeRoute.queryParams.subscribe(queryParams => {
+        this.loadExpensesData(queryParams.page);
+      });
+
+     
+    },(error) => {
+      console.log(error);
+    }
+    );
+  }
+
+
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
     this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {

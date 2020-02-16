@@ -19,6 +19,10 @@ const expenseSchema = new mongoose.Schema ({
     issue_status:{type: mongoose.Schema.Types.ObjectId, ref: 'VehicleIssueStatus'},
     attachments:[],
     images: [],
+    isDeleted: {
+        type: Number,
+        default: 0
+    },
     note: {
         type: String
     }

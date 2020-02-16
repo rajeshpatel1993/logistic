@@ -65,4 +65,10 @@ export class VehicleservService {
   updateService(data,id){
     return this.http.post(this.baseUrl+"/service/update-service/"+id, data);
   }
+
+
+  deleteExpense(data) {
+    return this.http.post(this.baseUrl+"/expenses/deleteExpense", data);
+  }
+
 }

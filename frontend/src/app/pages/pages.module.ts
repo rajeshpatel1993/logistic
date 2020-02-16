@@ -25,7 +25,8 @@ import { DailogBoxComponent } from './dailog-box/dailog-box.component';
   ],
   declarations: [
     PagesComponent,
-    JwPaginationComponent,
+    JwPaginationComponent
+
     // DailogBoxComponent
   ],
   schemas: [
