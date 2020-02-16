@@ -77,7 +77,17 @@
           <table class="table table-hover mt-3">
             <thead>
               <tr>
-                <th>Vehicle</th>
+                <th>
+                  <table class="table p-0 m-0">
+                    <thead>
+                      <tr>
+                        <th class="pt-0 pb-0 border-0">Vehicle</th>
+                        <th class="pt-0 pb-0 border-0">Type</th>
+                        <th  class="pt-0 pb-0 border-0">Status</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </th>
                 <th>service Type </th>
                 <th>Completion Date</th>
                 <th>Employee </th>
@@ -91,6 +101,7 @@
               <tr *ngFor="let item of vehiclesList">
                 <td>
                   <ngx-vehicle-detail-s [vehicleId]="item.vehicle._id"></ngx-vehicle-detail-s>
+                  
                 </td>
                 <td>
 
@@ -107,8 +118,8 @@
                       <img [src]="item['employee']['empImage']" width="60"/>
                     </div>
                     <div class="VehicleDetail_name">
-                      <h5>Emp name:- {{item.employee?.firstName}}</h5>
-                      <p>Emp Code:- {{item.employee?.employeeCode}}</p>
+                      <h5>Name:- {{item.employee?.firstName}}</h5>
+                      <p>Code:- {{item.employee?.employeeCode}}</p>
                     </div>
                   </div>
 
