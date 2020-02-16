@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {VehicleExpenseListComponent} from './vehicle-expense-list/vehicle-expense-list.component'
 import { VehicleExpenseDetailsComponent } from './vehicle-expense-details/vehicle-expense-details.component'
 import { ExpenseComponent } from './expense.component';
+import { EditVehicleExpenseComponent } from './edit-vehicle-expense/edit-vehicle-expense.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,11 +17,11 @@ const routes: Routes = [{
       {
         path: 'add-expense',
         component: VehicleExpenseDetailsComponent
+      },
+      {
+        path: 'edit-vehicle-expense/:id',
+        component: EditVehicleExpenseComponent
       }
-      // {
-      //   path: 'add-vehicle',
-      //   component: AddVehicleComponent
-      // },
       // {
       //   path: 'edit-vehicle/:id',
       //   component: EditVehicleComponent
