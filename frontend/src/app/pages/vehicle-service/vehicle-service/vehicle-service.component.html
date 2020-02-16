@@ -101,13 +101,6 @@
               <tr *ngFor="let item of vehiclesList">
                 <td>
                   <ngx-vehicle-detail-s [vehicleId]="item.vehicle._id"></ngx-vehicle-detail-s>
-                  <!-- <table class="table">
-                    <tbody>
-                      <tr>
-                        
-                      </tr>
-                    </tbody>
-                  </table> -->
                   
                 </td>
                 <td>
@@ -125,8 +118,8 @@
                       <img [src]="item['employee']['empImage']" width="60"/>
                     </div>
                     <div class="VehicleDetail_name">
-                      <h5>Emp name:- {{item.employee?.firstName}}</h5>
-                      <p>Emp Code:- {{item.employee?.employeeCode}}</p>
+                      <h5>Name:- {{item.employee?.firstName}}</h5>
+                      <p>Code:- {{item.employee?.employeeCode}}</p>
                     </div>
                   </div>
 

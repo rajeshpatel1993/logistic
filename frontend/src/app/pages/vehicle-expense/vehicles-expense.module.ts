@@ -19,6 +19,7 @@ import { ExpenseComponent } from './expense.component';
 import { VehicleExpenseDetailsComponent } from './vehicle-expense-details/vehicle-expense-details.component';
 import { CustomCommonModule } from '../custom-common.module';
 import { VehicleservService } from '../vehicle-service/vehicleserv.service';
+import { EditVehicleExpenseComponent } from './edit-vehicle-expense/edit-vehicle-expense.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { VehicleservService } from '../vehicle-service/vehicleserv.service';
   declarations: [
     VehicleExpenseListComponent,
     VehicleExpenseDetailsComponent,
-    ExpenseComponent
+    ExpenseComponent,
+    EditVehicleExpenseComponent
     // ,
     // VehicleServiceDetailsComponent
   ],

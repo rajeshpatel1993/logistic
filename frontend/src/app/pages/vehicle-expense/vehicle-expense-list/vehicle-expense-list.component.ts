@@ -167,4 +167,9 @@ export class VehicleExpenseListComponent implements OnInit {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
 
+  editVehicleExpense(expenseId){
+    
+    this.router.navigateByUrl('/pages/expenses/edit-vehicle-expense/'+expenseId);
+  }
+
 }
