@@ -81,43 +81,29 @@
                 <th>Vehicle</th>
                 <th>Date </th>
                 <th>Details</th>
+                <th>ExpenseType</th>
                 <th>Vendor </th>
                 <th>Amount</th>
-                <!-- <th>Action</th> -->
+                <th>Vehicle Issue Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of vehiclesList">
                 <td>
-                  <ng-template #dialog let-data let-ref="dialogRef">
-                    <nb-card class="popupImage">
-                      <nb-card-body>
-                        <img src="{{item.vehicle.vehicleImage}}" alt=" ">
-                        <button nbButton class="popupClose" (click)="ref.close()"><i
-                            class="fas fa-times-circle"></i></button>
-                      </nb-card-body>
+                  <ngx-vehicle-detail-s [vehicleId]="item.vehicle._id"></ngx-vehicle-detail-s>
 
-                    </nb-card>
-                  </ng-template>
-                  <div class="VehicleDetail">
-                    <div class="VehicleDetail_image">
-                      <img nbButton (click)="open(dialog)" src="{{item.vehicle.vehicleImage}}" width="80">
-                    </div>
-                    <div class="VehicleDetail_name">
-                      <h5>{{item.vehicle.name}}</h5>
-                      <h6><b>Code:</b> {{item.vehicle.vehicle_code}}</h6>
-                      <p><b>Reg/Ser No.:</b> {{item.vehicle.regNo}}</p>
-                      <!-- <p><b>Status.:</b> {{item.regNo}}</p> -->
-                    </div>
-                  </div>
                 </td>
                 <td>
 
-                  {{item.expense_date}}
+                  {{item.expense_date | date}}
 
                 </td>
                 <td>
                   {{item.details}}
+                </td>
+                <td>
+                  {{item.expense_type.expenseType}}
                 </td>
                 <td>
                   {{item.vendor}}
@@ -126,8 +112,13 @@
                   {{item.amount}}
                 </td>
 
-                <!-- <td><a class="btn btn-primary" href="javascript:void(0)"
-                    routerLink="/pages/vehicles/vehicle-service-details/{{item._id}}">Service</a></td> -->
+                <td>
+                  {{item.issue_status. vehicleIssueStatus}}
+                </td>
+
+                <button class="btn btn-default p-0" (click)="deleteVehicleExpense(item._id)">
+                  <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
+                  (click)="editVehicleExpense(item._id)"><i class="fas fa-edit text-primary"></i></button>
               </tr>
 
             </tbody>
@@ -136,24 +127,24 @@
         <div class="card-footer pb-0 pt-3 pb-3">
           <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
-              <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{page: 1}" class="page-link"><i
+              <a [routerLink]="['/pages/expenses/list']" [queryParams]="{page: 1}" class="page-link"><i
                   class="fas fa-angle-double-left"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
-              <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{ page: pager.currentPage - 1 }"
+              <a [routerLink]="['/pages/expenses/list']" [queryParams]="{ page: pager.currentPage - 1 }"
                 class="page-link"><i class="fas fa-angle-left"></i></a>
             </li>
             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
               class="page-item number-item">
-              <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{ page: page }"
+              <a [routerLink]="['/pages/expenses/list']" [queryParams]="{ page: page }"
                 class="page-link">{{page}}</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
-              <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{ page: pager.currentPage + 1 }"
+              <a [routerLink]="['/pages/expenses/list']" [queryParams]="{ page: pager.currentPage + 1 }"
                 class="page-link"><i class="fas fa-angle-right"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-              <a [routerLink]="['/pages/vehicles/assign-vehicles']" [queryParams]="{ page: pager.totalPages }"
+              <a [routerLink]="['/pages/expenses/list']" [queryParams]="{ page: pager.totalPages }"
                 class="page-link"><i class="fas fa-angle-double-right"></i></a>
             </li>
           </ul>

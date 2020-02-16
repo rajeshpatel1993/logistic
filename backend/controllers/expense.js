@@ -34,6 +34,24 @@ router.get("/vehicleIssueStatus", async(req,res)=>{
     }
 });
 
+
+router.post("/deleteExpense", async (req, res) => {
+    try{
+
+        let {id} = req.body;
+        const filter = { _id: mongoose.Types.ObjectId(id) };
+        const update = { "isDeleted": 1 };
+        let updateExpenses = await Expense.findOneAndUpdate(filter, update);
+        res.status(200).json({"msg":"deleted successfully"});
+        // console.log(updateVehicle);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
+
+
 router.post("/add", async (req, res)=> {
     try{
         // console.log(req.body);
@@ -82,7 +100,7 @@ router.get("/vehicle_expenses",async(req,res) => {
        
         const nooitems = await Expense.countDocuments();
         const pager = paginate(nooitems, page,resPerPage);
-        let expenseData = await Expense.find().populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type').skip(skipd).limit(resPerPage);
+        let expenseData = await Expense.find({"isDeleted": 0}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type').skip(skipd).limit(resPerPage);
         let responseData = {};
         responseData["status"] = 200;
         responseData["page"] = pager;

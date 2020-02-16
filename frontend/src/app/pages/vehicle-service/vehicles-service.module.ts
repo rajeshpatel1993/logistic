@@ -20,7 +20,6 @@ import { VehicleServiceDetailsComponent } from './vehicle-service-details/vehicl
 // import { DailogBoxComponent } from '../dailog-box/dailog-box.component';
 import { ServiceComponent } from './service.component';
 import { CustomCommonModule } from '../custom-common.module';
-import { VehicleDetailSComponent } from './vehicle-detail/vehicle-details-s.component';
 import { EditVehicleServiceComponent } from './edit-vehicle-service/edit-vehicle-service.component';
 
 @NgModule({
@@ -46,7 +45,6 @@ import { EditVehicleServiceComponent } from './edit-vehicle-service/edit-vehicle
     ServiceComponent,
     // JwPaginationComponent,
     VehicleServiceDetailsComponent,
-    VehicleDetailSComponent,
     EditVehicleServiceComponent
   ],
   providers: [
