@@ -41,6 +41,67 @@
 nb-sidebar .scrollable {
   padding: 0 5px;
 }
+.btn-primary{
+  background-color: #C2CC7F;
+  border-color: #C2CC7F;
+}
+nb-menu .menu-item{
+  a{
+    &.active{
+      color: #C2CC7F;
+      .menu-icon{
+        color: #C2CC7F;
+      }
+    }
+    &:hover{
+      color: #C2CC7F;
+      .menu-icon{
+        color: #C2CC7F;
+      }
+    }
+  }
+  .menu-icon{
+    font-size: 14px;
+  }
+}
+nb-tabset{
+  .tab{
+    &.active{
+      .tab-link{
+        color: #C2CC7F;
+        &::before{
+          background-color: #C2CC7F;
+        }
+      }
+    }
+    &:hover{
+      .tab-link{
+        color: #C2CC7F;
+        &::before{
+          background-color: #C2CC7F;
+        }
+      }
+    }
+  }
+}
+.VehicleAddTab{
+  .vehbgcolor{
+    .col-form-label{
+      color: #C2CC7F!important;
+    }
+  }
+}
+.page-item{
+  &.active{
+    .page-link{
+      background-color: #C2CC7F;
+      border-color: #C2CC7F;
+    }
+  }
+  .page-link{
+    color: #C2CC7F;
+  }
+}
 
 h5 {
   font-size: 14px;
@@ -327,6 +388,9 @@ a:focus {
   .EcommerceCol1 {
     width: 100%;
     flex: 1;
+    a{
+      color: #C2CC7F;
+    }
     .statusHeight {
       height: 405px;
       overflow-y: auto;

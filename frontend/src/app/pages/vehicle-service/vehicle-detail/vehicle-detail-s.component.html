@@ -1,14 +1,13 @@
-<div class="vehicleServiceDetail">
-  <ng-template #dialog let-data let-ref="dialogRef">
-    <nb-card class="popupImage">
-      <nb-card-body>
-        <img src="{{vehicleDetails.vehicleImage}}" alt=" ">
-        <button nbButton class="popupClose" (click)="ref.close()"><i
-            class="fas fa-times-circle"></i></button>
-      </nb-card-body>
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card class="popupImage">
+    <nb-card-body>
+      <img src="{{vehicleDetails.vehicleImage}}" alt=" ">
+      <button nbButton class="popupClose" (click)="ref.close()"><i class="fas fa-times-circle"></i></button>
+    </nb-card-body>
 
-    </nb-card>
-  </ng-template>
+  </nb-card>
+</ng-template>
+<td class="border-0">
   <div class="VehicleDetail">
     <div class="VehicleDetail_image">
       <img nbButton (click)="open(dialog)" src="{{vehicleDetails.vehicleImage}}" width="80">
@@ -17,22 +16,29 @@
       <h5>{{vehicleDetails.name}}</h5>
       <h6><b>Code:</b> {{vehicleDetails.vehicle_code}}</h6>
       <p><b>Reg/Ser No.:</b> {{vehicleDetails.regNo}}</p>
-      <b>Status.:</b> 
-       <p *ngFor="let vs of vehicleDetails.vehicleStatuss">
-       
-          <li class="text-info" *ngIf="vs.vehicleStatus == 'Working'"><i class="fas fa-wrench"></i> Working</li>
-          <li class="text-success" *ngIf="vs.vehicleStatus == 'Active'" ><i class="fas fa-check-circle"></i> Active</li>
-          <li class="text-warning" *ngIf="vs.vehicleStatus == 'In-Service'"><img src="assets/images/repair.png" alt=""> In-Service</li>
-          <li class="text-success" *ngIf="vs.vehicleStatus == 'Complaint'"><i class="fas fa-file-signature"></i> Complaint</li>
-          <li class="text-danger" *ngIf="vs.vehicleStatus == 'Accident'"><i class="fas fa-car-crash"></i> Accident</li>
-          <li class="text-danger" *ngIf="vs.vehicleStatus == 'Not-Working'"><i class="fas fa-times-circle"></i> Not Working</li>
-          <li class="text-success" *ngIf="vs.vehicleStatus == 'In-Active'" ><i class="fas fa-check-circle"></i> In Active</li>
-      
-      </p> 
-        <p *ngFor="let vt of vehicleDetails.vehicleTypes"><b>Vehicle Type:</b> {{vt.vehicleType}}</p>
-        <p *ngFor="let vd of vehicleDetails.vehicleDetailsArray"><b>Vehicle Details:</b> {{vd.vehicleDetails}}</p>
-
-
     </div>
   </div>
-</div>
+</td>
+<td class="border-0">
+  <div class="vehicleStatus">
+    <ul *ngFor="let vs of vehicleDetails.vehicleStatuss">
+
+      <li class="text-info" *ngIf="vs.vehicleStatus == 'Working'"><i class="fas fa-wrench"></i> Working</li>
+      <li class="text-success" *ngIf="vs.vehicleStatus == 'Active'"><i class="fas fa-check-circle"></i> Active</li>
+      <li class="text-warning" *ngIf="vs.vehicleStatus == 'In-Service'"><img src="assets/images/repair.png" alt="">
+        In-Service</li>
+      <li class="text-success" *ngIf="vs.vehicleStatus == 'Complaint'"><i class="fas fa-file-signature"></i> Complaint
+      </li>
+      <li class="text-danger" *ngIf="vs.vehicleStatus == 'Accident'"><i class="fas fa-car-crash"></i> Accident</li>
+      <li class="text-danger" *ngIf="vs.vehicleStatus == 'Not-Working'"><i class="fas fa-times-circle"></i> Not Working
+      </li>
+      <li class="text-success" *ngIf="vs.vehicleStatus == 'In-Active'"><i class="fas fa-check-circle"></i> In Active
+      </li>
+
+    </ul>
+  </div>
+</td>
+<td class="border-0">
+  <h6><span *ngFor="let vt of vehicleDetails.vehicleTypes">{{vt.vehicleType}}</span> - <span
+      *ngFor="let vd of vehicleDetails.vehicleDetailsArray">{{vd.vehicleDetails}}</span></h6>
+</td>
