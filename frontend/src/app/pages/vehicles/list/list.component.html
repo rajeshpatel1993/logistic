@@ -133,65 +133,157 @@
                       </div>
                     </td>
                     <td>
-                      {{getDateDifference(item.insuranceValid)}}
-                      <div class="workStatus">
-                        <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50">
-                          <div class="toolTip">
-                            <p>{{item.insuranceValid | date}}</p>
-                          </div>
-                        </span>
-                        <span class="pendingy"
-                          *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75">
-                          <div class="toolTip">
-                            <p>{{item.insuranceValid | date}}</p>
-                          </div>
-                        </span>
-                        <span class="pending"
-                          *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
-                          <div class="toolTip">
-                            <p>{{item.insuranceValid | date}}</p>
-
-                          </div>
-                        </span>
-                        <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
-                          <div class="toolTip">
-                            <p>{{item.insuranceValid | date}}</p>
-                          </div>
-                        </span>
+                    <div [ngSwitch] = "item.vehicle_typeId">
+                      <div *ngSwitchCase = "'1'"> 
+                        {{getDateDifference(item.insuranceValid)}}
+                        <div class="workStatus">
+                          <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+                            </div>
+                          </span>
+                          <span class="pendingy"
+                            *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+                            </div>
+                          </span>
+                          <span class="pending"
+                            *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+  
+                            </div>
+                          </span>
+                          <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+                            </div>
+                          </span>
+                        </div>
                       </div>
+                      <div *ngSwitchCase = "'2'"> 
+                        {{getDateDifference(item.insuranceValid)}}
+                        <div class="workStatus">
+                          <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+                            </div>
+                          </span>
+                          <span class="pendingy"
+                            *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+                            </div>
+                          </span>
+                          <span class="pending"
+                            *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+  
+                            </div>
+                          </span>
+                          <span class="danger" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
+                            <div class="toolTip">
+                              <p>{{item.insuranceValid | date}}</p>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div *ngSwitchCase = "'3'">
+                          <span>N.A.</span>
+                      </div>
+
+                      <div *ngSwitchCase = "'4'">
+                        <span>N.A.</span>
+                      </div>
+
+                    </div>
+                  
+                         
+                      
+                   
+                   
+                    
                     </td>
                     <td>
-                      {{getDateDifference(item.roadTaxValid)}}
-                      <div class="workStatus">
+                      <div [ngSwitch] = "item.vehicle_typeId">
 
-                        <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
-                          <div class="toolTip">
-                            <p>{{item.roadTaxValid | date}}</p>
+                        <div *ngSwitchCase = "'1'"> 
+                          {{getDateDifference(item.roadTaxValid)}}
+                          <div class="workStatus">
+    
+                            <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+                            <span class="pendingy"
+                              *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+                            <span class="pending"
+                              *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+                            <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+    
                           </div>
-                        </span>
-                        <span class="pendingy"
-                          *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75">
-                          <div class="toolTip">
-                            <p>{{item.roadTaxValid | date}}</p>
+                        </div>
+                        <div *ngSwitchCase = "'2'"> 
+                          {{getDateDifference(item.roadTaxValid)}}
+                          <div class="workStatus">
+    
+                            <span class="success" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+                            <span class="pendingy"
+                              *ngIf="getProgressBarValu(item.roadTaxValid) > 50 && getProgressBarValu(item.roadTaxValid) <= 75">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+                            <span class="pending"
+                              *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+                            <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90">
+                              <div class="toolTip">
+                                <p>{{item.roadTaxValid | date}}</p>
+                              </div>
+                            </span>
+    
+    
+                            <!-- <span class="success"></span> -->
+                            <!-- <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid)"></span> -->
+                            <!-- <span  class="danger"></span> -->
                           </div>
-                        </span>
-                        <span class="pending"
-                          *ngIf="getProgressBarValu(item.roadTaxValid) > 75 && getProgressBarValu(item.roadTaxValid) < 90">
-                          <div class="toolTip">
-                            <p>{{item.roadTaxValid | date}}</p>
-                          </div>
-                        </span>
-                        <span class="danger" *ngIf="getProgressBarValu(item.roadTaxValid) >= 90">
-                          <div class="toolTip">
-                            <p>{{item.roadTaxValid | date}}</p>
-                          </div>
-                        </span>
+                        </div>
+  
+                        <div *ngSwitchCase = "'3'">
+                            <span>N.A.</span>
+                        </div>
+  
+                        <div *ngSwitchCase = "'4'">
+                          <span>N.A.</span>
+                        </div>
 
 
-                        <!-- <span class="success"></span> -->
-                        <!-- <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid)"></span> -->
-                        <!-- <span  class="danger"></span> -->
                       </div>
+                     
                     </td>
                     <td>
                       {{getDateDifference(item.warrantyPeriod)}}

@@ -259,42 +259,63 @@ router.post("/add-assign", async (req, res)=> {
 router.post("/add", async (req, res)=> {
 // let {asset} = req.body;
 try{
+    // console.log(req.body);
 
     let imgUrl = "";
     let billUrls = "";
     let {vehicleTypef, vehicledetails, vehicleCode,vehicleName,regNo, model, brand, color, manufacture_year, engine_no, chasis_no, purchase_date, warranty_period, 
-        fuel_type, fuelMeausrement, insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry, 
-          bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
+        fuel_type, fuelMeausrement,bill_file_unique_id, image_file_unique_id, ownership_status, note, vehicleStatus, workLocation} = req.body;
+       
 
-     let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
-    //  console.log(vehicleImage)
-     if(vehicleImage.length > 0){
-        imgUrl = vehicleImage[0].s3Urls[0];
-     }
+        let vehicleImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+        //  console.log(vehicleImage)
+         if(vehicleImage.length > 0){
+            imgUrl = vehicleImage[0].s3Urls[0];
+         }
+         //Vehicle code,type, reg no or serial no, name
+        let qrCodeString = `Vehicle code: ${vehicleCode}\n Vehicle type: ${vehicleTypef.name}\n Reg no: ${regNo}\n Name: ${vehicleName}`;
+        let qrcodeURl = await qrCode.toDataURL(qrCodeString);
+         
+         let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+    
+         if(vehicleBills.length > 0){
+            billUrls = vehicleBills[0].s3Urls;
+        }
 
-     //Vehicle code,type, reg no or serial no, name
-     let qrCodeString = `Vehicle code: ${vehicleCode}\n Vehicle type: ${vehicleTypef.name}\n Reg no: ${regNo}\n Name: ${vehicleName}`;
-    let qrcodeURl = await qrCode.toDataURL(qrCodeString);
-     
-   
-     let vehicleBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+    let savedata = {vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
+        yearofManufacturer : manufacture_year, modelId : model.id, color : color.name,regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
+        warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,brandId: brand.id,
+        vehicleStatusId: vehicleStatus, workLocationId : workLocation.id,qrCode:qrcodeURl, note: note, vehicleBill:billUrls, vehicleImage: imgUrl
+    
+    };
 
-     if(vehicleBills.length > 0){
-        billUrls = vehicleBills[0].s3Urls;
+
+    
+    if(vehicleTypef.id == 1 || vehicleTypef.id == 2){
+        let {insurance_policy_no,insurance_amount,policy_expiry,insurance_agent,road_tax_no,road_tax_amount, road_tax_expiry} = req.body;
+        savedata['insuranceValid'] = policy_expiry;
+        savedata['insuranceNo'] = insurance_policy_no;
+        savedata['insuranceAmt'] = insurance_amount;
+        savedata['purchase_date'] = purchase_date;
+        savedata['insuranceCompanyId'] = insurance_agent.id;
+        savedata['roadTaxValid'] = road_tax_expiry;
+        savedata['roadTaxNo'] = road_tax_no;
+        savedata['roadTaxAmt'] = road_tax_amount;
     }
 
-        const vehicle_instance = new Vehicle({vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
-            yearofManufacturer : manufacture_year, modelId : model.id, color : color.name, vehicleImage:imgUrl, regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
-            warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,
-            insuranceValid: policy_expiry, insuranceNo : insurance_policy_no, insuranceAmt:insurance_amount, purchase_date: purchase_date,note: note,
-            insuranceCompanyId: insurance_agent.id, roadTaxValid : road_tax_expiry, roadTaxNo : road_tax_no, roadTaxAmt : road_tax_amount, brandId: brand.id,
-            vehicleStatusId: vehicleStatus, workLocationId : workLocation.id, vehicleBill: billUrls, bill_file_unique_id, image_file_unique_id
-            ,qrCode:qrcodeURl
+
+   
+    try{
+        const vehicle_instance = new Vehicle(savedata);
+     
+
+        let sData = await vehicle_instance.save();
+        res.status(200).send(sData);
         
-        });
-    let saveData = await vehicle_instance.save();
-    res.status(200).send(saveData);
-    
+    }catch(err){
+        console.log(err);
+    }
+ 
  
     // res.status(200).json(req.body);
 }catch(err){
