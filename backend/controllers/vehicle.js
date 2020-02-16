@@ -20,6 +20,7 @@ const {VehicleStatus} = require("../models/vehicleStatus");
 const {OwnerShip} = require("../models/ownership");
 const {WorkLocation} = require("../models/workLocation");
 const { upload } = require("../utils/upload_file_to_s3");
+const { ProjectType } = require("../models/projectType");
 
 const multer = require('multer');
 
@@ -632,6 +633,10 @@ router.get("/types", async(req,res)=>{
 });
 
 
+
+
+
+
 router.get("/workLocations", async(req,res)=>{
     try{
         let workLocationData = await WorkLocation.find().select("workLocationId  workLocation");
@@ -1102,6 +1107,44 @@ router.post("/assignVehicle/delete",async(req,res)=>{
 });
 
 
+
+
+router.get("/assignevechiclewitcount", async(req,res)=>{
+    try{
+        let tmpData = [];
+
+        let assignvehicledata = await AssignVehicle.aggregate([
+            {
+                "$match": {
+                    "projectsType": { 
+                        "$exists": true, 
+                        "$ne": null 
+                    }
+                }    
+            },
+            { 
+                  "$group" : {_id:"$projectsType", count:{$sum:1}}
+
+            }    
+        ]);
+
+        for(let i=0;i<assignvehicledata.length;i++){
+            let tmpObj = {};
+            let projectTypeData = await ProjectType.findOne(assignvehicledata[i]._id);
+            tmpObj["projectTypeName"] = projectTypeData.projectTypeName;
+            tmpObj["totalno"] = assignvehicledata[i].count;
+            tmpData.push(tmpObj);
+
+        }
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = tmpData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
 
 
 module.exports = router;

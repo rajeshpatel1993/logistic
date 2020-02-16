@@ -134,4 +134,8 @@ export class VehicleService {
     return this.http.post(this.baseUrl+"/vehicles/assignVehicle/delete", {"id":vehicleId});
 
   }
+
+  loadAssignedVehicleChartData(){
+    return this.http.get(this.baseUrl+"/vehicles/assignevechiclewitcount");
+  }
 }
