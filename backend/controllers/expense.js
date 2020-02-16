@@ -128,7 +128,7 @@ router.post("/add", async (req, res)=> {
             details, amount, issue_status, attachments, images, note} = req.body;
     
         let serviceFiles = await File.find({fileId:attachments }).select("s3Urls");
-        if(serviceFiles){
+        if(serviceFiles.length > 0){
             filesurls = serviceFiles[0].s3Urls; 
         }
 
