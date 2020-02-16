@@ -14,7 +14,7 @@ import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
   styleUrls: ['./edit-vehicle-expense.component.scss']
 })
 export class EditVehicleExpenseComponent implements OnInit {
-
+  public vehicleIssueStatusData:any[] = [];
   public vehicleExpenseForm: FormGroup;
   public expenseId : string;
   public vehicleData:any[] = [];
