@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import * as Highcharts from 'highcharts';
+import { VehicleService } from '../../vehicles/vehicles.service';
+import { Subscription } from 'rxjs';
 
 declare var require: any;
 let Boost = require('highcharts/modules/boost');
@@ -19,8 +21,9 @@ noData(Highcharts);
 })
 export class AssignVehicleChartComponent implements OnInit {
 
-
-  public options: any = {
+    public chartData:any[] = [];
+    public assignedVehicleChartSubscription : Subscription;
+    public options: any = {
     chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -28,10 +31,10 @@ export class AssignVehicleChartComponent implements OnInit {
         type: 'pie'
     },
     title: {
-        text: 'Browser market shares in January, 2018'
+        text: 'Assigned Vehicle based on Project Type'
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>{point.y}</b>'
     },
     accessibility: {
         point: {
@@ -49,46 +52,35 @@ export class AssignVehicleChartComponent implements OnInit {
         }
     },
     series: [{
-        name: 'Brands',
+        name: 'No of Vehicle',
         colorByPoint: true,
-        data: [{
-            name: 'Chrome',
-            y: 61.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Internet Explorer',
-            y: 11.84
-        }, {
-            name: 'Firefox',
-            y: 10.85
-        }, {
-            name: 'Edge',
-            y: 4.67
-        }, {
-            name: 'Safari',
-            y: 4.18
-        }, {
-            name: 'Sogou Explorer',
-            y: 1.64
-        }, {
-            name: 'Opera',
-            y: 1.6
-        }, {
-            name: 'QQ',
-            y: 1.2
-        }, {
-            name: 'Other',
-            y: 2.61
-        }]
+        data: this.chartData
     }]
 };
 
 
-  constructor() { }
+  constructor(public vehicleService: VehicleService) { }
 
   ngOnInit() {
-    Highcharts.chart('container', this.options);
+    this.loadAssignedVehicleChartData();
+    
+    
+  }
+
+  public loadAssignedVehicleChartData(){
+    this.assignedVehicleChartSubscription = this.vehicleService.loadAssignedVehicleChartData().subscribe((d)=>{
+        let dat = d["data"];
+        for(let i=0;i<dat.length;i++){
+            let tmpObj = {};
+            tmpObj["name"]=dat[i]["projectTypeName"];
+            tmpObj["y"] = dat[i]["totalno"];
+            this.chartData.push(tmpObj);
+        }
+        console.log(this.chartData);
+        Highcharts.chart('container', this.options);
+    },(err)=>{
+        console.log(err);
+    });
   }
 
 }
