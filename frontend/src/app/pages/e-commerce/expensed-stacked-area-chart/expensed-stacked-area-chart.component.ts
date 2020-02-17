@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Subscription } from 'rxjs';
 import { VehicleService } from '../../vehicles/vehicles.service';
+import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 
 declare var require: any;
 let Boost = require('highcharts/modules/boost');
@@ -22,7 +23,10 @@ noData(Highcharts);
 export class ExpensedStackedAreaChartComponent implements OnInit {
 
   public chartData:any[] = [];
+  public expenseTypeData: any[] = [];
   public assignedVehicleChartSubscription : Subscription;
+  public expenseTypeDataSubscription:Subscription;
+
   public options: any = {
     chart: {
         type: 'column'
@@ -86,17 +90,31 @@ export class ExpensedStackedAreaChartComponent implements OnInit {
 }
 
 
-constructor(public vehicleService: VehicleService) { }
+constructor(public vehicleService: VehicleService, public vehicleServService: VehicleservService) { }
 
 ngOnInit() {
+  this.loadExpenseTypeData();
 
   Highcharts.chart('container-stacked', this.options);
-  console.log(this.options);
+  // console.log(this.options);
   // this.loadExpenseVehicleChartData();
   
   
 }
 
+public loadExpenseTypeData(){
+  this.expenseTypeDataSubscription = this.vehicleServService.loadExpenseType().subscribe((d)=>{
+    let dat = d["data"];
+    for(let i=0;i<dat.length;i++){
+      this.expenseTypeData.push(dat[i].expenseType);
+    }
+
+    console.log(this.expenseTypeData);
+  }, (error)=>{
+    console.log(error);
+  });
+
+}
 public loadExpenseVehicleChartData(){
   this.assignedVehicleChartSubscription = this.vehicleService.loadAssignedVehicleChartData().subscribe((d)=>{
       let dat = d["data"];

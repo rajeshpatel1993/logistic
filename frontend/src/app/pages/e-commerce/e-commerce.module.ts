@@ -60,6 +60,7 @@ import { EarningCardFrontComponent } from './earning-card/front-side/earning-car
 import { EarningLiveUpdateChartComponent } from './earning-card/front-side/earning-live-update-chart.component';
 import { AssignVehicleChartComponent } from './assign-vehicle-chart/assign-vehicle-chart.component';
 import { ExpensedStackedAreaChartComponent } from './expensed-stacked-area-chart/expensed-stacked-area-chart.component';
+import { VehicleservService } from '../vehicle-service/vehicleserv.service';
 
 @NgModule({
   imports: [
@@ -114,7 +115,8 @@ import { ExpensedStackedAreaChartComponent } from './expensed-stacked-area-chart
     ExpensedStackedAreaChartComponent
   ],
   providers: [
-    DashboardService
+    DashboardService,
+    VehicleservService
     // CountryOrdersMapService,
   ],
 })

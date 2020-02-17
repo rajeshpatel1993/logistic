@@ -233,7 +233,7 @@ export class VehicleExpenseDetailsComponent implements OnInit {
     // console.log(this.vehicleServiceForm.value);
     this.vehicleservService.addExpense(this.vehicleExpenseForm.value).subscribe((data)=>{
       this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully Assigned";
+      this.msgObj["message"] = "successfully Added";
       this.dialogBox = true;
 
       setTimeout( ()=> {
