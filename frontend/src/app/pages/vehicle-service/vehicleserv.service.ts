@@ -76,9 +76,18 @@ export class VehicleservService {
 
   }
 
+  getExpenseAmountTotal(){
+    return this.http.get(this.baseUrl+"/expenses/vehicleExpensesbyMonth");
+
+  }
 
   deleteExpense(data) {
     return this.http.post(this.baseUrl+"/expenses/deleteExpense", data);
+  }
+
+  getStackChartDataByExpenseType(expenseTypeId){
+    return this.http.get(this.baseUrl+"/expenses/vehicleExpensesbyMonth/"+expenseTypeId);
+
   }
 
 }
