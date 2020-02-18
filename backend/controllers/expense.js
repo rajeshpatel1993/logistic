@@ -205,50 +205,42 @@ function getLastMonths(n) {
     return last_n_months
 }
 
-function getMonthDateRange(year, month) {
-    var moment = require('moment');
-
-    // month in moment is 0 based, so 9 is actually october, subtract 1 to compensate
-    // array is 'year', 'month', 'day', etc
-    var startDate = moment([year, month - 1]);
-
-    // Clone the value before .endOf()
-    var endDate = moment(startDate).endOf('month');
-
-    // just for demonstration:
-    console.log(startDate.toDate());
-    console.log(endDate.toDate());
-
-    // make sure to call toDate() for plain JavaScript date type
-    return { start: startDate, end: endDate };
-}
-
-
 router.get("/vehicleExpensesbyMonth", async (req, res) => {
     let monthsort = moment.monthsShort();
     let currMonth = moment().format('M');
     let last5months = getLastMonths(5);
     // let startmomentmonth = getMonthDateRange(2019,'December');
-    let startofmonth = new moment().startOf('month');
-    let enofmonth = new moment().endOf("month");
     let startdatearr = [];
     let enddatearr = [];
     for(let i=0;i<=5;i++){
+        let startofmonth = new moment().startOf('month');
+        let enofmonth = new moment().endOf("month");
         startdatearr.push(startofmonth.subtract(i,'months').toISOString());
         enddatearr.push(enofmonth.subtract(i,'months').toISOString());
 
     }
-    console.log(startdatearr);
 
-    // console.log(startofmonth.subtract(1, 'months').toISOString());
+    var finalData = [];
+    for(let i=0;i<5;i++){
+        let tmpMonthdata = {};
+        let filterdata = {"expense_date":{$gte:startdatearr[i], $lte:enddatearr[i]}};
+        let expenseData = await Expense.find(filterdata, {"amount":1});
+
+        let totalAmountByMonth = 0;
+        for(let i=0;i<expenseData.length;i++){
+            totalAmountByMonth = parseInt(totalAmountByMonth) + parseInt(expenseData[i]['amount']);
+        }
+        tmpMonthdata["monthname"] = last5months[i];
+        tmpMonthdata["totalExpense"] = totalAmountByMonth;
+        finalData.push(tmpMonthdata);
+    }
 
 
-
-    // let vehicleExpenseData = await Expense.findOne(filter).populate('vehicleType').populate('vehicle').populate('expense_type').populate('issue_status');
-    // let responseData = {};
-    // responseData["status"] = 200;
-    // responseData["data"] = vehicleExpenseData;
-    // res.status(200).json(responseData);
+   
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = finalData;
+    res.status(200).json(responseData);
     
 });
 
