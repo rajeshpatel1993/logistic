@@ -205,10 +205,12 @@ function getLastMonths(n) {
     return last_n_months
 }
 
-router.get("/vehicleExpensesbyMonth", async (req, res) => {
+router.get("/vehicleExpensesbyMonth/:vehicleExpenseType", async (req, res) => {
     let monthsort = moment.monthsShort();
     let currMonth = moment().format('M');
     let last5months = getLastMonths(5);
+    let expenseTypeId = req.params.vehicleExpenseType;
+    console.log(expenseTypeId);
     // let startmomentmonth = getMonthDateRange(2019,'December');
     let startdatearr = [];
     let enddatearr = [];
@@ -221,18 +223,17 @@ router.get("/vehicleExpensesbyMonth", async (req, res) => {
     }
 
     var finalData = [];
+
     for(let i=0;i<5;i++){
         let tmpMonthdata = {};
-        let filterdata = {"expense_date":{$gte:startdatearr[i], $lte:enddatearr[i]}};
+        let filterdata = {$and:[{"expense_date":{$gte:startdatearr[i], $lte:enddatearr[i]}}, {"expense_type":mongoose.Types.ObjectId(expenseTypeId)}]};
         let expenseData = await Expense.find(filterdata, {"amount":1});
 
         let totalAmountByMonth = 0;
         for(let i=0;i<expenseData.length;i++){
             totalAmountByMonth = parseInt(totalAmountByMonth) + parseInt(expenseData[i]['amount']);
         }
-        tmpMonthdata["monthname"] = last5months[i];
-        tmpMonthdata["totalExpense"] = totalAmountByMonth;
-        finalData.push(tmpMonthdata);
+        finalData.push(totalAmountByMonth);
     }
 
 

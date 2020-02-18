@@ -24,6 +24,8 @@ export class ExpensedStackedAreaChartComponent implements OnInit {
 
   public chartData:any[] = [];
   public expenseTypeData: any[] = [];
+  public seriesData: any[] = [];
+
   public assignedVehicleChartSubscription : Subscription;
   public expenseTypeDataSubscription:Subscription;
 
@@ -32,15 +34,15 @@ export class ExpensedStackedAreaChartComponent implements OnInit {
         type: 'column'
     },
     title: {
-        text: 'Stacked column chart'
+        text: 'Vehicle Expense by Month Chart'
     },
     xAxis: {
-        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+        categories: this.expenseTypeData
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Total fruit consumption'
+            text: 'Total vehicle expense amount by Month'
         },
         stackLabels: {
             enabled: true,
@@ -77,16 +79,7 @@ export class ExpensedStackedAreaChartComponent implements OnInit {
             }
         }
     },
-    series: [{
-        name: 'John',
-        data: [5, 3, 4, 7, 2]
-    }, {
-        name: 'Jane',
-        data: [2, 2, 3, 2, 1]
-    }, {
-        name: 'Joe',
-        data: [3, 4, 4, 2, 5]
-    }]
+    series: this.seriesData
 }
 
 
@@ -94,22 +87,69 @@ constructor(public vehicleService: VehicleService, public vehicleServService: Ve
 
 ngOnInit() {
   this.loadExpenseTypeData();
-  console.log(this.expenseTypeData);
-  Highcharts.chart('container-stacked', this.options);
-  // console.log(this.options);
-  // this.loadExpenseVehicleChartData();
-  
   
 }
 
+public getLastMonths(n) {
+    var m =['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var last_n_months =[]
+    var d = new Date()
+    for(var i=0;i<n;i++){
+      last_n_months[i] = m[d.getMonth()];
+      d.setMonth(d.getMonth()-1)
+    }
+    return last_n_months
+}
+
+public hasKeySetTo(obj,key,value)
+{
+    return obj.hasOwnProperty(key) && obj[key]==value;
+}
+
 public loadExpenseTypeData(){
+    
+    let tmpArrData = [];
+    let lastmonths = this.getLastMonths(5);
+    // console.log(lastmonths);
+    for(let i=0;i<lastmonths.length;i++){
+        let tmpObjM = {};
+        let keyexists = this.hasKeySetTo(this.seriesData,"name",lastmonths[i]);
+        if(!keyexists){
+            tmpObjM["name"] = lastmonths[i];
+            tmpObjM["data"] = [];
+            this.seriesData.push(tmpObjM);
+        }
+    }
+  
   this.expenseTypeDataSubscription = this.vehicleServService.loadExpenseType().subscribe((d)=>{
     let dat = d["data"];
-    for(let i=0;i<dat.length;i++){
-      this.expenseTypeData.push(dat[i].expenseType);
-    }
+    let tmpsedata = {};
 
-    console.log(this.expenseTypeData);
+
+    for(let i=0;i<dat.length;i++){
+        let tmpdaa = [];
+      this.expenseTypeData.push(dat[i].expenseType);
+
+      this.vehicleServService.getStackChartDataByExpenseType(dat[i]._id).subscribe((da)=>{
+          let dataa = da['data'];
+            for(let j=0;j<dataa.length;j++){
+                this.seriesData[j].data.push(dataa[j]);
+            }
+
+      }, (error)=>{
+        console.log(error);
+      });
+    }
+    // console.log(this.expenseTypeData);
+    // console.log(JSON.stringify(this.seriesData));
+
+    // console.log(this.options);
+
+    setTimeout(()=>{
+
+        Highcharts.chart('container-stacked', this.options);
+    },10000)
+
   }, (error)=>{
     console.log(error);
   });
