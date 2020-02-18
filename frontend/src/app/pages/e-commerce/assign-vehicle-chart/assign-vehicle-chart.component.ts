@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import * as Highcharts from 'highcharts';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { Subscription } from 'rxjs';
+
+import * as Highcharts from 'highcharts';
 
 declare var require: any;
 let Boost = require('highcharts/modules/boost');
@@ -76,7 +77,6 @@ export class AssignVehicleChartComponent implements OnInit {
             tmpObj["y"] = dat[i]["totalno"];
             this.chartData.push(tmpObj);
         }
-        console.log(this.chartData);
         Highcharts.chart('container', this.options);
     },(err)=>{
         console.log(err);
