@@ -94,7 +94,7 @@ constructor(public vehicleService: VehicleService, public vehicleServService: Ve
 
 ngOnInit() {
   this.loadExpenseTypeData();
-
+  console.log(this.expenseTypeData);
   Highcharts.chart('container-stacked', this.options);
   // console.log(this.options);
   // this.loadExpenseVehicleChartData();

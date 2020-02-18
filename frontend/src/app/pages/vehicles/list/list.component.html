@@ -137,22 +137,6 @@
                   </div>
                 </td>
                 <td>
-                  {{getDateDifference(item.insuranceValid)}}
-                  <div class="workStatus tooltipwrp">
-                    <span class="success" *ngIf="getProgressBarValu(item.insuranceValid) <= 50">
-                      <div class="toolTip">
-                        <p>{{item.insuranceValid | date}}</p>
-                      </div>
-                    </span>
-                    <span class="pendingy tooltipwrp"
-                      *ngIf="getProgressBarValu(item.insuranceValid) > 50 && getProgressBarValu(item.insuranceValid) < 75">
-                      <div class="toolTip">
-                        <p>{{item.insuranceValid | date}}</p>
-                      </div>
-                    </span>
-                    </div>
-                </td>
-                <td>
                   <div [ngSwitch]="item.vehicle_typeId">
                     <div *ngSwitchCase="'1'">
                       {{getDateDifference(item.insuranceValid)}}
@@ -337,38 +321,7 @@
                     <!-- <span  class="danger"></span> -->
                   </div>
                 </td>
-                <td>
-                  {{getDateDifference(item.warrantyPeriod)}}
-                  <div class="workStatus">
-                    <span class="success tooltipwrp" *ngIf="getProgressBarValu(item.warrantyPeriod) <= 50">
-                      <div class="toolTip ">
-                        <p>{{item.warrantyPeriod | date}}</p>
-                      </div>
-                    </span>
-                    <span class="pendingy tooltipwrp"
-                      *ngIf="getProgressBarValu(item.warrantyPeriod) > 50 && getProgressBarValu(item.warrantyPeriod) <= 75">
-                      <div class="toolTip">
-                        <p>{{item.warrantyPeriod | date}}</p>
-                      </div>
-                    </span>
-                    <span class="pending tooltipwrp"
-                      *ngIf="getProgressBarValu(item.warrantyPeriod) > 75 && getProgressBarValu(item.warrantyPeriod) < 90">
-                      <div class="toolTip ">
-                        <p>{{item.warrantyPeriod | date}}</p>
-                      </div>
-                    </span>
-                    <span class="danger tooltipwrp" *ngIf="getProgressBarValu(item.warrantyPeriod) >= 90">
-                      <div class="toolTip">
-                        <p>{{item.warrantyPeriod | date}}</p>
-                      </div>
-                    </span>
-
-
-                    <!-- <span class="success"></span>
-                    <span class="pending"></span> -->
-                    <!-- <span  class="danger"></span> -->
-                  </div>
-                </td>
+            
                 <td>{{item.workLocationArray[0].workLocation}}</td>
 
                 <td>
