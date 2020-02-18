@@ -82,9 +82,9 @@
                 <table class="table p-0 m-0">
                   <thead>
                     <tr>
-                      <th class="pt-0 pb-0 border-0">Vehicle</th>
-                      <th class="pt-0 pb-0 border-0">Type</th>
-                      <th  class="pt-0 pb-0 border-0">Status</th>
+                      <th class="p-0 border-0">Vehicle</th>
+                      <th class="p-0 border-0">Type</th>
+                      <th  class="p-0 border-0">Status</th>
                     </tr>
                   </thead>
                 </table>
@@ -100,7 +100,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of vehiclesList">
-                <td>
+                <td class="p-0">
                   <ngx-vehicle-detail-s [vehicleId]="item.vehicle._id"></ngx-vehicle-detail-s>
 
                 </td>
