@@ -4,4 +4,5 @@ frontend/CHANGELOG.md
 frontend/dist/
 backend/temp/
 frontend/package-lock.json
-backend/logs/cron.log
+backend/logs/cron.
+frontend/package-lock.json

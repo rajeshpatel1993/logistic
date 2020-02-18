@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const moment = require('moment');
+
 const {File} = require("../models/files");
 const {ExpenseType} = require("../models/expenseType");
 const {VehicleIssueStatus} = require("../models/vehicleIssueStatus");
@@ -172,6 +174,7 @@ router.get("/vehicleExpense/:expenseId", async (req, res) => {
 
 
 
+
 router.get("/vehicle_expenses",async(req,res) => {
     const resPerPage = 2; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
@@ -191,6 +194,63 @@ router.get("/vehicle_expenses",async(req,res) => {
 });
 
 
+function getLastMonths(n) {
+    var m =['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var last_n_months =[]
+    var d = new Date()
+    for(var i=0;i<n;i++){
+      last_n_months[i] = m[d.getMonth()];
+      d.setMonth(d.getMonth()-1)
+    }
+    return last_n_months
+}
+
+function getMonthDateRange(year, month) {
+    var moment = require('moment');
+
+    // month in moment is 0 based, so 9 is actually october, subtract 1 to compensate
+    // array is 'year', 'month', 'day', etc
+    var startDate = moment([year, month - 1]);
+
+    // Clone the value before .endOf()
+    var endDate = moment(startDate).endOf('month');
+
+    // just for demonstration:
+    console.log(startDate.toDate());
+    console.log(endDate.toDate());
+
+    // make sure to call toDate() for plain JavaScript date type
+    return { start: startDate, end: endDate };
+}
+
+
+router.get("/vehicleExpensesbyMonth", async (req, res) => {
+    let monthsort = moment.monthsShort();
+    let currMonth = moment().format('M');
+    let last5months = getLastMonths(5);
+    // let startmomentmonth = getMonthDateRange(2019,'December');
+    let startofmonth = new moment().startOf('month');
+    let enofmonth = new moment().endOf("month");
+    let startdatearr = [];
+    let enddatearr = [];
+    for(let i=0;i<=5;i++){
+        startdatearr.push(startofmonth.subtract(i,'months').toISOString());
+        enddatearr.push(enofmonth.subtract(i,'months').toISOString());
+
+    }
+    console.log(startdatearr);
+
+    // console.log(startofmonth.subtract(1, 'months').toISOString());
+
+
+
+    // let vehicleExpenseData = await Expense.findOne(filter).populate('vehicleType').populate('vehicle').populate('expense_type').populate('issue_status');
+    // let responseData = {};
+    // responseData["status"] = 200;
+    // responseData["data"] = vehicleExpenseData;
+    // res.status(200).json(responseData);
+    
+});
 
 
 
