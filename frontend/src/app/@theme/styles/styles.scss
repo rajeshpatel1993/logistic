@@ -64,6 +64,9 @@ nb-menu .menu-item{
     font-size: 14px;
   }
 }
+text.highcharts-credits{
+  display: none;
+}
 nb-tabset{
   .tab{
     &.active{
