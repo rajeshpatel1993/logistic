@@ -20,8 +20,8 @@ export class ReportsService {
 
   public baseUrl = environment.baseUrl;
 
-  loadVehicles(page){
-    return this.http.get(this.baseUrl+"/vehicles?page="+page);
+  loadVehicles(){
+    return this.http.get(this.baseUrl+"/reports/getReports");
   }
 
   loadAssignVehicles(page){

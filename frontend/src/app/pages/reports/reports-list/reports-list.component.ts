@@ -5,6 +5,10 @@ import { VehicleExpenseService } from '../../vehicle-expense/vehicleexpense.serv
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
+import { ReportsService } from '../reports.service';
+import { Subject } from 'rxjs';
+import * as jsPDF from 'jspdf'
+import 'jspdf-autotable';
 
 
 @Component({
@@ -32,6 +36,10 @@ export class ReportsListComponent implements OnInit {
   public dropDownAction = false;
   public selectedItem = '';
   public selectedPage = '';
+
+  dtOptions: any = {};
+  dtTrigger: any = new Subject();
+
 
   selected: any;
   alwaysShowCalendars: boolean;
@@ -64,7 +72,7 @@ export class ReportsListComponent implements OnInit {
     ]
   };
 
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { 
+  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService, private reportService: ReportsService) { 
     this.maxDate = moment().add(2,  'weeks');
     this.minDate = moment().subtract(3, 'days');
 
@@ -78,44 +86,90 @@ export class ReportsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadVehiclesTypes();
+    this.loadVehicles();
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadExpensesData(queryParams.page);
+      // this.loadExpensesData(queryParams.page);
     });
 
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+
   }
 
-  selectEvent(item, typeofautoselect) {
-    switch (typeofautoselect) {
-      case "vehicletype":
-        this.selectedVehicleType = item.id;
-        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
-        this.loadVehicleDetails(item.id);
-        break;
-      case "vehicledetails":
-        this.selectedVehicleDetail = item.id;
-        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
-
-        break;
-      case "vehiclereg":
-        this.selectedVehicleReg = item.name;
-        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
-
-      default:
-        // this.selectedVehicleType = item.id;
-    }
+  onChange(val){
+    console.log(val);
   }
 
+  exportToPdf(){
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#my-table' });
+    let bodyData = [];
+    let tmpArr = [];
+    for(let i=0;i<this.vehiclesList.length;i++){
+      
+      tmpArr.push(this.vehiclesList[i].name);
 
-  public loadVehicles(page?){
-    let p = page || 1;
-    this.vehicleService.loadAssignVehicles(p).subscribe((vehicleData:any)=>{
-     this.vehiclesList = vehicleData.data;
-     console.log(this.vehiclesList);
+      console.log(this.vehiclesList[i]);
+
+      let  employeefirstname  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data) ? this.vehiclesList[i].assign_data.employee.firstName : 'Not Assigned';
      
-     this.totalItems, this.pageOfItems = vehicleData.data; 
-     this.pager = vehicleData.page;
-    //  this.pageOfItems = vehicleData.data;
+      tmpArr.push(employeefirstname);
+      tmpArr.push(this.vehiclesList[i].workLocationArray[0].workLocation);
+      tmpArr.push(this.vehiclesList[i].vehicleTypesArray[0].vehicleType);
+      tmpArr.push(this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus);
+      tmpArr.push(this.vehiclesList[i].regNo);
+      let roadTaxValid = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? this.vehiclesList[i].roadTaxValid: 'N.A.';
+      tmpArr.push(roadTaxValid);
+      let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? this.vehiclesList[i].insuranceValid: 'N.A.';
+      tmpArr.push(insuranceDue);
+
+      let  projectName  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data )? this.vehiclesList[i].assign_data.projects.projectName : 'Not Assigned';
+      tmpArr.push(projectName);
+
+      let overallExpense = this.vehiclesList[i].total_expense.length > 0 ? this.vehiclesList[i].total_expense[0].total : 'No Expense';
+      tmpArr.push(overallExpense);
+
+      let lastExpense = this.vehiclesList[i].last_expense.length > 0 ? this.vehiclesList[i].last_expense[0].expense_type.expenseType : 'No Expense';
+
+      tmpArr.push(lastExpense);
+
+      bodyData.push(tmpArr);
+      tmpArr = [];
+
+
+
+
+
+
+
+    }
+
+    let optData = {
+      head: [['Name', 'Driver', 'Location','Vehicle Type', 'Status', 'Reg No', 'Road Tax Due','Insurance Due','Project Name','Overall Expense','Recent Expense']],
+      body: bodyData,
+    };
+
+   console.log(optData);
+
+  doc.autoTable(optData)
+
+  doc.save('Test.pdf');
+
+  }
+
+  exportToExcel(){
+    alert("excel");
+
+  }
+
+
+  public loadVehicles(){
+    this.reportService.loadVehicles().subscribe((vehicleData:any)=>{
+     this.vehiclesList = vehicleData.data;
+    //  console.log(this.vehiclesList);
+    this.dtTrigger.next();
 
     },(error)=>{
 
@@ -210,6 +264,28 @@ export class ReportsListComponent implements OnInit {
   }
   datesUpdated(range) {
     console.log('[datesUpdated] range is : ', range);
+  }
+
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+
+  public getDateDifference(expDate){
+    let expDatemM = moment(expDate).fromNow();
+    return expDatemM;
+  };
+
+  public getProgressBarValu(expDate){
+    let today = moment();
+    let exp = moment(expDate);
+    let noofdays = exp.diff(today, 'days');
+    let progress = 100 - (noofdays *100 / 365);
+    return progress;
+
+
   }
 
 

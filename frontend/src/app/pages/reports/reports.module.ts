@@ -13,13 +13,13 @@ import {
 
 import { ThemeModule } from '../../@theme/theme.module';
 import {  ReportsListComponent } from './reports-list/reports-list.component';
-import { VehicleRoutingModule } from './reports-routing.module';
-import {  VehicleExpenseService } from '../vehicle-expense/vehicleexpense.service';
+import { ReportRoutingModule } from './reports-routing.module';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { ReportsComponent } from './reports.component';
-import { CustomCommonModule } from '../custom-common.module';
-import { VehicleservService } from '../vehicle-service/vehicleserv.service';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { DataTablesModule } from 'angular-datatables';
+import { ReportsService } from './reports.service';
+import { CustomCommonModule} from '../custom-common.module';
 
 
 @NgModule({
@@ -33,14 +33,15 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     NbCardModule,
     NbButtonModule,
     NbUserModule,
-    VehicleRoutingModule,
+    ReportRoutingModule,
     NbTabsetModule,
     AutocompleteLibModule,
     NgxImgModule.forRoot(),
     NbDatepickerModule,
     CustomCommonModule,
     NbSelectModule,
-    NgxDaterangepickerMd.forRoot()
+    NgxDaterangepickerMd.forRoot(),
+    DataTablesModule
   ],
   declarations: [
     ReportsListComponent,
@@ -49,8 +50,7 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
     // VehicleServiceDetailsComponent
   ],
   providers: [
-    VehicleExpenseService,
-    VehicleservService
+    ReportsService
   ],
 })
 export class ReportsModule { }
