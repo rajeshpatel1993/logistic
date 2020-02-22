@@ -316,6 +316,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
       body: bodyData,
     };
 
+
   //  console.log(optData);
 
   doc.autoTable(optData)
@@ -352,6 +353,27 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     );
   }
 
+
+  selectEvent(item, typeofautoselect) {
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = item.id;
+        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.loadVehicleDetails(item.id);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = item.id;
+        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = item.name;
+        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+  }
 
   public loadExpensesData(page?){
 
