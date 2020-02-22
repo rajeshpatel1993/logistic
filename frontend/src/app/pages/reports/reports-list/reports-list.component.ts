@@ -20,6 +20,7 @@ export class ReportsListComponent implements OnInit {
 
   public vehicleTypes = [];
   public vehicleDetails = [];
+  public assignedVehicles = [];
   public vehicleRegistrations = [];
   public selectedVehicleType;
   public selectedVehicleDetail;
@@ -36,57 +37,37 @@ export class ReportsListComponent implements OnInit {
   public dropDownAction = false;
   public selectedItem = '';
   public selectedPage = '';
+  public jsonData = [];
+
 
   dtOptions: any = {};
+  dtOptions1: any = {};
+
   dtTrigger: any = new Subject();
+  dtTrigger1: any = new Subject();
 
 
   selected: any;
   alwaysShowCalendars: boolean;
-  showRangeLabelOnInput: boolean;
-  keepCalendarOpeningWithRange: boolean;
-  maxDate: moment.Moment;
-  minDate: moment.Moment;
-  invalidDates: moment.Moment[] = [];
   ranges: any = {
-    Today: [moment(), moment()],
-    Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+    'Today': [moment(), moment()],
+    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
     'This Month': [moment().startOf('month'), moment().endOf('month')],
-    'Last Month': [
-      moment()
-        .subtract(1, 'month')
-        .startOf('month'),
-      moment()
-        .subtract(1, 'month')
-        .endOf('month')
-    ],
-    'Last 3 Month': [
-      moment()
-        .subtract(3, 'month')
-        .startOf('month'),
-      moment()
-        .subtract(1, 'month')
-        .endOf('month')
-    ]
-  };
+    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+  }
+invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
+
 
   constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService, private reportService: ReportsService) { 
-    this.maxDate = moment().add(2,  'weeks');
-    this.minDate = moment().subtract(3, 'days');
-
     this.alwaysShowCalendars = true;
-    this.keepCalendarOpeningWithRange = true;
-    this.showRangeLabelOnInput = true;
-    this.selected = {startDate: moment().subtract(1, 'days'), endDate: moment().subtract(1, 'days')};
-    setTimeout(() => {
-      this.invalidDates = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
-    }, 5000);
+
   }
 
   ngOnInit() {
     this.loadVehicles();
+    this.loadAssignedVehicles();
     this.activeRoute.queryParams.subscribe(queryParams => {
       // this.loadExpensesData(queryParams.page);
     });
@@ -96,6 +77,21 @@ export class ReportsListComponent implements OnInit {
       pageLength: 2
     };
 
+
+
+    this.dtOptions1 = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+
+  }
+
+  isInvalidDate = (m: moment.Moment) =>  {
+    return this.invalidDates.some(d => d.isSame(m, 'day') )
+  }
+  
+  dateRangeChange(event){
+    console.log(event);
   }
 
   onChange(val){
@@ -107,11 +103,12 @@ export class ReportsListComponent implements OnInit {
     doc.autoTable({ html: '#my-table' });
     let bodyData = [];
     let tmpArr = [];
+
+    
     for(let i=0;i<this.vehiclesList.length;i++){
       
+  
       tmpArr.push(this.vehiclesList[i].name);
-
-      console.log(this.vehiclesList[i]);
 
       let  employeefirstname  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data) ? this.vehiclesList[i].assign_data.employee.firstName : 'Not Assigned';
      
@@ -139,10 +136,22 @@ export class ReportsListComponent implements OnInit {
       tmpArr = [];
 
 
+      // let tmpObj = {};
+      // tmpObj["name"] = this.vehiclesList[i].name;
+      // tmpObj["driver"] = employeefirstname;
+      // tmpObj["location"] = this.vehiclesList[i].workLocationArray[0].workLocation;
+      // tmpObj["vehicletype"] = this.vehiclesList[i].vehicleTypesArray[0].vehicleType;
+      // tmpObj["status"] = this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus;
+      // tmpObj["regno"] = this.vehiclesList[i].regNo;
 
 
+      // tmpObj["roadtaxdue"] = roadTaxValid;
+      // tmpObj["insurancedue"] = insuranceDue;
+      // tmpObj["projectname"] = projectName;
+      // tmpObj["overallexpense"] = overallExpense;
+      // tmpObj["recentexpense"] = lastExpense;
 
-
+      // this.jsonData.push(tmpObj);
 
     }
 
@@ -151,7 +160,7 @@ export class ReportsListComponent implements OnInit {
       body: bodyData,
     };
 
-   console.log(optData);
+  //  console.log(optData);
 
   doc.autoTable(optData)
 
@@ -160,9 +169,161 @@ export class ReportsListComponent implements OnInit {
   }
 
   exportToExcel(){
-    alert("excel");
+    this.jsonData = [];
+    let columns = ['name', 'driver', 'location','vehicletype', 'status', 'regno', 'roadtaxdue','insurancedue','projectname','overallexpense','recentexpense'];
+    for(let i=0;i<this.vehiclesList.length;i++){
+      
+  
+
+      let  employeefirstname  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data) ? this.vehiclesList[i].assign_data.employee.firstName : 'Not Assigned';
+      let roadTaxValid = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? this.vehiclesList[i].roadTaxValid: 'N.A.';
+      let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? this.vehiclesList[i].insuranceValid: 'N.A.';
+
+      let  projectName  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data )? this.vehiclesList[i].assign_data.projects.projectName : 'Not Assigned';
+
+      let overallExpense = this.vehiclesList[i].total_expense.length > 0 ? this.vehiclesList[i].total_expense[0].total : 'No Expense';
+
+      let lastExpense = this.vehiclesList[i].last_expense.length > 0 ? this.vehiclesList[i].last_expense[0].expense_type.expenseType : 'No Expense';
+
+
+
+
+      let tmpObj = {};
+      tmpObj["name"] = this.vehiclesList[i].name;
+      tmpObj["driver"] = employeefirstname;
+      tmpObj["location"] = this.vehiclesList[i].workLocationArray[0].workLocation;
+      tmpObj["vehicletype"] = this.vehiclesList[i].vehicleTypesArray[0].vehicleType;
+      tmpObj["status"] = this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus;
+      tmpObj["regno"] = this.vehiclesList[i].regNo;
+
+
+      tmpObj["roadtaxdue"] = roadTaxValid;
+      tmpObj["insurancedue"] = insuranceDue;
+      tmpObj["projectname"] = projectName;
+      tmpObj["overallexpense"] = overallExpense;
+      tmpObj["recentexpense"] = lastExpense;
+
+      this.jsonData.push(tmpObj);
+
+    }
+
+    this.reportService.downloadFile(this.jsonData, 'jsontocsv', columns);
+
 
   }
+
+
+
+
+  exportToExcelAssignVehicle(){
+    this.jsonData = [];
+
+    let columns = ['vehiclename', 'vehiclecode', 'currentdrivername','previousdrivername', 'driverlicenseno', 'driverlicensedue', 'location','status','astartdate','aenddate','duration','start_meter','end_meter','distance_in_Kms'];
+
+    for(let i=0;i<this.assignedVehicles.length;i++){
+      
+      let vehicleName = this.assignedVehicles[i].vehicle.name;
+      let vehiclecode = this.assignedVehicles[i].vehicle.vehicle_code;
+      let currentDrivername = this.assignedVehicles[i].employee.firstName;
+      let previousDrivername = this.assignedVehicles[i].previousDriver ? this.assignedVehicles[i].previousDriver.employee.firstName : 'N. A.';
+      let driverLicenseNo = 'N. A.';
+      let driverLicenseDue = this.assignedVehicles[i].driving_license_valid;
+      let location = this.assignedVehicles[i].workLocations.workLocation;
+      let status = 'N.A.';
+      let assignmentStartDate = this.assignedVehicles[i].assignmentStartDate;
+      let assignmentEndDate = this.assignedVehicles[i].assignmentEndDate;
+      let duration = 'N.A.';
+      let startMeter = 'N.A.';
+      let endMeter = 'N.A.';
+      let distanceinkms = 'N.A.';
+
+      let tmpObj = {};
+      tmpObj["vehiclename"] = vehicleName;
+      tmpObj["vehiclecode"] = vehiclecode;
+      tmpObj["currentdrivername"] = currentDrivername;
+      tmpObj["previousdrivername"] = previousDrivername;
+      tmpObj["driverlicenseno"] = driverLicenseNo;
+      tmpObj["driverlicensedue"] = driverLicenseDue;
+      tmpObj["location"] = location;
+
+      tmpObj["status"] = status;
+      tmpObj["astartdate"] = assignmentStartDate;
+      tmpObj["aenddate"] = assignmentEndDate;
+      tmpObj["duration"] = duration;
+      tmpObj["start_meter"] = startMeter;
+      tmpObj["end_meter"] = endMeter;
+
+      tmpObj["distance_in_Kms"] = distanceinkms;
+
+
+      this.jsonData.push(tmpObj);
+
+    }
+
+    this.reportService.downloadFile(this.jsonData, 'jsontocsv', columns);
+
+
+  }
+
+
+
+  exportToPdfAssignVehicle(){
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#my-table' });
+    let bodyData = [];
+    let tmpArr = [];
+
+    let columns = ['vehiclename', 'vehiclecode', 'currentdrivername', 'driverlicenseno', 'location','astartdate','aenddate','start_meter','end_meter'];
+
+
+    for(let i=0;i<this.assignedVehicles.length;i++){
+      
+      let vehicleName = this.assignedVehicles[i].vehicle.name;
+      let vehiclecode = this.assignedVehicles[i].vehicle.vehicle_code;
+      let currentDrivername = this.assignedVehicles[i].employee.firstName;
+      let previousDrivername = this.assignedVehicles[i].previousDriver ? this.assignedVehicles[i].previousDriver.employee.firstName : 'N. A.';
+      let driverLicenseNo = 'N. A.';
+      let driverLicenseDue = this.assignedVehicles[i].driving_license_valid;
+      let location = this.assignedVehicles[i].workLocations.workLocation;
+      let status = 'N.A.';
+      let assignmentStartDate = this.assignedVehicles[i].assignmentStartDate;
+      let assignmentEndDate = this.assignedVehicles[i].assignmentEndDate;
+      let duration = 'N.A.';
+      let startMeter = 'N.A.';
+      let endMeter = 'N.A.';
+      let distanceinkms = 'N.A.';
+
+      tmpArr.push(vehicleName);
+      tmpArr.push(vehiclecode);
+      tmpArr.push(currentDrivername);
+      tmpArr.push(driverLicenseNo);
+      tmpArr.push(location);
+      tmpArr.push(assignmentStartDate);
+      tmpArr.push(assignmentEndDate);
+      tmpArr.push(startMeter);
+      tmpArr.push(endMeter);
+
+      bodyData.push(tmpArr);
+      tmpArr = [];
+
+
+    }
+
+
+
+    let optData = {
+      head: [columns],
+      body: bodyData,
+    };
+
+  //  console.log(optData);
+
+  doc.autoTable(optData)
+
+  doc.save('Test.pdf');
+
+  }
+
 
 
   public loadVehicles(){
@@ -174,6 +335,21 @@ export class ReportsListComponent implements OnInit {
     },(error)=>{
 
     });
+  }
+
+
+  public loadAssignedVehicles(){
+    this.reportService.loadAssignVehicles().subscribe((assignedVehicleData: any) => {
+      this.assignedVehicles = assignedVehicleData.data;
+
+      this.dtTrigger1.next();
+
+      // console.log(this.assignedVehicles);
+    },
+    (error) => {
+
+    }
+    );
   }
 
 
@@ -255,17 +431,7 @@ export class ReportsListComponent implements OnInit {
 
 
 
-  isInvalidDate = (m: moment.Moment) =>  {
-    return this.invalidDates.some(d => d.isSame(m, 'day') );
-  }
-
-  rangeClicked(range) {
-    console.log('[rangeClicked] range is : ', range);
-  }
-  datesUpdated(range) {
-    console.log('[datesUpdated] range is : ', range);
-  }
-
+ 
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

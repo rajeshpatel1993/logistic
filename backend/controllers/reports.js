@@ -482,6 +482,34 @@ router.get("/getReports",async(req,res) => {
 
 
 
+router.get("/assign_vehicles",async(req,res) => {
+    const modifiedData = [];
+
+    try {
+       
+        let assignVehicleCollection = await AssignVehicle.find({isDeleted:0}, {}, {lean: true}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
+
+        for(let i=0;i<assignVehicleCollection.length;i++){
+            
+             let ele = {};
+            let elemId = assignVehicleCollection[i].vehicle._id;
+            let assignedVal = Object.assign(ele,assignVehicleCollection[i]);
+            // console.log(assignedVal);
+
+            let previousDriver = await AssignVehicleHistory.findOne({vehicle:elemId}).populate('employee');
+            assignedVal["previousDriver"] = previousDriver;
+            modifiedData.push(assignedVal);
+        }
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = modifiedData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
 
 
 router.get("/getAssignVehicle/:id", async (req, res) => {
