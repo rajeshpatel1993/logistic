@@ -21,6 +21,8 @@ const employeeController = require("./controllers/employee");
 const projectController = require("./controllers/project");
 const serviceController = require("./controllers/service");
 const expenseController = require("./controllers/expense");
+const reportController = require("./controllers/reports");
+
 
 const app = express();
 app.use(cors());
@@ -33,6 +35,8 @@ app.use('/api/employees', employeeController);
 app.use('/api/project', projectController);
 app.use('/api/service', serviceController);
 app.use('/api/expenses', expenseController);
+app.use('/api/reports', reportController);
+
 
 
 

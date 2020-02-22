@@ -332,6 +332,9 @@ uploadImage(){
       this.vehicleData = d['data'][0];
       this.selectedVehicleType = this.vehicleData['vehicle_code'];
       this.selectedVehicleT = this.vehicleData['vehicle_type'];
+
+
+
       this.vehDetail = this.vehicleData['vehicleDetailsArray'][0].vehicleDetails;
       this.vehName = this.vehicleData['name'];
       this.regName = this.vehicleData['regNo'];
@@ -346,13 +349,14 @@ uploadImage(){
       this.fuelType = this.vehicleData['fuelTypes'][0].fuelTypeName;
       this.fuelMeasureMent = this.vehicleData['fuelMesaureMents'][0].fuelMeausrement;
       this.workLocation = this.vehicleData['workLocations'][0].workLocation;
-      this.insurancePolicy = this.vehicleData['insuranceNo'];
-      this.insuranceAmount = this.vehicleData['insuranceAmt'];
-      this.policyExpiry = new Date(this.vehicleData['insuranceValid']);
-      this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
-      this.roadTaxNo = this.vehicleData['roadTaxNo'];
-      this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
-      this.roadTaxExpiry = new Date(this.vehicleData['roadTaxValid']);
+      
+      // this.insurancePolicy = this.vehicleData['insuranceNo'];
+      // this.insuranceAmount = this.vehicleData['insuranceAmt'];
+      // this.policyExpiry = new Date(this.vehicleData['insuranceValid']);
+      // this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
+      // this.roadTaxNo = this.vehicleData['roadTaxNo'];
+      // this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
+      // this.roadTaxExpiry = new Date(this.vehicleData['roadTaxValid']);
       this.ownershipStatus = this.vehicleData['vehicleOwnerships'][0].vehicleOwnership;
       this.status = +this.vehicleData['vehicleStatusId'];
       this.note = this.vehicleData['note'];
@@ -366,9 +370,11 @@ uploadImage(){
 
 
 
+      this.vehicleForm.get("vehType").patchValue(this.currentVehcileType);
 
       this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
       this.vehicleForm.get("vehicleTypef").patchValue(this.selectedVehicleT);
+
 
       this.vehicleForm.get("vehicledetails").patchValue(this.vehDetail);
       this.vehicleForm.get("vehicleName").patchValue(this.vehName);
@@ -379,18 +385,25 @@ uploadImage(){
       this.vehicleForm.get("manufacture_year").patchValue(this.manufactureYear);
       this.vehicleForm.get("engine_no").patchValue(this.engineNo);
       this.vehicleForm.get("chasis_no").patchValue(this.chasisNo);
-      this.vehicleForm.get("purchase_date").patchValue(this.purchaseDate);
+      // this.vehicleForm.get("purchase_date").patchValue(this.purchaseDate);
       this.vehicleForm.get("warranty_period").patchValue(this.warrantyPeriod);
       this.vehicleForm.get("fuel_type").patchValue(this.fuelType);
       this.vehicleForm.get("fuelMeausrement").patchValue(this.fuelMeasureMent);
       this.vehicleForm.get("workLocation").patchValue(this.workLocation);
-      this.vehicleForm.get("insurance_policy_no").patchValue(this.insurancePolicy);
-      this.vehicleForm.get("insurance_amount").patchValue(this.insuranceAmount);
-      this.vehicleForm.get("policy_expiry").patchValue(this.policyExpiry);
-      this.vehicleForm.get("insurance_agent").patchValue(this.insuranceAgent);
-      this.vehicleForm.get("road_tax_no").patchValue(this.roadTaxNo);
-      this.vehicleForm.get("road_tax_amount").patchValue(this.roadTaxAmount);
-      this.vehicleForm.get("road_tax_expiry").patchValue(this.roadTaxExpiry);
+
+
+
+      // this.vehicleForm.get("insurance_policy_no").patchValue(this.insurancePolicy);
+      // this.vehicleForm.get("insurance_amount").patchValue(this.insuranceAmount);
+      // this.vehicleForm.get("policy_expiry").patchValue(this.policyExpiry);
+      // this.vehicleForm.get("insurance_agent").patchValue(this.insuranceAgent);
+      // this.vehicleForm.get("road_tax_no").patchValue(this.roadTaxNo);
+      // this.vehicleForm.get("road_tax_amount").patchValue(this.roadTaxAmount);
+      // this.vehicleForm.get("road_tax_expiry").patchValue(this.roadTaxExpiry);
+
+
+
+
       this.vehicleForm.get("ownership_status").patchValue(this.ownershipStatus);
       this.vehicleForm.get("vehicleStatus").patchValue(this.status);
        this.vehicleForm.get("note").patchValue(this.note);
@@ -398,7 +411,6 @@ uploadImage(){
        this.vehicleForm.get("image_file_unique_id").patchValue(this.uniqueImageId);
        this.vehicleForm.get("bill_file_unique_id").patchValue(this.uniqueFileId);
 
-      this.vehicleForm.get("vehType").patchValue(this.currentVehcileType);
 
       //  this.loadBrandsData(this.vehicleData['vehicle_type']);
 
@@ -411,6 +423,7 @@ uploadImage(){
 
 
   createForm(showExtraField) {
+    console.log(this.showExtraField);
     let group = {
       // vehicleT:[],
       vehType: [],
