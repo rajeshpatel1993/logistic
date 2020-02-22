@@ -4,7 +4,8 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { ReportsService } from '../../../pages/reports/reports.service';
 
 @Component({
   selector: 'ngx-header',
@@ -16,6 +17,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  organization:any;
+  organizationSubscription : Subscription;
+
+
 
   themes = [
     {
@@ -45,10 +50,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
+              private reportService: ReportsService,
               private breakpointService: NbMediaBreakpointsService) {
   }
 
   ngOnInit() {
+    this.loadOrganization();
     this.currentTheme = this.themeService.currentTheme;
 
     this.userService.getUsers()
@@ -90,5 +97,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  loadOrganization(){
+    this.organizationSubscription = this.reportService.loadOrganizationData().subscribe((d)=>{
+      this.organization = d["data"];
+      console.log(this.organization);
+    },(error)=>{
+
+    });
   }
 }

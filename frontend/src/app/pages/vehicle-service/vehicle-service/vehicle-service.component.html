@@ -82,8 +82,9 @@
                     <thead>
                       <tr>
                         <th class="p-0 border-0">Vehicle</th>
-                        <th class="p-0 border-0">Type</th>
                         <th  class="p-0 border-0">Status</th>
+                        <th class="p-0 border-0">Type</th>
+                      
                       </tr>
                     </thead>
                   </table>
@@ -109,7 +110,7 @@
 
                 </td>
                 <td>
-                  {{item.completion_date_time}}
+                  {{item.completion_date_time | date}}
                 </td>
                 <td>
 

@@ -49,8 +49,8 @@ import { CustomCommonModule} from '../custom-common.module';
     // ,
     // VehicleServiceDetailsComponent
   ],
-  providers: [
-    ReportsService
-  ],
+  // providers: [
+  //   ReportsService
+  // ],
 })
 export class ReportsModule { }

@@ -11,6 +11,7 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ReportsService } from '../app/pages/reports/reports.service';
 
 import {
   NbChatModule,
@@ -45,6 +46,10 @@ import {
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
     CoreModule.forRoot(),
+  ],
+
+  providers: [
+    ReportsService
   ],
   bootstrap: [AppComponent],
   schemas: [
