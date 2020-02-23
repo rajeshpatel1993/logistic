@@ -22,6 +22,7 @@ const {WorkLocation} = require("../models/workLocation");
 const { upload } = require("../utils/upload_file_to_s3");
 const { ProjectType } = require("../models/projectType");
 const {Expense} = require("../models/expense");
+const {ServiceTask} = require("../models/serviceTask");
 
 const multer = require('multer');
 
@@ -508,6 +509,78 @@ router.get("/assign_vehicles",async(req,res) => {
         console.log(error);
     }
 });
+
+
+
+router.get("/vehicle_services",async(req,res) => {
+
+
+    try {
+       
+        let serviceTaskData = await ServiceTask.find({"isDeleted": 0}).populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType');
+        let responseData = {};
+        responseData["status"] = 200;
+        // responseData["page"] = pager;
+        responseData["data"] = serviceTaskData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+
+router.get("/serviceTypeGraph",async(req,res) => {
+
+    try {
+       
+        let serviceTypeGraphData = await ServiceTask.aggregate(
+            [
+            {$match:{"isDeleted": 0}},
+            {
+                 $group: { 
+                     
+                    _id: "$serviceType", 
+                    total: { 
+                        $sum: {"$toDouble":"$amount"} 
+                    } ,
+                    countA: { $sum: 1}
+                
+                } 
+
+
+            },
+
+
+
+            {
+                $sort:{'countA':-1}
+            },
+
+            {
+                $lookup: {
+                        from: "servicetype",
+                        localField: "_id",
+                        foreignField: "_id",
+                        as: "serviceTypeData"
+                }
+            }
+
+    
+        ]);
+
+        // console.log(serviceTypeGraphData);
+
+        let responseData = {};
+        responseData["status"] = 200;
+        // responseData["page"] = pager;
+        responseData["data"] = serviceTypeGraphData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 
 
