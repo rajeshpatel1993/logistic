@@ -342,6 +342,97 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
+  exportToPdfService(){
+
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#my-table' });
+    let bodyData = [];
+    let tmpArr = [];
+
+    let columns = ['vehiclename', 'vehiclecode', 'drivername', 'location','status','servicetype','lastperformeddate','lastservicecost'];
+
+
+    for(let i=0;i<this.serviceReportData.length;i++){
+      
+      let vehicleName = this.serviceReportData[i].vehicle.name;
+      let vehiclecode = this.serviceReportData[i].vehicle.vehicle_code;
+      let drivername = this.serviceReportData[i].employee.firstName;  
+      let location = 'N.A.';
+      let status = 'N.A.';
+      let servicetype = this.serviceReportData[i].serviceType.serviceTaskName;
+      let lastperformeddate = this.serviceReportData[i].previousService[0].createdAt;
+      let lastservicecost = this.serviceReportData[i].previousService[0].amount;
+
+
+      tmpArr.push(vehicleName);
+      tmpArr.push(vehiclecode);
+      tmpArr.push(drivername);
+      tmpArr.push(location);
+      tmpArr.push(status);
+      tmpArr.push(servicetype);
+      tmpArr.push(lastperformeddate);
+      tmpArr.push(lastservicecost);
+ 
+
+      bodyData.push(tmpArr);
+      tmpArr = [];
+
+
+    }
+
+
+
+    let optData = {
+      head: [columns],
+      body: bodyData,
+    };
+
+
+  //  console.log(optData);
+
+  doc.autoTable(optData)
+
+  doc.save('service.pdf');
+  }
+
+
+
+  exportToExcelService(){
+    this.jsonData = [];
+
+    let columns = ['vehiclename', 'vehiclecode', 'drivername', 'location','status','servicetype','lastperformeddate','lastservicecost'];
+    for(let i=0;i<this.serviceReportData.length;i++){
+      
+      let vehicleName = this.serviceReportData[i].vehicle.name;
+      let vehiclecode = this.serviceReportData[i].vehicle.vehicle_code;
+      let drivername = this.serviceReportData[i].employee.firstName;  
+      let location = 'N.A.';
+      let status = 'N.A.';
+      let servicetype = this.serviceReportData[i].serviceType.serviceTaskName;
+      let lastperformeddate = this.serviceReportData[i].previousService[0].createdAt;
+      let lastservicecost = this.serviceReportData[i].previousService[0].amount;
+
+      let tmpObj = {};
+      tmpObj["vehiclename"]=vehicleName;
+      tmpObj["vehiclecode"] = vehiclecode;
+      tmpObj["drivername"] = drivername;
+      tmpObj["location"] = location;
+      tmpObj["status"] = status;
+      tmpObj["servicetype"] = servicetype;
+      tmpObj["lastperformeddate"] = lastperformeddate;
+      tmpObj["lastservicecost"] = lastservicecost;
+  
+      this.jsonData.push(tmpObj);
+
+
+    }
+
+    this.reportService.downloadFile(this.jsonData, 'service_report', columns);
+    this.jsonData = [];
+
+  }
+
+
   public loadVehicles(){
     this.reportService.loadVehicles().subscribe((vehicleData:any)=>{
      this.vehiclesList = vehicleData.data;

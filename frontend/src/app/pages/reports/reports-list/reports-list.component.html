@@ -1,6 +1,7 @@
 <div class="Reports">
 
   <table id="my-table">
+    <h1>company:- Rajesh</h1>
     <!-- ... -->
   </table>
   <nb-card>
@@ -655,8 +656,8 @@
 
                   <div class="col-xs-12 col-sm-2 col-md-2 text-right">
 
-                    <button (click)="exportToPdfAssignVehicle()"> Export to PDF</button>
-                    <button (click)="exportToExcelAssignVehicle()"> Export to CSV</button>
+                    <button (click)="exportToPdfService()"> Export to PDF</button>
+                    <button (click)="exportToExcelService()"> Export to CSV</button>
 
                   </div>
 
@@ -736,13 +737,13 @@
                           N.A.
                         </td>
                         <td>
-                          N.A.
+                          {{item.previousService[0].createdAt | date}}
                         </td>
                         <td>
-                          N.A.
+                          {{item.previousService[0].odometer}}
                         </td>
                         <td>
-                          N.A.
+                          {{item.previousService[0].amount}}
                         </td>
                         <td>
                           N.A.

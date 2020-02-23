@@ -513,15 +513,29 @@ router.get("/assign_vehicles",async(req,res) => {
 
 
 router.get("/vehicle_services",async(req,res) => {
+    const modifiedData = [];
 
 
     try {
        
-        let serviceTaskData = await ServiceTask.find({"isDeleted": 0}).populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType');
+        let serviceTaskData = await ServiceTask.find({"isDeleted": 0},{},{lean: true}).populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType');
+
+        for(let i=0;i<serviceTaskData.length;i++){
+            
+            let ele = {};
+           let elemId = serviceTaskData[i].vehicle._id;
+           let assignedVal = Object.assign(ele,serviceTaskData[i]);
+           // console.log(assignedVal);
+
+           let previousService = await ServiceTask.find({vehicle:elemId}).sort({createdAt: 1}).limit(1);
+           assignedVal["previousService"] = previousService;
+           modifiedData.push(assignedVal);
+       }
+
         let responseData = {};
         responseData["status"] = 200;
         // responseData["page"] = pager;
-        responseData["data"] = serviceTaskData;
+        responseData["data"] = modifiedData;
         res.status(200).json(responseData);
     } catch (error) {
         console.log(error);
