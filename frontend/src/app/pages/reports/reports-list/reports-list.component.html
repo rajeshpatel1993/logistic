@@ -569,10 +569,13 @@
           
               </nb-tab>
               <nb-tab tabTitle="Service Management" class="p-1">
-                <ngx-bar-chart>
-                  
-                </ngx-bar-chart>
+                <div *ngIf="serviceCalled">
+                  <ngx-bar-chart>
 
+                  </ngx-bar-chart>
+
+                  <ngx-servicetaskbyamount></ngx-servicetaskbyamount>
+                </div>
                 <div class="table-responsive">
 
 

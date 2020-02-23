@@ -569,7 +569,7 @@ router.get("/serviceTypeGraph",async(req,res) => {
     
         ]);
 
-        console.log(serviceTypeGraphData);
+        // console.log(serviceTypeGraphData);
 
         let responseData = {};
         responseData["status"] = 200;

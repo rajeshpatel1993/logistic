@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import { ReportsService } from '../reports.service';
 
 declare var require: any;
 let Boost = require('highcharts/modules/boost');
@@ -20,7 +21,9 @@ noData(Highcharts);
 })
 export class BarChartComponent implements OnInit, AfterViewInit {
 
-
+  public chartData =      [
+    
+];
   public options:any =  {
     chart: {
         type: 'column'
@@ -53,73 +56,63 @@ export class BarChartComponent implements OnInit, AfterViewInit {
             borderWidth: 0,
             dataLabels: {
                 enabled: true,
-                format: '{point.y:.1f}%'
+                format: '{point.y}'
             }
         }
     },
   
     tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}<br/>'
     },
   
     series: [
         {
-            name: "Browsers",
+            name: "Service Task",
             colorByPoint: true,
-            data: [
-                {
-                    name: "Chrome",
-                    y: 62.74
-                },
-                {
-                    name: "Firefox",
-                    y: 10.57
-                },
-                {
-                    name: "Internet Explorer",
-                    y: 7.23
-                    
-                },
-                {
-                    name: "Safari",
-                    y: 5.58
-                   
-                },
-                {
-                    name: "Edge",
-                    y: 4.02
-                  
-                },
-                {
-                    name: "Opera",
-                    y: 1.92
-                   
-                },
-                {
-                    name: "Other",
-                    y: 7.62
-                   
-                }
-            ]
+            data:this.chartData
+        
         }
     ]
   }
 
-  constructor() { }
+  constructor(private reportService: ReportsService) { }
 
   ngOnInit() {
-
+    this.loadGraphData();
 
   }
 
+  public loadGraphData(){
+    this.reportService.loadServiceReportGraphData().subscribe((d)=>{
+      let tmpdata = d["data"];
+      
+      for(let i=0;i<tmpdata.length;i++){
+        let tmpObj = {};
+        tmpObj["name"] = tmpdata[i].serviceTypeData[0].serviceTaskName;
+        tmpObj["y"] = tmpdata[i].countA;
+        this.chartData.push(tmpObj);
+
+
+      }
+
+      setTimeout(()=>{
+        console.log(this.options);
+        Highcharts.chart('bar-chart-container', this.options);
+
+      },1000);
+      // console.log(tmpdata);
+    },(error)=>{
+
+    });
+  }
 
   ngAfterViewInit(){
 
-    setTimeout(()=>{
+   
 
-      Highcharts.chart('bar-chart-container', this.options);
-    },20000);
+      // Highcharts.chart('bar-chart-container', this.options);
+   
 
   }
 
