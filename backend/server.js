@@ -22,6 +22,7 @@ const projectController = require("./controllers/project");
 const serviceController = require("./controllers/service");
 const expenseController = require("./controllers/expense");
 const reportController = require("./controllers/reports");
+const organizationController= require("./controllers/organization");
 
 
 const app = express();
@@ -36,6 +37,8 @@ app.use('/api/project', projectController);
 app.use('/api/service', serviceController);
 app.use('/api/expenses', expenseController);
 app.use('/api/reports', reportController);
+app.use('/api/organization', organizationController);
+
 
 
 
