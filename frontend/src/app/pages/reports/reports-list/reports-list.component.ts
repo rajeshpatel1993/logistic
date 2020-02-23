@@ -410,7 +410,13 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   doc.save('service.pdf');
   }
 
+  exportToPdfExpense(){
 
+  }
+
+  exportToExcelExpense(){
+    
+  }
 
   exportToExcelService(){
     this.jsonData = [];
