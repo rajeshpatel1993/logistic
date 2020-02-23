@@ -37,8 +37,8 @@ export class ReportsService {
 
   }
 
-  loadVehicleRegistrations(){
-    return this.http.get(this.baseUrl+"/vehicles/regnos");
+  loadOrganizationData(){
+    return this.http.get(this.baseUrl+"/organization/");
   }
 
   loadFiltereddata(querystring:String, page){
