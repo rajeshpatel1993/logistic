@@ -87,7 +87,7 @@ nb-menu .menu-item {
   a {
     color: #777777!important;
     &.active {
-      color: #C2CC7F;
+      color: #C2CC7F!important;
 
       .menu-icon {
         color: #C2CC7F;
@@ -95,7 +95,7 @@ nb-menu .menu-item {
     }
 
     &:hover {
-      color: #C2CC7F;
+      color: #C2CC7F!important;
 
       .menu-icon {
         color: #C2CC7F;
