@@ -17,105 +17,30 @@
 
             <nb-tabset>
               <nb-tab tabTitle="Vehicle" class="p-0">
+                <div class="row no-gutters mt-4 mb-4">
+                  <div class="col-xs-12 col-sm-6 md-6">
+                    <div class="daterange">
+                      <input type="text" class="form-control"
+                      ngxDaterangepickerMd
+                      [(ngModel)]="selected"
+                      [showCustomRangeLabel]="true"
+                      [alwaysShowCalendars]="true"
+                      [ranges]="ranges"
+                      [linkedCalendars]="true"
+                      [isInvalidDate] = "isInvalidDate"
+                      [showClearButton]="true"
+                      (ngModelChange)="dateRangeChange($event)"
+                      placeholder="Select date..." />
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-6 text-right">
+                    <button class="btn btn-outline-primary custom" (click)="exportToPdf()"> Export to PDF</button>
+                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcel()"> Export to CSV</button>
+                  </div>
+                </div>
+          
                 <div class="table-responsive">
-
-
-                  <div class="row no-gutters">
-                    <div class="col-xs-12 col-sm-10 col-md-10 ">
-                      <div class="input-group daterange">
-                        <input type="text"
-                        ngxDaterangepickerMd
-                        [(ngModel)]="selected"
-                        [showCustomRangeLabel]="true"
-                        [alwaysShowCalendars]="true"
-                        [ranges]="ranges"
-                        [linkedCalendars]="true"
-                        [isInvalidDate] = "isInvalidDate"
-                        [showClearButton]="true"
-                        (ngModelChange)="dateRangeChange($event)"
-                        placeholder="Select date..." />
-                      </div>
-                      
-                    </div>
-              
-                  </div>
-            
-                 
-            
-                  <form class="formbg-light">
-                    <div class="form-row">
-                      <div class="col-xs-12 col-sm-3">
-                        <div class="ng-autocomplete">
-                          <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter vehicle code"
-                            (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
-                            [notFoundTemplate]="notFoundTemplate">
-                          </ng-autocomplete>
-            
-                          <ng-template #itemTemplate let-item>
-                            <a [innerHTML]="item.name"></a>
-                          </ng-template>
-            
-                          <ng-template #notFoundTemplate let-notFound>
-                            <div [innerHTML]="notFound"></div>
-                          </ng-template>
-                        </div>
-                      </div>
-                      <div class="col-xs-12 col-sm-3">
-                        <div class="ng-autocomplete">
-                          <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter reg no’s"
-                            (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
-                            [notFoundTemplate]="notFoundTemplate1">
-                          </ng-autocomplete>
-            
-                          <ng-template #itemTemplate1 let-item>
-                            <a [innerHTML]="item.name"></a>
-                          </ng-template>
-            
-                          <ng-template #notFoundTemplate1 let-notFound>
-                            <div [innerHTML]="notFound"></div>
-                          </ng-template>
-                        </div>
-            
-                      </div>
-                      <div class="col-xs-12 col-sm-3">
-                        <div class="ng-autocomplete">
-                          <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword" placeHolder="Enter driver name "
-                            (selected)='selectEvent($event, "vehiclereg")' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' historyIdentifier="vehicleRegistrations"
-                            [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
-                          </ng-autocomplete>
-            
-                          <ng-template #itemTemplate2 let-item>
-                            <a [innerHTML]="item.name"></a>
-                          </ng-template>
-            
-                          <ng-template #notFoundTemplate2 let-notFound>
-                            <div [innerHTML]="notFound"></div>
-                          </ng-template>
-                        </div>
-                      </div>
-                      <div class="col-xs-12 col-sm-3">
-                        <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary ml-2 mr-2"><i
-                            class="fas fa-search"></i> Search</button>
-                      </div>
-                    </div>
-                  </form>
-
-                  <div class="col-xs-12 col-sm-2 col-md-2 text-right">
-
-                    <button (click)="exportToPdf()"> Export to PDF</button>
-                    <button (click)="exportToExcel()"> Export to CSV</button>
-
-                    <!-- <select placeholder="Select Showcase" (change)="onChange($event.target.value)">
-                      <option value="" disabled>Export</option>
-                      <option value="1">PDF</option>
-                      <option value="2">CSV/Excel</option>
-                    </select> -->
-                  </div>
-                  
-                  <table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+                  <table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
                     <thead>
                       <tr>
                         <th>Vehicle</th>
@@ -157,19 +82,23 @@
                               <h5>{{item.name}}</h5>
                             </div>
                           </div>
-                          Images
                         </td>
                         <td>
 
-                          <div>
+                          <div class="row no-gutters">
   
-                            <div *ngIf="item.assignMentStatus == 0">
+                            <div class="col-12" *ngIf="item.assignMentStatus == 0">
                                 <p> Unassigned</p>
                             </div>
                           
-                            <div *ngIf="item.assignMentStatus == 1">
-                                <img [src]="item.assign_data.employee.empImage" width="200"/>
-                                <p>{{item.assign_data.employee.firstName}}</p>
+                            <div class="col-12" *ngIf="item.assignMentStatus == 1">
+                              <div class="VehicleDriver">
+                                <div class="VehicleDriver_image">
+                                  <img [src]="item.assign_data.employee.empImage" width="55"/>
+                                  <p>{{item.assign_data.employee.firstName}}</p>
+                                </div>
+                              </div>
+                                
                             </div>
                           </div>
 
@@ -267,11 +196,6 @@
                                     <p>{{item.roadTaxValid | date}}</p>
                                   </div>
                                 </span>
-        
-        
-                                <!-- <span class="success"></span> -->
-                                <!-- <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid)"></span> -->
-                                <!-- <span  class="danger"></span> -->
                               </div>
                             </div>
         
@@ -282,10 +206,7 @@
                             <div *ngSwitchCase="'4'">
                               <span>N.A.</span>
                             </div>
-        
-        
                           </div>
-                        
                         </td>
                         <td>
                           <div [ngSwitch]="item.vehicle_typeId">
@@ -364,10 +285,6 @@
 
                     </tbody>
                   </table>
-                </div>
-                <div class="card-footer pb-0 pt-3 pb-3">
-             
-
                 </div>
               </nb-tab>
               <nb-tab tabTitle="Assign Vehicle" class="p-1">
