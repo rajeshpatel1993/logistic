@@ -596,131 +596,21 @@ router.get("/serviceTypeGraph",async(req,res) => {
 });
 
 
+router.get("/vehicle_expenses",async(req,res) => {
 
-
-
-router.get("/getAssignVehicle/:id", async (req, res) => {
-    const id = req.params.id; //or use req.param('id')
-    const filter = { _id: mongoose.Types.ObjectId(id) };
-    const vehicleData = await Vehicle.aggregate([{$match:filter},{
-        
-            $lookup: {
-                from: "vehicleDetails", // collection to join
-                let: { "vechDetId": "$vehicleDetailsId" },
-                pipeline: [
-                    { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
-                    { "$project": { "vehicleDetails": 1, "_id": 0 }}
-                ],
-                as: "vehicleDetailsArray"// output array field
-            }
-        
-    },
-    {
-
-        $lookup: {
-            from: "vehicleType", // collection to join
-            let: { "vechTypeId": "$vehicle_typeId" },
-            pipeline: [
-                { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
-                { "$project": { "vehicleType": 1, "_id": 0 }}
-            ],
-            as: "vehicleTypes"// output array field
-        }
-
-    },
-]);
-    
-   
-        let ele = {};
-        let elemId = vehicleData[0]._id;
-        let assignedVal = Object.assign(ele,vehicleData[0]);
-        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId, isDeleted:0}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
-
-        vehicleData[0]["assign_data"] = assignVehicleCollection;
-    
-
-    let responseData = {};
-    responseData["status"] = 200;
-    responseData["data"] = vehicleData;
-    res.status(200).json(responseData);
-    
-
-
-});
-
-
-
-router.get("/getAssignedVehicle/:vehichleid", async (req, res) => {
-    const id = req.params.vehichleid; //or use req.param('id')
-    const filter = { vehicle: mongoose.Types.ObjectId(id) };
-
-    
-    let assignVehicleCollection = await AssignVehicle.findOne(filter).populate('employee');
-
-
-    let responseData = {};
-    responseData["status"] = 200;
-    responseData["data"] = assignVehicleCollection;
-    res.status(200).json(responseData);
-    
-
-
-});
-
-
-router.post("/assignVehicle/delete",async(req,res)=>{
-    let {id} = req.body;
-    const filter = { vehicle: mongoose.Types.ObjectId(id) };
-    const update = { isDeleted: 1 };
-    try{
-        let updateVehicle = await AssignVehicle.findOneAndUpdate(filter, update);
-        res.status(200).json({"msg":"deleted successfully"});
-    }catch(error){
-        res.send(error);
-    }
-   
-
-});
-
-
-
-
-router.get("/assignevechiclewitcount", async(req,res)=>{
-    try{
-        let tmpData = [];
-
-        let assignvehicledata = await AssignVehicle.aggregate([
-            {
-                "$match": {
-                    "projectsType": { 
-                        "$exists": true, 
-                        "$ne": null 
-                    }
-                }    
-            },
-            { 
-                  "$group" : {_id:"$projectsType", count:{$sum:1}}
-
-            }    
-        ]);
-
-        for(let i=0;i<assignvehicledata.length;i++){
-            let tmpObj = {};
-            let projectTypeData = await ProjectType.findOne(assignvehicledata[i]._id);
-            tmpObj["projectTypeName"] = projectTypeData.projectTypeName;
-            tmpObj["totalno"] = assignvehicledata[i].count;
-            tmpData.push(tmpObj);
-
-        }
+    try {
+        let expenseData = await Expense.find({"isDeleted": 0}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type');
         let responseData = {};
         responseData["status"] = 200;
-        responseData["data"] = tmpData;
+        responseData["data"] = expenseData;
         res.status(200).json(responseData);
-
-    }catch(error){
+    } catch (error) {
         console.log(error);
     }
 });
+
+
+
 
 
 module.exports = router;
