@@ -20,6 +20,9 @@ import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { DataTablesModule } from 'angular-datatables';
 import { ReportsService } from './reports.service';
 import { CustomCommonModule} from '../custom-common.module';
+import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { VehicleReportComponent } from './vehicle-report/vehicle-report.component';
+import { ServicetaskbyamountComponent } from './servicetaskbyamount/servicetaskbyamount.component';
 
 
 @NgModule({
@@ -45,7 +48,10 @@ import { CustomCommonModule} from '../custom-common.module';
   ],
   declarations: [
     ReportsListComponent,
-    ReportsComponent
+    ReportsComponent,
+    BarChartComponent,
+    VehicleReportComponent,
+    ServicetaskbyamountComponent
     // ,
     // VehicleServiceDetailsComponent
   ],

@@ -21,12 +21,16 @@ export class ReportsListComponent implements OnInit {
   public vehicleTypes = [];
   public vehicleDetails = [];
   public assignedVehicles = [];
+  public serviceReportData = [];
   public vehicleRegistrations = [];
   public selectedVehicleType;
   public selectedVehicleDetail;
   public selectedVehicleReg;
   public currentPage:String;
   keyword = 'name';
+
+  public serviceCalled:boolean = false;
+
 
   public filterQueryString = "";
 
@@ -42,10 +46,11 @@ export class ReportsListComponent implements OnInit {
 
   dtOptions: any = {};
   dtOptions1: any = {};
+  dtOptions2: any = {};
 
   dtTrigger: any = new Subject();
   dtTrigger1: any = new Subject();
-
+  dtTrigger2: any = new Subject();
 
   selected: any;
   alwaysShowCalendars: boolean;
@@ -84,7 +89,35 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
       pageLength: 2
     };
 
+    this.dtOptions2 = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+
   }
+
+  onChangeTab(event){
+    let tabTitle = event.tabTitle;
+    if(tabTitle === "Service Management"){
+      if(!this.serviceCalled){
+        this.loadServiceReportData();
+        this.loadGraphData();
+        this.serviceCalled = true;
+      }
+      
+    }
+    
+  }
+
+  loadGraphData(){
+    this.reportService.loadServiceReportGraphData().subscribe((d)=>{
+      console.log(d);
+
+    }, (error) => {
+
+    });
+  }
+
 
   isInvalidDate = (m: moment.Moment) =>  {
     return this.invalidDates.some(d => d.isSame(m, 'day') )
@@ -134,24 +167,6 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
       bodyData.push(tmpArr);
       tmpArr = [];
-
-
-      // let tmpObj = {};
-      // tmpObj["name"] = this.vehiclesList[i].name;
-      // tmpObj["driver"] = employeefirstname;
-      // tmpObj["location"] = this.vehiclesList[i].workLocationArray[0].workLocation;
-      // tmpObj["vehicletype"] = this.vehiclesList[i].vehicleTypesArray[0].vehicleType;
-      // tmpObj["status"] = this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus;
-      // tmpObj["regno"] = this.vehiclesList[i].regNo;
-
-
-      // tmpObj["roadtaxdue"] = roadTaxValid;
-      // tmpObj["insurancedue"] = insuranceDue;
-      // tmpObj["projectname"] = projectName;
-      // tmpObj["overallexpense"] = overallExpense;
-      // tmpObj["recentexpense"] = lastExpense;
-
-      // this.jsonData.push(tmpObj);
 
     }
 
@@ -327,6 +342,97 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
+  exportToPdfService(){
+
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#my-table' });
+    let bodyData = [];
+    let tmpArr = [];
+
+    let columns = ['vehiclename', 'vehiclecode', 'drivername', 'location','status','servicetype','lastperformeddate','lastservicecost'];
+
+
+    for(let i=0;i<this.serviceReportData.length;i++){
+      
+      let vehicleName = this.serviceReportData[i].vehicle.name;
+      let vehiclecode = this.serviceReportData[i].vehicle.vehicle_code;
+      let drivername = this.serviceReportData[i].employee.firstName;  
+      let location = 'N.A.';
+      let status = 'N.A.';
+      let servicetype = this.serviceReportData[i].serviceType.serviceTaskName;
+      let lastperformeddate = this.serviceReportData[i].previousService[0].createdAt;
+      let lastservicecost = this.serviceReportData[i].previousService[0].amount;
+
+
+      tmpArr.push(vehicleName);
+      tmpArr.push(vehiclecode);
+      tmpArr.push(drivername);
+      tmpArr.push(location);
+      tmpArr.push(status);
+      tmpArr.push(servicetype);
+      tmpArr.push(lastperformeddate);
+      tmpArr.push(lastservicecost);
+ 
+
+      bodyData.push(tmpArr);
+      tmpArr = [];
+
+
+    }
+
+
+
+    let optData = {
+      head: [columns],
+      body: bodyData,
+    };
+
+
+  //  console.log(optData);
+
+  doc.autoTable(optData)
+
+  doc.save('service.pdf');
+  }
+
+
+
+  exportToExcelService(){
+    this.jsonData = [];
+
+    let columns = ['vehiclename', 'vehiclecode', 'drivername', 'location','status','servicetype','lastperformeddate','lastservicecost'];
+    for(let i=0;i<this.serviceReportData.length;i++){
+      
+      let vehicleName = this.serviceReportData[i].vehicle.name;
+      let vehiclecode = this.serviceReportData[i].vehicle.vehicle_code;
+      let drivername = this.serviceReportData[i].employee.firstName;  
+      let location = 'N.A.';
+      let status = 'N.A.';
+      let servicetype = this.serviceReportData[i].serviceType.serviceTaskName;
+      let lastperformeddate = this.serviceReportData[i].previousService[0].createdAt;
+      let lastservicecost = this.serviceReportData[i].previousService[0].amount;
+
+      let tmpObj = {};
+      tmpObj["vehiclename"]=vehicleName;
+      tmpObj["vehiclecode"] = vehiclecode;
+      tmpObj["drivername"] = drivername;
+      tmpObj["location"] = location;
+      tmpObj["status"] = status;
+      tmpObj["servicetype"] = servicetype;
+      tmpObj["lastperformeddate"] = lastperformeddate;
+      tmpObj["lastservicecost"] = lastservicecost;
+  
+      this.jsonData.push(tmpObj);
+
+
+    }
+
+    this.reportService.downloadFile(this.jsonData, 'service_report', columns);
+    this.jsonData = [];
+
+  }
+
+
   public loadVehicles(){
     this.reportService.loadVehicles().subscribe((vehicleData:any)=>{
      this.vehiclesList = vehicleData.data;
@@ -352,6 +458,24 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     }
     );
   }
+
+
+  public loadServiceReportData(){
+
+    // console.log('calling services');
+    this.reportService.loadServiceTaskData().subscribe((serviceTaskData: any) => {
+      this.serviceReportData = serviceTaskData.data;
+
+      this.dtTrigger2.next();
+
+      // console.log(this.assignedVehicles);
+    },
+    (error) => {
+
+    }
+    );
+  }
+
 
 
   selectEvent(item, typeofautoselect) {
