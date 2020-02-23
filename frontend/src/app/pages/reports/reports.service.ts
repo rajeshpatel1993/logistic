@@ -44,6 +44,12 @@ export class ReportsService {
   }
 
 
+  loadVehicleExpenses(){
+    return this.http.get(this.baseUrl+"/reports/vehicle_expenses");
+
+  }
+
+
   // loadServiceTypeDataForGraph(){
   //   return this.http.get(this.baseUrl+"/reports/vehicle_services");
 
