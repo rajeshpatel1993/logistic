@@ -597,12 +597,27 @@ router.get("/serviceTypeGraph",async(req,res) => {
 
 
 router.get("/vehicle_expenses",async(req,res) => {
+    const modifiedData = [];
 
     try {
-        let expenseData = await Expense.find({"isDeleted": 0}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type');
+        let expenseData = await Expense.find({"isDeleted": 0},{},{lean: true}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type');
+
+
+        for(let i=0;i<expenseData.length;i++){
+            
+            let ele = {};
+           let elemId = expenseData[i].vehicle._id;
+           let assignedVal = Object.assign(ele,expenseData[i]);
+           // console.log(assignedVal);
+
+           let previousExpense = await Expense.find({vehicle:elemId}).populate('expense_type').sort({createdAt: 1}).limit(1);
+           assignedVal["previousExpense"] = previousExpense;
+           modifiedData.push(assignedVal);
+       }
+
         let responseData = {};
         responseData["status"] = 200;
-        responseData["data"] = expenseData;
+        responseData["data"] = modifiedData;
         res.status(200).json(responseData);
     } catch (error) {
         console.log(error);

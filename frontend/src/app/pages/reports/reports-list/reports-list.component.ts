@@ -23,6 +23,7 @@ export class ReportsListComponent implements OnInit {
   public assignedVehicles = [];
   public serviceReportData = [];
   public vehicleRegistrations = [];
+  public vehicleExpenseData = [];
   public selectedVehicleType;
   public selectedVehicleDetail;
   public selectedVehicleReg;
@@ -30,6 +31,7 @@ export class ReportsListComponent implements OnInit {
   keyword = 'name';
 
   public serviceCalled:boolean = false;
+  public expenseCalled:boolean = false;
 
 
   public filterQueryString = "";
@@ -47,10 +49,13 @@ export class ReportsListComponent implements OnInit {
   dtOptions: any = {};
   dtOptions1: any = {};
   dtOptions2: any = {};
+  dtOptions3: any = {};
+
 
   dtTrigger: any = new Subject();
   dtTrigger1: any = new Subject();
   dtTrigger2: any = new Subject();
+  dtTrigger3: any = new Subject();
 
   selected: any;
   alwaysShowCalendars: boolean;
@@ -94,6 +99,11 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
       pageLength: 2
     };
 
+    this.dtOptions3 = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
+
   }
 
   onChangeTab(event){
@@ -105,6 +115,11 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
         this.serviceCalled = true;
       }
       
+    }else if(tabTitle === "Expense"){
+      if(!this.expenseCalled){
+        this.loadVehicleExpenseReport();
+        this.expenseCalled = true;
+      }
     }
     
   }
@@ -474,6 +489,16 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
     }
     );
+  }
+
+  loadVehicleExpenseReport(){
+    this.reportService.loadVehicleExpenses().subscribe((d)=>{
+      this.vehicleExpenseData = d["data"];
+      this.dtTrigger3.next();
+
+    },(err)=>{
+
+    });
   }
 
 
