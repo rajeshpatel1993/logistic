@@ -29,7 +29,9 @@
         &_name{
             width: calc(100%- 55px);
             float: left;
-            
+            h5{
+                font-weight: 400;
+            }
         }
     }
     .VehicleType{
