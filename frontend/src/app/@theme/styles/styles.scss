@@ -367,6 +367,70 @@ a:focus {
         width: 500px;
     }
   }
+  .dataTables_wrapper{
+    .dataTables_filter{
+      input[type=search]{
+        display: inline-block;
+        width: 220px;
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+    }
+    .dataTables_length{
+      select{
+        display: inline-block;
+        width: 100px;
+        height: calc(1.5em + 0.75rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      }
+    }
+    .dataTables_paginate{
+      .paginate_button {
+        border: 1px solid #C2CC7F;
+        color: #C2CC7F !important;
+        &.current{
+          background: #C2CC7F;
+          border-color: #C2CC7F;
+          color: #fff !important;
+          &:hover{
+            background: #C2CC7F;
+            border-color: #C2CC7F;
+            color: #fff !important;
+            cursor: default;
+          }
+        }
+        &:hover{
+          background: #C2CC7F;
+          color: #fff !important;
+          border-color: #C2CC7F;
+        }
+        &.disabled{
+          border-color: #C2CC7F;
+          &:hover{
+            border-color: #C2CC7F;
+          }
+        }
+      }
+    }
+  }
 }
 
 .ecommerce {
