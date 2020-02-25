@@ -286,7 +286,8 @@ try{
     let savedata = {vehicle_type:vehicleTypef.name, vehicle_typeId: vehicleTypef.id, vehicle_code : vehicleCode , vehicleDetailsId: vehicledetails.id, name : vehicleName , 
         yearofManufacturer : manufacture_year, modelId : model.id, color : color.name,regNo: regNo, engineNo : engine_no , chassisNo : chasis_no,
         warrantyPeriod : warranty_period,  fuelTypeId: fuel_type.id, fuelMeausrementId: fuelMeausrement.id, vehicleOwnershipId: ownership_status.id,brandId: brand.id,
-        vehicleStatusId: vehicleStatus, workLocationId : workLocation.id,qrCode:qrcodeURl, note: note, vehicleBill:billUrls, vehicleImage: imgUrl
+        vehicleStatusId: vehicleStatus, workLocationId : workLocation.id,qrCode:qrcodeURl, note: note, vehicleBill:billUrls, vehicleImage: imgUrl,
+        image_file_unique_id:image_file_unique_id,bill_file_unique_id:bill_file_unique_id
     
     };
 

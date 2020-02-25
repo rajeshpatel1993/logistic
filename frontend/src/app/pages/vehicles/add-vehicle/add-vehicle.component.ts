@@ -31,6 +31,8 @@ export class AddVehicleComponent implements OnInit {
   public dialogBox : boolean = false;
   public msgObj ={};
   public lastVehcileCodeN;
+  public selectedVehicleType;
+
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder, private router: Router) { }
   public vehicleCode: String;
@@ -413,8 +415,7 @@ public formatNumber(num){
 
   return tmpNum;
 }
-public selectedVehicleType;
-  selectEventD(item) {
+selectEventD(item) {
     this.loadLastVehicleCode(item.id, item.code);
     this.showallfields = true;
     this.vehicleDetailsData = [];

@@ -405,17 +405,110 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
   //  console.log(optData);
 
-  doc.autoTable(optData)
+    doc.autoTable(optData)
 
-  doc.save('service.pdf');
+    doc.save('service.pdf');
   }
 
   exportToPdfExpense(){
 
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#my-table' });
+    let bodyData = [];
+    let tmpArr = [];
+
+    let columns = ['vehiclename', 'vehiclecode',  'status','expense_date','expense_type','description','amount','vendor_name','prev_expense','prev_expense_type'];
+
+
+    for(let i=0;i<this.vehicleExpenseData.length;i++){
+      
+      let vehicleName = this.vehicleExpenseData[i].vehicle.name;
+      let vehiclecode = this.vehicleExpenseData[i].vehicle.vehicle_code;
+      let status = 'N.A.';
+      let expense_date = this.vehicleExpenseData[i].expense_date;
+      let expense_type = this.vehicleExpenseData[i].expense_type.expenseType;
+      let description = this.vehicleExpenseData[i].details;
+      let amount = this.vehicleExpenseData[i].amount;
+      let vendor_name = this.vehicleExpenseData[i].vendor;
+      let prev_expense = this.vehicleExpenseData[i].previousExpense[0].amount;
+      let prev_expense_type = this.vehicleExpenseData[i].previousExpense[0].expense_type.expenseType;
+
+
+
+
+      tmpArr.push(vehicleName);
+      tmpArr.push(vehiclecode);
+      tmpArr.push(status);
+      tmpArr.push(expense_date);
+      tmpArr.push(expense_type);
+      tmpArr.push(description);
+      tmpArr.push(amount);
+      tmpArr.push(vendor_name);
+      tmpArr.push(prev_expense);
+      tmpArr.push(prev_expense_type);
+ 
+
+      bodyData.push(tmpArr);
+      tmpArr = [];
+
+
+    }
+
+
+
+    let optData = {
+      head: [columns],
+      body: bodyData,
+    };
+
+
+  //  console.log(optData);
+
+    doc.autoTable(optData)
+
+    doc.save('expense.pdf');
+
   }
 
   exportToExcelExpense(){
-    
+
+    this.jsonData = [];
+
+    let columns = ['vehiclename', 'vehiclecode',  'status','expense_date','expense_type','description','amount','vendor_name','prev_expense','prev_expense_type'];
+    for(let i=0;i<this.vehicleExpenseData.length;i++){
+      
+      let vehicleName = this.vehicleExpenseData[i].vehicle.name;
+      let vehiclecode = this.vehicleExpenseData[i].vehicle.vehicle_code;
+      let status = 'N.A.';
+      let expense_date = this.vehicleExpenseData[i].expense_date;
+      let expense_type = this.vehicleExpenseData[i].expense_type.expenseType;
+      let description = this.vehicleExpenseData[i].details;
+      let amount = this.vehicleExpenseData[i].amount;
+      let vendor_name = this.vehicleExpenseData[i].vendor;
+      let prev_expense = this.vehicleExpenseData[i].previousExpense[0].amount;
+      let prev_expense_type = this.vehicleExpenseData[i].previousExpense[0].expense_type.expenseType;
+
+
+      let tmpObj = {};
+      tmpObj["vehiclename"]=vehicleName;
+      tmpObj["vehiclecode"] = vehiclecode;
+      tmpObj["status"] = status;
+      tmpObj["expense_date"] = expense_date;
+      tmpObj["expense_type"] = expense_type;
+      tmpObj["description"] = description;
+      tmpObj["amount"] = amount;
+      tmpObj["vendor_name"] = vendor_name;
+      tmpObj["prev_expense"] = prev_expense;
+      tmpObj["prev_expense_type"] = prev_expense_type;
+  
+      this.jsonData.push(tmpObj);
+
+
+    }
+
+    this.reportService.downloadFile(this.jsonData, 'vehicle_expense', columns);
+    this.jsonData = [];
+
   }
 
   exportToExcelService(){

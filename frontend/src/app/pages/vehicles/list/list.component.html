@@ -284,7 +284,7 @@
                   </div>
 
                 </td>
-                <td>
+                <td *ngIf="item.warrantyPeriod != ''">
                   {{getDateDifference(item.warrantyPeriod)}}
                   <div class="workStatus">
                     <span class="success tooltipwrp" *ngIf="getProgressBarValu(item.warrantyPeriod) <= 50">
@@ -315,6 +315,9 @@
                     <!-- <span class="pending" *ngIf="getProgressBarValu(item.roadTaxValid)"></span> -->
                     <!-- <span  class="danger"></span> -->
                   </div>
+                </td>
+                <td *ngIf="item.warrantyPeriod == ''">
+                  N.A.
                 </td>
             
                 <td>{{item.workLocationArray[0].workLocation}}</td>
