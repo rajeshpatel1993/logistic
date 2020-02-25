@@ -42,7 +42,7 @@ export class VehicleService {
   }
 
   loadFiltereddata(querystring:String, page){
-    return this.http.get(this.baseUrl+"/vehicles/filtervehicle?"+querystring, page);
+    return this.http.get(this.baseUrl+"/vehicles/filtervehicle"+querystring, page);
   }
 
   loadModelsData(brandId?){
