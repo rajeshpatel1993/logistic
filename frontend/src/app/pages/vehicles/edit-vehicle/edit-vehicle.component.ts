@@ -104,6 +104,9 @@ export class EditVehicleComponent implements OnInit {
         break;
       default:
     }
+    
+    
+
   }
 
   onReset() {
@@ -140,6 +143,8 @@ selectVehicle(){
 
 uploadImage(){
     // console.log(this.imgSrc);
+
+    this.imageFileUniqueId = uuid.v4();
     const blob = this.dataURItoBlob(this.imgSrc[0]);
     let imgFileName = blob.type.split("/")[1];
     var fd = new FormData();
@@ -388,11 +393,6 @@ uploadImage(){
       this.currentVehcileType = this.vehicleData['vehicleTypes'][0].vehicleType;
 
 
-
-
-
-
-
       this.vehicleForm.get("vehType").patchValue(this.currentVehcileType);
 
       this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
@@ -489,8 +489,8 @@ uploadImage(){
     }
 
 
-    group['bill_file_unique_id'] = ['',Validators.required];
-    group['image_file_unique_id'] = ['', Validators.required];
+    group['bill_file_unique_id'] = [''];
+    group['image_file_unique_id'] = [''];
 
     group["ownership_status"] = ['', Validators.required];
     group["note"] = ['', Validators.required];
@@ -622,6 +622,7 @@ uploadImage(){
   }
 
   uploadBills(){
+    this.billfileuniqueid = uuid.v4()
    let formD = new FormData();
    formD.append('fileId', this.billfileuniqueid);
    formD.append('typeoffile', "bills");
