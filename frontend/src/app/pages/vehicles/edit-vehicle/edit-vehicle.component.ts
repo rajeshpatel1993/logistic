@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import * as uuid from 'uuid';
 import { ActivatedRoute, Router } from '@angular/router';
+import {Observable, Subscription} from 'rxjs/Rx';
+
 @Component({
   selector: 'ngx-edit-vehicle',
   templateUrl: './edit-vehicle.component.html',
@@ -20,6 +22,10 @@ export class EditVehicleComponent implements OnInit {
   public ownershipList:any=[];
   public fuelTypeList:any = [];
   public vehicle:any = [];
+  public lastVehcileCodeN;
+
+  public lastVehicleCodeSubscription: Subscription;
+
   public fuelMeasurementList:any = [];
   public showExtraField:boolean = true;
   public selectedFiles: any[] = [];
@@ -32,8 +38,11 @@ export class EditVehicleComponent implements OnInit {
   constructor(private vehicleService: VehicleService, private fb: FormBuilder, private activeRoute: ActivatedRoute, private router: Router) { }
   public vehicleCode: String;
   public vehicleTypes = [];
-  public billfileuniqueid = uuid.v4();
-  public imageFileUniqueId = uuid.v4();
+  // public billfileuniqueid = uuid.v4();
+  // public imageFileUniqueId = uuid.v4();
+
+  public billfileuniqueid ;
+  public imageFileUniqueId ;
 
   imgSrc: any = [];
 
@@ -333,6 +342,15 @@ uploadImage(){
       this.selectedVehicleType = this.vehicleData['vehicle_code'];
       this.selectedVehicleT = this.vehicleData['vehicle_type'];
 
+      let veh_type_id = this.vehicleData["vehicle_typeId"];
+
+      // console.log(this.selectedVehicleT);
+      if(veh_type_id == 1 || veh_type_id ==2){
+        this.showExtraField = true;
+      }else{
+        this.showExtraField = false;
+      }
+
 
 
       this.vehDetail = this.vehicleData['vehicleDetailsArray'][0].vehicleDetails;
@@ -344,19 +362,24 @@ uploadImage(){
       this.manufactureYear = this.vehicleData['yearofManufacturer'];
       this.engineNo = this.vehicleData['engineNo'];
       this.chasisNo = this.vehicleData['chassisNo'];
-      this.purchaseDate = new Date(this.vehicleData['purchase_date']);
-      this.warrantyPeriod = new Date(this.vehicleData['warrantyPeriod']);
+      if(this.vehicleData.hasOwnProperty("purchase_date") && this.vehicleData["purchase_date"]){
+        this.purchaseDate = new Date(this.vehicleData['purchase_date']);
+        this.vehicleForm.get("purchase_date").patchValue(this.purchaseDate);
+
+      }
+
+
+      if(this.vehicleData.hasOwnProperty("warrantyPeriod") && this.vehicleData["warrantyPeriod"]){
+        this.warrantyPeriod = new Date(this.vehicleData['warrantyPeriod']);
+        this.vehicleForm.get("warranty_period").patchValue(this.warrantyPeriod);
+
+      }
+
       this.fuelType = this.vehicleData['fuelTypes'][0].fuelTypeName;
       this.fuelMeasureMent = this.vehicleData['fuelMesaureMents'][0].fuelMeausrement;
       this.workLocation = this.vehicleData['workLocations'][0].workLocation;
       
-      // this.insurancePolicy = this.vehicleData['insuranceNo'];
-      // this.insuranceAmount = this.vehicleData['insuranceAmt'];
-      // this.policyExpiry = new Date(this.vehicleData['insuranceValid']);
-      // this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
-      // this.roadTaxNo = this.vehicleData['roadTaxNo'];
-      // this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
-      // this.roadTaxExpiry = new Date(this.vehicleData['roadTaxValid']);
+     
       this.ownershipStatus = this.vehicleData['vehicleOwnerships'][0].vehicleOwnership;
       this.status = +this.vehicleData['vehicleStatusId'];
       this.note = this.vehicleData['note'];
@@ -385,22 +408,31 @@ uploadImage(){
       this.vehicleForm.get("manufacture_year").patchValue(this.manufactureYear);
       this.vehicleForm.get("engine_no").patchValue(this.engineNo);
       this.vehicleForm.get("chasis_no").patchValue(this.chasisNo);
-      // this.vehicleForm.get("purchase_date").patchValue(this.purchaseDate);
-      this.vehicleForm.get("warranty_period").patchValue(this.warrantyPeriod);
       this.vehicleForm.get("fuel_type").patchValue(this.fuelType);
       this.vehicleForm.get("fuelMeausrement").patchValue(this.fuelMeasureMent);
       this.vehicleForm.get("workLocation").patchValue(this.workLocation);
 
 
 
-      // this.vehicleForm.get("insurance_policy_no").patchValue(this.insurancePolicy);
-      // this.vehicleForm.get("insurance_amount").patchValue(this.insuranceAmount);
-      // this.vehicleForm.get("policy_expiry").patchValue(this.policyExpiry);
-      // this.vehicleForm.get("insurance_agent").patchValue(this.insuranceAgent);
-      // this.vehicleForm.get("road_tax_no").patchValue(this.roadTaxNo);
-      // this.vehicleForm.get("road_tax_amount").patchValue(this.roadTaxAmount);
-      // this.vehicleForm.get("road_tax_expiry").patchValue(this.roadTaxExpiry);
+      if(this.showExtraField){
 
+        this.insurancePolicy = this.vehicleData['insuranceNo'];
+        this.insuranceAmount = this.vehicleData['insuranceAmt'];
+        this.policyExpiry = new Date(this.vehicleData['insuranceValid']);
+        this.insuranceAgent = this.vehicleData['insuranceAgents'][0].insuranceCompanyName;
+        this.roadTaxNo = this.vehicleData['roadTaxNo'];
+        this.roadTaxAmount = this.vehicleData['roadTaxAmt'];
+        this.roadTaxExpiry = new Date(this.vehicleData['roadTaxValid']);
+
+
+      this.vehicleForm.get("insurance_policy_no").patchValue(this.insurancePolicy);
+      this.vehicleForm.get("insurance_amount").patchValue(this.insuranceAmount);
+      this.vehicleForm.get("policy_expiry").patchValue(this.policyExpiry);
+      this.vehicleForm.get("insurance_agent").patchValue(this.insuranceAgent);
+      this.vehicleForm.get("road_tax_no").patchValue(this.roadTaxNo);
+      this.vehicleForm.get("road_tax_amount").patchValue(this.roadTaxAmount);
+      this.vehicleForm.get("road_tax_expiry").patchValue(this.roadTaxExpiry);
+    }
 
 
 
@@ -412,7 +444,7 @@ uploadImage(){
        this.vehicleForm.get("bill_file_unique_id").patchValue(this.uniqueFileId);
 
 
-      //  this.loadBrandsData(this.vehicleData['vehicle_type']);
+      this.loadBrandsData(this.vehicleData['vehicle_type']);
 
 
       console.log(d);
@@ -423,47 +455,46 @@ uploadImage(){
 
 
   createForm(showExtraField) {
-    console.log(this.showExtraField);
     let group = {
       // vehicleT:[],
-      vehType: [],
+      vehType: ['', Validators.required],
       vehicleId: [this.vehicleId],
-      vehicleTypef: [],
-      vehicledetails: [],
+      vehicleTypef: ['',Validators.required],
+      vehicledetails: ["", Validators.required],
       vehicleCode: [this.selectedVehicleType],
-      vehicleName: [''],
-      regNo: [''],
-      model: [''],
-      brand: [''],
-      color: [''],
-      manufacture_year: [''],
-      engine_no: [''],
-      chasis_no: [''],
+      vehicleName: ['', Validators.required],
+      regNo: ['', Validators.required],
+      model: ['', Validators.required],
+      brand: ['', Validators.required],
+      color: ['', Validators.required],
+      manufacture_year: ['', Validators.required],
+      engine_no: ['', Validators.required],
+      chasis_no: ['', Validators.required],
       purchase_date: [''],
       warranty_period:[''],
-      fuel_type:  [''],
-      fuelMeausrement: [''],
-      workLocation: ['']
+      fuel_type:  ['', Validators.required],
+      fuelMeausrement: ['', Validators.required],
+      workLocation: ['', Validators.required]
     };
     if(showExtraField){
-      group["insurance_policy_no"] = [''];
-      group["insurance_amount"] = [''];
-      group["policy_expiry"] = [''];
-      group["insurance_agent"] = [''];
-      group["road_tax_no"] = [''];
-      group["road_tax_amount"] = [''];
-      group["road_tax_expiry"] = [''];
+      group["insurance_policy_no"] = ['', Validators.required];
+      group["insurance_amount"] = ['', Validators.required];
+      group["policy_expiry"] = ['', Validators.required];
+      group["insurance_agent"] = ['', Validators.required];
+      group["road_tax_no"] = ['', Validators.required];
+      group["road_tax_amount"] = ['', Validators.required];
+      group["road_tax_expiry"] = ['', Validators.required];
 
 
     }
 
 
-    group['bill_file_unique_id'] = [];
-    group['image_file_unique_id'] = [];
+    group['bill_file_unique_id'] = ['',Validators.required];
+    group['image_file_unique_id'] = ['', Validators.required];
 
-    group["ownership_status"] = [''];
-    group["note"] = [''];
-    group["vehicleStatus"] = [];
+    group["ownership_status"] = ['', Validators.required];
+    group["note"] = ['', Validators.required];
+    group["vehicleStatus"] = ['',Validators.required];
     this.vehicleForm = this.fb.group(group);
   }
 
@@ -475,6 +506,12 @@ uploadImage(){
 
   updateVehicle(){
 
+
+    if (this.vehicleForm.invalid) {
+      alert("Please fill all required field");
+      return;
+    }
+    
 
    this.vehicleService.updateVehicle(this.vehicleForm.value).subscribe((data)=>{
       this.msgObj["type"] = "success";
@@ -538,14 +575,17 @@ uploadImage(){
 
 
   selectEventD(item) {
-    // console.log(item);
-    this.vehicleCode = item.code+" 001";
+    this.loadLastVehicleCode(item.id, item.code);
+    // this.vehicleForm.reset();
+    // this.showallfields = true;
+    this.vehicleDetailsData = [];
+
     this.selectedVehicleType = item;
-    this.selectedVehicleType = this.vehicleCode;
 
     this.vehicleForm.get("vehicleCode").patchValue(this.selectedVehicleType);
     this.vehicleForm.get("vehicleTypef").patchValue(item);
 
+    this.vehicleForm.get("vehicledetails").patchValue('');
     this.loadVehicleDetails(item.id);
     this.loadBrandsData(item.id);
 
@@ -604,6 +644,47 @@ uploadImage(){
     let brandId = brand.id;
     this.modelsList = [];
     this.loadModelsData(brandId);
+  }
+
+
+
+  public formatNumber(num){
+    let tmpNum;
+    if(num < 10){
+      tmpNum = `00${num}`;
+    }else{
+      tmpNum = `0${num}`;
+    }
+  
+    return tmpNum;
+  }
+
+  loadLastVehicleCode(vehicleTypeId, vehCode){
+ 
+    this.lastVehicleCodeSubscription = this.vehicleService.lastVehicleCode(vehicleTypeId).subscribe((d)=>{
+      let fnnumber;
+      if(d["data"].length > 0){
+        let dat = d["data"][0].vehicle_code;
+        let fn = dat.split(" ")[1];
+        fnnumber = +fn + 1;
+
+      }else{
+        fnnumber = 1;
+      }
+
+      this.lastVehcileCodeN = fnnumber;
+
+      let num = this.formatNumber(this.lastVehcileCodeN);
+      this.vehicleCode = vehCode+" "+num;
+      console.log(this.vehicleCode)
+
+      this.vehicleForm.patchValue({"vehicleCode":this.vehicleCode});
+      // console.log(this.vehicleCode);
+      // console.log(fnnumber);
+    },
+    (error)=>{
+
+    });
   }
 
 
