@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,300,400,400i,500,500i,600,600i,700,700i&display=swap');
 @import '~bootstrap/scss/mixins/breakpoints';
 @import '~@nebular/theme/styles/global/breakpoints';
 @import '../../styles/themes';
@@ -51,7 +52,27 @@
       text-decoration: none;
     }
   }
-
+  .comapnyLogo{
+    display: table;
+    width: 100%;
+    vertical-align: center;
+    text-align: center;
+    padding: 15px 0;
+    h5{
+    font-size: 28px;
+    font-family: 'Raleway';
+    font-weight: 600;
+    color: #192038;
+    display: inline-block;
+    border-bottom: 1px solid #C2CC7F;
+    padding: 3px 0;
+    }
+    p{
+      font-size: 12px;
+      font-family: 'Raleway';
+      color: #192038;
+    }
+  }
   @include media-breakpoint-down(sm) {
     .control-item {
       display: none;
