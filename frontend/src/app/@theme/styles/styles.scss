@@ -43,7 +43,14 @@ body {
   font-size: 14px;
   color: #777777;
 }
-
+nb-layout .layout{
+  font-family: 'Raleway'!important;
+}
+.nb-theme-default{
+  --card-text-font-family: 'Raleway'!important;
+  --card-header-text-font-family: 'Raleway'!important;
+  --header-text-font-family: 'Raleway'!important;
+}
 h1,
 h2,
 h3,
