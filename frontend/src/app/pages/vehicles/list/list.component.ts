@@ -125,7 +125,14 @@ export class ListComponent {
     this.loadVehiclesTypes();
     this.loadVehicleRegistration();
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadVehicles(queryParams.page);
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      if(lentgthoffilterQueryString.length > 0){
+        this.filterData();
+      }else{
+        this.loadVehicles(queryParams.page);
+
+      }
+      // console.log(lentgthoffilterQueryString.length);
     });
     
   }
