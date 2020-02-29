@@ -531,6 +531,10 @@ uploadImage(){
     // console.log(this.vehicleForm.value);
   }
 
+  getMsg(val){
+    this.dialogBox = false;
+  }
+  
   loadVehicleStatus(){
     this.vehicleService.loadVehicleStatus().subscribe((vehicleStatus)=>{
       let vehicleStatusData = vehicleStatus["data"];

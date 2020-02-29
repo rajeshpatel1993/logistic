@@ -33,21 +33,42 @@ export class ListComponent {
 
   } 
 
+ updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)", "i");
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+      var hash =  '';
+      if( uri.indexOf('#') !== -1 ){
+          hash = uri.replace(/.*#/, '#');
+          uri = uri.replace(/#.*/, '');
+      }
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";    
+      return uri + separator + key + "=" + value + hash;
+    }
+  }
+
   selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
       case "vehicletype":
         this.selectedVehicleType = item.id;
-        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
+        // if(!this.filterQueryString.includes('vehicleType') ){
+        //   this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        // }
         this.loadVehicleDetails(item.id);
         break;
       case "vehicledetails":
         this.selectedVehicleDetail = item.id;
-        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+        // this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
 
         break;
       case "vehiclereg":
         this.selectedVehicleReg = item.name;
-        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+        // this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
+
 
       default:
         // this.selectedVehicleType = item.id;
@@ -104,7 +125,14 @@ export class ListComponent {
     this.loadVehiclesTypes();
     this.loadVehicleRegistration();
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadVehicles(queryParams.page);
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      if(lentgthoffilterQueryString.length > 0){
+        this.filterData();
+      }else{
+        this.loadVehicles(queryParams.page);
+
+      }
+      // console.log(lentgthoffilterQueryString.length);
     });
     
   }
@@ -113,7 +141,7 @@ export class ListComponent {
     let p = page || 1;
     this.vehicleService.loadVehicles(p).subscribe((vehicleData:any)=>{
      this.vehiclesList = vehicleData.data;
-     console.log(this.vehiclesList);
+    //  console.log(this.vehiclesList);
      
      this.totalItems, this.pageOfItems = vehicleData.data; 
      this.pager = vehicleData.page;

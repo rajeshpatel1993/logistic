@@ -361,7 +361,6 @@ export class AddVehicleComponent implements OnInit {
 
   getMsg(val){
     this.dialogBox = false;
-    console.log(val);
   }
   loadVehicleStatus(){
     this.vehicleService.loadVehicleStatus().subscribe((vehicleStatus)=>{

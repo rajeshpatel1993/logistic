@@ -576,7 +576,23 @@ router.get("/filtervehicle", async(req,res)=>{
                 ],
                 as: "vehicleDetailsArray"// output array field
             }
-        }, {
+        },{
+
+
+            
+                $lookup: {
+                    from: "vehicleType", // from collection name
+                    let: { "vechTypeId": "$vehicle_typeId" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
+                        { "$project": { "vehicleType": 1, "_id": 0 }}
+                    ],
+                    as: "vehicleTypesArray"
+                }
+            
+        },
+        
+        {
             $lookup: {
                 from: "vehicleStatus", // from collection name
                 let: { "vechStatusId": "$vehicleStatusId" },
