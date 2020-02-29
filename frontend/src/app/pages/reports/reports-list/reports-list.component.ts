@@ -7,7 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { ReportsService } from '../reports.service';
 import { Subject } from 'rxjs';
-import * as jsPDF from 'jspdf'
+
+import * as jsPDF from 'jspdf';
+
 import 'jspdf-autotable';
 
 
@@ -27,7 +29,11 @@ export class ReportsListComponent implements OnInit {
   public selectedVehicleType;
   public selectedVehicleDetail;
   public selectedVehicleReg;
+  public workLocationsList: any[] = [];
   public currentPage:String;
+  public vehicleStatusList: any = [];
+
+
   keyword = 'name';
 
   public serviceCalled:boolean = false;
@@ -46,6 +52,9 @@ export class ReportsListComponent implements OnInit {
   public jsonData = [];
 
 
+  public startDateVehicle ;
+  public endDateVehicle ;
+
   dtOptions: any = {};
   dtOptions1: any = {};
   dtOptions2: any = {};
@@ -57,7 +66,7 @@ export class ReportsListComponent implements OnInit {
   dtTrigger2: any = new Subject();
   dtTrigger3: any = new Subject();
 
-  selected: any;
+  dateforvehiclelist: any;
   alwaysShowCalendars: boolean;
   ranges: any = {
     'Today': [moment(), moment()],
@@ -76,8 +85,12 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   }
 
   ngOnInit() {
+   
+    this.loadVehiclesTypes();
+    this.loadVehicleStatus();
     this.loadVehicles();
     this.loadAssignedVehicles();
+    this.loadWorkLocations();
     this.activeRoute.queryParams.subscribe(queryParams => {
       // this.loadExpensesData(queryParams.page);
     });
@@ -137,9 +150,17 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   isInvalidDate = (m: moment.Moment) =>  {
     return this.invalidDates.some(d => d.isSame(m, 'day') )
   }
+
+
+
   
   dateRangeChange(event){
-    console.log(event);
+
+    this.startDateVehicle = event.startDate?event.startDate.toISOString():null;
+    this.endDateVehicle = event.endDate?event.endDate.toISOString():null;
+
+    console.log(this.startDateVehicle);
+    console.log(this.endDateVehicle);
   }
 
   onChange(val){
@@ -547,6 +568,9 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   }
 
 
+
+
+
   public loadVehicles(){
     this.reportService.loadVehicles().subscribe((vehicleData:any)=>{
      this.vehiclesList = vehicleData.data;
@@ -555,6 +579,49 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
     },(error)=>{
 
+    });
+  }
+
+
+  loadVehicleStatus(){
+    this.vehicleService.loadVehicleStatus().subscribe((vehicleStatus)=>{
+      let vehicleStatusData = vehicleStatus["data"];
+      vehicleStatusData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = +item.vehicleStatusId;
+        tmpObj["name"] = item.vehicleStatus;
+        this.vehicleStatusList.push(tmpObj);
+       
+
+      });
+
+
+      // console.log(this.vehicleStatusList);
+
+
+    },
+    (error) => {
+      
+    });
+  }
+
+
+  loadWorkLocations(){
+    this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
+      let workLocationsData = workLocations["data"];
+      workLocationsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = +item.workLocationId;
+        tmpObj["name"] = item.workLocation;
+        this.workLocationsList.push(tmpObj);
+       
+
+      });
+
+
+    },
+    (error) => {
+      
     });
   }
 

@@ -205,6 +205,65 @@ function getLastMonths(n) {
     return last_n_months
 }
 
+
+router.post("/vehicleExpensesbyVehicle", async (req, res) => {
+    let {vehicleId, startDate,endDate} = req.body;
+    // let vehicleId = req.params.vehicleId;
+    let filter;
+    if(startDate && endDate){
+
+        filter = {$and: [{ vehicle:  mongoose.Types.ObjectId(vehicleId)},{"isDeleted":0}, {"createdAt" : 
+        {
+            "$gte" : new Date(startDate), 
+            "$lt" : new Date(endDate) 
+        }}] };
+        
+    }else{
+        filter = {$and: [{ vehicle:  mongoose.Types.ObjectId(vehicleId)},{"isDeleted":0}] };
+    }
+ 
+
+    try{
+    let expenseData = await Expense.aggregate([
+        {
+            $match: filter
+        }
+        ,
+        { 
+            $group: { 
+                _id: "$expense_type", 
+                total: { 
+                    $sum: {"$toDouble":"$amount" }
+                } 
+            } 
+        },
+
+        { "$lookup": {
+            "from": "expenseType",
+            "localField": "_id",
+            "foreignField": "_id",
+            "as": "expensesTypes"
+       }},
+       { "$unwind": { "path" : "$expensesTypes" } },
+
+        
+    ]);
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = expenseData;
+        res.status(200).json(responseData);
+        
+    }catch(error){
+        console.log(error);
+    }
+   
+
+    
+});
+
+
+
 router.get("/vehicleExpensesbyMonth/:vehicleExpenseType", async (req, res) => {
     let monthsort = moment.monthsShort();
     let currMonth = moment().format('M');

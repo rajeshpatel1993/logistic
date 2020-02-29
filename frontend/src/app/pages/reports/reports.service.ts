@@ -61,9 +61,9 @@ export class ReportsService {
   }
 
 
-  // loadVehiclesTypes(){
-  //   return this.http.get(this.baseUrl+"/vehicles/types");
-  // }
+  loadExpenseSummaryChartData(data){
+    return this.http.post(this.baseUrl+"/expenses/vehicleExpensesbyVehicle/",data);
+  }
 
   // loadVehicleDetails(vehicleId?){
   //   return this.http.get(this.baseUrl+"/vehicles/details/"+vehicleId);

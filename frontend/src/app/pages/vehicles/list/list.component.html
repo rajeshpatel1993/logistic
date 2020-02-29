@@ -29,9 +29,12 @@
               </ng-template>
             </div>
           </div>
+
+          <!-- vehicleStatusList -->
+
           <div class="col-xs-12 col-sm-3 my-1">
             <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
+              <ng-autocomplete [data]="vehicleStatusList" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Status"
                 (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
                 (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
                 [notFoundTemplate]="notFoundTemplate1">

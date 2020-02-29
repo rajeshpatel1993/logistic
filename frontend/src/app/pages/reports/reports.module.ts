@@ -23,6 +23,7 @@ import { CustomCommonModule} from '../custom-common.module';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { VehicleReportComponent } from './vehicle-report/vehicle-report.component';
 import { ServicetaskbyamountComponent } from './servicetaskbyamount/servicetaskbyamount.component';
+import { ExpenseSummaryComponent } from './expense-summary/expense-summary.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ServicetaskbyamountComponent } from './servicetaskbyamount/servicetaskb
     ReportsComponent,
     BarChartComponent,
     VehicleReportComponent,
-    ServicetaskbyamountComponent
+    ServicetaskbyamountComponent,
+    ExpenseSummaryComponent
     // ,
     // VehicleServiceDetailsComponent
   ],
