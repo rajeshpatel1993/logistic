@@ -29,7 +29,7 @@ export class ExpenseSummaryComponent implements OnInit {
   public endDateVehicle ;
   public vehicleId;
   public showNoDataFound:boolean = false;
-
+  dateforvehiclelist;
 
   alwaysShowCalendars: boolean;
   ranges: any = {

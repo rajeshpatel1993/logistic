@@ -32,7 +32,10 @@ export class ReportsListComponent implements OnInit {
   public workLocationsList: any[] = [];
   public currentPage:String;
   public vehicleStatusList: any = [];
-
+  assignvehicledatepicker;
+  servicedatepicker;
+  expensedate;
+  
 
   keyword = 'name';
 
