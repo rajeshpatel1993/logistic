@@ -14,7 +14,7 @@ const routes: Routes = [{
         component: ReportsListComponent
       },
       {
-        path: 'expense-summary/:vehicleId',
+        path: 'expense-summary',
         component: ExpenseSummaryComponent
       }
       // {

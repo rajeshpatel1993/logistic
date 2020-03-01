@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { Subscription } from 'rxjs';
@@ -6,31 +6,32 @@ import { Subscription } from 'rxjs';
 import * as Highcharts from 'highcharts';
 import { ReportsService } from '../reports.service';
 import { ActivatedRoute } from '@angular/router';
+import { VehicleExpenseService } from '../../vehicle-expense/vehicleexpense.service';
+import { Subject } from 'rxjs';
+import { NbDialogService } from '@nebular/theme';
 
-declare var require: any;
-let Boost = require('highcharts/modules/boost');
-let noData = require('highcharts/modules/no-data-to-display');
-let More = require('highcharts/highcharts-more');
 
-Boost(Highcharts);
-noData(Highcharts);
-More(Highcharts);
-noData(Highcharts);
+
 
 
 @Component({
   selector: 'ngx-expense-summary',
   templateUrl: './expense-summary.component.html',
-  styleUrls: ['./expense-summary.component.scss']
+  styleUrls: ['./expense-summary.component.scss'],
+  providers: [VehicleExpenseService]
 })
 export class ExpenseSummaryComponent implements OnInit {
 
   public startDateVehicle ;
   public endDateVehicle ;
-  public vehicleId;
+  // public vehicleId;
   public showNoDataFound:boolean = false;
   dateforvehiclelist;
 
+  
+
+  dtOptions: any = {};
+  dtTrigger: any = new Subject();
   alwaysShowCalendars: boolean;
   ranges: any = {
     'Today': [moment(), moment()],
@@ -45,6 +46,8 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 public chartData:any[] = [];
 public assignedVehicleChartSubscription : Subscription;
+public expenseVehicleData;
+public expenseVehicleSubscription : Subscription;
 public options: any = {
 chart: {
     plotBackgroundColor: null,
@@ -85,13 +88,20 @@ series: [{
 
 
 
-  constructor(public reportService: ReportsService,  private activeRoute: ActivatedRoute) { }
+  constructor(public reportService: ReportsService, public expenseService: VehicleExpenseService, private activeRoute: ActivatedRoute, private dialogService: NbDialogService) { }
 
   ngOnInit() {
-    this.vehicleId = this.activeRoute.snapshot.params.vehicleId;
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 2
+    };
 
-    this.loadExpenseTypeAmount(this.vehicleId);
+    // this.vehicleId = this.activeRoute.snapshot.params.vehicleId;
+
+    // this.loadExpenseTypeAmount(this.vehicleId);
+    this.loadExpenseByVehicleList();
   }
+
 
 
   dateRangeChange(event){
@@ -101,7 +111,7 @@ series: [{
 
     if(this.startDateVehicle && this.endDateVehicle){
       this.chartData = [];
-     this.loadExpenseTypeAmount(this.vehicleId);
+    //  this.loadExpenseTypeAmount(this.vehicleId);
     }
    
 
@@ -117,29 +127,20 @@ series: [{
 
 
 
-  public loadExpenseTypeAmount(vehicleId){
-    this.chartData = [];
-    let tmpData = {};
-    tmpData["vehicleId"] = vehicleId;
-    tmpData["startDate"] = this.startDateVehicle;
-    tmpData["endDate"] = this.endDateVehicle;
-    this.assignedVehicleChartSubscription = this.reportService.loadExpenseSummaryChartData(tmpData).subscribe((d)=>{
-        let dat = d["data"];
 
-        for(let i=0;i<dat.length;i++){
-            let tmpObj = {};
-            tmpObj["name"]=dat[i]["expensesTypes"].expenseType;
-            tmpObj["y"] = dat[i]["total"];
-            this.chartData.push(tmpObj);
-        }
-        // console.log(this.chartData);
-        // console.log(this.options);
-        this.options["series"][0]["data"] = this.chartData;
-        Highcharts.chart('container', this.options);
-    },(err)=>{
-        console.log(err);
+  loadExpenseByVehicleList(){
+    this.expenseVehicleSubscription = this.expenseService.loadExpensesByVehicles().subscribe((res)=>{
+      // console.log(data);
+      this.expenseVehicleData = res["data"];
+      this.dtTrigger.next();
+    },
+    (error)=>{
+      console.log(error);
     });
   }
 
 
+  open(dialog:any) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
+  }
 }
