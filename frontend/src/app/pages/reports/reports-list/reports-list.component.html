@@ -1,7 +1,7 @@
 <div class="Reports">
 
   <table id="my-table">
-   
+
     <!-- ... -->
   </table>
   <nb-card>
@@ -21,84 +21,81 @@
                 <div class="row no-gutters mt-3 mb-3">
                   <div class="col-12 text-right">
                     <button class="btn btn-outline-primary custom" (click)="exportToPdf()"> Export to PDF</button>
-                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcel()"> Export to CSV</button>
+                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcel()"> Export to
+                      CSV</button>
                   </div>
                 </div>
                 <form class="formbg-light mb-3">
                   <div class="form-row">
                     <div class="col-xs-12 col-sm-6 co-md-4 col-lg-4 mt-2">
                       <div class="daterange">
-                        <input type="text"
-                        ngxDaterangepickerMd
-                        [(ngModel)]="dateforvehiclelist"
-                        [showCustomRangeLabel]="true"
-                        [alwaysShowCalendars]="true"
-                        [ranges]="ranges"
-                        [linkedCalendars]="true"
-                        [isInvalidDate] = "isInvalidDate"
-                        [showClearButton]="true"
-                        [ngModelOptions]="{standalone: true}"
-                        (ngModelChange)="dateRangeChange($event)"
-                        placeholder="Select date..." />
+                        <input type="text" ngxDaterangepickerMd [(ngModel)]="dateforvehiclelist"
+                          [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                          [linkedCalendars]="true" [isInvalidDate]="isInvalidDate" [showClearButton]="true"
+                          [ngModelOptions]="{standalone: true}" (ngModelChange)="dateRangeChange($event)"
+                          placeholder="Select date..." />
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 co-md-2 col-lg-2 mt-2">
-                     
-                        <div class="ng-autocomplete">
-                          <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-                            (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                            (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
-                            [notFoundTemplate]="notFoundTemplate">
-                          </ng-autocomplete>
-            
-                          <ng-template #itemTemplate let-item>
-                            <a [innerHTML]="item.name"></a>
-                          </ng-template>
-            
-                          <ng-template #notFoundTemplate let-notFound>
-                            <div [innerHTML]="notFound"></div>
-                          </ng-template>
-                        </div>
-                     
+
+                      <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword"
+                          placeHolder="Enter the Vehicle Types" (selected)='selectEvent($event, "vehicletype")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                          <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+
                     </div>
                     <div class="col-xs-12 col-sm-5 co-md-2 col-lg-2 mt-2">
                       <div class="ng-autocomplete">
-                        <ng-autocomplete [data]="vehicleStatusList" [searchKeyword]="keyword" placeHolder="Enter Vehicle Status"
-                          (selected)='selectEvent($event, "vehicleStatus")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleStatusList" [itemTemplate]="itemTemplate1"
+                        <ng-autocomplete [data]="vehicleStatusList" [searchKeyword]="keyword"
+                          placeHolder="Enter Vehicle Status" (selected)='selectEvent($event, "vehicleStatus")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleStatusList" [itemTemplate]="itemTemplate1"
                           [notFoundTemplate]="notFoundTemplate1">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate1 let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate1 let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
                       </div>
-          
+
                     </div>
                     <div class="col-xs-12 col-sm-5 co-md-2 col-lg-2 mt-2">
                       <div class="ng-autocomplete">
-                        <ng-autocomplete [data]="workLocationsList" [searchKeyword]="keyword" placeHolder="Enter Work Location "
-                          (selected)='selectEvent($event, "vehiclereg")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="workLocationsList"
-                          [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
+                        <ng-autocomplete [data]="workLocationsList" [searchKeyword]="keyword"
+                          placeHolder="Enter Work Location " (selected)='selectEvent($event, "vehiclereg")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="workLocationsList" [itemTemplate]="itemTemplate2"
+                          [notFoundTemplate]="notFoundTemplate2">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate2 let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate2 let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 co-md-2 col-lg-2 mt-2">
-                      <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary w-100"><i
-                          class="fas fa-search"></i> Filter</button>
+                      <button type="button" nbButton status="Filter" (click)="filterData()"
+                        class="btn btn-primary w-100"><i class="fas fa-search"></i> Filter</button>
                     </div>
                   </div>
                 </form>
@@ -149,19 +146,19 @@
                         <td>
 
                           <div class="row no-gutters">
-  
+
                             <div class="col-12" *ngIf="item.assignMentStatus == 0">
-                                <p> Unassigned</p>
+                              <p> Unassigned</p>
                             </div>
-                          
+
                             <div class="col-12" *ngIf="item.assignMentStatus == 1">
                               <div class="VehicleDriver">
                                 <div class="VehicleDriver_image">
-                                  <img [src]="item.assign_data.employee.empImage" width="55"/>
+                                  <img [src]="item.assign_data.employee.empImage" width="55" />
                                   <p>{{item.assign_data.employee.firstName}}</p>
                                 </div>
                               </div>
-                                
+
                             </div>
                           </div>
 
@@ -180,16 +177,16 @@
                                   class="fas fa-wrench"></i> {{item.vehicleStatusArray[0].vehicleStatus}}</li>
                               <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Active'"><i
                                   class="fas fa-check-circle"></i> Active</li>
-                              <li class="text-warning" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Service'"><img
-                                  src="assets/images/repair.png" alt=""> In-Service</li>
-                              <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Complaint'"><i
-                                  class="fas fa-file-signature"></i> Complaint</li>
+                              <li class="text-warning" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Service'">
+                                <img src="assets/images/repair.png" alt=""> In-Service</li>
+                              <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Complaint'">
+                                <i class="fas fa-file-signature"></i> Complaint</li>
                               <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Accident'"><i
                                   class="fas fa-car-crash"></i> Accident</li>
-                              <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Not-Working'"><i
-                                  class="fas fa-times-circle"></i> Not Working</li>
-                              <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Active'"><i
-                                  class="fas fa-check-circle"></i> In Active</li>
+                              <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Not-Working'">
+                                <i class="fas fa-times-circle"></i> Not Working</li>
+                              <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Active'">
+                                <i class="fas fa-check-circle"></i> In Active</li>
                             </ul>
                           </div>
                         </td>
@@ -201,13 +198,13 @@
                         <td>.Previous service date</td>
                         <td>Service due </td>
                         <td>
-                          
+
                           <div [ngSwitch]="item.vehicle_typeId">
 
                             <div *ngSwitchCase="'1'">
                               {{getDateDifference(item.roadTaxValid)}}
                               <div class="workStatus">
-        
+
                                 <span class="success tooltipwrp" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
                                   <div class="toolTip">
                                     <p>{{item.roadTaxValid | date}}</p>
@@ -230,13 +227,13 @@
                                     <p>{{item.roadTaxValid | date}}</p>
                                   </div>
                                 </span>
-        
+
                               </div>
                             </div>
                             <div *ngSwitchCase="'2'">
                               {{getDateDifference(item.roadTaxValid)}}
                               <div class="workStatus">
-        
+
                                 <span class="success tooltipwrp" *ngIf="getProgressBarValu(item.roadTaxValid) <= 50">
                                   <div class="toolTip">
                                     <p>{{item.roadTaxValid | date}}</p>
@@ -261,11 +258,11 @@
                                 </span>
                               </div>
                             </div>
-        
+
                             <div *ngSwitchCase="'3'">
                               <span>N.A.</span>
                             </div>
-        
+
                             <div *ngSwitchCase="'4'">
                               <span>N.A.</span>
                             </div>
@@ -291,7 +288,7 @@
                                   *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
                                   <div class="toolTip">
                                     <p>{{item.insuranceValid | date}}</p>
-        
+
                                   </div>
                                 </span>
                                 <span class="danger tooltipwrp" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
@@ -319,7 +316,7 @@
                                   *ngIf="getProgressBarValu(item.insuranceValid) >= 75 && getProgressBarValu(item.insuranceValid) < 90">
                                   <div class="toolTip">
                                     <p>{{item.insuranceValid | date}}</p>
-        
+
                                   </div>
                                 </span>
                                 <span class="danger tooltipwrp" *ngIf="getProgressBarValu(item.insuranceValid) >= 90">
@@ -329,15 +326,15 @@
                                 </span>
                               </div>
                             </div>
-        
+
                             <div *ngSwitchCase="'3'">
                               <span>N.A.</span>
                             </div>
-        
+
                             <div *ngSwitchCase="'4'">
                               <span>N.A.</span>
                             </div>
-        
+
                           </div>
                         </td>
                         <td>Driver License due </td>
@@ -352,90 +349,85 @@
               </nb-tab>
               <nb-tab tabTitle="Assign Vehicle" class="p-0">
                 <div class="row no-gutters mt-4 mb-4">
-                <div class="col-12 text-right">
-                  <button class="btn btn-outline-primary custom" (click)="exportToPdfAssignVehicle()"> Export to PDF</button>
-                  <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcelAssignVehicle()"> Export to CSV</button>
+                  <div class="col-12 text-right">
+                    <button class="btn btn-outline-primary custom" (click)="exportToPdfAssignVehicle()"> Export to
+                      PDF</button>
+                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcelAssignVehicle()"> Export
+                      to CSV</button>
+                  </div>
                 </div>
-              </div>
-              <form class="formbg-light mb-3">
-                <div class="form-row">
-                  <div class="col-xs-12 col-sm-6 co-md-4 col-lg-4 mt-2">
-                    <div class="input-group daterange">
-                      <input type="text"
-                      ngxDaterangepickerMd
-                      [(ngModel)]="assignvehicledatepicker"
-                      [showCustomRangeLabel]="true"
-                      [alwaysShowCalendars]="true"
-                      [ranges]="ranges"
-                      [linkedCalendars]="true"
-                      [isInvalidDate] = "isInvalidDate"
-                      [showClearButton]="true"
-                      [ngModelOptions]="{standalone: true}"
+                <form class="formbg-light mb-3">
+                  <div class="form-row">
+                    <div class="col-xs-12 col-sm-6 co-md-4 col-lg-4 mt-2">
+                      <div class="input-group daterange">
+                        <input type="text" ngxDaterangepickerMd [(ngModel)]="assignvehicledatepicker"
+                          [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                          [linkedCalendars]="true" [isInvalidDate]="isInvalidDate" [showClearButton]="true"
+                          [ngModelOptions]="{standalone: true}" (ngModelChange)="dateRangeChange($event)"
+                          placeholder="Select date..." />
+                      </div>
 
-                      (ngModelChange)="dateRangeChange($event)"
-                      
-                      placeholder="Select date..." />
                     </div>
-                    
-                  </div>
-                  <div class="col-xs-12 col-sm-6 co-md-2 col-lg-2 mt-2">
-                    <div class="ng-autocomplete">
-                      <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter vehicle code"
-                        (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                        (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
-                        [notFoundTemplate]="notFoundTemplate">
-                      </ng-autocomplete>
-        
-                      <ng-template #itemTemplate let-item>
-                        <a [innerHTML]="item.name"></a>
-                      </ng-template>
-        
-                      <ng-template #notFoundTemplate let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
+                    <div class="col-xs-12 col-sm-6 co-md-2 col-lg-2 mt-2">
+                      <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword"
+                          placeHolder="Enter vehicle code" (selected)='selectEvent($event, "vehicletype")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                          <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-5 co-md-2 col-lg-2 mt-2">
+                      <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter reg no’s"
+                          (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
+                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails"
+                          [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate1 let-item>
+                          <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate1 let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+
+                    </div>
+                    <div class="col-xs-12 col-sm-5 co-md-2 col-lg-2 mt-2">
+                      <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
+                          placeHolder="Enter driver name " (selected)='selectEvent($event, "vehiclereg")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
+                          [notFoundTemplate]="notFoundTemplate2">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate2 let-item>
+                          <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate2 let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-2 co-md-2 col-lg-2 mt-2">
+                      <button type="button" nbButton status="Filter" (click)="filterData()"
+                        class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
                     </div>
                   </div>
-                  <div class="col-xs-12 col-sm-5 co-md-2 col-lg-2 mt-2">
-                    <div class="ng-autocomplete">
-                      <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter reg no’s"
-                        (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
-                        (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
-                        [notFoundTemplate]="notFoundTemplate1">
-                      </ng-autocomplete>
-        
-                      <ng-template #itemTemplate1 let-item>
-                        <a [innerHTML]="item.name"></a>
-                      </ng-template>
-        
-                      <ng-template #notFoundTemplate1 let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
-                    </div>
-        
-                  </div>
-                  <div class="col-xs-12 col-sm-5 co-md-2 col-lg-2 mt-2">
-                    <div class="ng-autocomplete">
-                      <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword" placeHolder="Enter driver name "
-                        (selected)='selectEvent($event, "vehiclereg")' (inputChanged)='onChangeSearch($event)'
-                        (inputFocused)='onFocused($event)' historyIdentifier="vehicleRegistrations"
-                        [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
-                      </ng-autocomplete>
-        
-                      <ng-template #itemTemplate2 let-item>
-                        <a [innerHTML]="item.name"></a>
-                      </ng-template>
-        
-                      <ng-template #notFoundTemplate2 let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-2 co-md-2 col-lg-2 mt-2">
-                    <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary w-100"><i
-                        class="fas fa-search"></i> Search</button>
-                  </div>
-                </div>
-              </form>
+                </form>
                 <div class="table-responsive">
                   <table class="table table-hover" datatable [dtOptions]="dtOptions1" [dtTrigger]="dtTrigger1">
                     <thead>
@@ -443,7 +435,7 @@
                         <th>Vehicle</th>
                         <th>Current Driver </th>
                         <th>Previous Driver </th>
-                        
+
                         <th>Driver License No</th>
                         <th>Driver License Due </th>
                         <th>Location</th>
@@ -458,7 +450,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of assignedVehicles">
-                      <td>
+                        <td>
                           <ng-template #dialog let-data let-ref="dialogRef">
                             <nb-card class="popupImage">
                               <nb-card-body>
@@ -500,10 +492,10 @@
                           </div>
 
 
-                         
+
                         </td>
                         <td>
-                          
+
                           <div *ngIf="item.previousDriver">
                             <ng-template #dialogdriver let-data let-refd="dialogRefd">
                               <nb-card class="popupImage">
@@ -517,20 +509,21 @@
                             </ng-template>
                             <div class="VehicleDetail">
                               <div class="VehicleDetail_image">
-                                <img nbButton (click)="open(dialogdriver)" src="{{item.previousDriver.employee.empImage}}" width="80">
+                                <img nbButton (click)="open(dialogdriver)"
+                                  src="{{item.previousDriver.employee.empImage}}" width="80">
                               </div>
                               <div class="VehicleDetail_name">
                                 <h5>{{item.previousDriver.employee.firstName}}</h5>
                               </div>
                             </div>
-                           </div>
-                           <div *ngIf="!item.previousDriver">
-                              N.A.
+                          </div>
+                          <div *ngIf="!item.previousDriver">
+                            N.A.
 
-                           </div>
+                          </div>
                         </td>
                         <td>
-                           N.A.
+                          N.A.
                         </td>
                         <td>
                           {{ item.driving_license_valid | date }}
@@ -542,7 +535,7 @@
                           N.A.
                         </td>
                         <td>
-                          {{item.assignmentStartDate | date}}  
+                          {{item.assignmentStartDate | date}}
                         </td>
                         <td>{{ item.assignmentEndDate | date }}</td>
                         <td>duration </td>
@@ -554,14 +547,16 @@
                     </tbody>
                   </table>
                 </div>
-          
+
               </nb-tab>
               <nb-tab tabTitle="Service Management" class="p-0">
                 <div class="row no-gutters">
                   <div class="col-12 text-right mt-3 mb-3">
-                    <button class="btn btn-outline-primary custom" (click)="exportToPdfService()"> Export to PDF</button>
-                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcelService()"> Export to CSV</button>
-                  </div>              
+                    <button class="btn btn-outline-primary custom" (click)="exportToPdfService()"> Export to
+                      PDF</button>
+                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcelService()"> Export to
+                      CSV</button>
+                  </div>
                 </div>
                 <div *ngIf="serviceCalled">
                   <div class="row">
@@ -574,37 +569,31 @@
                     </div>
                   </div>
                 </div>
-                
+
                 <form class="formbg-light mb-3">
                   <div class="form-row">
                     <div class="col-xs-12 col-sm-6 col-lg-4 mt-2">
                       <div class="input-group daterange">
-                        <input type="text"
-                        ngxDaterangepickerMd
-                        [(ngModel)]="servicedatepicker"
-                        [showCustomRangeLabel]="true"
-                        [alwaysShowCalendars]="true"
-                        [ranges]="ranges"
-                        [linkedCalendars]="true"
-                        [isInvalidDate] = "isInvalidDate"
-                        [showClearButton]="true"
-                        (ngModelChange)="dateRangeChange($event)"
-                        [ngModelOptions]="{standalone: true}"
-                        placeholder="Select date..." />
+                        <input type="text" ngxDaterangepickerMd [(ngModel)]="servicedatepicker"
+                          [showCustomRangeLabel]="true" [alwaysShowCalendars]="true" [ranges]="ranges"
+                          [linkedCalendars]="true" [isInvalidDate]="isInvalidDate" [showClearButton]="true"
+                          (ngModelChange)="dateRangeChange($event)" [ngModelOptions]="{standalone: true}"
+                          placeholder="Select date..." />
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-lg-2 mt-2">
                       <div class="ng-autocomplete">
-                        <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter vehicle code"
-                          (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                        <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword"
+                          placeHolder="Enter vehicle code" (selected)='selectEvent($event, "vehicletype")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
                           [notFoundTemplate]="notFoundTemplate">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
@@ -614,40 +603,41 @@
                       <div class="ng-autocomplete">
                         <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter reg no’s"
                           (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
-                          [notFoundTemplate]="notFoundTemplate1">
+                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails"
+                          [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate1 let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate1 let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
                       </div>
-          
+
                     </div>
                     <div class="col-xs-12 col-sm-5 col-lg-2 mt-2">
                       <div class="ng-autocomplete">
-                        <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword" placeHolder="Enter driver name "
-                          (selected)='selectEvent($event, "vehiclereg")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleRegistrations"
-                          [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
+                        <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
+                          placeHolder="Enter driver name " (selected)='selectEvent($event, "vehiclereg")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
+                          [notFoundTemplate]="notFoundTemplate2">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate2 let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate2 let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-lg-2 mt-2">
-                      <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary w-100"><i
-                          class="fas fa-search"></i> Search</button>
+                      <button type="button" nbButton status="Filter" (click)="filterData()"
+                        class="btn btn-primary w-100"><i class="fas fa-search"></i> Search</button>
                     </div>
                   </div>
                 </form>
@@ -672,7 +662,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of serviceReportData">
-                      <td>
+                        <td>
                           <ng-template #dialog let-data let-ref="dialogRef">
                             <nb-card class="popupImage">
                               <nb-card-body>
@@ -692,8 +682,8 @@
                               <h6>{{item.vehicle.vehicle_code}}</h6>
                             </div>
                           </div>
-                      </td>
-                      <td>
+                        </td>
+                        <td>
 
                           <ng-template #dialogdriver let-data let-refd="dialogRefd">
                             <nb-card class="popupImage">
@@ -713,13 +703,13 @@
                               <h5>{{item.employee.firstName}}</h5>
                             </div>
                           </div>
-                      </td>
-                      <td>
-                           N.A.
-                      </td>
-                      <td>
-                        N.A.
-                      </td>
+                        </td>
+                        <td>
+                          N.A.
+                        </td>
+                        <td>
+                          N.A.
+                        </td>
 
                         <td>
                           {{item.serviceType.serviceTaskName}}
@@ -752,47 +742,42 @@
 
 
 
-                
+
               </nb-tab>
               <nb-tab tabTitle="Expense" class="p-0">
                 <div class="row no-gutters">
                   <div class="col-12 text-right">
-                    <button class="btn btn-outline-primary custom" (click)="exportToPdfExpense()"> Export to PDF</button>
-                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcelExpense()"> Export to CSV</button>
+                    <button class="btn btn-outline-primary custom" (click)="exportToPdfExpense()"> Export to
+                      PDF</button>
+                    <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcelExpense()"> Export to
+                      CSV</button>
                   </div>
                 </div>
                 <form class="formbg-light mb-3">
                   <div class="form-row">
                     <div class="col-xs-12 col-sm-6 col-lg-4 mt-2">
                       <div class="input-group daterange">
-                        <input type="text"
-                        ngxDaterangepickerMd
-                        [(ngModel)]="expensedate"
-                        [showCustomRangeLabel]="true"
-                        [alwaysShowCalendars]="true"
-                        [ranges]="ranges"
-                        [linkedCalendars]="true"
-                        [isInvalidDate] = "isInvalidDate"
-                        [showClearButton]="true"
-                        (ngModelChange)="dateRangeChange($event)"
-                        [ngModelOptions]="{standalone: true}"
-
-                        placeholder="Select date..." />
+                        <input type="text" ngxDaterangepickerMd [(ngModel)]="expensedate" [showCustomRangeLabel]="true"
+                          [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true"
+                          [isInvalidDate]="isInvalidDate" [showClearButton]="true"
+                          (ngModelChange)="dateRangeChange($event)" [ngModelOptions]="{standalone: true}"
+                          placeholder="Select date..." />
                       </div>
-                      
+
                     </div>
                     <div class="col-xs-12 col-sm-6  col-lg-2 mt-2">
                       <div class="ng-autocomplete">
-                        <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter vehicle code"
-                          (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                        <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword"
+                          placeHolder="Enter vehicle code" (selected)='selectEvent($event, "vehicletype")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
                           [notFoundTemplate]="notFoundTemplate">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
@@ -802,40 +787,41 @@
                       <div class="ng-autocomplete">
                         <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter reg no’s"
                           (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
-                          [notFoundTemplate]="notFoundTemplate1">
+                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails"
+                          [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate1 let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate1 let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
                       </div>
-          
+
                     </div>
                     <div class="col-xs-12 col-sm-5 col-lg-2 mt-2">
                       <div class="ng-autocomplete">
-                        <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword" placeHolder="Enter driver name "
-                          (selected)='selectEvent($event, "vehiclereg")' (inputChanged)='onChangeSearch($event)'
-                          (inputFocused)='onFocused($event)' historyIdentifier="vehicleRegistrations"
-                          [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
+                        <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
+                          placeHolder="Enter driver name " (selected)='selectEvent($event, "vehiclereg")'
+                          (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                          historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
+                          [notFoundTemplate]="notFoundTemplate2">
                         </ng-autocomplete>
-          
+
                         <ng-template #itemTemplate2 let-item>
                           <a [innerHTML]="item.name"></a>
                         </ng-template>
-          
+
                         <ng-template #notFoundTemplate2 let-notFound>
                           <div [innerHTML]="notFound"></div>
                         </ng-template>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-2 col-lg-2 mt-2">
-                      <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary ml-2 mr-2"><i
-                          class="fas fa-search"></i> Search</button>
+                      <button type="button" nbButton status="Filter" (click)="filterData()"
+                        class="btn btn-primary ml-2 mr-2"><i class="fas fa-search"></i> Search</button>
                     </div>
                   </div>
                 </form>
@@ -853,12 +839,11 @@
                         <th>Previous Expense </th>
                         <th>Previous Expense Type</th>
                         <th>Expense Summary</th>
-
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of vehicleExpenseData">
-                      <td>
+                        <td>
                           <ng-template #dialog let-data let-ref="dialogRef">
                             <nb-card class="popupImage">
                               <nb-card-body>
@@ -878,20 +863,20 @@
                               <h6>{{item.vehicle.vehicle_code}}</h6>
                             </div>
                           </div>
-                      </td>
+                        </td>
 
-                      <td>
-                           N.A.
-                      </td>
-                      <td>
-                       {{item.expense_date | date}}
-                      </td>
-
-                      <td>
-                       {{ item.expense_type.expenseType }}
-                      </td>
                         <td>
-                         {{item.details}}
+                          N.A.
+                        </td>
+                        <td>
+                          {{item.expense_date | date}}
+                        </td>
+
+                        <td>
+                          {{ item.expense_type.expenseType }}
+                        </td>
+                        <td>
+                          {{item.details}}
                         </td>
                         <td>
                           {{item.amount}}
@@ -906,16 +891,6 @@
                         <td>{{item.previousExpense[0].expense_type.expenseType}}</td>
 
                         <td><a [routerLink]="['../','expense-summary', item.vehicle._id]">Expense summary</a></td>
-
-                        <!-- <td>
-                          {{item.previousService[0].amount}}
-                        </td>
-                        <td>
-                          N.A.
-                        </td>
-                        <td>N.A. </td>
-                        <td>N.A. </td>
-                        <td>N.A. </td> -->
                       </tr>
 
                     </tbody>
