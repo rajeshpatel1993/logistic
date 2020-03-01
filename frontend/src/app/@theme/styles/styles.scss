@@ -99,6 +99,9 @@ nb-menu .menu-item {
       .menu-icon {
         color: #C2CC7F;
       }
+      &::before{
+        background-color: #C2CC7F!important;
+      }
     }
 
     &:hover {
@@ -424,7 +427,40 @@ a:focus {
       overflow-x: auto;
     }
   }
-
+  .md-drppicker{
+    &.double{
+      width: 600px;
+    }
+    .ranges{
+      ul{
+        li{
+          button{
+            &.active{
+              background-color: #C2CC7F;
+            }
+          }
+        }
+      }
+    }
+    td{
+      &.active{
+        background-color: #C2CC7F;
+        &:hover{
+          background-color: #C2CC7F;
+        }
+      }
+    }
+    .btn{
+      background-color: #C2CC7F;
+      padding: 0px 15px;
+      &:hover{
+        background-color: #777777;
+      }
+    }
+    .clear svg{
+      vertical-align: text-bottom;
+    }
+  }
   @media (min-width: 768px) and (max-width: 991.98px) {
     .md-drppicker.double {
       width: 600px;
