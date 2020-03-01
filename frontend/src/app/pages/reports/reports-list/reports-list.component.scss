@@ -12,7 +12,13 @@
             font-size: 0.8rem;
         }
         td{
-
+            a{
+                color: #C2CC7F;
+                &:hover{
+                    color: #777777;
+                    text-decoration: none;
+                }
+            }
         }
         th,td{
             padding: 1rem 0.75rem;
