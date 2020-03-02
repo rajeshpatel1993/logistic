@@ -103,14 +103,26 @@ export const MENU_ITEMS: NbMenuItem[] = [
       icon: 'file-contract',
       pack: 'solid'},
 
-      // children: [
-      //         {
-      //           title: 'Vehicle',
-      //           link: '/pages/reports/list',
-      //         }
-      // ]
-    link: '/pages/reports/list',
-    home: true,
+      children: [
+              {
+                title: 'Vehicle',
+                link: '/pages/reports/vehicle'
+              },
+              {
+                title: 'Assign Vehicle',
+                link: '/pages/reports/assign-vehicle'
+              },
+              {
+                title: 'Vehicle Services',
+                link: '/pages/reports/vehicle-services'
+              },
+              {
+                title: 'Expenses',
+                link: '/pages/reports/vehicle-expenses'
+              }
+      ]
+    // link: '/pages/reports/list',
+    // home: true,
   }
 
 

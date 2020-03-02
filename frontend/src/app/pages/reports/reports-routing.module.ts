@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import {ReportsListComponent} from './reports-list/reports-list.component'
 import { ReportsComponent } from './reports.component';
 import { ExpenseSummaryComponent } from './expense-summary/expense-summary.component';
+import { VehicleReportComponent } from './vehicle-report/vehicle-report.component';
+import { AssignVehicleReportsComponent } from './assign-vehicle-reports/assign-vehicle-reports.component';
+import { ServiceReportComponent } from './service-report/service-report.component';
+import { ExpenseReportComponent } from './expense-report/expense-report.component';
 
 const routes: Routes = [{
   path: '',
@@ -14,57 +18,26 @@ const routes: Routes = [{
         component: ReportsListComponent
       },
       {
+        path: 'vehicle',
+        component: VehicleReportComponent
+      },
+      {
+        path: 'assign-vehicle',
+        component: AssignVehicleReportsComponent
+      },
+      {
         path: 'expense-summary',
         component: ExpenseSummaryComponent
+      },
+      {
+        path: 'vehicle-services',
+        component: ServiceReportComponent
+      },
+      {
+        path: 'vehicle-expenses',
+        component: ExpenseReportComponent
       }
-      // {
-      //   path: 'add-expense',
-      //   component: VehicleExpenseDetailsComponent
-      // }
-      // {
-      //   path: 'add-vehicle',
-      //   component: AddVehicleComponent
-      // },
-      // {
-      //   path: 'edit-vehicle/:id',
-      //   component: EditVehicleComponent
-      // }
-      
-    // {
-    //   path: 'stepper',
-    //   component: StepperComponent,
-    // },
-    // {
-    //   path: 'list',
-    //   component: ListComponent,
-    // },
-    // {
-    //   path: 'infinite-list',
-    //   component: InfiniteListComponent,
-    // },
-    // {
-    //   path: 'accordion',
-    //   component: AccordionComponent,
-    // },
-    // {
-    //   path: 'tabs',
-    //   component: TabsComponent,
-    //   children: [
-    //     {
-    //       path: '',
-    //       redirectTo: 'tab1',
-    //       pathMatch: 'full',
-    //     },
-    //     {
-    //       path: 'tab1',
-    //       component: Tab1Component,
-    //     },
-    //     {
-    //       path: 'tab2',
-    //       component: Tab2Component,
-    //     },
-    //   ],
-    // },
+
   ],
 },
 
