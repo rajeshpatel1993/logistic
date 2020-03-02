@@ -7,11 +7,25 @@
         padding: 1rem 0.25rem;
         margin-top: 12px;
     }
+    .table-responsive{
+        margin-bottom: 15px;
+    }
     .table{
+        margin-bottom: 15px;
         th{
             font-size: 0.8rem;
         }
         td{
+            ul{
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                li{
+                    color: #777777;
+                    font-size: 14px;
+                    padding: 0 5px;
+                }
+            }
             a{
                 color: #C2CC7F;
                 &:hover{
@@ -147,3 +161,4 @@
     
 
 }
+
