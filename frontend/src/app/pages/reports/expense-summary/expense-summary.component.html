@@ -53,7 +53,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of expenseVehicleData">
+                    <tr *ngFor="let item of expenseVehicleData;let i = index;">
                      <td>
 
 
@@ -137,7 +137,7 @@
 
                     <td style="min-width:200px">
 
-                     <ngx-expense-vehicle [vehicleId]="item._id"></ngx-expense-vehicle>
+                     <ngx-expense-vehicle [vehicleId]="item._id" [indexOfVehicle]="i+1"></ngx-expense-vehicle>
                     </td>
                 
                     </tr>

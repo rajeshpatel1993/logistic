@@ -23,7 +23,10 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
   @Input() vehicleId:String;
   @Input() startDateVehicle = null;
   @Input() endDateVehicle = null;
+  @Input() indexOfVehicle=1;
   public chartData:any[] = [];
+  public categories:any[] = [];
+
   constructor(private reportService : ReportsService) { }
 
   ngOnInit() {
@@ -35,38 +38,25 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
         type: 'column'
     },
     title: {
-        text: 'Monthly Average Rainfall'
+        text: 'Vehicle Expenses'
     },
-    subtitle: {
-        text: 'Source: WorldClimate.com'
-    },
+
     xAxis: {
         categories: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'
+           
         ],
         crosshair: true
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Rainfall (mm)'
+            text: 'Expense Amount'
         }
     },
     tooltip: {
-        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        // headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<table><tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -78,46 +68,13 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
         }
     },
     series: [{
-        name: 'Tokyo',
-        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+        name: 'Expense',
+        data: []
 
     }]
 };
 
-  // public options: any = {
-  //   chart: {
-  //       plotBackgroundColor: null,
-  //       plotBorderWidth: null,
-  //       plotShadow: false,
-  //       type: 'pie'
-  //   },
-  //   title: {
-  //       text: 'Total Expense for Vehicle'
-  //   },
-  //   tooltip: {
-  //       pointFormat: '{series.name}: <b>{point.y}</b>'
-  //   },
-  //   accessibility: {
-  //       point: {
-  //           valueSuffix: '%'
-  //       }
-  //   },
-  //   plotOptions: {
-  //       pie: {
-  //           allowPointSelect: true,
-  //           cursor: 'pointer',
-  //           dataLabels: {
-  //               enabled: true,
-  //               format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-  //           }
-  //       }
-  //   },
-  //   series: [{
-  //       name: 'Total Amount',
-  //       colorByPoint: true,
-  //       data: this.chartData
-  //   }]
-  //   };
+
 
   
   public assignedVehicleChartSubscription : Subscription;
@@ -133,15 +90,17 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
         let dat = d["data"];
 
         for(let i=0;i<dat.length;i++){
-            let tmpObj = {};
-            tmpObj["name"]=dat[i]["expensesTypes"].expenseType;
-            tmpObj["y"] = dat[i]["total"];
-            this.chartData.push(tmpObj);
+            this.categories.push(dat[i]["expensesTypes"].expenseType);
+            // let tmpObj = {};
+            // tmpObj["name"]=dat[i]["expensesTypes"].expenseType;
+            // tmpObj["y"] = dat[i]["total"];
+             this.chartData.push(dat[i]["total"]);
         }
-        // console.log(this.chartData);
-        // console.log(this.options);
+    
         this.options["series"][0]["data"] = this.chartData;
-        Highcharts.chart('container', this.options);
+        this.options["xAxis"]["categories"] = this.categories;
+
+        Highcharts.chart('container-'+this.indexOfVehicle, this.options);
     },(err)=>{
         console.log(err);
     });
