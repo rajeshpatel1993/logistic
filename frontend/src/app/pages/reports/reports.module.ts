@@ -26,6 +26,9 @@ import { ServicetaskbyamountComponent } from './servicetaskbyamount/servicetaskb
 import { ExpenseSummaryComponent } from './expense-summary/expense-summary.component';
 import { ExpenseVehicleComponent } from './expense-summary/expense-vehicle/expense-vehicle.component';
 import { ExpenseTypesComponent } from './expense-summary/expense-types/expense-types.component';
+import { AssignVehicleReportsComponent } from './assign-vehicle-reports/assign-vehicle-reports.component';
+import { ServiceReportComponent } from './service-report/service-report.component';
+import { ExpenseReportComponent } from './expense-report/expense-report.component';
 
 
 @NgModule({
@@ -57,7 +60,10 @@ import { ExpenseTypesComponent } from './expense-summary/expense-types/expense-t
     ServicetaskbyamountComponent,
     ExpenseSummaryComponent,
     ExpenseVehicleComponent,
-    ExpenseTypesComponent
+    ExpenseTypesComponent,
+    AssignVehicleReportsComponent,
+    ServiceReportComponent,
+    ExpenseReportComponent
     // ,
     // VehicleServiceDetailsComponent
   ],

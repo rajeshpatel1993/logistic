@@ -162,8 +162,6 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     this.startDateVehicle = event.startDate?event.startDate.toISOString():null;
     this.endDateVehicle = event.endDate?event.endDate.toISOString():null;
 
-    // console.log(this.startDateVehicle);
-    // console.log(this.endDateVehicle);
   }
 
   onChange(val){
