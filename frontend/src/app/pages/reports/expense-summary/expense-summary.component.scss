@@ -17,3 +17,20 @@
         height: 40px;
     }
 }
+.table{
+    th,td{
+        white-space: nowrap;
+    }
+    td{
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li{
+                color: #777777;
+                font-size: 14px;
+                padding: 0 5px;
+            }
+        }
+    }
+}
