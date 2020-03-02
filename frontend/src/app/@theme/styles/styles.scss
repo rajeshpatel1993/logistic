@@ -514,7 +514,7 @@ a:focus {
       .paginate_button {
         border: 1px solid #C2CC7F;
         color: #C2CC7F !important;
-
+        background-color: #fff;
         &.current {
           background: #C2CC7F;
           border-color: #C2CC7F;
@@ -903,4 +903,9 @@ a:focus {
     }
   }
 
+}
+.expence_report_chart{
+  .highcharts-title{
+      font-size: 12px !important;
+  }
 }
