@@ -161,7 +161,9 @@ router.post("/add", async (req, res)=> {
 
 
 router.get("/vehicleExpense/:expenseId", async (req, res) => {
+
     const id = req.params.expenseId; //or use req.param('id')
+ 
     const filter = { _id: mongoose.Types.ObjectId(id) };
     let vehicleExpenseData = await Expense.findOne(filter).populate('vehicleType').populate('vehicle').populate('expense_type').populate('issue_status');
     let responseData = {};
@@ -170,6 +172,20 @@ router.get("/vehicleExpense/:expenseId", async (req, res) => {
     res.status(200).json(responseData);
     
 });
+
+
+router.get("/expensetypebyexpenseid/:expenseId", async (req, res) => {
+    const id = req.params.expenseId; //or use req.param('id')
+    console.log(id);
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    let vehicleExpenseData = await ExpenseType.findOne(filter);
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicleExpenseData;
+    res.status(200).json(responseData);
+    
+});
+
 
 
 
@@ -205,6 +221,106 @@ function getLastMonths(n) {
     return last_n_months
 }
 
+
+
+router.get("/vehicle_expenses_by_vehicle",async(req,res) => {
+    const resPerPage = 2; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let noofitems;
+    try {
+
+        const nooitemsAggregate = await Expense.aggregate([
+            {$match: {"isDeleted":0}},
+            {$group: {_id: "$vehicle"}},
+            {$count : "noofitems"}
+        ]);
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
+
+       
+        const pager = paginate(nooitems, page,resPerPage);
+
+        const vehiclesIds = await Expense.aggregate([
+            {$match: {"isDeleted":0}},
+            {
+                $group:{
+                    _id: "$vehicle",
+                    expense_dates: { $push: "$createdAt" } ,
+                    expense_types_ids: {$push:"$expense_type"},
+                    descriptions: {$push: "$details"},
+                    amounts: {$push: "$amount"},
+                    vendors: {$push: "$vendor"},
+                    totalAmount: {$sum:{"$toDouble":"$amount"}}
+
+                }
+            },
+            
+            // {
+            //     $lookup:{
+                    
+            //         "from": "expenseType",
+            //         "foreignField": "_id",
+            //         "localField": "expense_types_ids",
+            //         "as": "expenseTypes"
+            //     }
+            // },
+            {
+                $lookup:{
+                    
+                    "from": "vehicle",
+                    "let": { "vehId": "$_id" },
+                    "pipeline": [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$vehId"]}}},
+                        { "$project": { "vehicleStatusId": 1, "name": 1 , "vehicle_code":1, "vehicleImage":1,}}
+                      ],
+                      "as": "vehicleDetail"
+                }
+            },
+            {   $unwind:"$vehicleDetail" },     // $unwind used for getting data in object or for one record only
+
+            {
+                $lookup:{
+                    
+                    "from": "vehicleStatus",
+                    "let": { "vehId": "$vehicleDetail.vehicleStatusId" },
+                    "pipeline": [
+                        { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vehId"] }}},
+                        { "$project": { "vehicleStatusId": 1, "vehicleStatus": 1 }}
+                      ],
+                      "as": "vehicleStatus"
+
+                }
+            },
+
+            {   $unwind:"$vehicleStatus" },     // $unwind used for getting data in object or for one record only
+
+
+
+             
+        // {
+        //     $skip: skipd
+        // },
+        // {
+        //     $limit:resPerPage
+        // }
+       
+        ]);
+        // let expenseData = await Expense.find({"isDeleted": 0}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type').skip(skipd).limit(resPerPage);
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = vehiclesIds;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 router.post("/vehicleExpensesbyVehicle", async (req, res) => {
     let {vehicleId, startDate,endDate} = req.body;

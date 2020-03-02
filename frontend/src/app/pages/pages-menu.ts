@@ -40,8 +40,19 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: {
       icon: 'file-invoice-dollar',
       pack: 'solid'},
-    link: '/pages/expenses/list',
-    home: true,
+
+      children: [
+        {
+          title: 'List',
+          link: '/pages/expenses/list',
+        },
+        {
+          title: 'Summary',
+          link: '/pages/reports/expense-summary',
+        }
+      ]
+    // link: '',
+    // home: true,
   },
   {
     title: 'Repairs/Complaint',

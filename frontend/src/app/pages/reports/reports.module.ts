@@ -24,6 +24,8 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { VehicleReportComponent } from './vehicle-report/vehicle-report.component';
 import { ServicetaskbyamountComponent } from './servicetaskbyamount/servicetaskbyamount.component';
 import { ExpenseSummaryComponent } from './expense-summary/expense-summary.component';
+import { ExpenseVehicleComponent } from './expense-summary/expense-vehicle/expense-vehicle.component';
+import { ExpenseTypesComponent } from './expense-summary/expense-types/expense-types.component';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { ExpenseSummaryComponent } from './expense-summary/expense-summary.compo
     BarChartComponent,
     VehicleReportComponent,
     ServicetaskbyamountComponent,
-    ExpenseSummaryComponent
+    ExpenseSummaryComponent,
+    ExpenseVehicleComponent,
+    ExpenseTypesComponent
     // ,
     // VehicleServiceDetailsComponent
   ],

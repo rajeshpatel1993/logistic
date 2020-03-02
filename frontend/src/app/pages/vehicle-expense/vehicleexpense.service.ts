@@ -119,4 +119,12 @@ export class VehicleExpenseService {
   loadProjects(projectTypeId){
     return this.http.get(this.baseUrl+"/project/"+projectTypeId);
   }
+
+  loadExpensesByVehicles(){
+    return this.http.get(this.baseUrl+"/expenses/vehicle_expenses_by_vehicle");
+  }
+  getExpenseTypename(expensetypeid){
+    return this.http.get(this.baseUrl+"/expenses/expensetypebyexpenseid/"+expensetypeid);
+
+  }
 }
