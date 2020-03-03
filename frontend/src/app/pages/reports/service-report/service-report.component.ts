@@ -6,9 +6,10 @@ import * as moment from 'moment';
 import * as jsPDF from 'jspdf';
 
 import 'jspdf-autotable';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 import { ReportsService } from '../reports.service';
+import { VehicleService } from '../../vehicles/vehicles.service';
 
 @Component({
   selector: 'ngx-service-report',
@@ -17,16 +18,82 @@ import { ReportsService } from '../reports.service';
 })
 export class ServiceReportComponent implements OnInit, OnDestroy {
 
-    
+  public vehicleRegistrations = [];
+
+  public currentPage:String;
+  public selectedVehicleType;
+  public filterQueryString = "";
+  public vehicleTypes = [];
+  keyword = 'name';
+  public vehicleStatusList: any = [];
+  public workLocationsList: any[] = [];
+
+  public selectedVehicleDetail;
+  public selectedVehicleReg;
+
+  public vehicleDetails = [];
+  public totalItems: any;
+  public pager = {};
+  public pageOfItems = [];
+  public dropDownAction = false;
+  public selectedItem = '';
+  public selectedPage = '';
+  public jsonData = [];
+
+  selectEvent(item, typeofautoselect) {
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = item.id;
+        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.loadVehicleDetails(item.id);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = item.id;
+        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = item.name;
+        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+  }
+
+
+  onChangeSearch(search: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+
+  onFocused(e) {
+    // do something
+  }
+
+
+  filterData(){
+    this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
+    this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
+      this.vehiclesList = filterData.data;
+      this.totalItems, this.pageOfItems = filterData.data; 
+      this.pager = filterData.page;
+      // console.log(filterData);
+    });
+  }
+
+
+
 
   public serviceReportData = [];
 
   public startDateVehicle ;
   public endDateVehicle ;
   public assignedVehicles = [];
+  public serviceCalled:boolean = false;
 
   vehiclesList: any[] = [];
-  jsonData = [];
 
 
   dtOptions: any = {};
@@ -48,7 +115,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
-  constructor(private router:Router, private dialogService: NbDialogService, private reportService: ReportsService) { }
+  constructor(private router:Router, private dialogService: NbDialogService,private activeRoute: ActivatedRoute, private vehicleService: VehicleService,  private reportService: ReportsService) { }
 
   ngOnInit() {
 
@@ -218,6 +285,22 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     }
     );
   }
+
+
+  public loadVehicleDetails(vehicleTypeId){
+    this.vehicleService.loadVehicleDetails(vehicleTypeId).subscribe((vehicleDetails:any) => {
+      let vehicleDetailData = vehicleDetails.data;
+      vehicleDetailData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.vehicleDetailsId;
+        tmpObj["name"] = item.vehicleDetails;
+        this.vehicleDetails.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+
+  }
+
 
 
 }

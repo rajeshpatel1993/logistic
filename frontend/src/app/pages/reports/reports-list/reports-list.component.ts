@@ -21,6 +21,56 @@ import 'jspdf-autotable';
 export class ReportsListComponent implements OnInit {
 
   public vehicleTypes = [];
+  keyword = 'name';
+  public vehicleStatusList: any = [];
+  public workLocationsList: any[] = [];
+  selectEvent(item, typeofautoselect) {
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = item.id;
+        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.loadVehicleDetails(item.id);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = item.id;
+        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = item.name;
+        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+  }
+
+
+  onChangeSearch(search: string) {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+  }
+
+
+  onFocused(e) {
+    // do something
+  }
+
+
+  filterData(){
+    this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
+    this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
+      this.vehiclesList = filterData.data;
+      this.totalItems, this.pageOfItems = filterData.data; 
+      this.pager = filterData.page;
+      // console.log(filterData);
+    });
+  }
+
+
+  
+
+
   public vehicleDetails = [];
   public assignedVehicles = [];
   public serviceReportData = [];
@@ -29,15 +79,15 @@ export class ReportsListComponent implements OnInit {
   public selectedVehicleType;
   public selectedVehicleDetail;
   public selectedVehicleReg;
-  public workLocationsList: any[] = [];
+
   public currentPage:String;
-  public vehicleStatusList: any = [];
+ 
   assignvehicledatepicker;
   servicedatepicker;
   expensedate;
   
 
-  keyword = 'name';
+ 
 
   public serviceCalled:boolean = false;
   public expenseCalled:boolean = false;
@@ -670,26 +720,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
-  selectEvent(item, typeofautoselect) {
-    switch (typeofautoselect) {
-      case "vehicletype":
-        this.selectedVehicleType = item.id;
-        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
-        this.loadVehicleDetails(item.id);
-        break;
-      case "vehicledetails":
-        this.selectedVehicleDetail = item.id;
-        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
-
-        break;
-      case "vehiclereg":
-        this.selectedVehicleReg = item.name;
-        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
-
-      default:
-        // this.selectedVehicleType = item.id;
-    }
-  }
+ 
 
   public loadExpensesData(page?){
 
@@ -742,25 +773,10 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   }
 
 
-  filterData(){
-    this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
-    this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
-      this.vehiclesList = filterData.data;
-      this.totalItems, this.pageOfItems = filterData.data; 
-      this.pager = filterData.page;
-      // console.log(filterData);
-    });
-  }
 
-  onChangeSearch(search: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
-  }
+ 
 
-  onFocused(e) {
-    // do something
-  }
-
+  
   open(dialog:any) {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
