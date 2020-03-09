@@ -93,7 +93,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: {
       icon: 'bell',
       pack: 'regular'},
-    link: '/pages/remainders',
+    link: '/pages/remainders/list',
     home: true,
   },
 

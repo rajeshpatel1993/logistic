@@ -1,0 +1,27 @@
+<div class="AddRemainder">
+  <form [formGroup]="form">
+    <div class="form-group row m-0 mb-3 vehbgcolor">
+      <label for="vehicletype" class="col-sm-3 col-form-label">REMAINDER TYPE<span class="star">*</span></label>
+      <div class="col-sm-9">
+        <div class="ng-autocomplete">
+          <ng-autocomplete [data]="remidnerType" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
+            (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.name"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+
+      </div>
+    </div>
+    <div class="form-group row">
+           <angular-editor autofocus="true" id="editor" formControlName="htmlContent" (ngModelChange)="onChange2($event)"></angular-editor>
+    </div>
+    
+  </form>
+</div>
