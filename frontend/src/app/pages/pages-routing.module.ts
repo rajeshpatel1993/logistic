@@ -40,6 +40,11 @@ const routes: Routes = [{
       loadChildren: () => import('./reports/reports.module')
         .then(m => m.ReportsModule),
     },
+    {
+      path:'remainders',
+      loadChildren: () => import('./remainders/remainders.module')
+        .then(m => m.RemaindersModule),
+    },
 
     {
       path: 'layout',
