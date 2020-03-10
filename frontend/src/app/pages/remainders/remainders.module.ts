@@ -15,6 +15,7 @@ import {
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { RemaindersComponent } from './remainders.component';
 import { AadRemaindersComponent } from './aad-remainders/aad-remainders.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent],
@@ -31,7 +32,8 @@ import { AadRemaindersComponent } from './aad-remainders/aad-remainders.componen
     NbUserModule,
     NbTabsetModule,
     NbDatepickerModule,
-    AutocompleteLibModule
+    AutocompleteLibModule,
+    AngularEditorModule
   ]
 })
 export class RemaindersModule { }

@@ -80,12 +80,12 @@ export class AadRemaindersComponent implements OnInit {
     console.warn(this.form.value);
   }
 
-  AngularEditorComponent.prototype.onTextAreaFocus = function (event) {
-    if (this.focused && event) {  // note the "&& event" here
-        event.stopPropagation();
-        return;
-    }
-    this.focused = true;
-    this.focusEvent.emit(event);
-};
+//   AngularEditorComponent.prototype.onTextAreaFocus = function (event) {
+//     if (this.focused && event) {  // note the "&& event" here
+//         event.stopPropagation();
+//         return;
+//     }
+//     this.focused = true;
+//     this.focusEvent.emit(event);
+// };
 }
