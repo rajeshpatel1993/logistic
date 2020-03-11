@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RemaindersComponent } from './remainders.component'
 import { RemaindersListComponent } from './remainders-list/remainders-list.component';
 import { AadRemaindersComponent } from './aad-remainders/aad-remainders.component';
+import { RemaindersReportComponent } from './remainders-report/remainders-report.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
         path: 'add-remainders',
         component: AadRemaindersComponent
       },
+      {
+        path: 'report',
+        component: RemaindersReportComponent
+      }
     ],
   },
 ];

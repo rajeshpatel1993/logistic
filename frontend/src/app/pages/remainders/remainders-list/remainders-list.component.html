@@ -7,7 +7,7 @@
         </div>
         <div class="col-sm-6 text-right">
           <a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/remainders/add-remainders">Add
-            Remainder</a>
+            Remainder Task</a>
         </div>
       </div>
       <form class="formbg-light">
@@ -77,11 +77,18 @@
           <table class="table table-hover mt-4">
             <thead>
               <tr>
-                <th scope="col">Vehicle</th>
-                <th scope="col">Type</th>
-                <th scope="col">Status</th>
-                <th scope="col">Insurance Expiry</th>
-                <th scope="col">Road Tax</th>
+                <th scope="col">Category</th>
+                <th scope="col">Remainder Name</th>
+                <th scope="col">Email Subject</th>
+                <th scope="col">Expiration</th>
+                <th scope="col">Remainders Interval</th>
+                <th scope="col">Email account owner's list</th>
+                <th scope="col">Send alerts</th>
+                <th scope="col">Template</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Enable/disable</th>
+                <th scope="col">Send alert after expiration</th>
+                <th scope="col">File</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -98,23 +105,24 @@
                     </nb-card-body>
                   </nb-card>
                 </ng-template>
+                <td>Category</td>
+                <td>Remainder Name</td>
+                <td>Email Subject</td>
+                <td>Expiration Date with time</td>
+                <td>Remainders Interval</td>
+                <td> Email account owner's list</td>
+                <td>Send alerts to the account owner</td>
                 <td>
                   <div class="VehicleDetail">
                     <div class="VehicleDetail_image">
                       <img nbButton (click)="open(dialog)" src="assets/images/camera3.jpg" width="80">
                     </div>
-                    <div class="VehicleDetail_name">
-                      <h5>Name:- </h5>
-                      <p>Reg no:-</p>
-                    </div>
                   </div>
                 </td>
-                <td>
-                  <h6>Type</h6>
-                </td>
-               <td>Status</td>
-               <td>Insurance</td>
-                <td>Road</td>
+                <td>Notes</td>
+               <td>Enable/disable</td>
+               <td>Send alert after expiration</td>
+                <td><i class="far fa-file-pdf"></i></td>
                 <td><button class="btn btn-default p-0">
                     <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
                     ><i class="fas fa-edit text-primary"></i></button>
