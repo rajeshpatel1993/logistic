@@ -16,9 +16,10 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { RemaindersComponent } from './remainders.component';
 import { AadRemaindersComponent } from './aad-remainders/aad-remainders.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { RemaindersReportComponent } from './remainders-report/remainders-report.component';
 
 @NgModule({
-  declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent],
+  declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent, RemaindersReportComponent],
   imports: [
     CommonModule,
     RemaindersRoutingModule,
