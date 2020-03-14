@@ -17,6 +17,7 @@ import { RemaindersComponent } from './remainders.component';
 import { AadRemaindersComponent } from './aad-remainders/aad-remainders.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { RemaindersReportComponent } from './remainders-report/remainders-report.component';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent, RemaindersReportComponent],
@@ -34,7 +35,8 @@ import { RemaindersReportComponent } from './remainders-report/remainders-report
     NbTabsetModule,
     NbDatepickerModule,
     AutocompleteLibModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgxMaterialTimepickerModule
   ]
 })
 export class RemaindersModule { }

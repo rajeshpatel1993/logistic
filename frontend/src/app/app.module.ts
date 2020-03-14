@@ -26,6 +26,7 @@ import {
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,7 +51,8 @@ import { FormsModule } from '@angular/forms';
     CoreModule.forRoot(),
     AngularEditorModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxMaterialTimepickerModule
   ],
 
   providers: [
