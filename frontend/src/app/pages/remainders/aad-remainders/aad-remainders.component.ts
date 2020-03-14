@@ -12,6 +12,9 @@ export class AadRemaindersComponent implements OnInit {
   public remidnerType = [];
   keyword = 'name';
   form: FormGroup;
+  public reminderForm: FormGroup;
+
+
   public editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -48,7 +51,7 @@ export class AadRemaindersComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    uploadUrl: 'v1/image',
+    uploadUrl: 'http://localhost:3000/api/vehicles/uploadeditorfile',
     uploadWithCredentials: false,
     sanitize: true,
     toolbarPosition: 'top',
@@ -59,18 +62,40 @@ export class AadRemaindersComponent implements OnInit {
   };
   htmlContent = '';
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      htmlContent: ['', Validators.required]
-    });
-    console.log(this.htmlContent);
+
+    this.createForm();
+    
   }
   selectEventD(item) { }
   onChange(event) {
     console.log('changed');
   }
+
+
+  createForm() {
+    let group = {
+      category: ['', Validators.required],
+      remainder_name: ['', Validators.required],
+      subject: ['',Validators.required],
+      expiration_date: ['', Validators.required],
+      interval: ['', Validators.required],
+      email_lists: ['', Validators.required],
+      owner: ['', Validators.required],
+      template: ['', Validators.required],
+      notes: ['', Validators.required],
+      enable: ['', Validators.required],
+      alert_after_expiration: [''],
+      attached_file:['']
+    };
+    this.reminderForm = this.fb.group(group);
+  }
+
+  get f() { return this.reminderForm.controls; }
+
+
 
   onBlur(event) {
     console.log('blur ' + event);

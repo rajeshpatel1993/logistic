@@ -1,6 +1,6 @@
 <div class="AddRemainder">
-  <form [formGroup]="form">
-    <div class="form-group row">
+  <form [formGroup]="reminderForm" novalidate>
+    <!-- <div class="form-group row">
       <label for="vehicletype" class="col-sm-3 col-form-label">Category<span class="star">*</span></label>
       <div class="col-sm-9">
         <div class="ng-autocomplete">
@@ -18,7 +18,23 @@
         </div>
 
       </div>
+    </div> -->
+
+
+
+    <div class="form-group row">
+      <label for="status" class="col-sm-3 col-form-label">Category<span class="star">*</span></label>
+      <div class="col-sm-9">
+        <select class="form-control" id="status" formControlName="category">
+          <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
+        </select>
+        <div class="errormsg"
+          *ngIf="f.category.invalid && (f.category.dirty || f.category.touched)">
+          Category is required
+        </div>
+      </div>
     </div>
+
     <div class="form-group row">
       <label for="name" class="col-sm-3 col-form-label">Remainder Name<span class="star">*</span></label>
       <div class="col-sm-9">
@@ -60,7 +76,7 @@
     <div class="form-group row">
       <label for="template" class="col-sm-3 col-form-label">Template<span class="star">*</span></label>
       <div class="col-sm-9">
-        <angular-editor autofocus="true" id="editor" formControlName="htmlContent" ></angular-editor>
+        <angular-editor autofocus="true" id="editor" formControlName="template" [config]="editorConfig" ></angular-editor>
       </div>
     </div>
     <div class="form-group row">
