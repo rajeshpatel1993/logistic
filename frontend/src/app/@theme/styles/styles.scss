@@ -46,6 +46,9 @@ body {
 nb-layout .layout{
   font-family: 'Raleway'!important;
 }
+*:focus{
+  outline: none;
+}
 .nb-theme-default{
   --card-text-font-family: 'Raleway'!important;
   --card-header-text-font-family: 'Raleway'!important;
@@ -911,4 +914,26 @@ a:focus {
 }
 .angular-editor-textarea{
   min-height: 200px!important;
+}
+.ngx-timepicker{
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 2px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  .ngx-timepicker-control__arrow{
+    height: 10px;
+  }
+}
+.timepicker__header,.clock-face__number > span.active,.clock-face__clock-hand{
+  background-color: #C2CC7F!important;
+}
+.timepicker-button{
+  color: #C2CC7F!important;
 }
