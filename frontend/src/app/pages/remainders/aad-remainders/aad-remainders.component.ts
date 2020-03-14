@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -13,6 +14,7 @@ export class AadRemaindersComponent implements OnInit {
   keyword = 'name';
   form: FormGroup;
   public reminderForm: FormGroup;
+  public attachFileUniqueId = uuid.v4();
 
 
   public editorConfig: AngularEditorConfig = {
@@ -88,7 +90,7 @@ export class AadRemaindersComponent implements OnInit {
       notes: ['', Validators.required],
       enable: ['', Validators.required],
       alert_after_expiration: [''],
-      attached_file:['']
+      attach_file_unique_id : [this.attachFileUniqueId]
     };
     this.reminderForm = this.fb.group(group);
   }
@@ -106,4 +108,9 @@ export class AadRemaindersComponent implements OnInit {
   }
   fileAdded(event){}
   uploadBills(){}
+
+
+  addRemainder(){
+    console.log(this.reminderForm.value);
+  }
 }
