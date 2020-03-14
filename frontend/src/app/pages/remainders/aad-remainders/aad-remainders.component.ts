@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -12,6 +13,10 @@ export class AadRemaindersComponent implements OnInit {
   public remidnerType = [];
   keyword = 'name';
   form: FormGroup;
+  public reminderForm: FormGroup;
+  public attachFileUniqueId = uuid.v4();
+
+
   public editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -48,7 +53,7 @@ export class AadRemaindersComponent implements OnInit {
         tag: 'h1',
       },
     ],
-    uploadUrl: 'v1/image',
+    uploadUrl: 'http://localhost:3000/api/vehicles/uploadeditorfile',
     uploadWithCredentials: false,
     sanitize: true,
     toolbarPosition: 'top',
@@ -59,18 +64,40 @@ export class AadRemaindersComponent implements OnInit {
   };
   htmlContent = '';
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      htmlContent: ['', Validators.required]
-    });
-    console.log(this.htmlContent);
+
+    this.createForm();
+    
   }
   selectEventD(item) { }
   onChange(event) {
     console.log('changed');
   }
+
+
+  createForm() {
+    let group = {
+      category: ['', Validators.required],
+      remainder_name: ['', Validators.required],
+      subject: ['',Validators.required],
+      expiration_date: ['', Validators.required],
+      interval: ['', Validators.required],
+      email_lists: ['', Validators.required],
+      owner: ['', Validators.required],
+      template: ['', Validators.required],
+      notes: ['', Validators.required],
+      enable: ['', Validators.required],
+      alert_after_expiration: [''],
+      attach_file_unique_id : [this.attachFileUniqueId]
+    };
+    this.reminderForm = this.fb.group(group);
+  }
+
+  get f() { return this.reminderForm.controls; }
+
+
 
   onBlur(event) {
     console.log('blur ' + event);
@@ -81,4 +108,9 @@ export class AadRemaindersComponent implements OnInit {
   }
   fileAdded(event){}
   uploadBills(){}
+
+
+  addRemainder(){
+    console.log(this.reminderForm.value);
+  }
 }

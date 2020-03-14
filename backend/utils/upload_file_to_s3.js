@@ -8,6 +8,8 @@ module.exports.upload = async (req, res, next)  => {
       accessKeyId: config['aws'].accessKeyId,
       secretAccessKey: config['aws'].secretAccessKey
     });
+    // console.log(req.files);
+
     const s3 = new aws.S3();
     const file = req.files;
     let lengthofFile = file.length;
@@ -35,6 +37,50 @@ try{
                     // console.log("test");
         }
     });
+
+}catch(error){
+
+}
+
+    // console.log()
+
+    
+   
+  }
+
+
+  module.exports.uploadSingleFile = async (req, res, next)  => {
+    
+    aws.config.setPromisesDependency();
+    aws.config.update({
+      accessKeyId: config['aws'].accessKeyId,
+      secretAccessKey: config['aws'].secretAccessKey
+    });
+    
+    const s3 = new aws.S3();
+    const file = req.file;
+  
+  
+
+    const uploadedFileData = [];
+try{
+   
+        const params = {
+          Bucket:config['aws'].s3_bucket,
+          Body: fs.createReadStream(file.path),
+          Key: `files/${file.originalname}`
+        };
+        // console.log(params);
+        let data = await s3.upload(params).promise();
+        // console.log(data);
+        if (data) {
+                    fs.unlinkSync(file.path); // Empty temp folder
+                    const locationUrl = data.Location;
+                    req.uploadedFiles = locationUrl;
+                    next();
+
+        }
+  
 
 }catch(error){
 

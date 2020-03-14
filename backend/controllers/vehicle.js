@@ -20,6 +20,7 @@ const {VehicleStatus} = require("../models/vehicleStatus");
 const {OwnerShip} = require("../models/ownership");
 const {WorkLocation} = require("../models/workLocation");
 const { upload } = require("../utils/upload_file_to_s3");
+const { uploadSingleFile } = require("../utils/upload_file_to_s3");
 const { ProjectType } = require("../models/projectType");
 
 const multer = require('multer');
@@ -46,6 +47,30 @@ router.post("/fileupload",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 102
     }
 
 });
+
+
+//upload files
+router.post("/uploadeditorfile",  multer({ dest: 'temp/', limits: { fieldSize: 8 * 1024 * 1024 } }).single(
+    'file'
+  ),uploadSingleFile, async(req,res) => {
+    //   console.log(req.uploadedFiles);
+    let {fileId, typeoffile} = req.body;
+    try{
+       
+        let responseData = {};
+        responseData["status"] = 200;
+        // "imageUrl":`https://storage.googleapis.com/article-images/demoImage.jpg`
+
+         responseData["imageUrl"] = req.uploadedFiles;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+
+});
+
+
 
 
 router.post("/updateVehicle", async (req, res)=> {
