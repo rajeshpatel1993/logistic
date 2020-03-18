@@ -88,7 +88,7 @@ export class AadRemaindersComponent implements OnInit {
       remainder_name: ['', Validators.required],
       subject: ['',Validators.required],
       expiration_date: ['', Validators.required],
-      interval: ['', Validators.required],
+      interval: ['Select Interval', Validators.required],
       email_lists: ['', Validators.required],
       owner: ['', Validators.required],
       template: ['', Validators.required],

@@ -50,15 +50,30 @@
     <div class="form-group row">
       <label for="expiration" class="col-sm-3 col-form-label">Expiration<span class="star">*</span></label>
       <div class="col-sm-9">
-          <input class="form-control" id="expiration" nbInput placeholder="Expiration" formControlName="expiration_date" [nbDatepicker]="expiration">
-        <nb-datepicker #expiration></nb-datepicker>
+        <div class="row no-gutters">
+          <div class="col-12 col-md-6 col-lg-8">
+            <input class="form-control" id="expiration" nbInput placeholder="Expiration" formControlName="expiration_date" [nbDatepicker]="expiration">
+            <nb-datepicker #expiration></nb-datepicker>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="ngx-timepicker-field-example">
+
+              <ngx-timepicker-field [buttonAlign]="'right'"></ngx-timepicker-field>
+
+              <!-- <input [ngxTimepicker]="picker">
+
+              <ngx-material-timepicker #picker></ngx-material-timepicker> -->
+
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="form-group row">
       <label for="remainderinterval" class="col-sm-3 col-form-label">Remainders Interval<span class="star">*</span></label>
       <div class="col-sm-9">
-        <select class="form-control" id="remainderinterval" formControlName="interval">
-          <option value="test" selected>Select Interval</option>
+        <select class="form-control" id="remainderinterval" >
+          <option value="" selected>Select Interval</option>
           <option value="6">6 hour</option>
           <option value="12">12 hour</option>
 
@@ -111,7 +126,9 @@
 
 
     <div class="form-group row">
-      <button (click)="addRemainder()">Add Remainder</button>
+      <div class="col-12">
+        <button (click)="addRemainder()" class="btn btn-primary float-right">Add Remainder</button>
+      </div>
     </div>
   </form>
 </div>
