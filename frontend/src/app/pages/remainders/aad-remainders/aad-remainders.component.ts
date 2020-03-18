@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as uuid from 'uuid';
+import { RemainderService } from '../remainder.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -12,7 +14,9 @@ export class AadRemaindersComponent implements OnInit {
 
   public remidnerType = [];
   keyword = 'name';
+  public remainderTypeData:any = [];
   form: FormGroup;
+  public typeSubscription : Subscription;
   public reminderForm: FormGroup;
   public attachFileUniqueId = uuid.v4();
 
@@ -64,11 +68,12 @@ export class AadRemaindersComponent implements OnInit {
   };
   htmlContent = '';
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private remainderService : RemainderService) { }
 
   ngOnInit() {
 
     this.createForm();
+    this.loadTypes();
     
   }
   selectEventD(item) { }
@@ -112,5 +117,14 @@ export class AadRemaindersComponent implements OnInit {
 
   addRemainder(){
     console.log(this.reminderForm.value);
+  }
+
+  loadTypes(){
+    this.typeSubscription = this.remainderService.loadRemainderTypes().subscribe((d)=>{
+      this.remainderTypeData = d['data'];
+
+}, (err)=>{
+      console.log(err);
+    });
   }
 }

@@ -17,6 +17,7 @@ import { RemaindersComponent } from './remainders.component';
 import { AadRemaindersComponent } from './aad-remainders/aad-remainders.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { RemaindersReportComponent } from './remainders-report/remainders-report.component';
+import { RemainderService } from './remainder.service';
 
 @NgModule({
   declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent, RemaindersReportComponent],
@@ -35,6 +36,8 @@ import { RemaindersReportComponent } from './remainders-report/remainders-report
     NbDatepickerModule,
     AutocompleteLibModule,
     AngularEditorModule
-  ]
+  ],
+
+  providers: [RemainderService]
 })
 export class RemaindersModule { }
