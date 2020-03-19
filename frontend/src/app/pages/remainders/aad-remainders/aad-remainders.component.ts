@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as uuid from 'uuid';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -15,6 +16,7 @@ export class AadRemaindersComponent implements OnInit {
   form: FormGroup;
   public reminderForm: FormGroup;
   public attachFileUniqueId = uuid.v4();
+  public vehicleStatusList: any = [];
 
 
   public editorConfig: AngularEditorConfig = {
@@ -64,7 +66,7 @@ export class AadRemaindersComponent implements OnInit {
   };
   htmlContent = '';
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,protected ref: NbDialogRef<AadRemaindersComponent>) { }
 
   ngOnInit() {
 
@@ -112,5 +114,8 @@ export class AadRemaindersComponent implements OnInit {
 
   addRemainder(){
     console.log(this.reminderForm.value);
+  }
+  cancel() {
+    this.ref.close();
   }
 }
