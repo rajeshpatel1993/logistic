@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as uuid from 'uuid';
 import { RemainderService } from '../remainder.service';
 import { Subscription } from 'rxjs';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -14,11 +15,12 @@ export class AadRemaindersComponent implements OnInit {
 
   public remidnerType = [];
   keyword = 'name';
-  public remainderTypeData:any = [];
+  public remainderTypeData: any = [];
   form: FormGroup;
-  public typeSubscription : Subscription;
+  public typeSubscription: Subscription;
   public reminderForm: FormGroup;
   public attachFileUniqueId = uuid.v4();
+  public vehicleStatusList: any = [];
 
 
   public editorConfig: AngularEditorConfig = {
@@ -68,13 +70,14 @@ export class AadRemaindersComponent implements OnInit {
   };
   htmlContent = '';
 
-  constructor(private fb: FormBuilder, private remainderService : RemainderService) { }
+
+  constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
 
   ngOnInit() {
 
     this.createForm();
     this.loadTypes();
-    
+
   }
   selectEventD(item) { }
   onChange(event) {
@@ -86,7 +89,7 @@ export class AadRemaindersComponent implements OnInit {
     let group = {
       category: ['', Validators.required],
       remainder_name: ['', Validators.required],
-      subject: ['',Validators.required],
+      subject: ['', Validators.required],
       expiration_date: ['', Validators.required],
       interval: ['Select Interval', Validators.required],
       email_lists: ['', Validators.required],
@@ -95,7 +98,7 @@ export class AadRemaindersComponent implements OnInit {
       notes: ['', Validators.required],
       enable: ['', Validators.required],
       alert_after_expiration: [''],
-      attach_file_unique_id : [this.attachFileUniqueId]
+      attach_file_unique_id: [this.attachFileUniqueId]
     };
     this.reminderForm = this.fb.group(group);
   }
@@ -111,19 +114,21 @@ export class AadRemaindersComponent implements OnInit {
   onChange2(event) {
     console.warn(this.form.value);
   }
-  fileAdded(event){}
-  uploadBills(){}
+  fileAdded(event) { }
+  uploadBills() { }
 
 
-  addRemainder(){
+  addRemainder() {
     console.log(this.reminderForm.value);
   }
-
-  loadTypes(){
-    this.typeSubscription = this.remainderService.loadRemainderTypes().subscribe((d)=>{
+  cancel() {
+    this.ref.close();
+  }
+  loadTypes() {
+    this.typeSubscription = this.remainderService.loadRemainderTypes().subscribe((d) => {
       this.remainderTypeData = d['data'];
 
-}, (err)=>{
+    }, (err) => {
       console.log(err);
     });
   }

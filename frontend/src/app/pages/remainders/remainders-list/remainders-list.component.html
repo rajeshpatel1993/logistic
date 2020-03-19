@@ -13,62 +13,17 @@
       <form class="formbg-light">
         <div class="form-row">
           <div class="col-xs-12 col-sm-3 my-1">
-            <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-                (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
-                [notFoundTemplate]="notFoundTemplate">
-              </ng-autocomplete>
-
-              <ng-template #itemTemplate let-item>
-                <a [innerHTML]="item.name"></a>
-              </ng-template>
-
-              <ng-template #notFoundTemplate let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
-            </div>
+            
           </div>
 
           <div class="col-xs-12 col-sm-3 my-1">
-            <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
-                (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
-                [notFoundTemplate]="notFoundTemplate1">
-              </ng-autocomplete>
-
-              <ng-template #itemTemplate1 let-item>
-                <a [innerHTML]="item.name"></a>
-              </ng-template>
-
-              <ng-template #notFoundTemplate1 let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
-            </div>
 
           </div>
           <div class="col-xs-12 col-sm-3 my-1">
-            <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
-                placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
-                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
-                [notFoundTemplate]="notFoundTemplate2">
-              </ng-autocomplete>
-
-              <ng-template #itemTemplate2 let-item>
-                <a [innerHTML]="item.name"></a>
-              </ng-template>
-
-              <ng-template #notFoundTemplate2 let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
-            </div>
+           
           </div>
           <div class="col-xs-12 col-sm-3 my-1">
-            <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary"><i
-                class="fas fa-search"></i> Search</button>
+           
           </div>
         </div>
       </form>

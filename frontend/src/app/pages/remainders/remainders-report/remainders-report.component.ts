@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
+import { NbDialogRef } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-remainders-report',
@@ -10,7 +11,7 @@ export class RemaindersReportComponent implements OnInit {
 
   public vehicleTypes = [];
 
-  constructor(private dialogService: NbDialogService) { }
+  constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersReportComponent>) { }
 
   ngOnInit() {
   }
@@ -27,5 +28,9 @@ export class RemaindersReportComponent implements OnInit {
     // do something
   }
   filterData(){}
-
+  exportToPdf(){}
+  exportToExcel(){}
+  cancel() {
+    this.ref.close();
+  }
 }
