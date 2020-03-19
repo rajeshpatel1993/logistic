@@ -26,7 +26,7 @@
       <label for="status" class="col-sm-3 col-form-label">Category<span class="star">*</span></label>
       <div class="col-sm-9">
         <select class="form-control" id="status" formControlName="category">
-          <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
+          <option *ngFor="let ct of remainderTypeData" [value]="ct._id">{{ct.name}}</option>
         </select>
         <div class="errormsg"
           *ngIf="f.category.invalid && (f.category.dirty || f.category.touched)">
@@ -57,8 +57,14 @@
           </div>
           <div class="col-12 col-md-6 col-lg-4">
             <div class="ngx-timepicker-field-example">
+
               <ngx-timepicker-field [buttonAlign]="'right'"></ngx-timepicker-field>
-          </div>
+
+              <!-- <input [ngxTimepicker]="picker">
+
+              <ngx-material-timepicker #picker></ngx-material-timepicker> -->
+
+            </div>
           </div>
         </div>
       </div>
