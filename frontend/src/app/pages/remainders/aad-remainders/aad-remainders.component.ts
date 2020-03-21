@@ -71,7 +71,11 @@ export class AadRemaindersComponent implements OnInit {
   htmlContent = '';
 
 
-  constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
+  constructor(private fb: FormBuilder, private remainderService: RemainderService) { }
+
+
+  // constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
+
 
   ngOnInit() {
 
@@ -91,7 +95,7 @@ export class AadRemaindersComponent implements OnInit {
       remainder_name: ['', Validators.required],
       subject: ['', Validators.required],
       expiration_date: ['', Validators.required],
-      interval: ['Select Interval', Validators.required],
+      interval: [0, Validators.required],
       email_lists: ['', Validators.required],
       owner: ['', Validators.required],
       template: ['', Validators.required],
@@ -121,9 +125,9 @@ export class AadRemaindersComponent implements OnInit {
   addRemainder() {
     console.log(this.reminderForm.value);
   }
-  cancel() {
-    this.ref.close();
-  }
+  // cancel() {
+  //   this.ref.close();
+  // }
   loadTypes() {
     this.typeSubscription = this.remainderService.loadRemainderTypes().subscribe((d) => {
       this.remainderTypeData = d['data'];
