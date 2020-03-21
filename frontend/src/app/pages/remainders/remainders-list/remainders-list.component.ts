@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
+import { NbDialogRef } from '@nebular/theme';
 
 
 @Component({
@@ -9,9 +10,9 @@ import { NbDialogService } from '@nebular/theme';
 })
 export class RemaindersListComponent implements OnInit {
 
-  public vehicleTypes = [];
+ 
 
-  constructor(private dialogService: NbDialogService) { }
+  constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersListComponent>) { }
 
   ngOnInit() {
   }
@@ -27,5 +28,9 @@ export class RemaindersListComponent implements OnInit {
   onFocused(e) {
     // do something
   }
-  filterData(){}
+  filterData(){}    
+  exportToPdf(){}
+  cancel() {
+    this.ref.close();
+  }
 }
