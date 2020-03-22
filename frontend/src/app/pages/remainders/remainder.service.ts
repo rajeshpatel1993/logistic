@@ -23,96 +23,10 @@ export class RemainderService {
   loadRemainderTypes(){
     return this.http.get(this.baseUrl+"/remainder/types");
   }
-
-  // loadAssignVehicles(){
-  //   return this.http.get(this.baseUrl+"/reports/assign_vehicles");
-  // }
-
-  // loadVehicleServices(){
-  //   return this.http.get(this.baseUrl+"/reports/vehicle_services");
-
-  // }
-
-  // loadOrganizationData(){
-  //   return this.http.get(this.baseUrl+"/organization/");
-  // }
-
-
-  // loadServiceTaskData(){
-  //   return this.http.get(this.baseUrl+"/reports/vehicle_services");
-
-  // }
-
-
-  // loadVehicleExpenses(){
-  //   return this.http.get(this.baseUrl+"/reports/vehicle_expenses");
-
-  // }
-
-
-  // // loadServiceTypeDataForGraph(){
-  // //   return this.http.get(this.baseUrl+"/reports/vehicle_services");
-
-  // // }
-
-  // loadServiceReportGraphData(){
-  //   return this.http.get(this.baseUrl+"/reports/serviceTypeGraph");
-
-  // }
-
-
-  // loadExpenseSummaryChartData(data){
-  //   return this.http.post(this.baseUrl+"/expenses/vehicleExpensesbyVehicle/",data);
-  // }
-
-  // // loadVehicleDetails(vehicleId?){
-  // //   return this.http.get(this.baseUrl+"/vehicles/details/"+vehicleId);
-
-  // // }
-
-  // // loadOrganizationData(){
-  // //   return this.http.get(this.baseUrl+"/organization/");
-  // // }
-
-  // // loadFiltereddata(querystring:String, page){
-  // //   return this.http.get(this.baseUrl+"/vehicles/filtervehicle?"+querystring, page);
-  // // }
-
-  // // loadModelsData(brandId?){
-  // //   return this.http.get(this.baseUrl+"/vehicles/models/"+brandId);
-  // // }
-
-  // // loadBrandsData(){
-  // //   return this.http.get(this.baseUrl+"/vehicles/brands");
-  // // }
-
-  // // loadColorsData(){
-  // //   return this.http.get(this.baseUrl+"/vehicles/colors");
-  // // }
   
-  // // loadFuelTypeData(measureMentId?){
-  // //   return this.http.get(this.baseUrl+"/vehicles/fueltype/"+measureMentId);
-  // // }
-
-  // // loadFuelMesaurementData(){
-  // //   return this.http.get(this.baseUrl+"/vehicles/fuelMeasurement");
-  // // }
-
-  // // loadAgentData(){
-  // //   return this.http.get(this.baseUrl+"/vehicles/agents");
-  // // }
-
-  // // loadOwnerShipData(){
-  // //   return this.http.get(this.baseUrl+"/vehicles/ownerships");
-  // // }
-
-  // // uploadFile(formdata){
-  // //   return this.http.post(this.baseUrl+"/vehicles/fileupload", formdata);
-  // // }
-
-  // // addVehicle(data){
-  // //   return this.http.post(this.baseUrl+"/vehicles/add",data);
-  // // }
+  addRemainder(data){
+    return this.http.post(this.baseUrl+"/remainder/add",data);
+  }
 
   // // addAssignVehicle(data){
   // //   return this.http.post(this.baseUrl+"/vehicles/add-assign",data);
