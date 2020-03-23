@@ -5,6 +5,7 @@ import * as uuid from 'uuid';
 import { RemainderService } from '../remainder.service';
 import { Subscription } from 'rxjs';
 import { NbDialogRef } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -21,7 +22,8 @@ export class AadRemaindersComponent implements OnInit {
   public reminderForm: FormGroup;
   public attachFileUniqueId = uuid.v4();
   public vehicleStatusList: any = [];
-
+  public dialogBox : boolean = false;
+  public msgObj ={};
 
   public editorConfig: AngularEditorConfig = {
     editable: true,
@@ -71,7 +73,11 @@ export class AadRemaindersComponent implements OnInit {
   htmlContent = '';
 
 
-  constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
+  constructor(private fb: FormBuilder, private remainderService: RemainderService, private router: Router) { }
+
+
+  // constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
+
 
   ngOnInit() {
 
@@ -91,10 +97,11 @@ export class AadRemaindersComponent implements OnInit {
       remainder_name: ['', Validators.required],
       subject: ['', Validators.required],
       expiration_date: ['', Validators.required],
-      interval: ['Select Interval', Validators.required],
+      interval: [0, Validators.required],
       email_lists: ['', Validators.required],
       owner: ['', Validators.required],
       template: ['', Validators.required],
+      expiration_time: ['', Validators.required],
       notes: ['', Validators.required],
       enable: ['', Validators.required],
       alert_after_expiration: [''],
@@ -119,11 +126,36 @@ export class AadRemaindersComponent implements OnInit {
 
 
   addRemainder() {
-    console.log(this.reminderForm.value);
+
+    if (this.reminderForm.invalid) {
+      alert("Please fill all required field");
+      return;
+    }
+
+    this.remainderService.addRemainder(this.reminderForm.value).subscribe((d)=>{
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully Added";
+      this.dialogBox = true;
+
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/vehicles/list');
+    }, 2000);
+
+    },(error)=>{
+
+
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] =error.error.errmsg;
+      this.dialogBox = true;
+
+      
+    });
+    // console.log(this.reminderForm.value);
   }
-  cancel() {
-    this.ref.close();
-  }
+  // cancel() {
+  //   this.ref.close();
+  // }
   loadTypes() {
     this.typeSubscription = this.remainderService.loadRemainderTypes().subscribe((d) => {
       this.remainderTypeData = d['data'];

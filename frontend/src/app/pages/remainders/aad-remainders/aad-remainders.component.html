@@ -58,11 +58,11 @@
           <div class="col-12 col-md-6 col-lg-4">
             <div class="ngx-timepicker-field-example">
 
-              <ngx-timepicker-field [buttonAlign]="'right'"></ngx-timepicker-field>
+              <!-- <ngx-timepicker-field [buttonAlign]="'right'"></ngx-timepicker-field> -->
 
-              <!-- <input [ngxTimepicker]="picker">
+              <input [ngxTimepicker]="picker" formControlName="expiration_time">
 
-              <ngx-material-timepicker #picker></ngx-material-timepicker> -->
+              <ngx-material-timepicker #picker></ngx-material-timepicker>
 
             </div>
           </div>
@@ -72,8 +72,8 @@
     <div class="form-group row">
       <label for="remainderinterval" class="col-sm-3 col-form-label">Remainders Interval<span class="star">*</span></label>
       <div class="col-sm-9">
-        <select class="form-control" id="remainderinterval" >
-          <option value="" selected>Select Interval</option>
+        <select class="form-control" id="remainderinterval" formControlName="interval">
+          <option value="0">Select Interval</option>
           <option value="6">6 hour</option>
           <option value="12">12 hour</option>
 

@@ -12,7 +12,9 @@ export class RemaindersListComponent implements OnInit {
 
  
 
-  constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersListComponent>) { }
+  // constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersListComponent>) { }
+     constructor(private dialogService: NbDialogService) { }
+
 
   ngOnInit() {
   }
@@ -30,7 +32,7 @@ export class RemaindersListComponent implements OnInit {
   }
   filterData(){}    
   exportToPdf(){}
-  cancel() {
-    this.ref.close();
-  }
+  // cancel() {
+  //   this.ref.close();
+  // }
 }
