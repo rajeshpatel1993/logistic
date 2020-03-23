@@ -74,11 +74,7 @@ export class AadRemaindersComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder, private remainderService: RemainderService, private router: Router) { }
-
-
   // constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
-
-
   ngOnInit() {
 
     this.createForm();
