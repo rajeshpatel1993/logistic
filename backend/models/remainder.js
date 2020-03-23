@@ -14,6 +14,12 @@ const remainderSchema = new mongoose.Schema ({
     enabledisable: {type: String},
     afterexpiration: {type: String},
     fileId: {type: String},
+    imageUrl: {type: String},
+
+    isDeleted: {
+        type: String,
+        default: 0
+    },
     createdDate: {
         type: Date,
         default: Date.now
@@ -24,5 +30,5 @@ const remainderSchema = new mongoose.Schema ({
 });
 
 
-const remainder = mongoose.model("remainder", remainderSchema, 'remainders');
-exports.remainder = remainder;
+const Remainder = mongoose.model("Remainder", remainderSchema, 'remainders');
+exports.Remainder = Remainder;
