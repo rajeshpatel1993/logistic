@@ -28,6 +28,18 @@ export class RemainderService {
     return this.http.post(this.baseUrl+"/remainder/add",data);
   }
 
+
+  loadRemainders(page){
+    return this.http.get(this.baseUrl+"/remainder?page="+page);
+
+  }
+
+  deleteRemainder(data) {
+    return this.http.post(this.baseUrl+"/remainder/deleteRemainder", data);
+  }
+
+
+
   // // addAssignVehicle(data){
   // //   return this.http.post(this.baseUrl+"/vehicles/add-assign",data);
   // // }
