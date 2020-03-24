@@ -22,6 +22,21 @@ router.get("/types", async(req,res)=>{
 });
 
 
+router.post("/deleteRemainder", async (req, res) => {
+    try{
+
+        let {id} = req.body;
+        const filter = { _id: mongoose.Types.ObjectId(id) };
+        const update = { isDeleted: 1 };
+        let updateVehicle = await Remainder.findOneAndUpdate(filter, update);
+        res.status(200).json({"msg":"saved successfully"});
+        // console.log(updateVehicle);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
 
 router.post("/add", async (req, res)=> {
     try{
