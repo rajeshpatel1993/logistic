@@ -69,7 +69,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       icon: 'gas-pump',
       pack: 'solid'
     },
-    link: '/pages/fuel',
+    link: '/pages/fuel/list',
     home: true,
   },
   {
