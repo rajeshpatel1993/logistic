@@ -37,20 +37,19 @@
                 <th scope="col">Email Subject</th>
                 <th scope="col">Expiration</th>
                 <th scope="col">Remainders Interval</th>
-                <th scope="col">Email account owner's list</th>
+                <th scope="col">Email lists</th>
                 <th scope="col">Send alerts</th>
                 <th scope="col">Template</th>
                 <th scope="col">Notes</th>
                 <th scope="col">Enable/disable</th>
-                <th scope="col">Send alert after expiration</th>
-                <th scope="col">File</th>
+               
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let item of remainderData">
                 <!-- List Image popup design -->
-                <ng-template #dialog let-data let-ref="dialogRef">
+                <!-- <ng-template #dialog let-data let-ref="dialogRef">
                   <nb-card class="popupImage">
                     <nb-card-body>
                       <img src="assets/images/camera3.jpg" alt=" ">
@@ -59,26 +58,27 @@
                       </button>
                     </nb-card-body>
                   </nb-card>
-                </ng-template>
-                <td>Category</td>
-                <td>Remainder Name</td>
-                <td>Email Subject</td>
-                <td>Expiration Date with time</td>
-                <td>Remainders Interval</td>
-                <td> Email account owner's list</td>
-                <td>Send alerts to the account owner</td>
+                </ng-template> -->
+                
+                <td>{{item.remainderTypeData[0].name}}</td>
+                <td>{{item.remainderName}}</td>
+                <td>{{item.subject}}</td>
+                <td>{{item.expirationDate | date}}</td>
+                <td>{{item.remainderInterval}} hour</td>
+                <td> <ul>
+                  <li *ngFor="let email of item.emailList">
+                    {{email}}
+                  </li>
+                </ul></td>
+                <td>{{item.afterexpiration}}</td>
                 <td>
-                  <div class="VehicleDetail">
-                    <div class="VehicleDetail_image">
-                      <img nbButton (click)="open(dialog)" src="assets/images/camera3.jpg" width="80">
-                    </div>
-                  </div>
+                  <div [innerHTML]="item.template"></div>
+               
                 </td>
-                <td>Notes</td>
-               <td>Enable/disable</td>
-               <td>Send alert after expiration</td>
-                <td><i class="far fa-file-pdf"></i></td>
-                <td><button class="btn btn-default p-0">
+                <td>{{item.notes}}</td>
+               <td>{{item.enabledisable}}</td>
+              
+                <td><button class="btn btn-default p-0" (click)="deleteRemainder(item._id)">
                     <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
                     ><i class="fas fa-edit text-primary"></i></button>
                 </td>
@@ -86,6 +86,33 @@
             </tbody>
           </table>
         </div>
+
+        <div class="card-footer pb-0 pt-3 pb-3">
+          <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{page: 1}" class="page-link"><i
+                  class="fas fa-angle-double-left"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.currentPage - 1 }"
+                class="page-link"><i class="fas fa-angle-left"></i></a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+              class="page-item number-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.currentPage + 1 }"
+                class="page-link"><i class="fas fa-angle-right"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.totalPages }" class="page-link"><i
+                  class="fas fa-angle-double-right"></i></a>
+            </li>
+          </ul>
+        </div>
+
+
       </nb-layout-column>
     </nb-card-body>
   </nb-card>

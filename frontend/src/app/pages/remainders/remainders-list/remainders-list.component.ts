@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { NbDialogRef } from '@nebular/theme';
+import { Subscription } from 'rxjs';
+import { RemainderService } from '../remainder.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -9,14 +12,27 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./remainders-list.component.scss']
 })
 export class RemaindersListComponent implements OnInit {
-
- 
-
+  remainderListSubscription: Subscription;
+  remainderData : any = [];
+  public totalItems: any;
+  public pager = {};
+  public filterQueryString = "";
+  public pageOfItems = [];
   // constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersListComponent>) { }
-     constructor(private dialogService: NbDialogService) { }
+     constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute,private remainderService: RemainderService) { }
 
 
   ngOnInit() {
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      if(lentgthoffilterQueryString.length > 0){
+        this.filterData();
+      }else{
+        this.loadRemainders(queryParams.page);
+
+      }
+      // console.log(lentgthoffilterQueryString.length);
+    });
   }
 
   open(dialog:any) {
@@ -35,4 +51,31 @@ export class RemaindersListComponent implements OnInit {
   // cancel() {
   //   this.ref.close();
   // }
+
+
+  loadRemainders(page?){
+    let p = page || 1;
+    this.remainderListSubscription = this.remainderService.loadRemainders(p).subscribe((d)=>{
+      this.remainderData = d["data"];
+      this.totalItems, this.pageOfItems = d["data"]; 
+      this.pager = d["page"];
+      console.log(this.remainderData);
+    },(error) => {
+
+    } );
+  }
+
+  deleteRemainder(remainderId){
+    this.remainderService.deleteRemainder({id:remainderId}).subscribe((d) =>{
+      this.activeRoute.queryParams.subscribe(queryParams => {
+        this.loadRemainders(queryParams.page);
+      });
+
+     
+    },(error) => {
+      console.log(error);
+    }
+    );
+  }
+
 }
