@@ -8,9 +8,8 @@ import { ListComponent } from './list/list.component';
 @NgModule({
   imports: [
     CommonModule,
-    FuelRoutingModule,
-    FuelComponent
+    FuelRoutingModule
   ],
-  declarations: [ListComponent],
+  declarations: [ListComponent, FuelComponent],
 })
 export class FuelModule { }
