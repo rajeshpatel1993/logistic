@@ -43,7 +43,7 @@ router.post("/add", async (req, res)=> {
 
         let imgUrl = "";
         let {category, remainder_name, subject,expiration_date,expiration_time,interval, email_lists, owner, template, notes, enable,alert_after_expiration, attach_file_unique_id} = req.body;
-        let remainderImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+        let remainderImage = await File.find({fileId:attach_file_unique_id }).select("s3Urls");
         //  console.log(vehicleImage)
         if(remainderImage.length > 0){
           imgUrl = vehicleImage[0].s3Urls[0];
@@ -56,7 +56,7 @@ router.post("/add", async (req, res)=> {
         
         };
 
-        console.log(savedata);
+        // console.log(savedata);
     
         const remainder_instance = new Remainder(savedata);
         let sData = await remainder_instance.save();

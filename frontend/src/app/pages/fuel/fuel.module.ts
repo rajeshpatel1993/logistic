@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { FuelRoutingModule } from './fuel-routing.module';
 import { FuelComponent } from './fuel.component';
 import { ListComponent } from './list/list.component';
+import { CustomCommonModule } from '../custom-common.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FuelRoutingModule
+    FuelRoutingModule,
+    CustomCommonModule
   ],
   declarations: [ListComponent, FuelComponent],
 })

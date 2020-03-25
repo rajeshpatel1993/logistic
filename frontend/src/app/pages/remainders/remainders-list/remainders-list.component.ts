@@ -59,7 +59,7 @@ export class RemaindersListComponent implements OnInit {
       this.remainderData = d["data"];
       this.totalItems, this.pageOfItems = d["data"]; 
       this.pager = d["page"];
-      console.log(this.remainderData);
+      console.log(this.pager);
     },(error) => {
 
     } );
