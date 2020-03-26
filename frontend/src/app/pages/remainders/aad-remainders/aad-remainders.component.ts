@@ -139,7 +139,7 @@ export class AadRemaindersComponent implements OnInit {
       this.dialogBox = true;
 
       setTimeout( ()=> {
-        this.router.navigateByUrl('/pages/vehicles/list');
+        this.router.navigateByUrl('/pages/remainders/list');
     }, 2000);
 
     },(error)=>{

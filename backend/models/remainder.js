@@ -17,7 +17,7 @@ const remainderSchema = new mongoose.Schema ({
     imageUrl: {type: String},
 
     isDeleted: {
-        type: String,
+        type: Number,
         default: 0
     },
     createdDate: {
