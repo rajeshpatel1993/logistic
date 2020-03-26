@@ -132,3 +132,8 @@
     </div>
   </form>
 </div>
+
+<div *ngIf="dialogBox">
+
+  <ngx-dailog-box (messageToEmit)="getMsg($event)" [msgObj]="msgObj"></ngx-dailog-box>
+</div>

@@ -19,6 +19,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { RemaindersReportComponent } from './remainders-report/remainders-report.component';
 import { RemainderService } from './remainder.service';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { CustomCommonModule } from '../custom-common.module';
 
 @NgModule({
   declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent, RemaindersReportComponent],
@@ -37,7 +38,8 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     NbDatepickerModule,
     AutocompleteLibModule,
     AngularEditorModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    CustomCommonModule
   ],
 
   providers: [RemainderService]

@@ -90,23 +90,23 @@
         <div class="card-footer pb-0 pt-3 pb-3">
           <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
-              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{page: 1}" class="page-link"><i
+              <a [routerLink]="['/pages/remainders/list']" [queryParams]="{page: 1}" class="page-link"><i
                   class="fas fa-angle-double-left"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
-              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.currentPage - 1 }"
+              <a [routerLink]="['/pages/remainders/list']" [queryParams]="{ page: pager.currentPage - 1 }"
                 class="page-link"><i class="fas fa-angle-left"></i></a>
             </li>
             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
               class="page-item number-item">
-              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+              <a [routerLink]="['/pages/remainders/list']" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
-              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.currentPage + 1 }"
+              <a [routerLink]="['/pages/remainders/list']" [queryParams]="{ page: pager.currentPage + 1 }"
                 class="page-link"><i class="fas fa-angle-right"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.totalPages }" class="page-link"><i
+              <a [routerLink]="['/pages/remainders/list']" [queryParams]="{ page: pager.totalPages }" class="page-link"><i
                   class="fas fa-angle-double-right"></i></a>
             </li>
           </ul>
