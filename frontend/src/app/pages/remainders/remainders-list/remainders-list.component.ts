@@ -3,7 +3,7 @@ import { NbDialogService } from '@nebular/theme';
 import { NbDialogRef } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { RemainderService } from '../remainder.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class RemaindersListComponent implements OnInit {
   public filterQueryString = "";
   public pageOfItems = [];
   // constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersListComponent>) { }
-     constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute,private remainderService: RemainderService) { }
+     constructor(private router: Router,private dialogService: NbDialogService, private activeRoute: ActivatedRoute,private remainderService: RemainderService) { }
 
 
   ngOnInit() {
@@ -59,7 +59,12 @@ export class RemaindersListComponent implements OnInit {
       this.remainderData = d["data"];
       this.totalItems, this.pageOfItems = d["data"]; 
       this.pager = d["page"];
-      console.log(this.pager);
+
+      if(this.pager["totalPages"] < p){
+        this.router.navigateByUrl('/pages/remainders/list?page='+(p-1));
+
+      }
+      // console.log(this.pager);
     },(error) => {
 
     } );

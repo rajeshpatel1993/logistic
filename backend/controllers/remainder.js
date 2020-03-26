@@ -80,7 +80,7 @@ router.get("/",async(req,res) => {
         try {
            
     
-            const nooitems = await Remainder.countDocuments({"isDeleted": 0});
+            const nooitems = await Remainder.countDocuments({"isDeleted": +0});
 
             const pager = paginate(nooitems, page,resPerPage);
     
