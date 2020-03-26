@@ -1,3 +1,251 @@
-<p>
-  list works!
-</p>
+<div class="Fuel">
+  <nb-card>
+    <nb-card-body>
+      <div class="row no-gutters">
+        <div class="col-sm-6">
+          <h6>Fuel History</h6>
+        </div>
+        <div class="col-sm-6 text-right">
+          <a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/fuel/add-fuel-entry">Add Fuel Entry</a>
+        </div>
+      </div>
+      <form class="formbg-light">
+        <div class="form-row">
+          <div class="col-xs-12 col-sm-6 my-1">
+            <div class="daterange">
+              <input type="text" ngxDaterangepickerMd [(ngModel)]="dateforvehiclelist" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [isInvalidDate]="isInvalidDate"
+                [showClearButton]="true" [ngModelOptions]="{standalone: true}" (ngModelChange)="dateRangeChange($event)"
+                placeholder="Select date range..." />
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
+                (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
+                (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
+                (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
+                placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
+                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
+                [notFoundTemplate]="notFoundTemplate2">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate2 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate2 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="fuelType" [searchKeyword]="keyword"
+                placeHolder="Enter Fuel Type" (selected)='selectEvent($event, "fueltyp")'
+                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                historyIdentifier="fuelType" [itemTemplate]="itemTemplate3"
+                [notFoundTemplate]="notFoundTemplate3">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate3 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate3 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+         <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="driveName" [searchKeyword]="keyword"
+                placeHolder="Enter Driver Name" (selected)='selectEvent($event, "drivernm")'
+                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                historyIdentifier="driveName" [itemTemplate]="itemTemplate4"
+                [notFoundTemplate]="notFoundTemplate4">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate4 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate4 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary"><i
+                class="fas fa-search"></i> Search</button>
+          </div>
+        </div>
+      </form>
+      <nb-layout-column class="p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mt-4">
+            <thead>
+              <tr>
+
+                <th scope="col">Vehicle</th>
+                <th scope="col">Status</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date & Time</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Mode of Payment</th>
+                <th scope="col">Card/coupon details</th>
+                <th scope="col">Driver</th>
+                <th scope="col">Work Location</th>
+                <th scope="col">Usage</th>
+                <th scope="col">Price/Unit</th>
+                <th scope="col">Volume </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <ng-template #dialog let-data let-ref="dialogRef">
+                    <nb-card class="popupImage">
+                      <nb-card-body>
+                        <img src="assets/images/camera1.jpg" alt=" ">
+                        <button nbButton class="popupClose" (click)="ref.close()"><i class="fas fa-times-circle"></i></button>
+                      </nb-card-body>
+      
+                    </nb-card>
+                  </ng-template>
+                  <table class="table border-0">
+                    <tr>
+                      <td class="border-0 p-0">
+                        <div class="FuelDetail">
+                          <div class="FuelDetail_image">
+                            <img nbButton (click)="open(dialog)" src="assets/images/camera1.jpg" width="80">
+                          </div>
+                          </div>
+                      </td>
+                      <td class="border-0 p-0">
+                        <div class="FuelDetail">
+                          <div class="FuelDetail_name">
+                            <h5>Baleno(3242) / 137492DL2018</h5>
+                            <div class="FuelStatus">
+                              <ul>
+                                <li class="text-success"><i
+                                    class="fas fa-check-circle"></i> Active</li>
+                                <!-- <li class="text-warning" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Service'"><img
+                                    src="assets/images/repair.png" alt=""> In-Service</li>
+                                <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Complaint'"><i
+                                    class="fas fa-file-signature"></i> Complaint</li>
+                                <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Accident'"><i
+                                    class="fas fa-car-crash"></i> Accident</li>
+                                <li class="text-danger" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Not-Working'"><i
+                                    class="fas fa-times-circle"></i> Not Working</li>
+                                <li class="text-success" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'In-Active'"><i
+                                    class="fas fa-check-circle"></i> In Active</li> -->
+                                    
+                              </ul>
+                              <ul><li>Pick up Truck</li></ul>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  
+                </td>
+                <td>Status Color</td>
+                <td>Vehicle Type</td>
+                <td>26-Mar-2020 11:58PM</td>
+                <td>4385</td>
+                <td>Merchant</td>
+                <td>Card detail</td>
+                <td>Unassigned</td>
+                <td>Onsite
+                  <div>
+                    <div class="workStatus">
+                      <span class="success">
+                      </span>
+                      <span class="pendingy">
+                      </span>
+                      <span class="pending">
+                      </span>
+                      <span class="danger">
+                      </span>
+                    </div>
+                  </div>
+                </td>
+                <td>Current/Previous Odometer</td>
+                <td>245</td>
+                <td>34213</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- <div class="card-footer pb-0 pt-3 pb-3">
+          <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{page: 1}" class="page-link"><i
+                  class="fas fa-angle-double-left"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.currentPage - 1 }"
+                class="page-link"><i class="fas fa-angle-left"></i></a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+              class="page-item number-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.currentPage + 1 }"
+                class="page-link"><i class="fas fa-angle-right"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+              <a [routerLink]="['/pages/vehicles/list']" [queryParams]="{ page: pager.totalPages }" class="page-link"><i
+                  class="fas fa-angle-double-right"></i></a>
+            </li>
+          </ul>
+        </div> -->
+
+      </nb-layout-column>
+      <div class="row">
+        <div class="col-12">
+          <h5 class="text-center text-danger p-4"> No records Found</h5>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<!-- <ngx-dailog-box></ngx-dailog-box> -->
