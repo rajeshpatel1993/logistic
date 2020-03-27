@@ -1,3 +1,262 @@
-<p>
-  add-fuel works!
-</p>
+<div class="VehicleAddTab">
+  <form [formGroup]="fuelEntryForm">
+    <div class="row no-gutters">
+      <nb-tabset class="col-12">
+
+        <nb-tab tabTitle="Identification" class="identification">
+          <div class="form-group row">
+            <label for="vehicletype" class="col-sm-3 col-form-label">Vehicle Type<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
+                  (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                </ng-autocomplete>
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+              <input type="hidden" id="vehicletypeformcontrol" class="form-control" formControlName="vehicleTypef">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="vehicledetails" class="col-sm-3 col-form-label">Vehicle Details<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="vehicleNameData" [itemTemplate]="itemTemplate1" formControlName="vehiclename"
+                  [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Name"
+                  readonly>
+                </ng-autocomplete>
+                <ng-template #itemTemplate1 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate1 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="vehicledetails" class="col-sm-3 col-form-label">Vehicle Details<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="vehicleDetailsData" [itemTemplate]="itemTemplate2" formControlName="vehicledetails"
+                  [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
+                  readonly>
+                </ng-autocomplete>
+                <ng-template #itemTemplate2 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate2 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="vehiclereg" class="col-sm-3 col-form-label">Vehicle Reg/Serial No<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" id="vehiclereg" class="form-control" placeholder="" value="233412DL2018" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="vehiclecode" class="col-sm-3 col-form-label">Vehicle Code<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" id="vehiclecode" class="form-control" placeholder="" value="233412423" readonly>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="vehicleimg" class="col-sm-3 col-form-label">Vehicle Image<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="vehicleImage">
+                <img id="vehicleimg" src="assets/images/camera1.jpg" alt="">
+              </div>
+            </div>
+          </div>
+          
+         
+
+        </nb-tab>
+
+        <nb-tab tabTitle="Fuel Entry Details ">
+          <div class="form-group row">
+            <label for="expiration" class="col-sm-3 col-form-label">Date with Time<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="row no-gutters">
+                <div class="col-12 col-md-6 col-lg-8">
+                  <input class="form-control" id="expiration" nbInput placeholder="Expiration" formControlName="expiration_date" [nbDatepicker]="expiration">
+                  <nb-datepicker #expiration></nb-datepicker>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                  <div class="ngx-timepicker-field-example">
+                    <input [ngxTimepicker]="picker" class="form-control" formControlName="expiration_time">
+                    <ngx-material-timepicker #picker></ngx-material-timepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="amounts" class="col-sm-3 col-form-label">Amount<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="number" id="amounts" class="form-control" placeholder="Enter Amount" formControlName="amount">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="odometers" class="col-sm-3 col-form-label">Odometer</label>
+            <div class="col-sm-9">
+              <input type="number" id="odometers" class="form-control" placeholder="Enter Odometer" formControlName="odometer">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="modeaym"p class="col-sm-3 col-form-label">Mode of Payment<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete id="modeaym" [data]="modeOfPaymentData" [itemTemplate]="itemTemplate4" formControlName="modeofpayment"
+                  [notFoundTemplate]="notFoundTemplate4" [searchKeyword]="keyword" placeHolder="Slect payment mode"
+                  readonly>
+                </ng-autocomplete>
+                <ng-template #itemTemplate4 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate4 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="card" class="col-sm-3 col-form-label">Card No<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="number" id="card" class="form-control" placeholder="Enter Card Bumber" formControlName="cardno" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="couponf" class="col-sm-3 col-form-label">Coupon From<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" id="couponf" class="form-control" placeholder="Enter Coupon Code" formControlName="couponfrom" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="coupont" class="col-sm-3 col-form-label">Coupon to<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" id="coupont" class="form-control" placeholder="Enter Coupon Code" formControlName="couponto" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="couponv"p class="col-sm-3 col-form-label">Coupon value<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete id="couponv" [data]="couponValueData" [itemTemplate]="itemTemplate5" formControlName="couponvalue"
+                  [notFoundTemplate]="notFoundTemplate5" [searchKeyword]="keyword" placeHolder="Enter Coupon Value"
+                  readonly>
+                </ng-autocomplete>
+                <ng-template #itemTemplate5 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate5 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="types" class="col-sm-3 col-form-label">Type<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <input type="text" id="types" class="form-control" placeholder="Enter Type" formControlName="type" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="price" class="col-sm-3 col-form-label">Price/Unit</label>
+            <div class="col-sm-9">
+              <input type="text" id="price" class="form-control" placeholder="Enter Price/unit" formControlName="priceunit" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="units" class="col-sm-3 col-form-label">Unit</label>
+            <div class="col-sm-9">
+              <input type="text" id="units" class="form-control" placeholder="" formControlName="unit" />
+            </div>
+          </div>
+        </nb-tab>
+
+        <nb-tab tabTitle="Additional Details">
+          <div class="form-group row">
+            <label for="vendern" class="col-sm-3 col-form-label">Vendor Name</label>
+            <div class="col-sm-9">
+              <input type="text" id="vendern" class="form-control" placeholder="Enter Vender Name" formControlName="vendername" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="drivern"p class="col-sm-3 col-form-label">Driver Name<span class="star">*</span></label>
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete id="drivern" [data]="driverData" [itemTemplate]="itemTemplate6" formControlName="drivername"
+                  [notFoundTemplate]="notFoundTemplate6" [searchKeyword]="keyword" placeHolder="Enter Driver Name"
+                  readonly>
+                </ng-autocomplete>
+                <ng-template #itemTemplate6 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+                <ng-template #notFoundTemplate6 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <input type="hidden" id="bill_file_unique_id" class="form-control" formControlName="bill_file_unique_id">
+
+            <label for="attachdoc" class="col-sm-3 col-form-label">Attachments</label>
+            <div class="col-sm-9">
+              <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
+              <button (click)="uploadBills()" class="btn btn-primary float-right">Upload</button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="attachimg" class="col-sm-3 col-form-label">Images</label>
+            <div class="col-sm-9">
+              <input type="hidden" id="image_file_unique_id" class="form-control"
+                formControlName="image_file_unique_id">
+
+              <div class="row no-gutters">
+                <div class="col-xs-12 col-sm-12 col-md-8">
+                  <ngx-img (onSelect)="onSelect($event)" (onReset)="onReset()" [config]="{ crop: [ { ratio: 1.5 } ] }">
+                  </ngx-img>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 mt-1">
+                  <!-- <div *ngIf="imgSrc.length" class="container mb-3">
+                    <h5>Preview</h5>
+                    <div class="row">
+                      <div *ngFor="let img of imgSrc" class="col">
+                        <img class="img-fluid" [src]="img">
+                      </div>
+                    </div>
+                  </div> -->
+                  <button class="btn btn-primary float-right" (click)="uploadImage()">Upload Image<span
+                      class="star">*</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="comments" class="col-sm-3 col-form-label">Comments</label>
+            <div class="col-sm-9">
+              <textarea id="comments" style="height: 100px;" class="form-control" placeholder="Enter Comments" formControlName="comment"></textarea>
+            </div>
+          </div>
+        </nb-tab>
+
+      </nb-tabset>
+    </div>
+
+    <div class="row no-gutters mt-3">
+      <div class="col-12 pr-4">
+        <button type="submit" (click)="addVehicle()" class="btn btn-primary float-right">Submit</button>
+      </div>
+    </div>
+
+  </form>
+</div>
