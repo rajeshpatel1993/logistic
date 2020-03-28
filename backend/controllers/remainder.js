@@ -124,4 +124,70 @@ router.get("/",async(req,res) => {
 });
 
 
+
+router.get("/getRemainder/:id", async (req, res) => {
+    const id = req.params.id; //or use req.param('id')
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    const vehicle = await Remainder.aggregate([{$match:filter}
+
+]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
+
+
+router.post("/updateRemainder", async (req, res)=> {
+    // let {asset} = req.body;
+    try{
+
+        let imgUrl = "";
+        let {category, remainder_name, subject,expiration_date,expiration_time,interval, email_lists, owner, template, notes, enable,alert_after_expiration, attach_file_unique_id, remainder_id} = req.body;
+        let remainderImage = await File.find({fileId:attach_file_unique_id }).select("s3Urls");
+        //  console.log(vehicleImage)
+        if(remainderImage.length > 0){
+          imgUrl = vehicleImage[0].s3Urls[0];
+        }
+
+
+
+        let updateData = {remainderType:category, remainderName: remainder_name, subject : subject , expirationDate: expiration_date, expirationTime : expiration_time , 
+            remainderInterval : interval, emailList : email_lists, ownerEmail : owner,template: template, notes : notes , enabledisable : enable, afterexpiration: alert_after_expiration,
+            fileId:attach_file_unique_id,
+            imageUrl:imgUrl
+        
+        };
+
+
+        const filter = { _id: mongoose.Types.ObjectId(remainder_id) };
+        const update = updateData;
+
+
+        let doc = await Remainder.findOneAndUpdate(filter, updateData, {
+            new: true,
+            upsert: true // Make this update into an upsert
+            });
+
+        
+        if(doc){
+            res.status(200).json({"msg":"saved successfully"});
+        }
+
+    }catch(err){
+        //  console.log(err);
+         res.status(400).send(err);
+
+    }
+    
+    
+});
+
+
+
+
 module.exports = router;

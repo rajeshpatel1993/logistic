@@ -4,6 +4,7 @@ import { RemaindersComponent } from './remainders.component'
 import { RemaindersListComponent } from './remainders-list/remainders-list.component';
 import { AadRemaindersComponent } from './aad-remainders/aad-remainders.component';
 import { RemaindersReportComponent } from './remainders-report/remainders-report.component';
+import { EditRemaindersComponent } from './edit-remainders/edit-remainders.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'add-remainders',
         component: AadRemaindersComponent
+      },
+      {
+        path: 'edit-remainders/:id',
+        component: EditRemaindersComponent
       },
       {
         path: 'report',
