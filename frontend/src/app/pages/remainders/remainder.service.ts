@@ -38,15 +38,18 @@ export class RemainderService {
     return this.http.post(this.baseUrl+"/remainder/deleteRemainder", data);
   }
 
+  loadRemainder(remainderId){
+    return this.http.get(this.baseUrl+"/remainder/getRemainder/"+remainderId);
+  }
 
 
-  // // addAssignVehicle(data){
-  // //   return this.http.post(this.baseUrl+"/vehicles/add-assign",data);
-  // // }
+  updateRemainder(data){
+    return this.http.post(this.baseUrl+"/remainder/updateRemainder",data);
+  }
 
-  // // loadVehicleStatus(){
-  // //   return this.http.get(this.baseUrl+"/vehicles/vehicleStatus");
-  // // }
+
+
+
   // // loadWorkLocation(){
   // //   return this.http.get(this.baseUrl+"/vehicles/workLocations");
   // // }

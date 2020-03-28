@@ -20,9 +20,10 @@ import { RemaindersReportComponent } from './remainders-report/remainders-report
 import { RemainderService } from './remainder.service';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { CustomCommonModule } from '../custom-common.module';
+import { EditRemaindersComponent } from './edit-remainders/edit-remainders.component';
 
 @NgModule({
-  declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent, RemaindersReportComponent],
+  declarations: [RemaindersListComponent,RemaindersComponent, AadRemaindersComponent, RemaindersReportComponent, EditRemaindersComponent],
   imports: [
     CommonModule,
     RemaindersRoutingModule,

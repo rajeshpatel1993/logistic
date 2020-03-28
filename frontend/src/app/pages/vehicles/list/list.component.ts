@@ -167,7 +167,6 @@ export class ListComponent {
   editVehicle(vehicleId){
     
     this.router.navigateByUrl('/pages/vehicles/edit-vehicle/'+vehicleId);
-    console.log(vehicleId);
   }
 
   public loadVehiclesTypes(){

@@ -83,4 +83,11 @@ export class RemaindersListComponent implements OnInit {
     );
   }
 
+  editRemainder(remainderId){
+
+    this.router.navigateByUrl('/pages/remainders/edit-remainders/'+remainderId);
+
+
+  }
+
 }
