@@ -15,6 +15,16 @@ const remainderSchema = new mongoose.Schema ({
     afterexpiration: {type: String},
     fileId: {type: String},
     imageUrl: {type: String},
+    remindert:{
+        type: Number,
+        enum : [1,2],
+        default: '1'
+    },
+    vehicleTypef:{
+        type: String
+    },
+    vehicle: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
+
 
     isDeleted: {
         type: Number,

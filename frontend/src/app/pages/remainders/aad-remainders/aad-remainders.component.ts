@@ -6,6 +6,8 @@ import { RemainderService } from '../remainder.service';
 import { Subscription } from 'rxjs';
 import { NbDialogRef } from '@nebular/theme';
 import { Router } from '@angular/router';
+import { VehicleService } from '../../vehicles/vehicles.service';
+import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 
 @Component({
   selector: 'ngx-aad-remainders',
@@ -18,12 +20,20 @@ export class AadRemaindersComponent implements OnInit {
   keyword = 'name';
   public remainderTypeData: any = [];
   form: FormGroup;
+  public vehicleNamesData:any[] = [];
+  public showFormFields:number = 0;
   public typeSubscription: Subscription;
+  public vehicleDetailsData = [];
   public reminderForm: FormGroup;
   public attachFileUniqueId = uuid.v4();
   public vehicleStatusList: any = [];
   public dialogBox : boolean = false;
   public msgObj ={};
+  public reminderTypeVal;
+  public showExtraField : Number = 1;
+  public vehicleTypesData = [];
+
+  public remainderTypeDropDown = [{"name":"single","val":2},{"name":"common", "val":1}];
 
   public editorConfig: AngularEditorConfig = {
     editable: true,
@@ -73,26 +83,80 @@ export class AadRemaindersComponent implements OnInit {
   htmlContent = '';
 
 
-  constructor(private fb: FormBuilder, private remainderService: RemainderService, private router: Router) { }
+  constructor(private fb: FormBuilder, private remainderService: RemainderService, private router: Router, public vehicleService: VehicleService, private vehicleservService: VehicleservService,) { }
 
 
   // constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
 
 
-  ngOnInit() {
+  onChangeEvent(evt){
 
+    this.showFormFields = 1;
+    this.reminderTypeVal = evt.target.value;
+
+    
     this.createForm();
-    this.loadTypes();
+
+  
+   
+    if(this.reminderTypeVal == 2){
+      this.showExtraField = 1;
+    }else{
+      this.showExtraField = 0;
+    }
 
   }
-  selectEventD(item) { }
+
+  ngOnInit() {
+
+    this.loadTypes();
+
+    this.loadVehiclesTypes();
+
+  }
+  selectEventD(item) {
+    this.vehicleDetailsData = [];
+    this.selectVehicleType(item);
+
+
+
+    // console.log(this.vehicleCode);
+  }
+
+
+  selectVehicleType(item){
+    let vehicleTypeId = item.id;
+    this.vehicleservService.loadVehiclesByTypeId(vehicleTypeId).subscribe((vehicleData)=>{
+      let vehcilesData = vehicleData["data"];
+      vehcilesData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.name;
+        this.vehicleNamesData.push(tmpObj);
+      });
+    },
+    (error) => {
+      console.log(error);
+    }
+    );
+    
+  }
+ 
+
+  
+
+
   onChange(event) {
     console.log('changed');
   }
 
 
+
+
+
   createForm() {
     let group = {
+      reminderType:[this.reminderTypeVal],
       category: ['', Validators.required],
       remainder_name: ['', Validators.required],
       subject: ['', Validators.required],
@@ -105,8 +169,13 @@ export class AadRemaindersComponent implements OnInit {
       notes: ['', Validators.required],
       enable: ['', Validators.required],
       alert_after_expiration: [''],
-      attach_file_unique_id: [this.attachFileUniqueId]
+      attach_file_unique_id: [this.attachFileUniqueId],
+      vehicleTypef : [''],
+      vehicle: ['']
+
     };
+
+ 
     this.reminderForm = this.fb.group(group);
   }
 
@@ -164,4 +233,22 @@ export class AadRemaindersComponent implements OnInit {
       console.log(err);
     });
   }
+
+
+
+  public loadVehiclesTypes(){
+    this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
+      let vehicleTypeData = vehicleType.data;
+      vehicleTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.vehicleTypeId;
+        tmpObj["name"] = item.vehicleType;
+         tmpObj["code"] = item.vehicleTypeCode;
+        this.vehicleTypesData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
 }
