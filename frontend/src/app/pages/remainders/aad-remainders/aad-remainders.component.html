@@ -7,6 +7,7 @@
     
 
       <select class="form-control" (change)="onChangeEvent($event)"  id="remindertype">
+        <option value="3">Please select Remainder Type</option>
         <option *ngFor="let rm of remainderTypeDropDown" [value]="rm.val">{{rm.name}}</option>
       </select>
     
@@ -46,7 +47,7 @@
         class="star">*</span></label>
       <div class="col-sm-9">
         <div class="ng-autocomplete">
-          <ng-autocomplete [data]="vehicleNamesData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
+          <ng-autocomplete [data]="vehicleNamesData" [searchKeyword]="keyword"
           placeHolder="Enter the Vehicle Name" formControlName="vehicle"
             [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
           </ng-autocomplete>

@@ -29,10 +29,11 @@ export class AadRemaindersComponent implements OnInit {
   public vehicleStatusList: any = [];
   public dialogBox : boolean = false;
   public msgObj ={};
-  public showExtraField : Number = 0;
+  public reminderTypeVal;
+  public showExtraField : Number = 1;
   public vehicleTypesData = [];
 
-  public remainderTypeDropDown = [{"name":"single","val":1},{"name":"common", "val":2}];
+  public remainderTypeDropDown = [{"name":"single","val":2},{"name":"common", "val":1}];
 
   public editorConfig: AngularEditorConfig = {
     editable: true,
@@ -91,10 +92,14 @@ export class AadRemaindersComponent implements OnInit {
   onChangeEvent(evt){
 
     this.showFormFields = 1;
+    this.reminderTypeVal = evt.target.value;
+
+    
     this.createForm();
 
-    let reminderTypeVal = evt.target.value;
-    if(reminderTypeVal == 2){
+  
+   
+    if(this.reminderTypeVal == 2){
       this.showExtraField = 1;
     }else{
       this.showExtraField = 0;
@@ -151,7 +156,7 @@ export class AadRemaindersComponent implements OnInit {
 
   createForm() {
     let group = {
-      reminderType:['', Validators.required],
+      reminderType:[this.reminderTypeVal],
       category: ['', Validators.required],
       remainder_name: ['', Validators.required],
       subject: ['', Validators.required],
