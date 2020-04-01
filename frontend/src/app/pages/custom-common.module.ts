@@ -19,7 +19,6 @@ import {AssignedVehicleComponent} from './vehicles/assigned-vehicle/assigned-veh
     DailogBoxComponent,
     VehicleDetailSComponent,
     AssignedVehicleComponent
-
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

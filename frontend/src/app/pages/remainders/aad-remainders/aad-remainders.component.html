@@ -4,23 +4,18 @@
   <div class="form-group row">
     <label for="remindertype" class="col-sm-3 col-form-label">Reminder Type<span class="star">*</span></label>
     <div class="col-sm-9">
-    
-
       <select class="form-control" (change)="onChangeEvent($event)"  id="remindertype">
         <option value="3">Please select Remainder Type</option>
         <option *ngFor="let rm of remainderTypeDropDown" [value]="rm.val">{{rm.name}}</option>
       </select>
-    
-
-
     </div>
   </div>
   <div *ngIf="showFormFields == 1">
   <form  [formGroup]="reminderForm" novalidate>
   
   <div class="showvehicleField" *ngIf="showExtraField == 1">
-    <div class="form-group row m-0 mb-3 vehbgcolor">
-      <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
+    <div class="form-group row">
+      <label for="vehicletype" class="col-sm-3 col-form-label">Vehicle type<span class="star">*</span></label>
       <div class="col-sm-9">
         <div class="ng-autocomplete">
           <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"

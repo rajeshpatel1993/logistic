@@ -53,6 +53,12 @@ const routes: Routes = [{
     },
 
     {
+      path:'notes',
+      loadChildren: () => import('./notes/notes.module')
+        .then(m => m.NotesModule),
+    },
+
+    {
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')
         .then(m => m.LayoutModule),
