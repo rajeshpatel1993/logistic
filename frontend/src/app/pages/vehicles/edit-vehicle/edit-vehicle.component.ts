@@ -349,7 +349,7 @@ uploadImage(){
 
       let veh_type_id = this.vehicleData["vehicle_typeId"];
 
-      // console.log(this.selectedVehicleT);
+      console.log(this.vehicleData);
       if(veh_type_id == 1 || veh_type_id ==2){
         this.showExtraField = true;
       }else{
