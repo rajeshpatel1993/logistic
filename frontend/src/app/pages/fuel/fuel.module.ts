@@ -12,6 +12,8 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { NgxImgModule } from 'ngx-img';
+import { FuelService } from './fuel.service';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   imports: [
@@ -21,6 +23,7 @@ import { NgxImgModule } from 'ngx-img';
     AutocompleteLibModule,
     NgxDaterangepickerMd.forRoot(),
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     NbLayoutModule,
     NbTabsetModule,
@@ -29,5 +32,6 @@ import { NgxImgModule } from 'ngx-img';
     NgxImgModule.forRoot(),
   ],
   declarations: [ListComponent, FuelComponent, AddFuelComponent],
+  providers: [FuelService]
 })
 export class FuelModule { }

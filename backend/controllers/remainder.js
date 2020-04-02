@@ -61,7 +61,7 @@ router.post("/add", async (req, res)=> {
     
         const remainder_instance = new Remainder(savedata);
         let sData = await remainder_instance.save();
-        console.log(sData);
+        // console.log(sData);
         res.status(200).send(sData);
         // res.status(200).json(req.body);
     }catch(err){
