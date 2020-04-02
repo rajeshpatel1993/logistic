@@ -110,6 +110,11 @@ export class AddFuelComponent implements OnInit {
     this.selectVehicleType(item);
 
   }
+
+
+  selectEmployee(item){
+    
+  }
   
   selectEventVeh(item){
       this.selectEventVehicle(item);

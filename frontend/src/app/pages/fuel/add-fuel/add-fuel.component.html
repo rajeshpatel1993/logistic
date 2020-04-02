@@ -169,7 +169,7 @@
             <label for="drivern"p class="col-sm-3 col-form-label">Driver Name<span class="star">*</span></label>
             <div class="col-sm-9">
               <div class="ng-autocomplete">
-                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEmployee($event)'
                 placeHolder="Enter the Driver" formControlName="drivername"
                   [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
                 </ng-autocomplete>
