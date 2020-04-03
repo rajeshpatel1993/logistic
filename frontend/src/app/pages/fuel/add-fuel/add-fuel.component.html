@@ -5,11 +5,11 @@
 
         <nb-tab tabTitle="Identification" class="identification">
           <div class="form-group row">
-            <label for="vehicletype" class="col-sm-3 col-form-label">Vehicle Type<span class="star">*</span></label>
+            <label for="vehicleTypef" class="col-sm-3 col-form-label">Vehicle Type<span class="star">*</span></label>
             <div class="col-sm-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-                  (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                  (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" formControlName="vehicleTypef">
                 </ng-autocomplete>
                 <ng-template #itemTemplate let-item>
                   <a [innerHTML]="item.name"></a>
@@ -18,7 +18,7 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
               </div>
-              <input type="hidden" id="vehicletypeformcontrol" class="form-control" formControlName="vehicleTypef">
+              <!-- <input type="hidden" id="vehicletypeformcontrol" class="form-control" formControlName="vehicleTypef"> -->
             </div>
           </div>
           <div class="form-group row">
@@ -117,7 +117,7 @@
               <input type="text" id="coupont" class="form-control" placeholder="Enter Coupon Code" formControlName="couponto" [readonly]="!showCouponOption"/>
             </div>
           </div>
-          <div class="form-group row">
+          <div class="form-group row" *ngIf="showCouponOption">
             <label for="couponv"p class="col-sm-3 col-form-label">Coupon value<span class="star">*</span></label>
             <div class="col-sm-9">
               <input type="number" id="coponv" class="form-control" placeholder="Enter Coupon Value" formControlName="couponvalue">
@@ -235,7 +235,7 @@
 
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
-        <button type="submit" (click)="addVehicle()" class="btn btn-primary float-right">Submit</button>
+        <button type="submit" (click)="addFuel()" class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
 

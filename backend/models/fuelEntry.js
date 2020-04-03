@@ -13,11 +13,18 @@ const fuelSchema = new mongoose.Schema ({
     couponvalue: {type: String},
     type: {type: String, required:true},
     priceunit: {type: String, required: true},
+    image_file_unique_id: {type: String},
+    bill_file_unique_id: {type: String},
+    imageUrl: {type: String},
+    billUrl: {type: []},
     unit:{
-        type: string
+        type: String
        
     },
     vendorname:{
+        type: String
+    },
+    comment:{
         type: String
     },
     driver: {type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
@@ -36,5 +43,5 @@ const fuelSchema = new mongoose.Schema ({
 });
 
 
-const Remainder = mongoose.model("Remainder", remainderSchema, 'remainders');
-exports.Remainder = Remainder;
+const FuelEntry = mongoose.model("FuelEntry", fuelSchema, 'fuelEntry');
+exports.FuelEntry = FuelEntry;

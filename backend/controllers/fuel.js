@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const {File} = require("../models/files");
 const {fuelEntryMode} = require("../models/fuelEntryMode");
+const {FuelEntry} =  require("../models/fuelEntry");
 const {Remainder} = require("../models/remainder");
 
 const paginate = require('jw-paginate');
@@ -38,39 +39,60 @@ router.get("/paymentmodes", async(req,res)=>{
 // });
 
 
-// router.post("/add", async (req, res)=> {
-//     try{
+router.post("/add", async (req, res)=> {
+    // let {asset} = req.body;
+    try{
+        // console.log(req.body);
+    
+        let imgUrl = "";
+        let billUrls = "";
+        let {vehicleTypef, vehiclename,expiration_time, expiration_date, amount, odometer, modeofpayment,
+            cardno, couponfrom, couponto, couponvalue, type, priceunit, unit, vendorname,drivername,
+            comment,bill_file_unique_id, image_file_unique_id} = req.body;
+           
+    
+            let fuelEntryImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+            //  console.log(vehicleImage)
+             if(fuelEntryImage.length > 0){
+                imgUrl = fuelEntryImage[0].s3Urls[0];
+             }
 
-//         let imgUrl = "";
-//         let {category, remainder_name, subject,expiration_date,expiration_time,interval, email_lists, owner, template, notes, enable,alert_after_expiration, attach_file_unique_id, reminderType, vehicleTypef, vehicle} = req.body;
-//         let remainderImage = await File.find({fileId:attach_file_unique_id }).select("s3Urls");
-//          console.log(reminderType);
-//         if(remainderImage.length > 0){
-//           imgUrl = vehicleImage[0].s3Urls[0];
-//         }
-
-//         let savedata = {remainderType:category, remainderName: remainder_name, subject : subject , expirationDate: expiration_date, expirationTime : expiration_time , 
-//             remainderInterval : interval, emailList : email_lists, ownerEmail : owner,
-//             template: template, notes : notes , enabledisable : enable, afterexpiration: alert_after_expiration,
-//             fileId:attach_file_unique_id, remindert: reminderType, vehicleTypef:vehicleTypef.id, vehicle:vehicle.id,
-//             imageUrl:imgUrl
+            let fuelBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
         
-//         };
+            if(fuelBills.length > 0){
+                billUrls = fuelBills[0].s3Urls;
+            }
+    
+        let savedata = {vehicle:vehiclename.id , 
+            expiration_date : expiration_date, expiration_time : expiration_time, amount : amount,
+            odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
+            couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
+            type: type,priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivername.id,
+            comment: comment,image_file_unique_id, bill_file_unique_id, imageUrl: imgUrl,billUrl:billUrls
+        
+        };
+    
+        try{
+            const fuel_instance = new FuelEntry(savedata);
+            let sData = await fuel_instance.save();
+            res.status(200).send(sData);
+            
+        }catch(err){
+            console.log(err);
+        }
+     
+     
+        // res.status(200).json(req.body);
+    }catch(err){
+        res.status(400).send(err);
+        // console.log(err);
+    }
+    
+    
+    });
 
-//         // console.log(savedata);
-    
-//         const remainder_instance = new Remainder(savedata);
-//         let sData = await remainder_instance.save();
-//         console.log(sData);
-//         res.status(200).send(sData);
-//         // res.status(200).json(req.body);
-//     }catch(err){
-//         // res.status(400).send(err);
-//          console.log(err);
-//     }
     
     
-//     });
 
 // router.get("/",async(req,res) => {
 //         const resPerPage = 2; // results per page

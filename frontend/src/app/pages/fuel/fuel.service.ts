@@ -14,4 +14,8 @@ export class FuelService {
     return this.http.get(this.baseUrl+"/fuel/paymentmodes");
   }
 
+  addFuel(data){
+    return this.http.post(this.baseUrl+"/fuel/add",data);
+  }
+
 }
