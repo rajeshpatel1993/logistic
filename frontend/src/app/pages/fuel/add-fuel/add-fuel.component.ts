@@ -6,6 +6,7 @@ import * as uuid from 'uuid';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 import { FuelService } from '../fuel.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-add-fuel',
@@ -13,7 +14,7 @@ import { FuelService } from '../fuel.service';
   styleUrls: ['./add-fuel.component.scss']
 })
 export class AddFuelComponent implements OnInit {
-
+  submitted = false;
   public fuelEntryForm: FormGroup;
   public keyword = 'name';
   public vehicleNamesData:any[] = [];
@@ -52,7 +53,7 @@ export class AddFuelComponent implements OnInit {
   public msgObj ={};
   public dialogBox : boolean = false;
 
-  constructor(private dialogService: NbDialogService,private fb: FormBuilder, private vehicleService : VehicleService, public vehicleservService : VehicleservService, private fuelService: FuelService) { }
+  constructor(private router: Router, private dialogService: NbDialogService,private fb: FormBuilder, private vehicleService : VehicleService, public vehicleservService : VehicleservService, private fuelService: FuelService) { }
 
   ngOnInit() {
     this.createForm();
@@ -67,9 +68,9 @@ export class AddFuelComponent implements OnInit {
   createForm() {
     this.fuelEntryForm = this.fb.group({
       vehicleTypef: [],
-      vehicleCode: ['', Validators.required],
-      vehicledetails: ['',Validators.required],
-      vehicle: ['', Validators.required],
+      vehicleCode: [''],
+      vehicledetails: [''],
+      // vehicle: ['', Validators.required],
       vehiclename: ['',Validators.required],
       expiration_time: ['',Validators.required],
       expiration_date: ['',Validators.required],
@@ -104,7 +105,41 @@ export class AddFuelComponent implements OnInit {
     this.startDateVehicle = event.startDate?event.startDate.toISOString():null;
     this.endDateVehicle = event.endDate?event.endDate.toISOString():null;
   }
-  addVehicle(){}
+  addFuel(){
+    console.log(this.fuelEntryForm.value);
+
+    this.submitted = true;
+    if (this.fuelEntryForm.invalid) {
+      alert("Please fill all required field");
+      return;
+    }
+
+    
+    this.fuelService.addFuel(this.fuelEntryForm.value).subscribe((data)=>{
+      // console.log(data);
+      // alert("Saved successfully");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully Added";
+      this.dialogBox = true;
+
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/fuel/list');
+    }, 2000);
+
+
+
+    },(error)=>{
+      // console.log(error.error.errmsg);
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] =error.error.errmsg;
+      this.dialogBox = true;
+
+    });
+
+
+
+  }
 
   selectEventD(item){
     this.selectVehicleType(item);
@@ -113,7 +148,7 @@ export class AddFuelComponent implements OnInit {
 
 
   selectEmployee(item){
-    
+
   }
   
   selectEventVeh(item){
