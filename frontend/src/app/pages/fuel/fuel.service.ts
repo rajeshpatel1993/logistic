@@ -18,4 +18,8 @@ export class FuelService {
     return this.http.post(this.baseUrl+"/fuel/add",data);
   }
 
+  loadFuelEntries(page){
+    return this.http.get(this.baseUrl+"/fuel?page="+page);
+  }
+
 }

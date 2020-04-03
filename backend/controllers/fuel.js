@@ -94,6 +94,101 @@ router.post("/add", async (req, res)=> {
     
     
 
+
+    router.get("/",async(req,res) => {
+        const resPerPage = 2; // results per page
+        const page = parseInt(req.query.page) || 1; // Page 
+        const skipd = (resPerPage * page) - resPerPage;
+    
+    
+        try {
+           
+    
+            const nooitems = await FuelEntry.countDocuments({"isDeleted": +0});
+
+            const pager = paginate(nooitems, page,resPerPage);
+    
+           let fuelEntryData = await FuelEntry.aggregate([{
+    
+            $match: {
+                "isDeleted":0
+            }
+           }
+            ,
+           {
+            $lookup: {
+                from: "vehicle", // collection to join
+                let: { "vehicleId": "$vehicle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1, "_id": 0 }}
+                ],
+                as: "vehicleData"// output array field
+            }
+        }
+            , {
+                $lookup: {
+                    from: "fuelEntryMode", // collection to join
+                    let: { "fuelEntryId": "$modeofpayment" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$fuelEntryId"] }}},
+                        { "$project": { "fuelEntryMode":1, "_id": 0 }}
+                    ],
+                    as: "paymentModeData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "employeesId": "$driver" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$employeesId"] }}},
+                        { "$project": { "firstName":1,"empImage":1, "_id": 0 }}
+                    ],
+                    as: "employeeData"// output array field
+                }
+            },
+            
+            {
+                $skip: skipd
+            },
+            {
+                $limit:resPerPage
+            }
+           
+        
+        ]);
+    
+            let responseData = {};
+            responseData["status"] = 200;
+            responseData["page"] = pager;
+            responseData["data"] = fuelEntryData;
+            res.status(200).json(responseData);
+        } catch (error) {
+            console.log(error);
+        }
+});
+
+
+
+router.get("/getRemainder/:id", async (req, res) => {
+    const id = req.params.id; //or use req.param('id')
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    const vehicle = await Remainder.aggregate([{$match:filter}
+
+]);
+    
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = vehicle;
+    res.status(200).json(responseData);
+    
+
+
+});
+
+
 // router.get("/",async(req,res) => {
 //         const resPerPage = 2; // results per page
 //         const page = parseInt(req.query.page) || 1; // Page 

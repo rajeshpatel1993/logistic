@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import * as moment from 'moment';
+import { FuelService } from '../fuel.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ngx-list',
@@ -16,6 +18,14 @@ export class ListComponent implements OnInit {
   public fuelType = [{id:1,name:'Petrol'}, {id:2,name:'Diesel'}];
   public driveName = [{id:1,name:'Driver 1'}, {id:2,name:'Driver 2'}];
   public dateforvehiclelist: any;
+  public fuelEntryDataList;
+  public norecord : boolean = false;
+  public totalItems: any;
+  public pager = {};
+  public pageOfItems = [];
+  public filterQueryString = "";
+
+
   public alwaysShowCalendars: boolean;
   public ranges: any = {
     'Today': [moment(), moment()],
@@ -28,10 +38,22 @@ export class ListComponent implements OnInit {
   public invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
   public startDateVehicle ;
   public endDateVehicle ;
-  constructor(private dialogService: NbDialogService) { }
+  constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute, private fuelService : FuelService) { }
 
   ngOnInit() {
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      if(lentgthoffilterQueryString.length > 0){
+        this.filterData();
+      }else{
+        this.loadFuelEntry(queryParams.page);
+
+      }
+      // console.log(lentgthoffilterQueryString.length);
+    });
   }
+
+ 
 
   selectEvent(item, typeofautoselect){}
   onChangeSearch(search:string){}
@@ -47,4 +69,27 @@ export class ListComponent implements OnInit {
   open(dialog:any) {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
+
+
+  public loadFuelEntry(page?){
+    let p = page || 1;
+    this.fuelService.loadFuelEntries(p).subscribe((vehicleData:any)=>{
+     this.fuelEntryDataList = vehicleData.data;
+     this.totalItems, this.pageOfItems = vehicleData.data; 
+     this.pager = vehicleData.page;
+    //  this.pageOfItems = vehicleData.data;
+      console.log(this.fuelEntryDataList);
+    },(error)=>{
+
+    });
+  }
+
+  public deleteFuel(id){
+
+  }
+
+  public editFuel(id){
+    
+  }
+
 }
