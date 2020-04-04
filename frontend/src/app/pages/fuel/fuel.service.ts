@@ -22,8 +22,18 @@ export class FuelService {
     return this.http.get(this.baseUrl+"/fuel?page="+page);
   }
 
+  loadFuelEntry(fuelEntryId){
+    return this.http.get(this.baseUrl+"/fuel/getFuel/"+fuelEntryId);
+  }
+
+
   deleteFuelEntry(data) {
     return this.http.post(this.baseUrl+"/fuel/deleteFuelEntry", data);
   }
+
+  updateFuelEntry(data){
+    return this.http.post(this.baseUrl+"/fuel/updateFuelEntry",data);
+  }
+
 
 }

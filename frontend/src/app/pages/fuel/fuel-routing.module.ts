@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FuelComponent } from './fuel.component';
 import { ListComponent } from './list/list.component';
 import { AddFuelComponent } from './add-fuel/add-fuel.component';
+import { EditFuelComponent } from './edit-fuel/edit-fuel.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,6 +17,11 @@ const routes: Routes = [{
         path: 'add-fuel-entry',
         component: AddFuelComponent
       },
+      {
+        path: 'edit-fuel/:id',
+        component: EditFuelComponent
+      }
+
     ]
   },
 ];
