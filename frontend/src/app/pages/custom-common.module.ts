@@ -11,7 +11,7 @@ import {AssignedVehicleComponent} from './vehicles/assigned-vehicle/assigned-veh
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   exports: [DailogBoxComponent, VehicleDetailSComponent, AssignedVehicleComponent],
   declarations: [
