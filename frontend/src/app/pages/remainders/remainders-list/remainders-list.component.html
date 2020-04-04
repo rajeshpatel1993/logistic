@@ -27,7 +27,7 @@
           </div>
         </div>
       </form> -->
-      <nb-layout-column class="p-0">
+      <nb-layout-column class="p-0" *ngIf="!showNoRecord">
         <div class="table-responsive">
           <table class="table table-hover mt-4">
             <thead>
@@ -114,6 +114,13 @@
 
 
       </nb-layout-column>
+
+      <div class="row" *ngIf="showNoRecord">
+        <div class="col-12">
+          <h5 class="text-center text-danger p-4"> No records Found</h5>
+        </div>
+      </div>
+
     </nb-card-body>
   </nb-card>
 </div>

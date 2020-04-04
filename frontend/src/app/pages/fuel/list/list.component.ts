@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import * as moment from 'moment';
 import { FuelService } from '../fuel.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-list',
@@ -22,9 +22,10 @@ export class ListComponent implements OnInit {
   public norecord : boolean = false;
   public totalItems: any;
   public pager = {};
+  public showNoRecord : boolean = false;
   public pageOfItems = [];
   public filterQueryString = "";
-
+  
 
   public alwaysShowCalendars: boolean;
   public ranges: any = {
@@ -38,7 +39,7 @@ export class ListComponent implements OnInit {
   public invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'), moment().add(5, 'days')];
   public startDateVehicle ;
   public endDateVehicle ;
-  constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute, private fuelService : FuelService) { }
+  constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute, private fuelService : FuelService, private router: Router) { }
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(queryParams => {
@@ -75,17 +76,37 @@ export class ListComponent implements OnInit {
     let p = page || 1;
     this.fuelService.loadFuelEntries(p).subscribe((vehicleData:any)=>{
      this.fuelEntryDataList = vehicleData.data;
-     this.totalItems, this.pageOfItems = vehicleData.data; 
-     this.pager = vehicleData.page;
-    //  this.pageOfItems = vehicleData.data;
-      console.log(this.fuelEntryDataList);
+     if(this.fuelEntryDataList.length > 0){
+      this.totalItems, this.pageOfItems = vehicleData.data; 
+      this.pager = vehicleData.page;
+      this.showNoRecord = false;
+
+      if(this.pager["totalPages"] < p){
+        this.router.navigateByUrl('/pages/remainders/list?page='+(p-1));
+
+      }
+
+
+     }else{
+       this.showNoRecord = true;
+     }
+     
     },(error)=>{
 
     });
   }
 
-  public deleteFuel(id){
+  deleteFuel(id){
+    this.fuelService.deleteFuelEntry({id:id}).subscribe((d) =>{
+      this.activeRoute.queryParams.subscribe(queryParams => {
+        this.loadFuelEntry(queryParams.page);
+      });
 
+     
+    },(error) => {
+      console.log(error);
+    }
+    );
   }
 
   public editFuel(id){
