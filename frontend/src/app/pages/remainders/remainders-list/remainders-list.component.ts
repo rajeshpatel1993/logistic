@@ -18,6 +18,8 @@ export class RemaindersListComponent implements OnInit {
   public pager = {};
   public filterQueryString = "";
   public pageOfItems = [];
+  public showNoRecord : boolean = false;
+
   // constructor(private dialogService: NbDialogService,protected ref: NbDialogRef<RemaindersListComponent>) { }
      constructor(private router: Router,private dialogService: NbDialogService, private activeRoute: ActivatedRoute,private remainderService: RemainderService) { }
 
@@ -57,13 +59,24 @@ export class RemaindersListComponent implements OnInit {
     let p = page || 1;
     this.remainderListSubscription = this.remainderService.loadRemainders(p).subscribe((d)=>{
       this.remainderData = d["data"];
-      this.totalItems, this.pageOfItems = d["data"]; 
-      this.pager = d["page"];
 
-      if(this.pager["totalPages"] < p){
-        this.router.navigateByUrl('/pages/remainders/list?page='+(p-1));
 
-      }
+      if(this.remainderData.length > 0){
+        this.totalItems, this.pageOfItems = d["data"]; 
+        this.pager = d["page"];
+  
+        if(this.pager["totalPages"] < p){
+          this.router.navigateByUrl('/pages/remainders/list?page='+(p-1));
+  
+        }
+  
+  
+       }else{
+         this.showNoRecord = true;
+       }
+
+
+
       // console.log(this.pager);
     },(error) => {
 

@@ -23,20 +23,20 @@ router.get("/paymentmodes", async(req,res)=>{
 });
 
 
-// router.post("/deleteRemainder", async (req, res) => {
-//     try{
+router.post("/deleteFuelEntry", async (req, res) => {
+    try{
 
-//         let {id} = req.body;
-//         const filter = { _id: mongoose.Types.ObjectId(id) };
-//         const update = { isDeleted: 1 };
-//         let updateVehicle = await Remainder.findOneAndUpdate(filter, update);
-//         res.status(200).json({"msg":"saved successfully"});
-//         // console.log(updateVehicle);
+        let {id} = req.body;
+        const filter = { _id: mongoose.Types.ObjectId(id) };
+        const update = { isDeleted: 1 };
+        let updateFuel = await FuelEntry.findOneAndUpdate(filter, update);
+        res.status(200).json({"msg":"saved successfully"});
+        // console.log(updateVehicle);
 
-//     }catch(error){
-//         console.log(error);
-//     }
-// });
+    }catch(error){
+        console.log(error);
+    }
+});
 
 
 router.post("/add", async (req, res)=> {
