@@ -85,7 +85,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: {
       icon: 'clipboard',
       pack: 'regular'},
-    link: '/pages/notes/add-notes',
+    link: '/pages/notes/list',
   },
   {
     title: 'Remainders',

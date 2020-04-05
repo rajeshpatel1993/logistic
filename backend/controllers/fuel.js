@@ -270,9 +270,9 @@ router.post("/updateFuelEntry", async (req, res)=> {
         
         };
 
-        if(drivername){
+        if(typeof drivername != "string"){
             updateData['driver'] = drivername.id;
-            
+
         }
 
 
