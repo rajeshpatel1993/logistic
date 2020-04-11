@@ -1,5 +1,5 @@
 <div class="VehicleAddTab">
-  <form [formGroup]="vehicleExpenseForm" novalidate>
+  <form [formGroup]="notesForm" novalidate>
 
     <div class="row no-gutters">
       <nb-tabset class="col-12">
@@ -11,7 +11,7 @@
             <div class="col-sm-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" (selected)='selectVehicleType($event)'
-                placeHolder="Enter the Vehicle Type" formControlName="vehicle_type"
+                placeHolder="Enter the Vehicle Type"
                   [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
                 </ng-autocomplete>
 
@@ -88,37 +88,19 @@
             <label class="col-sm-3 col-form-label">Note<span
               class="star">*</span></label>
             <div class="col-sm-9">
-              <input type="text"  class="form-control" placeholder="Note" formControlName="note" >
+              <textarea class="form-control" placeholder="Note" formControlName="note">
+
+              </textarea>
+           
             </div>
           </div>
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Attachments <span
-                class="star">*</span></label>
-                <div class="col-sm-9">
-                  <input type="hidden" id="attachments" class="form-control" formControlName="attachments">
-
-                  <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
-                  <button (click)="uploadBills()" class="btn btn-primary float-right">Upload</button>
-                </div>
-          </div>
-
-
-          <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Images <span
-                class="star">*</span></label>
-                <div class="col-sm-9">
-                  <input type="hidden" id="images" class="form-control" formControlName="images">
-
-                  <input type="file" id="attachImages" #attachimages multiple (change)="fileAdded($event)">
-                  <button (click)="uploadImages()" class="btn btn-primary float-right">Upload Image</button>
-                </div>
-          </div>
+    
         </nb-tab>
       </nb-tabset>
     </div>
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
-        <button type="submit" (click)="addExpense()" class="btn btn-primary float-right">Submit</button>
+        <button type="submit" (click)="addNotes()" class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
   </form>
