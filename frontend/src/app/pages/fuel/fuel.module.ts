@@ -14,6 +14,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { NgxImgModule } from 'ngx-img';
 import { FuelService } from './fuel.service';
 import { CommonModule } from '@angular/common';
+import { EditFuelComponent } from './edit-fuel/edit-fuel.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import { CommonModule } from '@angular/common';
     NbDatepickerModule,
     NgxImgModule.forRoot(),
   ],
-  declarations: [ListComponent, FuelComponent, AddFuelComponent],
+  declarations: [ListComponent, FuelComponent, AddFuelComponent, EditFuelComponent],
   providers: [FuelService]
 })
 export class FuelModule { }

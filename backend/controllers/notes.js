@@ -2,11 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const {File} = require("../models/files");
-const {fuelEntryMode} = require("../models/fuelEntryMode");
-const {FuelEntry} =  require("../models/fuelEntry");
-const {Remainder} = require("../models/remainder");
-
+const {Notes} =  require("../models/notes");
 const paginate = require('jw-paginate');
 
 router.get("/paymentmodes", async(req,res)=>{
@@ -23,13 +19,13 @@ router.get("/paymentmodes", async(req,res)=>{
 });
 
 
-router.post("/deleteFuelEntry", async (req, res) => {
+router.post("/deleteNote", async (req, res) => {
     try{
 
         let {id} = req.body;
         const filter = { _id: mongoose.Types.ObjectId(id) };
         const update = { isDeleted: 1 };
-        let updateFuel = await FuelEntry.findOneAndUpdate(filter, update);
+        let updateNote = await Notes.findOneAndUpdate(filter, update);
         res.status(200).json({"msg":"saved successfully"});
         // console.log(updateVehicle);
 
@@ -42,39 +38,13 @@ router.post("/deleteFuelEntry", async (req, res) => {
 router.post("/add", async (req, res)=> {
     // let {asset} = req.body;
     try{
-        // console.log(req.body);
-    
-        let imgUrl = "";
-        let billUrls = "";
-        let {vehicleTypef, vehiclename,expiration_time, expiration_date, amount, odometer, modeofpayment,
-            cardno, couponfrom, couponto, couponvalue, type, priceunit, unit, vendorname,drivername,
-            comment,bill_file_unique_id, image_file_unique_id} = req.body;
-           
-    
-        let fuelEntryImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
-        //  console.log(vehicleImage)
-            if(fuelEntryImage.length > 0){
-            imgUrl = fuelEntryImage[0].s3Urls[0];
-            }
 
-        let fuelBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
-    
-        if(fuelBills.length > 0){
-            billUrls = fuelBills[0].s3Urls;
-        }
-    
-        let savedata = {vehicle:vehiclename.id , 
-            expiration_date : expiration_date, expiration_time : expiration_time, amount : amount,
-            odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
-            couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
-            type: type,priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivername.id,
-            comment: comment,image_file_unique_id, bill_file_unique_id, imageUrl: imgUrl,billUrl:billUrls
-        
-        };
+      let  {vehicle, note} = req.body;
+        let savedata = {vehicle:vehicle.id,note:note};
     
         try{
-            const fuel_instance = new FuelEntry(savedata);
-            let sData = await fuel_instance.save();
+            const note_instance = new Notes(savedata);
+            let sData = await note_instance.save();
             res.status(200).send(sData);
             
         }catch(err){
@@ -84,8 +54,8 @@ router.post("/add", async (req, res)=> {
      
         // res.status(200).json(req.body);
     }catch(err){
-        res.status(400).send(err);
-        // console.log(err);
+        // res.status(400).send(err);
+        console.log(err);
     }
     
     
@@ -104,11 +74,11 @@ router.post("/add", async (req, res)=> {
         try {
            
     
-            const nooitems = await FuelEntry.countDocuments({"isDeleted": +0});
+            const nooitems = await Notes.countDocuments({"isDeleted": +0});
 
             const pager = paginate(nooitems, page,resPerPage);
     
-           let fuelEntryData = await FuelEntry.aggregate([{
+           let notedata = await Notes.aggregate([{
     
             $match: {
                 "isDeleted":0
@@ -126,29 +96,7 @@ router.post("/add", async (req, res)=> {
                 as: "vehicleData"// output array field
             }
         }
-            , {
-                $lookup: {
-                    from: "fuelEntryMode", // collection to join
-                    let: { "fuelEntryId": "$modeofpayment" },
-                    pipeline: [
-                        { "$match": { "$expr": { "$eq": ["$_id", "$$fuelEntryId"] }}},
-                        { "$project": { "fuelEntryMode":1, "_id": 0 }}
-                    ],
-                    as: "paymentModeData"// output array field
-                }
-            },
-
-            {
-                $lookup: {
-                    from: "employees", // collection to join
-                    let: { "employeesId": "$driver" },
-                    pipeline: [
-                        { "$match": { "$expr": { "$eq": ["$_id", "$$employeesId"] }}},
-                        { "$project": { "firstName":1,"empImage":1, "_id": 0 }}
-                    ],
-                    as: "employeeData"// output array field
-                }
-            },
+            ,
             
             {
                 $skip: skipd
@@ -163,7 +111,7 @@ router.post("/add", async (req, res)=> {
             let responseData = {};
             responseData["status"] = 200;
             responseData["page"] = pager;
-            responseData["data"] = fuelEntryData;
+            responseData["data"] = notedata;
             res.status(200).json(responseData);
         } catch (error) {
             console.log(error);

@@ -3,23 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class FuelService {
-
+export class NoteService {
 
   constructor(private http: HttpClient) {}
 
   public baseUrl = environment.baseUrl;
 
-  loadPaymentModes(){
-    return this.http.get(this.baseUrl+"/fuel/paymentmodes");
+  addNote(data){
+    return this.http.post(this.baseUrl+"/notes/add",data);
   }
 
-  addFuel(data){
-    return this.http.post(this.baseUrl+"/fuel/add",data);
-  }
 
-  loadFuelEntries(page){
-    return this.http.get(this.baseUrl+"/fuel?page="+page);
+  loadNotes(page){
+    return this.http.get(this.baseUrl+"/notes?page="+page);
   }
 
   loadFuelEntry(fuelEntryId){
@@ -27,8 +23,8 @@ export class FuelService {
   }
 
 
-  deleteFuelEntry(data) {
-    return this.http.post(this.baseUrl+"/fuel/deleteFuelEntry", data);
+  deleteNote(data) {
+    return this.http.post(this.baseUrl+"/notes/deleteNote", data);
   }
 
   updateFuelEntry(data){

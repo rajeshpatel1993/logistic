@@ -11,6 +11,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { NgxImgModule } from 'ngx-img';
 import { ListComponent } from './list/list.component';
 import { EditNotesComponent } from './edit-notes/edit-notes.component';
+import { NoteService } from './note.service';
 
 @NgModule({
   
@@ -29,5 +30,6 @@ import { EditNotesComponent } from './edit-notes/edit-notes.component';
     NbDatepickerModule,
   ],
   declarations: [NotesComponent,AddNotesComponent, ListComponent, EditNotesComponent],
+  providers: [NoteService]
 })
 export class NotesModule { }

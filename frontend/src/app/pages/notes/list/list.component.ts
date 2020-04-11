@@ -4,6 +4,7 @@ import { NbDialogService } from '@nebular/theme';
 import { VehicleExpenseService } from '../../vehicle-expense/vehicleexpense.service';
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NoteService } from '../note.service';
 
 @Component({
   selector: 'ngx-list',
@@ -22,20 +23,30 @@ export class ListComponent implements OnInit {
   keyword = 'name';
 
   public filterQueryString = "";
-
-  public vehiclesList: any[] = [];
+  public showNoRecord : boolean = false;
+  public noteList: any[] = [];
   public totalItems: any;
   public pager = {};
   public pageOfItems = [];
   public dropDownAction = false;
 
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService) { }
+  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private activeRoute: ActivatedRoute, private eRef: ElementRef, private router:Router, private dialogService: NbDialogService, private noteService: NoteService) { }
 
   ngOnInit() {
     this.loadVehiclesTypes();
+
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadExpensesData(queryParams.page);
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      if(lentgthoffilterQueryString.length > 0){
+        this.filterData();
+      }else{
+        this.loadNotes(queryParams.page);
+
+      }
+      // console.log(lentgthoffilterQueryString.length);
     });
+
+   
   }
 
   selectEvent(item, typeofautoselect) {
@@ -59,35 +70,38 @@ export class ListComponent implements OnInit {
     }
   }
 
-  public loadVehicles(page?){
+  public loadNotes(page?){
     let p = page || 1;
-    this.vehicleService.loadAssignVehicles(p).subscribe((vehicleData:any)=>{
-     this.vehiclesList = vehicleData.data;
-     console.log(this.vehiclesList);
-     
-     this.totalItems, this.pageOfItems = vehicleData.data; 
-     this.pager = vehicleData.page;
-    //  this.pageOfItems = vehicleData.data;
+    this.noteService.loadNotes(p).subscribe((noteData:any)=>{
+     this.noteList = noteData.data;
 
+     if(this.noteList.length > 0){
+      this.totalItems, this.pageOfItems = noteData.data; 
+      this.pager = noteData.page;
+      this.showNoRecord = false;
+
+      if(this.pager["totalPages"] < p){
+        this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
+
+      }
+
+
+     }else{
+       if(p > 1){
+        this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
+       }
+
+      // this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
+       this.showNoRecord = true;
+     }
+     
     },(error)=>{
 
     });
-  }
-
-  public loadExpensesData(page?){
-    let p = page || 1;
-    this.vehicleservService.loadVehicleExpenses(p).subscribe((vehicleData:any)=>{
-     this.vehiclesList = vehicleData.data;
-     
-     this.totalItems, this.pageOfItems = vehicleData.data; 
-     this.pager = vehicleData.page;
-    //  this.pageOfItems = vehicleData.data;
-
-    },(error)=>{
-
-    });
 
   }
+
+
 
   public loadVehiclesTypes(){
     this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
@@ -117,9 +131,10 @@ export class ListComponent implements OnInit {
   }
 
   deleteNotes(notesId){
-    this.vehicleservService.deleteExpense({id:notesId}).subscribe((d) =>{
+    this.noteService.deleteNote({id:notesId}).subscribe((d) =>{
       this.activeRoute.queryParams.subscribe(queryParams => {
-        this.loadExpensesData(queryParams.page);
+        this.loadNotes(queryParams.page);
+
       });
 
      
@@ -133,7 +148,7 @@ export class ListComponent implements OnInit {
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
     this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
-      this.vehiclesList = filterData.data;
+      this.noteList = filterData.data;
       this.totalItems, this.pageOfItems = filterData.data; 
       this.pager = filterData.page;
       // console.log(filterData);

@@ -82,7 +82,7 @@ export class ListComponent implements OnInit {
       this.showNoRecord = false;
 
       if(this.pager["totalPages"] < p){
-        this.router.navigateByUrl('/pages/remainders/list?page='+(p-1));
+        this.router.navigateByUrl('/pages/fuel/list?page='+(p-1));
 
       }
 
@@ -110,7 +110,8 @@ export class ListComponent implements OnInit {
   }
 
   public editFuel(id){
-    
+    this.router.navigateByUrl('/pages/fuel/edit-fuel/'+id);
+
   }
 
 }

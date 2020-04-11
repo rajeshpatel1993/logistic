@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 
 import * as uuid from 'uuid';
+import { NoteService } from '../note.service';
 
 @Component({
   selector: 'ngx-add-notes',
@@ -14,7 +15,7 @@ import * as uuid from 'uuid';
 })
 export class AddNotesComponent implements OnInit {
 
-  public vehicleExpenseForm: FormGroup;
+  public notesForm: FormGroup;
   public vehicleId : string;
   public vehicleData:any[] = [];
   public vehicleTypesData:any[] = [];
@@ -34,17 +35,13 @@ export class AddNotesComponent implements OnInit {
 
 
   keyword = 'name';
-  public billFileUniqueId = uuid.v4();
-  public imageFileUniqueId = uuid.v4();
 
   
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
+  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router, private noteService: NoteService) { }
 
   ngOnInit() {
-    this.vehicleId = this.activeRoute.snapshot.params.id;
     this.loadVehiclesTypes();
     this.createForm();
-    this.loadExpenseType();
     this.loadvehicleIssueStatus();
   }
 
@@ -54,77 +51,17 @@ export class AddNotesComponent implements OnInit {
   }
 
 
-  get f() { return this.vehicleExpenseForm.controls; }
+  get f() { return this.notesForm.controls; }
 
   createForm() {
     let group = {
-      vehicle_type: ['', Validators.required],
       vehicle: ['', Validators.required],
-      expense_type: ['', Validators.required],
-      expense_date: ['', Validators.required],
-      vendor: [''],
-      details: ['', Validators.required],
-      amount: ['', Validators.required],
-      issue_status: ['', Validators.required],
-      attachments : [this.billFileUniqueId],
-      images: [this.imageFileUniqueId],
       note: ['']
 
     }
-    this.vehicleExpenseForm = this.fb.group(group);
+    this.notesForm = this.fb.group(group);
   }
 
-
-  uploadBills(){
-    // console.log(this.selectedFiles);
-
-   let formD = new FormData();
-   formD.append('fileId', this.billFileUniqueId);
-   formD.append('typeoffile', "bills");
-    if(this.selectedFiles.length){
-      for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
-      }
-    }
-
-    this.vehicleService.uploadFile(formD).subscribe((data) => {
-      // alert("successfully uploaded");
-
-      this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully uploaded";
-      this.dialogBox = true;
-
-    },(err)=>{
-      console.log(err);
-    });
-
-  }
-
-
-  uploadImages(){
-    // console.log(this.selectedFiles);
-
-   let formD = new FormData();
-   formD.append('fileId', this.imageFileUniqueId);
-   formD.append('typeoffile', "images");
-    if(this.selectedFiles.length){
-      for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
-      }
-    }
-
-    this.vehicleService.uploadFile(formD).subscribe((data) => {
-      // alert("successfully uploaded");
-
-      this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully uploaded";
-      this.dialogBox = true;
-
-    },(err)=>{
-      console.log(err);
-    });
-
-  }
 
 
 
@@ -168,18 +105,6 @@ export class AddNotesComponent implements OnInit {
   }
 
 
-  loadExpenseType(){
-    this.vehicleservService.loadExpenseType().subscribe((expenseTyData:any) => {
-      let expenseTypeData = expenseTyData.data;
-      expenseTypeData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = item._id;
-        tmpObj["name"] = item.expenseType;
-        this.expenseTypesData.push(tmpObj);
-      });
-      // console.log(vehicleTypeData);
-    });
-  }
 
   loadvehicleIssueStatus(){
     this.vehicleservService.loadVehicleIssueStatus().subscribe((issueTyData:any) => {
@@ -199,13 +124,7 @@ export class AddNotesComponent implements OnInit {
 
   }
 
-  fileAdded(event) {
-    if(event.target.files.length){
-      for(let i=0 ; i < event.target.files.length ;i++){ 
-        this.selectedFiles.push(<File>event.target.files[i]);
-      }
-    }
-  }
+
 
   public loadVehiclesTypes(){
     this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
@@ -223,21 +142,22 @@ export class AddNotesComponent implements OnInit {
   }
   
   
-  addExpense(){
+  addNotes(){
+    console.log(this.notesForm.value);
     this.submitted = true;
-    if (this.vehicleExpenseForm.invalid) {
+    if (this.notesForm.invalid) {
       alert("Please fill all required field");
       return;
     }
     
     // console.log(this.vehicleServiceForm.value);
-    this.vehicleservService.addExpense(this.vehicleExpenseForm.value).subscribe((data)=>{
+    this.noteService.addNote(this.notesForm.value).subscribe((data)=>{
       this.msgObj["type"] = "success";
       this.msgObj["message"] = "successfully Added";
       this.dialogBox = true;
 
       setTimeout( ()=> {
-        this.router.navigateByUrl('/pages/expenses/list');
+        this.router.navigateByUrl('/pages/notes/list');
     }, 2000);
 
 
