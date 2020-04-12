@@ -131,8 +131,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       ]
     // link: '/pages/reports/list',
     // home: true,
+  },
+  {
+    title: 'Contacts',
+    icon: {
+      icon: 'clipboard',
+      pack: 'regular'},
+    link: '/pages/contacts/contact-list',
   }
-
 
 ];
 

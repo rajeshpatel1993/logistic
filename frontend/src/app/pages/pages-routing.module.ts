@@ -109,6 +109,11 @@ const routes: Routes = [{
         .then(m => m.MiscellaneousModule),
     },
     {
+      path: 'contacts',
+      loadChildren: () => import('./contact-us/contact-us.module')
+        .then(m => m.ContactUsModule),
+    },
+    {
       path: '',
       redirectTo: 'dashboard',
       pathMatch: 'full',
