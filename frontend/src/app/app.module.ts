@@ -35,9 +35,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-
     ThemeModule.forRoot(),
-
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),

@@ -18,8 +18,8 @@ export class NoteService {
     return this.http.get(this.baseUrl+"/notes?page="+page);
   }
 
-  loadFuelEntry(fuelEntryId){
-    return this.http.get(this.baseUrl+"/fuel/getFuel/"+fuelEntryId);
+  loadNote(noteId){
+    return this.http.get(this.baseUrl+"/notes/getNote/"+noteId);
   }
 
 
@@ -27,8 +27,8 @@ export class NoteService {
     return this.http.post(this.baseUrl+"/notes/deleteNote", data);
   }
 
-  updateFuelEntry(data){
-    return this.http.post(this.baseUrl+"/fuel/updateFuelEntry",data);
+  updateNote(data){
+    return this.http.post(this.baseUrl+"/notes/updateNote",data);
   }
 
 
