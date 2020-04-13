@@ -7,6 +7,7 @@ import * as uuid from 'uuid';
 import { Subscription } from 'rxjs';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
+import { NoteService } from '../note.service';
 
 @Component({
   selector: 'ngx-edit-notes',
@@ -16,8 +17,8 @@ import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 export class EditNotesComponent implements OnInit {
 
   public vehicleIssueStatusData:any[] = [];
-  public vehicleExpenseForm: FormGroup;
-  public expenseId : string;
+  public notesForm: FormGroup;
+  public noteId : string;
   public vehicleData:any[] = [];
   public vehicleTypesData:any[] = [];
   public vehicleNamesData:any[] = [];
@@ -41,22 +42,14 @@ export class EditNotesComponent implements OnInit {
   public expenseSubscription: Subscription;
 
   keyword = 'name';
-  public billfileuniqueid = uuid.v4();
-  public imageuniqueid = uuid.v4();
-
-
-  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
+  constructor(private vehicleService: VehicleService, private vehicleservService: VehicleservService,private noteService : NoteService, private fb: FormBuilder, private activeRoute: ActivatedRoute,  private router: Router) { }
 
   ngOnInit() {
-    this.expenseId = this.activeRoute.snapshot.params.id;
-    this.loadVehiclesTypes();
-    
-    // this.loadEmployee();
+    this.noteId = this.activeRoute.snapshot.params.id;
+    this.createForm(this.noteId);
 
-    this.loadVehicleexpenseD(this.expenseId);
-    this.loadExpenseType();
+    this.loadNote(this.noteId);
 
-    this.createForm();
   }
 
   getMsg(val){
@@ -65,133 +58,51 @@ export class EditNotesComponent implements OnInit {
   }
 
 
+  get f() { return this.notesForm.controls; }
 
-  loadVehicleexpenseD(expenseId){
-    this.expenseSubscription = this.vehicleservService.loadExpenseData(this.expenseId).subscribe((d)=>{
-      let expenseData = d["data"];
-      this.vehicleExpenseForm.get("vehicle_type").patchValue(expenseData.vehicleType.vehicleType);
-      this.vehicleExpenseForm.get("vehicle").patchValue(expenseData.vehicle.name);
-      this.selectEventVehicle({id: expenseData.vehicle._id});
-      this.vehicleExpenseForm.get("expense_type").patchValue(expenseData.expense_type.expenseType);
-      this.vehicleExpenseForm.get("expense_date").patchValue(new Date(expenseData.expense_date));
-      this.vehicleExpenseForm.get("vendor").patchValue(expenseData.vendor);
-      this.vehicleExpenseForm.get("details").patchValue(expenseData.details);
-      this.vehicleExpenseForm.get("amount").patchValue(expenseData.amount);
-      this.vehicleExpenseForm.get("issue_status").patchValue(expenseData.issue_status.vehicleIssueStatus);
-      this.vehicleExpenseForm.get("note").patchValue(expenseData.note);
-
-    },(error)=>{
-
-    });
-
-  }
-
-
-
-  loadProjectType(){
-    this.vehicleService.loadProjectType().subscribe((projectTypesData)=>{
-      let projectTypeData = projectTypesData["data"];
-      projectTypeData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = +item.projectTypeId;
-        tmpObj["name"] = item.projectTypeName;
-        this.projectTypeList.push(tmpObj);
-       
-
-      });
-
-
-    },
-    (error) => {
-      
-    });
-  }
-
-  
-
-
-
-
-  get f() { return this.vehicleExpenseForm.controls; }
-
-  createForm() {
+  createForm(noteId) {
     let group = {
-      vehicle_type: ['', Validators.required],
       vehicle: ['', Validators.required],
-      expense_type: ['', Validators.required],
-      expense_date: ['', Validators.required],
-      vendor: [''],
-      details: ['', Validators.required],
-      amount: ['', Validators.required],
-      issue_status: ['', Validators.required],
-      attachments : [this.billfileuniqueid],
-      images: [this.imageuniqueid],
+      noteId:[noteId, Validators.required],
       note: ['']
 
     }
-    this.vehicleExpenseForm = this.fb.group(group);
+    this.notesForm = this.fb.group(group);
   }
 
 
-  uploadBills(){
-    // console.log(this.selectedFiles);
 
-   let formD = new FormData();
-   formD.append('fileId', this.billfileuniqueid);
-   formD.append('typeoffile', "bills");
-    if(this.selectedFiles.length){
-      for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
-      }
+
+
+
+  
+  
+  updateNote(){
+    console.log(this.notesForm.value);
+     this.submitted = true;
+    if (this.notesForm.invalid) {
+      alert("Please fill all required field");
+      return;
     }
-
-    this.vehicleService.uploadFile(formD).subscribe((data) => {
-      // alert("successfully uploaded");
-
+    
+    this.noteService.updateNote(this.notesForm.value).subscribe((data)=>{
       this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully uploaded";
+      this.msgObj["message"] = "successfully Updated";
       this.dialogBox = true;
 
-    },(err)=>{
-      console.log(err);
-    });
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/notes/list');
+    }, 2000);
 
+
+
+    },(error)=>{});
+  
   }
-
-
-  uploadImages(){
-    // console.log(this.selectedFiles);
-
-   let formD = new FormData();
-   formD.append('fileId', this.billfileuniqueid);
-   formD.append('typeoffile', "images");
-    if(this.selectedFiles.length){
-      for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
-      }
-    }
-
-    this.vehicleService.uploadFile(formD).subscribe((data) => {
-      // alert("successfully uploaded");
-
-      this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully uploaded";
-      this.dialogBox = true;
-
-    },(err)=>{
-      console.log(err);
-    });
-
-  }
-
-
-
 
 
   selectEventVehicle(item) {
-    this.vehicleService.loadVehicle(item.id).subscribe((vehData) => {
-      console.log(vehData);
-
+    this.vehicleService.loadVehicle(item).subscribe((vehData) => {
       let veData = vehData["data"][0];
       this.vehicleRegNo = veData.regNo;
       this.vehicleCode = veData.vehicle_code;
@@ -203,107 +114,26 @@ export class EditNotesComponent implements OnInit {
 
   }
 
-  selectVehicleType(item){
-    let vehicleTypeId = item.id;
-    this.vehicleservService.loadVehiclesByTypeId(vehicleTypeId).subscribe((vehicleData)=>{
-      let vehcilesData = vehicleData["data"];
-      vehcilesData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = item._id;
-        tmpObj["name"] = item.name;
-        this.vehicleNamesData.push(tmpObj);
-      });
-    },
-    (error) => {
+
+  loadNote(noteId){
+
+    this.noteService.loadNote(noteId).subscribe((d)=>{
+      let noteData = d['data'][0];
+
+      this.vehicleName = noteData.vehicleData[0].name;
+      this.vehicleRegNo = noteData.vehicleData[0].regNo;
+      this.vehicleCode = noteData.vehicleData[0].vehicle_code;
+      this.vehicleImage = noteData.vehicleData[0].vehicleImage;
+      this.notesForm.get("vehicle").patchValue(noteData.vehicle);
+      this.notesForm.get("note").patchValue(noteData.note);
+     
+
+    }, (error)=>{
       console.log(error);
-    }
-    );
-    
-  }
- 
-  onChangeSearch(val: string) {
-  }
-  
-  onFocused(e){
-  }
-
-  loadEmployee(){
-    this.vehicleService.loadEmployee().subscribe((employeesData:any) => {
-      let employeeData = employeesData.data;
-      employeeData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = item._id;
-        tmpObj["name"] = item.firstName;
-        this.employeeLists.push(tmpObj);
-      });
-      // console.log(vehicleTypeData);
     });
-  }
-
-
-  loadExpenseType(){
-    this.vehicleservService.loadExpenseType().subscribe((expenseTyData:any) => {
-      let expenseTypeData = expenseTyData.data;
-      expenseTypeData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = item._id;
-        tmpObj["name"] = item.expenseType;
-        this.expenseTypesData.push(tmpObj);
-      });
-      // console.log(vehicleTypeData);
-    });
-  }
-
-
-  selectEvent($event){
 
   }
 
-  fileAdded(event) {
-    if(event.target.files.length){
-      for(let i=0 ; i < event.target.files.length ;i++){ 
-        this.selectedFiles.push(<File>event.target.files[i]);
-      }
-    }
-  }
 
-  public loadVehiclesTypes(){
-    this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
-      let vehicleTypeData = vehicleType.data;
-      vehicleTypeData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = item.vehicleTypeId;
-        tmpObj["name"] = item.vehicleType;
-         tmpObj["code"] = item.vehicleTypeCode;
-         tmpObj["_id"] = item._id;
-        this.vehicleTypesData.push(tmpObj);
-      });
-      // console.log(vehicleTypeData);
-    });
-  }
-  
-  
-  
-  updateExpense(){
-    this.submitted = true;
-    if (this.vehicleExpenseForm.invalid) {
-      alert("Please fill all required field");
-      return;
-    }
-    
-    this.vehicleservService.updateexpense(this.vehicleExpenseForm.value, this.expenseId).subscribe((data)=>{
-      this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully Updated";
-      this.dialogBox = true;
-
-      setTimeout( ()=> {
-        this.router.navigateByUrl('/pages/expenses/list');
-    }, 2000);
-
-
-
-    },(error)=>{});
-  
-  }
 
 }
