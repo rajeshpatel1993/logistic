@@ -1,0 +1,113 @@
+<div class="AssignVehicle">
+  <nb-card>
+    <nb-card-body>
+      <div class="row no-gutters">
+        <div class="col-12">
+          <h5 class="pb-3">Complaint/Issue report</h5>
+        </div>
+      </div>
+      <nb-layout-column class="p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mt-3">
+            <thead>
+              <tr>
+                <th>Issue</th>
+                <th>Status</th>
+                <th>Summary</th>
+                <th>Reported By</th>
+                <th>Assigned</th>
+                <th>Due Date</th>
+                <th>Due Meter</th>
+                <th>Vehicle assigned</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#1</td>
+                <td>
+                  <h6 class="open">Open</h6>
+                </td>
+                <td>Brake light</td>
+                <td>Wilsom</td>
+                <td>Wilsom</td>
+                <td>20/05/2020</td>
+                <td>85453</td>
+                <td>Toyota 1100(2018)</td>
+              </tr>
+              <tr>
+                <td>#2</td>
+                <td>
+                  <h6 class="overdue">Resolved</h6>
+                </td>
+                <td>Brake light</td>
+                <td>Wilsom</td>
+                <td>Wilsom</td>
+                <td>20/05/2020</td>
+                <td>85453</td>
+                <td>Toyota 1100(2018)</td>
+              </tr>
+              <tr>
+                <td>#3</td>
+                <td>
+                  <h6 class="closed">Resolved</h6>
+                </td>
+                <td>Brake light</td>
+                <td>Wilsom</td>
+                <td>Wilsom</td>
+                <td>20/05/2020</td>
+                <td>85453</td>
+                <td>Toyota 1100(2018)</td>
+              </tr>
+              <tr>
+                <td>#4</td>
+                <td>
+                  <h6 class="resolved">Resolved</h6>
+                </td>
+                <td>Brake light</td>
+                <td>Wilsom</td>
+                <td>Wilsom</td>
+                <td>20/05/2020</td>
+                <td>85453</td>
+                <td>Toyota 1100(2018)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer pb-0 pt-3 pb-3">
+          <!-- <ul *ngIf="
+          ['pages'] && pager['pages'].length" class="pagination justify-content-center">
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
+              <a [routerLink]="['/pages/notes/list']" [queryParams]="{page: 1}" class="page-link"><i
+                  class="fas fa-angle-double-left"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
+              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.currentPage - 1 }"
+                class="page-link"><i class="fas fa-angle-left"></i></a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
+              class="page-item number-item">
+              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: page }"
+                class="page-link">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
+              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.currentPage + 1 }"
+                class="page-link"><i class="fas fa-angle-right"></i></a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
+              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.totalPages }"
+                class="page-link"><i class="fas fa-angle-double-right"></i></a>
+            </li>
+          </ul> -->
+        </div>
+
+      </nb-layout-column>
+    </nb-card-body>
+
+    <div class="row" *ngIf="showNoRecord">
+      <div class="col-12">
+        <h5 class="text-center text-danger p-4"> No records Found</h5>
+      </div>
+    </div>
+
+  </nb-card>
+</div>

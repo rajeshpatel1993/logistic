@@ -60,7 +60,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       icon: 'comment-alt',
       pack: 'regular',
     },
-    link: '/pages/repair',
+    link: '/pages/complaint/list',
     home: true,
   },
   {
