@@ -19,50 +19,58 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let item of contactList">
                 <td>
                   <div class="VehicleDriver">
                     <div class="VehicleDriver_image">
-                      <img src="assets/images/camera1.jpg" alt="driver">
+                      <img [src]="item.empImage" alt="driver">
                     </div>
                     <div class="VehicleDriver_name">
-                      <h5>Amresh</h5>
+                      <h5>{{item.firstName}} {{item.middleName}}  {{item.lastName}}</h5>
                     </div>
                   </div>
                 </td>
-                <td><h6>Senoir Engineer</h6> Client Side</td>
-                <td>Empy4234</td>
-                <td>402-2343-342</td>
-                <td>Car <button class="btn btn-default p-0"><i class="fas fa-edit text-primary"></i></button></td>
+                <td><h6>{{item.jobTitleData.jobTitle}}</h6> {{item.workLocationData.workLocation}}</td>
+                <td>{{item.employeeCode}}</td>
+                <td>{{item.primaryContact}}</td>
+                <td>
+                  
+                  <ul>
+                    <li *ngFor="let vh of item.assignVehicleData">
+                      <a routerLink="pages/vehicles/edit-vehicle/{{vh.vehicle}}">
+                        {{vh.vehicledata.name}}
+                      </a>
+                    </li>
+                  </ul>
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="card-footer pb-0 pt-3 pb-3">
-          <!-- <ul *ngIf="
-          ['pages'] && pager['pages'].length" class="pagination justify-content-center">
+          <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{page: 1}" class="page-link"><i
+              <a [routerLink]="['/pages/contacts/contact-list']" [queryParams]="{page: 1}" class="page-link"><i
                   class="fas fa-angle-double-left"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.currentPage - 1 }"
+              <a [routerLink]="['/pages/contacts/contact-list']" [queryParams]="{ page: pager.currentPage - 1 }"
                 class="page-link"><i class="fas fa-angle-left"></i></a>
             </li>
             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
               class="page-item number-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: page }"
+              <a [routerLink]="['/pages/contacts/contact-list']" [queryParams]="{ page: page }"
                 class="page-link">{{page}}</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.currentPage + 1 }"
+              <a [routerLink]="['/pages/contacts/contact-list']" [queryParams]="{ page: pager.currentPage + 1 }"
                 class="page-link"><i class="fas fa-angle-right"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.totalPages }"
+              <a [routerLink]="['/pages/contacts/contact-list']" [queryParams]="{ page: pager.totalPages }"
                 class="page-link"><i class="fas fa-angle-double-right"></i></a>
             </li>
-          </ul> -->
+          </ul>
         </div>
 
       </nb-layout-column>
