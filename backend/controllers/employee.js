@@ -30,8 +30,6 @@ router.get("/emp_list", async(req,res)=>{
     try{
             // const nooitems = await Employee.countDocuments({"isDeleted": +0});
             const nooitems = await Employee.countDocuments();
-
-
             const pager = paginate(nooitems, page,resPerPage);
     
            let notedata = await Employee.aggregate([
@@ -54,17 +52,47 @@ router.get("/emp_list", async(req,res)=>{
                 as: "workLocationData"// output array field
             }
         },
+
+        {
+            $lookup: {
+                from: "jobtitle", // collection to join
+                let: { "jobTitleId": "$jobTitle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$jobTitleId", "$$jobTitleId"] }}},
+                    { "$project": { "jobTitle":1}}
+                ],
+                as: "jobTitleData"// output array field
+            }
+        },
         {
             $lookup: {
                 from: "assignVehicle", // collection to join
                 let: { "empid": "$_id" },
                 pipeline: [
-                    { "$match": { "$expr": { "$eq": ["$employee", "$$empid"] }}},
-                    { "$project": { "vehicle":1 }}
+                    { "$match": { "$expr":  { "$eq": ["$employee", "$$empid"] }}},
+                    { "$project": { "vehicle":1 }},
+                    { "$lookup": {
+                        "from": "vehicle",
+                        "let": { "vehId": "$vehicle" },
+                        "pipeline": [
+                          { "$match": { "$expr": { "$eq": ["$_id", "$$vehId"] }}},
+                          { "$project": { "name":1 }},
+                        ],
+                        "as": "vehicledata"
+                      }},
+                      { 
+                        "$unwind" : {
+                            "path" : "$vehicledata", 
+                            "preserveNullAndEmptyArrays" : false
+                        }
+                    }, 
                 ],
                 as: "assignVehicleData"// output array field
             }
         }
+        ,
+        { $unwind : "$jobTitleData" },
+        { $unwind : "$workLocationData" }
             ,
             
             {

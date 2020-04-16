@@ -12,11 +12,15 @@ export class ContactService {
   public baseUrl = environment.baseUrl;
 
   loadContact(page){
-    return this.http.get(this.baseUrl+"/notes?page="+page);
+    return this.http.get(this.baseUrl+"/employees/emp_list?page="+page);
   }
 
-  updateFuelEntry(data){
-    return this.http.post(this.baseUrl+"/fuel/updateFuelEntry",data);
-  }
+
+  // getEmployeeList(){
+  //   return this.http.get(this.baseUrl+"/employees/emp_list");
+  // }
+
+
+
 
 }

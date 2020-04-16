@@ -21,24 +21,29 @@ export class ContactListComponent implements OnInit {
   constructor(private contactServices: ContactService, private router:Router,private activeRoute:ActivatedRoute) { }
 
   ngOnInit() {
+    this.activeRoute.queryParams.subscribe(queryParams => {
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      this.loadEmployee(queryParams.page);
+
+    });
   }
 
-  public loadNotes(page?){
+  public loadEmployee(page?){
     let p = page || 1;
-    this.contactServices.loadContact(p).subscribe((noteData:any)=>{
-     this.contactList = noteData.data;
+    this.contactServices.loadContact(p).subscribe((contactData:any)=>{
+     this.contactList = contactData.data;
 
      if(this.contactList.length > 0){
-      this.totalItems, this.pageOfItems = noteData.data; 
-      this.pager = noteData.page;
+      this.totalItems, this.pageOfItems = contactData.data; 
+      this.pager = contactData.page;
       this.showNoRecord = false;
 
       if(this.pager["totalPages"] < p){
-        this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
+        this.router.navigateByUrl('/pages/contacts/list?page='+(p-1));
       }
      }else{
        if(p > 1){
-        this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
+        this.router.navigateByUrl('/pages/contacts/list?page='+(p-1));
        }
        this.showNoRecord = true;
      }
