@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ComplaintComponent } from './complaint.component'
 import { ComplaintListComponent } from './complaint-list/complaint-list.component';
+import { AddComplaintComponent } from './add-complaint/add-complaint.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
       {
         path: 'list',
         component: ComplaintListComponent
+      },
+      {
+        path: 'add-issue',
+        component: AddComplaintComponent
       }
     ]
   }
