@@ -26,6 +26,7 @@ const organizationController= require("./controllers/organization");
 const remainderController = require("./controllers/remainder");
 const fuelController = require("./controllers/fuel");
 const noteController = require("./controllers/notes");
+const issueController = require("./controllers/issue");
 
 const app = express();
 app.use(cors());
@@ -43,7 +44,7 @@ app.use('/api/organization', organizationController);
 app.use('/api/remainder', remainderController);
 app.use('/api/fuel', fuelController);
 app.use('/api/notes',noteController);
-
+app.use('/api/issues',issueController);
 
 
 

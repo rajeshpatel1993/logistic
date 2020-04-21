@@ -11,6 +11,7 @@ import { AddComplaintComponent } from './add-complaint/add-complaint.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ThemeModule } from '../../@theme/theme.module';
+import { CustomCommonModule } from '../custom-common.module';
 
 @NgModule({
   declarations: [ComplaintComponent,ComplaintListComponent, AddComplaintComponent],
@@ -18,6 +19,7 @@ import { ThemeModule } from '../../@theme/theme.module';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    CustomCommonModule,
     ComplaintRoutingModule,
     NbLayoutModule,
     NbCardModule,
