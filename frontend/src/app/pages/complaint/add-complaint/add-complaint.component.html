@@ -1,5 +1,5 @@
 <div class="VehicleAddTab">
-  <form [formGroup]="complaintForm" novalidate>
+  <form [formGroup]="complaintForm" (ngSubmit)="addComplain()" novalidate>
 
     <div class="row no-gutters">
       <nb-tabset class="col-12">
@@ -70,6 +70,13 @@
               <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" readonly>
             </div>
           </div>
+
+
+          <div class="form-group row">
+            <img [src]="vehicleImage">
+          </div>
+
+
         </nb-tab>
 
         <nb-tab tabTitle="Issue Entry Details ">
@@ -95,8 +102,8 @@
               class="star">*</span></label>
             <div class="col-sm-9">
               <div class="ng-autocomplete">
-                <ng-autocomplete [data]="reportedData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
-                placeHolder="Gonter,joey" formControlName="reported"
+                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
+                placeHolder="Reported By" formControlName="reportedBy"
                   [itemTemplate]="itemTemplate4" [notFoundTemplate]="notFoundTemplate4">
                 </ng-autocomplete>
 
@@ -113,18 +120,35 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label"> Assign To<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <!-- <div class="col-sm-9">
               <div class="row no-gutters">
                 <div class="col-sm-8">
-                  <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" formControlName="assign_to">
-                </div>
-                <div class="col-sm-4 fintnew">
-                  <button type="button" class="btn btn-primary">Find</button>
-                  <button type="button" class="btn btn-primary">New</button>
+                  <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" formControlName="assignTo">
                 </div>
               </div>
               
+            </div> -->
+
+
+            <div class="col-sm-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectAssignTo($event)'
+                placeHolder="Assign To" formControlName="assignTo"
+                  [itemTemplate]="itemTemplateassign" [notFoundTemplate]="notFoundTemplateassign">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplateassign let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplateassign let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
             </div>
+
+
+
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Summary<span
@@ -150,7 +174,7 @@
             <div class="col-sm-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="priorityData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
-                placeHolder="list" formControlName="priority"
+                placeHolder="Priority " formControlName="priority"
                   [itemTemplate]="itemTemplate5" [notFoundTemplate]="notFoundTemplate5">
                 </ng-autocomplete>
 
@@ -168,7 +192,7 @@
             <label class="col-sm-3 col-form-label">Notify assignee</label>
             <div class="col-sm-9">
               <label class="checkbox">
-                <input type="checkbox" class="checkbox__input" formControlName="notify">
+                <input type="checkbox" class="checkbox__input" formControlName="notify_assignee">
                 <span class="checkbox__checkmark"></span>
             </label>
             </div>
@@ -177,7 +201,7 @@
             <label class="col-sm-3 col-form-label">Status</label>
             <div class="col-sm-9">
               <div class="ng-autocomplete">
-                <ng-autocomplete [data]="statusData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
+                <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
                 placeHolder="Status" formControlName="status"
                   [itemTemplate]="itemTemplate6" [notFoundTemplate]="notFoundTemplate6">
                 </ng-autocomplete>
@@ -209,7 +233,7 @@
             <div class="col-sm-9">
               <input type="hidden" id="images" class="form-control" formControlName="images">
 
-                  <input type="file" id="attachImages" #attachimages multiple (change)="fileAdded($event)">
+                  <input type="file" id="attachImages" #attachimages multiple (change)="imageAdded($event)">
                   <button (click)="uploadImages()" class="btn btn-primary float-right">Upload Image</button>
             </div>
           </div>
@@ -226,8 +250,14 @@
     </div>
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
-        <button type="submit" (click)="addNotes()" class="btn btn-primary float-right">Submit</button>
+        <button type="submit"  class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
   </form>
+</div>
+
+
+<div *ngIf="dialogBox">
+
+  <ngx-dailog-box (messageToEmit)="getMsg($event)" [msgObj]="msgObj"></ngx-dailog-box>
 </div>

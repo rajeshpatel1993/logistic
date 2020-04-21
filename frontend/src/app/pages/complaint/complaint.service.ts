@@ -33,4 +33,8 @@ export class ComplaintService {
     return this.http.post(this.baseUrl+"/notes/updateNote",data);
   }
 
+  loadPriorityStatus(){
+    return this.http.get(this.baseUrl+"/issues/getPriorityStatus");
+  }
+
 }
