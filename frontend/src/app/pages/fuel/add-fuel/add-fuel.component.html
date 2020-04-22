@@ -5,8 +5,8 @@
 
         <nb-tab tabTitle="Identification" class="identification">
           <div class="form-group row">
-            <label for="vehicleTypef" class="col-sm-3 col-form-label">Vehicle Type<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehicleTypef" class="col-lg-4 col-xl-3 col-form-label">Vehicle Type<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                   (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" formControlName="vehicleTypef">
@@ -22,8 +22,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="vehiclename" class="col-sm-3 col-form-label">Vehicle Name<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehiclename" class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleNamesData" [itemTemplate]="itemTemplate1" formControlName="vehiclename"
                   [notFoundTemplate]="notFoundTemplate1" (selected)='selectEventVeh($event)' [searchKeyword]="keyword" placeHolder="Enter the Vehicle Name"
@@ -39,26 +39,26 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="vehicledetails" class="col-sm-3 col-form-label">Vehicle Details<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehicledetails" class="col-lg-4 col-xl-3 col-form-label">Vehicle Details<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" [value]="vehicleDetail" placeholder="Vehicle Detail" class="form-control" readonly/>
             </div>
           </div>
           <div class="form-group row">
-            <label for="vehiclereg" class="col-sm-3 col-form-label">Vehicle Reg/Serial No<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehiclereg" class="col-lg-4 col-xl-3 col-form-label">Vehicle Reg/Serial No<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="vehiclereg" class="form-control" placeholder="Vehicle Reg No" [value]="vehicleRegNo" readonly>
             </div>
           </div>
           <div class="form-group row">
-            <label for="vehiclecode" class="col-sm-3 col-form-label">Vehicle Code<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehiclecode" class="col-lg-4 col-xl-3 col-form-label">Vehicle Code<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code" [value]="vehicleCode" readonly>
             </div>
           </div>
           <div class="form-group row">
-            <label for="vehicleimg" class="col-sm-3 col-form-label">Vehicle Image<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehicleimg" class="col-lg-4 col-xl-3 col-form-label">Vehicle Image<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="vehicleImage">
                 <img id="vehicleimg" [src]="vehicleImage" alt="">
               </div>
@@ -71,8 +71,8 @@
 
         <nb-tab tabTitle="Fuel Entry Details ">
           <div class="form-group row">
-            <label for="expiration" class="col-sm-3 col-form-label">Date with Time<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="expiration" class="col-lg-4 col-xl-3 col-form-label">Date with Time<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="row no-gutters">
                 <div class="col-12 col-md-6 col-lg-8">
                   <input class="form-control" id="expiration" nbInput placeholder="Expiration" formControlName="expiration_date" [nbDatepicker]="expiration">
@@ -89,8 +89,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="modeaym"p class="col-sm-3 col-form-label">Mode of Payment<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="modeaym"p class="col-lg-4 col-xl-3 col-form-label">Mode of Payment<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
 
            
 
@@ -100,59 +100,59 @@
             </div>
           </div>
           <div class="form-group row" *ngIf="showCardOption">
-            <label for="card" class="col-sm-3 col-form-label">Card No<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="card" class="col-lg-4 col-xl-3 col-form-label">Card No<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="number" id="card" class="form-control" placeholder="Enter Card Number" formControlName="cardno" [readonly]="!showCardOption" />
             </div>
           </div>
           <div class="form-group row"  *ngIf="showCouponOption">
-            <label for="couponf" class="col-sm-3 col-form-label">Coupon From<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="couponf" class="col-lg-4 col-xl-3 col-form-label">Coupon From<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="couponf" class="form-control" placeholder="Enter Coupon Code" formControlName="couponfrom" [readonly]="!showCouponOption" />
             </div>
           </div>
           <div class="form-group row" *ngIf="showCouponOption">
-            <label for="coupont" class="col-sm-3 col-form-label">Coupon to<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="coupont" class="col-lg-4 col-xl-3 col-form-label">Coupon to<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="coupont" class="form-control" placeholder="Enter Coupon Code" formControlName="couponto" [readonly]="!showCouponOption"/>
             </div>
           </div>
           <div class="form-group row" *ngIf="showCouponOption">
-            <label for="couponv"p class="col-sm-3 col-form-label">Coupon value<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="couponv"p class="col-lg-4 col-xl-3 col-form-label">Coupon value<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="number" id="coponv" class="form-control" placeholder="Enter Coupon Value" formControlName="couponvalue">
             </div>
           </div>
 
           <div class="form-group row">
-            <label for="amounts" class="col-sm-3 col-form-label">Amount<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="amounts" class="col-lg-4 col-xl-3 col-form-label">Amount<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="number" id="amounts" class="form-control" placeholder="Enter Amount" formControlName="amount">
             </div>
           </div>
           <div class="form-group row">
-            <label for="odometers" class="col-sm-3 col-form-label">Odometer</label>
-            <div class="col-sm-9">
+            <label for="odometers" class="col-lg-4 col-xl-3 col-form-label">Odometer</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="number" id="odometers" class="form-control" placeholder="Enter Odometer" formControlName="odometer">
             </div>
           </div>
 
 
           <div class="form-group row">
-            <label for="types" class="col-sm-3 col-form-label">Type<span class="star">*</span></label>
-            <div class="col-sm-9">
-              <input type="text" id="types" class="form-control" placeholder="Enter Type" formControlName="type" />
+            <label for="types" class="col-lg-4 col-xl-3 col-form-label">Fuel Type<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" id="types" class="form-control" placeholder="Enter Fuel Type" formControlName="type" />
             </div>
           </div>
           <div class="form-group row">
-            <label for="price" class="col-sm-3 col-form-label">Price/Unit</label>
-            <div class="col-sm-9">
-              <input type="text" id="price" class="form-control" placeholder="Enter Price/unit" formControlName="priceunit" />
+            <label for="price" class="col-lg-4 col-xl-3 col-form-label">Price</label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" id="price" class="form-control" placeholder="Enter Price" formControlName="priceunit" />
             </div>
           </div>
           <div class="form-group row">
-            <label for="units" class="col-sm-3 col-form-label">Unit</label>
-            <div class="col-sm-9">
+            <label for="units" class="col-lg-4 col-xl-3 col-form-label">Unit</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="units" class="form-control" placeholder="" formControlName="unit" />
             </div>
           </div>
@@ -160,14 +160,14 @@
 
         <nb-tab tabTitle="Additional Details">
           <div class="form-group row">
-            <label for="vendern" class="col-sm-3 col-form-label">Vendor Name</label>
-            <div class="col-sm-9">
+            <label for="vendern" class="col-lg-4 col-xl-3 col-form-label">Vendor Name</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="vendern" class="form-control" placeholder="Enter Vender Name" formControlName="vendorname" />
             </div>
           </div>
           <div class="form-group row">
-            <label for="drivern"p class="col-sm-3 col-form-label">Driver Name<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="drivern"p class="col-lg-4 col-xl-3 col-form-label">Driver Name<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEmployee($event)'
                 placeHolder="Enter the Driver" formControlName="drivername"
@@ -187,9 +187,9 @@
           <div class="form-group row">
             <input type="hidden" id="bill_file_unique_id" class="form-control" formControlName="bill_file_unique_id">
 
-            <label for="attachdoc" class="col-sm-3 col-form-label">Attach Documents(Bill)<span
+            <label for="attachdoc" class="col-lg-4 col-xl-3 col-form-label">Attach Documents(Bill)<span
                 class="star"></span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
               <button (click)="uploadBills()" class="btn btn-primary float-right">Upload</button>
             </div>
@@ -197,17 +197,17 @@
 
 
           <div class="form-group row">
-            <label for="attachimg" class="col-sm-3 col-form-label">Attach Image<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="attachimg" class="col-lg-4 col-xl-3 col-form-label">Attach Image</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="hidden" id="image_file_unique_id" class="form-control"
                 formControlName="image_file_unique_id">
 
               <div class="row no-gutters">
-                <div class="col-xs-12 col-sm-12 col-md-8">
+                <div class="col-xs-12 col-lg-12 col-xl-8">
                   <ngx-img (onSelect)="onSelect($event)" (onReset)="onReset()" [config]="{ crop: [ { ratio: 1.5 } ] }">
                   </ngx-img>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 mt-1">
+                <div class="col-xs-12 col-lg-12 col-xl-4 mt-1">
                   <div *ngIf="imgSrc.length" class="container mb-3">
                     <h5>Preview</h5>
                     <div class="row">
@@ -216,15 +216,14 @@
                       </div>
                     </div>
                   </div>
-                  <button class="btn btn-primary float-right" (click)="uploadImage()">Upload Image<span
-                      class="star">*</span></button>
+                  <button class="btn btn-primary float-right" (click)="uploadImage()">Upload Image</button>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-group row">
-            <label for="comments" class="col-sm-3 col-form-label">Comments</label>
-            <div class="col-sm-9">
+            <label for="comments" class="col-lg-4 col-xl-3 col-form-label">Comments</label>
+            <div class="col-lg-8 col-xl-9">
               <textarea id="comments" style="height: 100px;" class="form-control" placeholder="Enter Comments" formControlName="comment"></textarea>
             </div>
           </div>

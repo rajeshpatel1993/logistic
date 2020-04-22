@@ -6,9 +6,9 @@
         <nb-tab tabTitle="Identification" class="identification">
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Type<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Type<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" (selected)='selectVehicleType($event)'
                 placeHolder="Enter the Vehicle Type"
@@ -27,9 +27,9 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Name<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleNamesData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
                 placeHolder="Enter the Vehicle Name" formControlName="vehicle"
@@ -48,24 +48,24 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Reg No<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Reg No<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <input type="text" value="{{vehicleRegNo}}" class="form-control" placeholder="Vehicle Reg No" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Code</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Code</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" value="{{vehicleCode}}" class="form-control" placeholder="Vehicle Code" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Detail<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Detail<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               
               <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" readonly>
             </div>
@@ -81,14 +81,14 @@
 
         <nb-tab tabTitle="Issue Entry Details ">
           <div class="form-group row">
-            <label for="datetime" class="col-sm-3 col-form-label">Reported Date with time<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="datetime" class="col-lg-4 col-xl-3 col-form-label">Reported Date with time<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="row no-gutters">
-                <div class="col-12 col-md-6 col-lg-8">
+                <div class="col-12 col-lg-7 col-xl-8">
                   <input class="form-control" id="datetime" nbInput placeholder="Reported Date" formControlName="reported_date" [nbDatepicker]="expiration">
                   <nb-datepicker #expiration></nb-datepicker>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-lg-5 col-xl-4">
                   <div class="ngx-timepicker-field-example">
                     <input [ngxTimepicker]="picker" class="form-control" placeholder="Repoted Time" formControlName="reported_time">
                     <ngx-material-timepicker #picker></ngx-material-timepicker>
@@ -98,9 +98,9 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Reported By<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Reported By<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
                 placeHolder="Reported By" formControlName="reportedBy"
@@ -118,9 +118,9 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label"> Assign To<span
+            <label class="col-lg-4 col-xl-3 col-form-label"> Assign To<span
               class="star">*</span></label>
-            <!-- <div class="col-sm-9">
+            <!-- <div class="col-lg-8 col-xl-9">
               <div class="row no-gutters">
                 <div class="col-sm-8">
                   <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" formControlName="assignTo">
@@ -130,7 +130,7 @@
             </div> -->
 
 
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectAssignTo($event)'
                 placeHolder="Assign To" formControlName="assignTo"
@@ -151,27 +151,27 @@
 
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Summary<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Summary<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <textarea class="form-control" placeholder="" formControlName="summary"></textarea>
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Description</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Description</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" class="form-control" placeholder="" formControlName="description">
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Odometer</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Odometer</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" class="form-control" placeholder="" formControlName="odometer">
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Priority</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Priority</label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="priorityData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
                 placeHolder="Priority " formControlName="priority"
@@ -189,8 +189,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Notify assignee</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Notify assignee</label>
+            <div class="col-lg-8 col-xl-9">
               <label class="checkbox">
                 <input type="checkbox" class="checkbox__input" formControlName="notify_assignee">
                 <span class="checkbox__checkmark"></span>
@@ -198,8 +198,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Status</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Status</label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
                 placeHolder="Status" formControlName="status"
@@ -220,8 +220,8 @@
 
         <nb-tab tabTitle="Additional Details ">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Attachments</label>
-                <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Attachments</label>
+                <div class="col-lg-8 col-xl-9">
                   <input type="hidden" id="attachments" class="form-control" formControlName="attachments">
 
                   <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
@@ -229,8 +229,8 @@
                 </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Image</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Image</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="hidden" id="images" class="form-control" formControlName="images">
 
                   <input type="file" id="attachImages" #attachimages multiple (change)="imageAdded($event)">
@@ -238,8 +238,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Note</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Note</label>
+            <div class="col-lg-8 col-xl-9">
               <textarea class="form-control" placeholder="Note" formControlName="note">
               </textarea>
             </div>

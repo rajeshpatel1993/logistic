@@ -6,9 +6,9 @@
         <nb-tab tabTitle="Identification" class="identification">
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Type<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Type<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" (selected)='selectVehicleType($event)'
                 placeHolder="Enter the Vehicle Type" formControlName="vehicle_type"
@@ -27,9 +27,9 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Name<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span
               class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleNamesData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
                 placeHolder="Enter the Vehicle Name" formControlName="vehicle"
@@ -48,22 +48,22 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Reg No</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Reg No</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" value="{{vehicleRegNo}}" class="form-control" placeholder="Vehicle Reg No" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Code</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Code</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" value="{{vehicleCode}}" class="form-control" placeholder="Vehicle Code" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Image</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Image</label>
+            <div class="col-lg-8 col-xl-9">
               <div class="assignImage">
                 <img [src]="vehicleImage" alt="" class="img-thumbnail">
               </div>
@@ -73,8 +73,8 @@
    
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Vehicle Detail</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Detail</label>
+            <div class="col-lg-8 col-xl-9">
               
               <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" readonly>
             </div>
@@ -83,9 +83,9 @@
 
         <nb-tab tabTitle="Service Task & Repeating Schedule">
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Service Type<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Service Type<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="serviceTypesData" [searchKeyword]="keyword" (selected)='selectEvent($event)'
                 placeHolder="Enter the Service Type" formControlName="service_type"
@@ -105,16 +105,16 @@
 
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Odometer</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">Odometer</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text"  class="form-control" placeholder="Odometer" formControlName="odometer" >
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Completion Date & Time<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Completion Date & Time<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
          
 
               <input class="form-control" nbInput placeholder="Completion Date & Time" [nbDatepicker]="completiondatetime" formControlName="completion_date_time">
@@ -129,9 +129,9 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Start Date<span
+            <label class="col-lg-4 col-xl-3 col-form-label">Start Date<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <input class="form-control" nbInput placeholder="Start Date" [nbDatepicker]="startdate" formControlName="start_date">
               <nb-datepicker #startdate></nb-datepicker>
 
@@ -142,40 +142,40 @@
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">vendor</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">vendor</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text"  class="form-control" placeholder="Vendor" formControlName="vendor" >
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">reference</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">reference</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text"  class="form-control" placeholder="Reference" formControlName="reference" >
             </div>
           </div>
 
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">description</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">description</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text"  class="form-control" placeholder="Description" formControlName="description" >
             </div>
           </div>
 
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">amount</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">amount</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text"  class="form-control" placeholder="Amount" formControlName="amount" >
             </div>
           </div>
      
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Attachments <span
+            <label class="col-lg-4 col-xl-3 col-form-label">Attachments <span
                 class="star">*</span></label>
-                <div class="col-sm-9">
+                <div class="col-lg-8 col-xl-9">
                   <input type="hidden" id="attachments" class="form-control" formControlName="attachments">
 
                   <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
@@ -185,9 +185,9 @@
 
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">Images <span
+            <label class="col-lg-4 col-xl-3 col-form-label">Images <span
                 class="star">*</span></label>
-                <div class="col-sm-9">
+                <div class="col-lg-8 col-xl-9">
                   <input type="hidden" id="images" class="form-control" formControlName="images">
 
                   <input type="file" id="attachImages" #attachimages multiple (change)="fileAdded($event)">
@@ -197,9 +197,9 @@
 
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">In charge<span
+            <label class="col-lg-4 col-xl-3 col-form-label">In charge<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEvent($event)'
                 placeHolder="Enter the Employee" formControlName="in_charge"
@@ -219,8 +219,8 @@
 
 
           <div class="form-group row">
-            <label class="col-sm-3 col-form-label">comments</label>
-            <div class="col-sm-9">
+            <label class="col-lg-4 col-xl-3 col-form-label">comments</label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text"  class="form-control" placeholder="Comments" formControlName="comment" >
             </div>
           </div>

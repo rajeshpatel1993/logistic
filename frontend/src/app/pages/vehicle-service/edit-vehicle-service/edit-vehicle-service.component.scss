@@ -38,20 +38,7 @@
         }
     }
 
-    .tabset {
-        .tab {
-            &.active {
-                .tab-link {
-                    background-color: #fff;
-                }
-            }
-
-            .tab-link {
-                font-size: 14px;
-            }
-        }
-    }
-
+    
     .ng-autocomplete {
         width: 100%;
         
@@ -91,4 +78,18 @@
 
 .autocomplete-container .input-container input {
     padding: 20px;
+}
+.tabset {
+    .tab {
+        text-align: center;
+        &.active {
+            .tab-link {
+                background-color: #fff;
+            }
+        }
+
+        .tab-link {
+            font-size: 14px;
+        }
+    }
 }
