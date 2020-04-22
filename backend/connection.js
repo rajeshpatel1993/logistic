@@ -7,6 +7,8 @@ let server_port = config["app"].port;
 
 
 // console.log(host);
+// let connUri = `mongodb+srv://${db_username}:${db_password}@${db_uri}`;
+// console.log(connUri);
 
 mongoose.connect(`mongodb+srv://${db_username}:${db_password}@${db_uri}`, {useNewUrlParser: true, useUnifiedTopology: true})
     .then(()=> console.log('connected to Mongodb..'))

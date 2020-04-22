@@ -27,13 +27,16 @@ export class AddComplaintComponent implements OnInit {
   public vehicleCode: String;
   public vehicleImage: String;
   public selectedFiles: any[] = [];
+  public selectedImages: any[] = [];
   public vehicleDetail:String;
+  public employeeLists:any = [];
   public msgObj ={};
   public dialogBox : boolean = false;
   public submitted = false;
   public reportedData: [{'id': '1','name': 'a'}];
-  public priorityData:[];
-  public statusData: [];
+  public priorityData:any[] = [];
+  public statusData: any[];
+  
   
 
 
@@ -46,8 +49,10 @@ export class AddComplaintComponent implements OnInit {
 
   ngOnInit() {
     this.loadVehiclesTypes();
-    this.createForm();
     this.loadvehicleIssueStatus();
+    this.loadPriorityStatus();
+    this.loadEmployee();
+    this.createForm();
   }
 
   getMsg(val){
@@ -64,16 +69,16 @@ export class AddComplaintComponent implements OnInit {
       note: [''],
       reported_date: ['', Validators.required],
       reported_time: ['', Validators.required],
-      reported: ['', Validators.required],
+      reportedBy: ['', Validators.required],
+      assignTo: ['', Validators.required],
+      summary: ['', Validators.required],
+      description: [''],
+      odometer: [''],
       priority: [''],
       status: [''],
       attachments : [this.billFileUniqueId],
       images: [this.imageFileUniqueId],
-      assign_to: ['', Validators.required],
-      summary: ['', Validators.required],
-      description: [''],
-      odometer: [''],
-      notify: [''],
+      notify_assignee: ['']
 
     }
     this.complaintForm = this.fb.group(group);
@@ -143,6 +148,21 @@ export class AddComplaintComponent implements OnInit {
 
 
 
+  loadEmployee(){
+    this.vehicleService.loadEmployee().subscribe((employeesData:any) => {
+      let employeeData = employeesData.data;
+      employeeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.firstName;
+        this.employeeLists.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+
   public loadVehiclesTypes(){
     this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
       let vehicleTypeData = vehicleType.data;
@@ -158,28 +178,42 @@ export class AddComplaintComponent implements OnInit {
     });
   }
   
+
+  public loadPriorityStatus(){
+    this.complaintService.loadPriorityStatus().subscribe((prData:any) => {
+      let priorityListData = prData.data;
+      priorityListData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.priorityStatus;
+        this.priorityData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
   
-  addNotes(){
+  addComplain(){
     console.log(this.complaintForm.value);
-    this.submitted = true;
-    if (this.complaintForm.invalid) {
-      alert("Please fill all required field");
-      return;
-    }
+    // this.submitted = true;
+    // if (this.complaintForm.invalid) {
+    //   alert("Please fill all required field");
+    //   return;
+    // }
     
-    // console.log(this.vehicleServiceForm.value);
-    this.complaintService.addNote(this.complaintForm.value).subscribe((data)=>{
-      this.msgObj["type"] = "success";
-      this.msgObj["message"] = "successfully Added";
-      this.dialogBox = true;
+    // // console.log(this.vehicleServiceForm.value);
+    // this.complaintService.addNote(this.complaintForm.value).subscribe((data)=>{
+    //   this.msgObj["type"] = "success";
+    //   this.msgObj["message"] = "successfully Added";
+    //   this.dialogBox = true;
 
-      setTimeout( ()=> {
-        this.router.navigateByUrl('/pages/notes/list');
-    }, 2000);
+    //   setTimeout( ()=> {
+    //     this.router.navigateByUrl('/pages/notes/list');
+    // }, 2000);
 
 
 
-    },(error)=>{});
+    // },(error)=>{});
   
   }
 
@@ -190,6 +224,15 @@ export class AddComplaintComponent implements OnInit {
       }
     }
   }
+
+  imageAdded(event) {
+    if(event.target.files.length){
+      for(let i=0 ; i < event.target.files.length ;i++){ 
+        this.selectedImages.push(<File>event.target.files[i]);
+      }
+    }
+  }
+
 
   uploadBills(){
     // console.log(this.selectedFiles);
@@ -222,9 +265,9 @@ export class AddComplaintComponent implements OnInit {
    let formD = new FormData();
    formD.append('fileId', this.imageFileUniqueId);
    formD.append('typeoffile', "images");
-    if(this.selectedFiles.length){
-      for(let i=0 ; i < this.selectedFiles.length ; i++){
-        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
+    if(this.selectedImages.length){
+      for(let i=0 ; i < this.selectedImages.length ; i++){
+        formD.append('files', this.selectedImages[i],this.selectedImages[i].name);
       }
     }
 
