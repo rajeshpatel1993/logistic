@@ -161,6 +161,8 @@
     .template{
         width: 120px;
         float: left;
+        white-space: normal;
+        word-break: break-all;
         img{
             width: 100%;
         }

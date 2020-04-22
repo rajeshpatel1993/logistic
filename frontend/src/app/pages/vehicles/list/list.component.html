@@ -17,7 +17,7 @@
               <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
                 (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
-                [notFoundTemplate]="notFoundTemplate">
+                [notFoundTemplate]="notFoundTemplate" autofocus>
               </ng-autocomplete>
 
               <ng-template #itemTemplate let-item>

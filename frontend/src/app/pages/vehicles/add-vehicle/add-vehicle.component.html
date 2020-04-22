@@ -1,11 +1,11 @@
 <div class="VehicleAddTab">
   <form [formGroup]="vehicleForm" novalidate>
     <div class="form-group row m-0 mb-3 vehbgcolor">
-      <label for="vehicletype" class="col-sm-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
-      <div class="col-sm-9">
+      <label for="vehicletype" class="col-lg-4 col-xl-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
+      <div class="col-lg-8 col-xl-9">
         <div class="ng-autocomplete">
           <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
-            (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+            (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" (inputFocused)='onFocused($event)'>
           </ng-autocomplete>
 
           <ng-template #itemTemplate let-item>
@@ -24,9 +24,9 @@
 
         <nb-tab tabTitle="Identification" class="identification">
           <div class="form-group row">
-            <label for="vehicledetails" class="col-sm-3 col-form-label">Vehicle Details<span
+            <label for="vehicledetails" class="col-lg-4 col-xl-3 col-form-label">Vehicle Details<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
 
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleDetailsData" [itemTemplate]="itemTemplate1"
@@ -61,8 +61,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="vehiclecode" class="col-sm-3 col-form-label">Vehicle Code<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehiclecode" class="col-lg-4 col-xl-3 col-form-label">Vehicle Code<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code"
                 formControlName="vehicleCode" readonly>
 
@@ -79,8 +79,8 @@
         </nb-tab>
         <nb-tab tabTitle="Specification">
           <div class="form-group row">
-            <label for="vehiclename" class="col-sm-3 col-form-label">Vehicle Name<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="vehiclename" class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="vehiclename" class="form-control" placeholder="Vehicle Name"
                 formControlName="vehicleName">
               <div class="errormsg" *ngIf="f.vehicleName.invalid && (f.vehicleName.dirty || f.vehicleName.touched)">
@@ -95,8 +95,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="regno" class="col-sm-3 col-form-label">Reg No<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="regno" class="col-lg-4 col-xl-3 col-form-label">Reg no/serial nos<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="regno" class="form-control" placeholder="Reg No" formControlName="regNo">
               <div class="errormsg" *ngIf="f.regNo.invalid && (f.regNo.dirty || f.regNo.touched)">
                 Reg no is required
@@ -106,8 +106,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="brand" class="col-sm-3 col-form-label">Brand<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="brand" class="col-lg-4 col-xl-3 col-form-label">Brand<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="brandsList" [itemTemplate]="itemTemplate3" formControlName="brand"
                   [notFoundTemplate]="notFoundTemplate3" [searchKeyword]="keyword" placeHolder="Enter the Brand"
@@ -131,8 +131,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="make" class="col-sm-3 col-form-label">Model<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="make" class="col-lg-4 col-xl-3 col-form-label">Model<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="modelsList" [itemTemplate]="itemTemplate2" formControlName="model"
                   [notFoundTemplate]="notFoundTemplate2" [searchKeyword]="keyword" placeHolder="Enter the Model">
@@ -154,8 +154,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="color" class="col-sm-3 col-form-label">Color<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="color" class="col-lg-4 col-xl-3 col-form-label">Color<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="colorsList" [itemTemplate]="itemTemplate4" formControlName="color"
                   [notFoundTemplate]="notFoundTemplate4" [searchKeyword]="keyword" placeHolder="Enter the Color">
@@ -177,8 +177,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="manufacture" class="col-sm-3 col-form-label">Manufacture Year<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="manufacture" class="col-lg-4 col-xl-3 col-form-label">Manufacture Year<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="manufacture" placeholder="Manufacture Year" class="form-control"
                 formControlName="manufacture_year">
 
@@ -190,8 +190,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="engine" class="col-sm-3 col-form-label">Engine No<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="engine" class="col-lg-4 col-xl-3 col-form-label">Engine No<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="engine" class="form-control" placeholder="Engine No" formControlName="engine_no">
 
               <div class="errormsg" *ngIf="f.engine_no.invalid && (f.engine_no.dirty || f.engine_no.touched)">
@@ -201,8 +201,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="chassis" class="col-sm-3 col-form-label">Chassis No<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="chassis" class="col-lg-4 col-xl-3 col-form-label">Chassis No<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="chassis" class="form-control" placeholder="Chassis No" formControlName="chasis_no">
 
               <div class="errormsg" *ngIf="f.chasis_no.invalid && (f.chasis_no.dirty || f.chasis_no.touched)">
@@ -211,8 +211,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="purchase" class="col-sm-3 col-form-label">Purchase Date<span class="star"></span></label>
-            <div class="col-sm-9">
+            <label for="purchase" class="col-lg-4 col-xl-3 col-form-label">Purchase Date<span class="star"></span></label>
+            <div class="col-lg-8 col-xl-9">
               <!-- <input type="text" id="purchase" class="form-control" placeholder="Purchase Date"
                 formControlName="purchase_date"> -->
 
@@ -228,8 +228,8 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="warranty" class="col-sm-3 col-form-label"> Warranty (Date)<span class="star"></span></label>
-            <div class="col-sm-9">
+            <label for="warranty" class="col-lg-4 col-xl-3 col-form-label"> Warranty (Date)<span class="star"></span></label>
+            <div class="col-lg-8 col-xl-9">
               <!-- <input type="text" id="warranty" class="form-control" placeholder="Warranty Period"
                 formControlName="warranty_period"> -->
 
@@ -248,9 +248,9 @@
 
 
           <div class="form-group row">
-            <label for="fuel-measurment" class="col-sm-3 col-form-label">Fuel Measurement<span
+            <label for="fuel-measurment" class="col-lg-4 col-xl-3 col-form-label">Fuel Measurement<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="fuelMeasurementList" [itemTemplate]="itemTemplate6"
                   formControlName="fuelMeausrement" [notFoundTemplate]="notFoundTemplate6" [searchKeyword]="keyword"
@@ -277,8 +277,8 @@
 
 
           <div class="form-group row">
-            <label for="fuel" class="col-sm-3 col-form-label">Fuel Type<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="fuel" class="col-lg-4 col-xl-3 col-form-label">Fuel Type<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="fuelTypeList" [itemTemplate]="itemTemplate5" formControlName="fuel_type"
                   [notFoundTemplate]="notFoundTemplate5" [searchKeyword]="keyword" placeHolder="Enter the Fuel Type">
@@ -303,9 +303,9 @@
 
 
           <div class="form-group row">
-            <label for="fuel-measurment" class="col-sm-3 col-form-label">Work Location<span
+            <label for="fuel-measurment" class="col-lg-4 col-xl-3 col-form-label">Work Location<span
                 class="star">*</span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="workLocationsList" [itemTemplate]="itemTemplate10"
                   formControlName="workLocation" [notFoundTemplate]="notFoundTemplate10" [searchKeyword]="keyword"
@@ -334,9 +334,9 @@
 
           <div *ngIf="showExtraField">
             <div class="form-group row">
-              <label for="insurancepolicy" class="col-sm-3 col-form-label">Insurance Policy No<span
+              <label for="insurancepolicy" class="col-lg-4 col-xl-3 col-form-label">Insurance Policy No<span
                   class="star">*</span></label>
-              <div class="col-sm-9">
+              <div class="col-lg-8 col-xl-9">
                 <input type="text" id="insurancepolicy" class="form-control" placeholder="Insurance Policy No"
                   formControlName="insurance_policy_no">
                 <div class="errormsg"
@@ -347,9 +347,9 @@
             </div>
 
             <div class="form-group row">
-              <label for="insurance_amount" class="col-sm-3 col-form-label">Insurance Amount<span
+              <label for="insurance_amount" class="col-lg-4 col-xl-3 col-form-label">Insurance Amount<span
                   class="star">*</span></label>
-              <div class="col-sm-9">
+              <div class="col-lg-8 col-xl-9">
                 <input type="text" id="insurance_amount" class="form-control" placeholder="Insurance Amount"
                   formControlName="insurance_amount">
                 <div class="errormsg"
@@ -361,9 +361,9 @@
 
 
             <div class="form-group row">
-              <label for="policy_expiry" class="col-sm-3 col-form-label">Policy Expiry<span
+              <label for="policy_expiry" class="col-lg-4 col-xl-3 col-form-label">Policy Expiry<span
                   class="star">*</span></label>
-              <div class="col-sm-9">
+              <div class="col-lg-8 col-xl-9">
                 <!-- <input type="text" id="policy_expiry" class="form-control" formControlName="policy_expiry"
                   placeholder="Policy expiry"> -->
 
@@ -379,8 +379,8 @@
 
 
             <div class="form-group row">
-              <label for="agent" class="col-sm-3 col-form-label">Insurance Agent<span class="star">*</span></label>
-              <div class="col-sm-9">
+              <label for="agent" class="col-lg-4 col-xl-3 col-form-label">Insurance Agent<span class="star">*</span></label>
+              <div class="col-lg-8 col-xl-9">
                 <div class="ng-autocomplete">
                   <ng-autocomplete [data]="agentsList" [itemTemplate]="itemTemplate6" formControlName="insurance_agent"
                     [notFoundTemplate]="notFoundTemplate6" [searchKeyword]="keyword"
@@ -406,8 +406,8 @@
             </div>
 
             <div class="form-group row">
-              <label for="roadtaxno" class="col-sm-3 col-form-label">Road Tax No<span class="star">*</span></label>
-              <div class="col-sm-9">
+              <label for="roadtaxno" class="col-lg-4 col-xl-3 col-form-label">Road Tax No<span class="star">*</span></label>
+              <div class="col-lg-8 col-xl-9">
                 <input type="text" id="roadtaxno" class="form-control" placeholder="Road Tax No"
                   formControlName="road_tax_no">
                 <div class="errormsg"
@@ -418,8 +418,8 @@
             </div>
 
             <div class="form-group row">
-              <label for="roadtaxamt" class="col-sm-3 col-form-label">Road Tax Amount<span class="star">*</span></label>
-              <div class="col-sm-9">
+              <label for="roadtaxamt" class="col-lg-4 col-xl-3 col-form-label">Road Tax Amount<span class="star">*</span></label>
+              <div class="col-lg-8 col-xl-9">
                 <input type="text" id="roataxamt" class="form-control" placeholder="Road Tax Amount"
                   formControlName="road_tax_amount">
                 <div class="errormsg"
@@ -430,9 +430,9 @@
             </div>
 
             <div class="form-group row">
-              <label for="roadtaxexpiry" class="col-sm-3 col-form-label">Road Tax Expiry<span
+              <label for="roadtaxexpiry" class="col-lg-4 col-xl-3 col-form-label">Road Tax Expiry<span
                   class="star">*</span></label>
-              <div class="col-sm-9">
+              <div class="col-lg-8 col-xl-9">
                 <!-- <input type="text" id="roadtaxexpiry" class="form-control" placeholder="Road Tax Expiry"
                   formControlName="road_tax_expiry"> -->
 
@@ -451,8 +451,8 @@
 
 
           <div class="form-group row">
-            <label for="ownership" class="col-sm-3 col-form-label">Ownership Status<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="ownership" class="col-lg-4 col-xl-3 col-form-label">Ownership Status<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="ownershipList" [itemTemplate]="itemTemplate7"
                   formControlName="ownership_status" [notFoundTemplate]="notFoundTemplate7" [searchKeyword]="keyword"
@@ -477,8 +477,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="note" class="col-sm-3 col-form-label">Note<span class="star"></span></label>
-            <div class="col-sm-9">
+            <label for="note" class="col-lg-4 col-xl-3 col-form-label">Note<span class="star"></span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="text" id="note" class="form-control" placeholder="Note" formControlName="note">
               <!-- <div class="errormsg" *ngIf="f.note.invalid && (f.note.dirty || f.note.touched)">
                 Note is required
@@ -488,8 +488,8 @@
           </div>
 
           <div class="form-group row">
-            <label for="status" class="col-sm-3 col-form-label">Status<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="status" class="col-lg-4 col-xl-3 col-form-label">Status<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <select class="form-control" id="status" formControlName="vehicleStatus">
                 <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
               </select>
@@ -503,9 +503,9 @@
           <div class="form-group row">
             <input type="hidden" id="bill_file_unique_id" class="form-control" formControlName="bill_file_unique_id">
 
-            <label for="attachdoc" class="col-sm-3 col-form-label">Attach Documents(Bill)<span
+            <label for="attachdoc" class="col-lg-4 col-xl-3 col-form-label">Attach Documents(Bill)<span
                 class="star"></span></label>
-            <div class="col-sm-9">
+            <div class="col-lg-8 col-xl-9">
               <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
               <button (click)="uploadBills()" class="btn btn-primary float-right">Upload</button>
             </div>
@@ -513,17 +513,17 @@
 
 
           <div class="form-group row">
-            <label for="attachimg" class="col-sm-3 col-form-label">Attach Image<span class="star">*</span></label>
-            <div class="col-sm-9">
+            <label for="attachimg" class="col-lg-4 col-xl-3 col-form-label">Attach Image<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
               <input type="hidden" id="image_file_unique_id" class="form-control"
                 formControlName="image_file_unique_id">
 
               <div class="row no-gutters">
-                <div class="col-xs-12 col-sm-12 col-md-8">
+                <div class="col-xs-12 col-lg-12 col-xl-8">
                   <ngx-img (onSelect)="onSelect($event)" (onReset)="onReset()" [config]="{ crop: [ { ratio: 1.5 } ] }">
                   </ngx-img>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-4 mt-1">
+                <div class="col-xs-12 col-lg-12 col-xl-4 mt-1">
                   <div *ngIf="imgSrc.length" class="container mb-3">
                     <h5>Preview</h5>
                     <div class="row">
@@ -532,8 +532,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="btn btn-primary float-right" (click)="uploadImage()">Upload Image<span
-                      class="star">*</span></button>
+                  <button class="btn btn-primary float-right" (click)="uploadImage()">Upload Image</button>
                 </div>
               </div>
             </div>

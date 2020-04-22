@@ -231,6 +231,8 @@ a:focus {
 .star {
   color: #f00;
   vertical-align: super;
+  font-size: 24px;
+  line-height: 1px;
 }
 
 .logiVehicle {
@@ -939,4 +941,14 @@ a:focus {
 }
 .template img {
   width: 100%;
+}
+.innerTable{
+  tr{
+    th{
+      width: 100px;
+      &:first-child{
+        width: 200px;
+      }
+    }
+  }
 }
