@@ -14,3 +14,19 @@
         }
     }
 }
+.table{
+    tr{
+        td{
+            width: 100px;
+            white-space: normal;
+            word-wrap: break-all;
+            &:first-child{
+                width: 200px;
+            }
+        }
+        &:hover{
+            background-color: transparent;
+        }
+    }
+    
+}

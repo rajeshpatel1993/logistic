@@ -63,11 +63,11 @@
                 <td>{{item.remainderTypeData[0].name}}</td>
                 <td>{{item.remainderName}}</td>
                 <td>{{item.subject}}</td>
-                <td>{{item.expirationDate | date}}</td>
+                <td><i class="fas fa-bell text-danger"></i> {{item.expirationDate | date}} <i class="fas fa-calendar-alt text-info"></i></td>
                 <td>{{item.remainderInterval}} hour</td>
                 <td> <ul>
                   <li *ngFor="let email of item.emailList">
-                    {{email}}
+                    <p class="p-0 m-0 FontSmall">{{email}}</p>
                   </li>
                 </ul></td>
                 <td>{{item.afterexpiration}}</td>
