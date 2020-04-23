@@ -102,6 +102,24 @@ export class AddComplaintComponent implements OnInit {
 
   }
 
+
+  selectEventReportedBy(item){
+
+  }
+
+  selectAssignTo(item){
+
+
+  }
+
+  selectPriority(item){
+
+  }
+
+  selectStaus(item){
+    
+  }
+
   selectVehicleType(item){
     let vehicleTypeId = item.id;
     this.vehicleservService.loadVehiclesByTypeId(vehicleTypeId).subscribe((vehicleData)=>{
@@ -194,26 +212,27 @@ export class AddComplaintComponent implements OnInit {
 
   
   addComplain(){
-    console.log(this.complaintForm.value);
-    // this.submitted = true;
-    // if (this.complaintForm.invalid) {
-    //   alert("Please fill all required field");
-    //   return;
-    // }
+    // console.log(this.complaintForm.value);
+    this.submitted = true;
+    if (this.complaintForm.invalid) {
+      alert("Please fill all required field");
+      return;
+    }
     
-    // // console.log(this.vehicleServiceForm.value);
-    // this.complaintService.addNote(this.complaintForm.value).subscribe((data)=>{
-    //   this.msgObj["type"] = "success";
-    //   this.msgObj["message"] = "successfully Added";
-    //   this.dialogBox = true;
+    this.complaintService.addComplain(this.complaintForm.value).subscribe((data)=>{
 
-    //   setTimeout( ()=> {
-    //     this.router.navigateByUrl('/pages/notes/list');
-    // }, 2000);
+      // console.log(data);
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully Added";
+      this.dialogBox = true;
+
+      setTimeout( ()=> {
+        this.router.navigateByUrl('/pages/complaint/list');
+    }, 2000);
 
 
 
-    // },(error)=>{});
+    },(error)=>{});
   
   }
 

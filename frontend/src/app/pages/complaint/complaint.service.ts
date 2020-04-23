@@ -11,8 +11,8 @@ export class ComplaintService {
 
   public baseUrl = environment.baseUrl;
 
-  addNote(data){
-    return this.http.post(this.baseUrl+"/notes/add",data);
+  addComplain(data){
+    return this.http.post(this.baseUrl+"/issues/add",data);
   }
 
 

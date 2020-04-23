@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 
 const {File} = require("../models/files");
 const {PriorityStatus} = require("../models/priorityStatus");
+const {Issue} = require("../models/issue");
+
 const paginate = require('jw-paginate');
 
 
@@ -23,18 +25,7 @@ router.get("/getPriorityStatus", async(req,res)=>{
 
 
 
-router.get("/paymentmodes", async(req,res)=>{
-    try{
-        let paymentModeData = await fuelEntryMode.find();
-        let responseData = {};
-        responseData["status"] = 200;
-        responseData["data"] = paymentModeData;
-        res.status(200).json(responseData);
 
-    }catch(error){
-        console.log(error);
-    }
-});
 
 
 router.post("/deleteFuelEntry", async (req, res) => {
@@ -60,35 +51,34 @@ router.post("/add", async (req, res)=> {
     
         let imgUrl = "";
         let billUrls = "";
-        let {vehicleTypef, vehiclename,expiration_time, expiration_date, amount, odometer, modeofpayment,
-            cardno, couponfrom, couponto, couponvalue, type, priceunit, unit, vendorname,drivername,
-            comment,bill_file_unique_id, image_file_unique_id} = req.body;
+        let {vehicle,note, reported_date, reported_time, reportedBy, assignTo,
+            summary, description, odometer, priority, status, attachments, images, notify_assignee} = req.body;
            
     
-        let fuelEntryImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
+        let issueImage = await File.find({fileId:images }).select("s3Urls");
         //  console.log(vehicleImage)
-            if(fuelEntryImage.length > 0){
-            imgUrl = fuelEntryImage[0].s3Urls[0];
+            if(issueImage.length > 0){
+            imgUrl = issueImage[0].s3Urls;
             }
 
-        let fuelBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+        let issueBills = await File.find({fileId:attachments }).select("s3Urls");
     
-        if(fuelBills.length > 0){
-            billUrls = fuelBills[0].s3Urls;
+        if(issueBills.length > 0){
+            issueBills = issueBills[0].s3Urls;
         }
     
-        let savedata = {vehicle:vehiclename.id , 
-            expiration_date : expiration_date, expiration_time : expiration_time, amount : amount,
-            odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
-            couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
-            type: type,priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivername.id,
-            comment: comment,image_file_unique_id, bill_file_unique_id, imageUrl: imgUrl,billUrl:billUrls
+        let savedata = {vehicle:vehicle.id , 
+            reported_date : reported_date, reported_time : reported_time, reportedBy : reportedBy.id,
+            assignTo: assignTo.id, summary : summary , description : description,
+            odometer : odometer,  priority: priority.id, notify_assignee: notify_assignee,
+            status: status.id,note: note,imageUrl:issueImage,billUrl:issueBills,
+            image_file_unique_id:images, bill_file_unique_id:attachments
         
         };
     
         try{
-            const fuel_instance = new FuelEntry(savedata);
-            let sData = await fuel_instance.save();
+            const issueInstance = new Issue(savedata);
+            let sData = await issueInstance.save();
             res.status(200).send(sData);
             
         }catch(err){
@@ -98,8 +88,8 @@ router.post("/add", async (req, res)=> {
      
         // res.status(200).json(req.body);
     }catch(err){
-        res.status(400).send(err);
-        // console.log(err);
+        // res.status(400).send(err);
+        console.log(err);
     }
     
     
