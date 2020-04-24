@@ -108,11 +108,11 @@ router.post("/add", async (req, res)=> {
         try {
            
     
-            const nooitems = await FuelEntry.countDocuments({"isDeleted": +0});
+            const nooitems = await Issue.countDocuments({"isDeleted": +0});
 
             const pager = paginate(nooitems, page,resPerPage);
     
-           let fuelEntryData = await FuelEntry.aggregate([{
+           let issueData = await Issue.aggregate([{
     
             $match: {
                 "isDeleted":0
@@ -132,27 +132,52 @@ router.post("/add", async (req, res)=> {
         }
             , {
                 $lookup: {
-                    from: "fuelEntryMode", // collection to join
-                    let: { "fuelEntryId": "$modeofpayment" },
+                    from: "employees", // collection to join
+                    let: { "empId": "$reportedBy" },
                     pipeline: [
-                        { "$match": { "$expr": { "$eq": ["$_id", "$$fuelEntryId"] }}},
-                        { "$project": { "fuelEntryMode":1, "_id": 0 }}
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
                     ],
-                    as: "paymentModeData"// output array field
+                    as: "employeedataReported"// output array field
                 }
             },
 
             {
                 $lookup: {
                     from: "employees", // collection to join
-                    let: { "employeesId": "$driver" },
+                    let: { "empId": "$assignTo" },
                     pipeline: [
-                        { "$match": { "$expr": { "$eq": ["$_id", "$$employeesId"] }}},
-                        { "$project": { "firstName":1,"empImage":1, "_id": 0 }}
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
                     ],
-                    as: "employeeData"// output array field
+                    as: "employeedataAssignTo"// output array field
                 }
             },
+
+            {
+                $lookup: {
+                    from: "priorityStatus", // collection to join
+                    let: { "priorityId": "$priority" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$priorityId"] }}},
+                        { "$project": { "priorityStatus":1, "priorityColor": 1}}
+                    ],
+                    as: "priorityData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "vehicleIssueStatus", // collection to join
+                    let: { "statusId": "$status" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$statusId"] }}},
+                        { "$project": { "vehicleIssueStatus":1}}
+                    ],
+                    as: "issueStatusData"// output array field
+                }
+            },
+
             
             {
                 $skip: skipd
@@ -167,7 +192,7 @@ router.post("/add", async (req, res)=> {
             let responseData = {};
             responseData["status"] = 200;
             responseData["page"] = pager;
-            responseData["data"] = fuelEntryData;
+            responseData["data"] = issueData;
             res.status(200).json(responseData);
         } catch (error) {
             console.log(error);

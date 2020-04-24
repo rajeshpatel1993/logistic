@@ -16,8 +16,8 @@ export class ComplaintService {
   }
 
 
-  loadNotes(page){
-    return this.http.get(this.baseUrl+"/notes?page="+page);
+  loadComplains(page){
+    return this.http.get(this.baseUrl+"/issues?page="+page);
   }
 
   loadNote(noteId){
