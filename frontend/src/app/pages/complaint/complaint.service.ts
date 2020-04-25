@@ -25,8 +25,8 @@ export class ComplaintService {
   }
 
 
-  deleteNote(data) {
-    return this.http.post(this.baseUrl+"/notes/deleteNote", data);
+  deleteComplaint(data) {
+    return this.http.post(this.baseUrl+"/issues/deleteIssues", data);
   }
 
   updateNote(data){

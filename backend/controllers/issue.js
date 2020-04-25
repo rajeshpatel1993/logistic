@@ -28,13 +28,13 @@ router.get("/getPriorityStatus", async(req,res)=>{
 
 
 
-router.post("/deleteFuelEntry", async (req, res) => {
+router.post("/deleteIssues", async (req, res) => {
     try{
 
         let {id} = req.body;
         const filter = { _id: mongoose.Types.ObjectId(id) };
         const update = { isDeleted: 1 };
-        let updateFuel = await FuelEntry.findOneAndUpdate(filter, update);
+        let updateFuel = await Issue.findOneAndUpdate(filter, update);
         res.status(200).json({"msg":"saved successfully"});
         // console.log(updateVehicle);
 

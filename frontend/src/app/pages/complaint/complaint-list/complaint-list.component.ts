@@ -62,6 +62,19 @@ export class ComplaintListComponent implements OnInit {
   }
 
 
+  deleteIssue(id){
+    this.complaintService.deleteComplaint({id:id}).subscribe((d) =>{
+      this.activeRoute.queryParams.subscribe(queryParams => {
+        this.loadComplaintList(queryParams.page);
+      });
+
+     
+    },(error) => {
+      console.log(error);
+    }
+    );
+  }
+
 
 
 }

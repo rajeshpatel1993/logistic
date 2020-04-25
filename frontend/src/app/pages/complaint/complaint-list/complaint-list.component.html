@@ -18,7 +18,9 @@
                 <th>Issue</th>
                 <th>Status</th>
                 <th>Priority</th>
-                <th>Assigned</th>
+                <th>Employee Assign To</th>
+                <th>Employee Reported To</th>
+
                 <th>Action</th>
               </tr>
             </thead>
@@ -61,10 +63,24 @@
 
                 <td>
 
-                  <ngx-assigned-vehicle [vehicleId]="item.vehicle"></ngx-assigned-vehicle>
-
+                  <div>
+                    <img [src]="item.employeedataAssignTo[0].empImage" width="200">
+                    <span> {{item.employeedataAssignTo[0].firstName}}</span>
+                  </div>
 
                 </td>
+
+
+
+                <td>
+
+                  <div>
+                    <img [src]="item.employeedataReported[0].empImage" width="200">
+                    <span> {{item.employeedataReported[0].firstName}}</span>
+                  </div>
+
+                </td>
+
 
                 <td>
                   <button class="btn btn-default p-0" (click)="deleteIssue(item._id)">
