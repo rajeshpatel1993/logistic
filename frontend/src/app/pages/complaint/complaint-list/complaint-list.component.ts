@@ -76,5 +76,11 @@ export class ComplaintListComponent implements OnInit {
   }
 
 
+  public editIssues(id){
+    this.router.navigateByUrl('/pages/complaint/edit-issue/'+id);
+
+  }
+
+
 
 }

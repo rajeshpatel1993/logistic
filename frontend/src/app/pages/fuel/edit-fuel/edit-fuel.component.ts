@@ -18,6 +18,7 @@ export class EditFuelComponent implements OnInit {
 
   submitted = false;
   public fuelEntryForm: FormGroup;
+  
   public keyword = 'name';
   public vehicleNamesData:any[] = [];
   public vehicleTypesData = [];

@@ -201,10 +201,10 @@ router.post("/add", async (req, res)=> {
 
 
 
-router.get("/getFuel/:id", async (req, res) => {
+router.get("/getIssue/:id", async (req, res) => {
     const id = req.params.id; //or use req.param('id')
     const filter = { _id: mongoose.Types.ObjectId(id) };
-    const fuelEntry = await FuelEntry.aggregate([{$match:filter},
+    const IssueData = await Issue.aggregate([{$match:filter},
         {
             $lookup: {
                 from: "vehicle", // collection to join
@@ -216,49 +216,60 @@ router.get("/getFuel/:id", async (req, res) => {
                 as: "vehicleData"// output array field
             }
         }
-        // ,
-
-        // {
-        //     $lookup: {
-        //         from: "vehicleType", // collection to join
-        //         let: { "vehicleTypeIdD": "$vehicleData[0].vehicle_typeId" },
-        //         pipeline: [
-        //             { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vehicleTypeIdD"] }}},
-        //             { "$project": { "vehicleType": 1, "_id": 0 }}
-        //         ],
-        //         as: "vehicleTypeData"// output array field
-        //     }
-        // }
-
             , {
                 $lookup: {
-                    from: "fuelEntryMode", // collection to join
-                    let: { "fuelEntryId": "$modeofpayment" },
+                    from: "employees", // collection to join
+                    let: { "empId": "$reportedBy" },
                     pipeline: [
-                        { "$match": { "$expr": { "$eq": ["$_id", "$$fuelEntryId"] }}},
-                        { "$project": { "fuelEntryMode":1 }}
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
                     ],
-                    as: "paymentModeData"// output array field
+                    as: "employeedataReported"// output array field
                 }
             },
 
             {
                 $lookup: {
                     from: "employees", // collection to join
-                    let: { "employeesId": "$driver" },
+                    let: { "empId": "$assignTo" },
                     pipeline: [
-                        { "$match": { "$expr": { "$eq": ["$_id", "$$employeesId"] }}},
-                        { "$project": { "firstName":1,"empImage":1 }}
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
                     ],
-                    as: "employeeData"// output array field
+                    as: "employeedataAssignTo"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "priorityStatus", // collection to join
+                    let: { "priorityId": "$priority" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$priorityId"] }}},
+                        { "$project": { "priorityStatus":1, "priorityColor": 1}}
+                    ],
+                    as: "priorityData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "vehicleIssueStatus", // collection to join
+                    let: { "statusId": "$status" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$statusId"] }}},
+                        { "$project": { "vehicleIssueStatus":1}}
+                    ],
+                    as: "issueStatusData"// output array field
                 }
             }
+
     
     ]);
     
     let responseData = {};
     responseData["status"] = 200;
-    responseData["data"] = fuelEntry;
+    responseData["data"] = IssueData;
     res.status(200).json(responseData);
     
 

@@ -1,0 +1,257 @@
+<div class="VehicleAddTab">
+  <form [formGroup]="complaintForm" (ngSubmit)="updateComplain()" novalidate>
+
+    <div class="row no-gutters">
+      <nb-tabset class="col-12">
+        <nb-tab tabTitle="Identification" class="identification">
+
+          <!-- <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Type<span
+                class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" (selected)='selectVehicleType($event)'
+                placeHolder="Enter the Vehicle Type"
+                  [itemTemplate]="itemTemplate1" [notFoundTemplate]="notFoundTemplate1">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate1 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate1 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span
+              class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" name="vehicleName" readonly [value]="vehicleName" class="form-control"/>
+              <!-- <div class="ng-autocomplete">
+                <ng-autocomplete [data]="vehicleNamesData" [searchKeyword]="keyword" (selected)='selectEventVehicle($event)'
+                placeHolder="Enter the Vehicle Name" formControlName="vehicle"
+                  [itemTemplate]="itemTemplate2" [notFoundTemplate]="notFoundTemplate2">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate2 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate2 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Reg No<span
+              class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" value="{{vehicleRegNo}}" class="form-control" placeholder="Vehicle Reg No" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Code</label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" value="{{vehicleCode}}" class="form-control" placeholder="Vehicle Code" readonly>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Detail<span
+              class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              
+              <input type="text" value="{{vehicleDetail}}" class="form-control" placeholder="Vehicle Detail" readonly>
+            </div>
+          </div>
+
+
+          <div class="form-group row">
+            <img [src]="vehicleImage">
+          </div>
+
+
+        </nb-tab>
+
+        <nb-tab tabTitle="Issue Entry Details ">
+          <div class="form-group row">
+            <label for="datetime" class="col-lg-4 col-xl-3 col-form-label">Reported Date with time<span class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <div class="row no-gutters">
+                <div class="col-12 col-lg-7 col-xl-8">
+                  <input class="form-control" id="datetime" nbInput placeholder="Reported Date" formControlName="reported_date" [nbDatepicker]="expiration">
+                  <nb-datepicker #expiration></nb-datepicker>
+                </div>
+                <div class="col-12 col-lg-5 col-xl-4">
+                  <div class="ngx-timepicker-field-example">
+                    <input [ngxTimepicker]="picker" class="form-control" placeholder="Repoted Time" formControlName="reported_time">
+                    <ngx-material-timepicker #picker></ngx-material-timepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Reported By<span
+              class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEventReportedBy($event)'
+                placeHolder="Reported By" formControlName="reportedBy"
+                  [itemTemplate]="itemTemplate4" [notFoundTemplate]="notFoundTemplate4">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate4 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate4 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label"> Assign To<span
+              class="star">*</span></label>
+     
+
+
+            <div class="col-lg-8 col-xl-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectAssignTo($event)'
+                placeHolder="Assign To" formControlName="assignTo"
+                  [itemTemplate]="itemTemplateassign" [notFoundTemplate]="notFoundTemplateassign">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplateassign let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplateassign let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+
+
+
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Summary<span
+              class="star">*</span></label>
+            <div class="col-lg-8 col-xl-9">
+              <textarea class="form-control" placeholder="" formControlName="summary"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Description</label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" class="form-control" placeholder="" formControlName="description">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Odometer</label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="text" class="form-control" placeholder="" formControlName="odometer">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Priority</label>
+            <div class="col-lg-8 col-xl-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="priorityData" [searchKeyword]="keyword" (selected)='selectPriority($event)'
+                placeHolder="Priority " formControlName="priority"
+                  [itemTemplate]="itemTemplate5" [notFoundTemplate]="notFoundTemplate5">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate5 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate5 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Notify assignee</label>
+            <div class="col-lg-8 col-xl-9">
+              <label class="checkbox">
+                <input type="checkbox" class="checkbox__input" formControlName="notify_assignee">
+                <span class="checkbox__checkmark"></span>
+            </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Status</label>
+            <div class="col-lg-8 col-xl-9">
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" (selected)='selectStaus($event)'
+                placeHolder="Status" formControlName="status"
+                  [itemTemplate]="itemTemplate6" [notFoundTemplate]="notFoundTemplate6">
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate6 let-item>
+                  <a [innerHTML]="item.name"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate6 let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </nb-tab>
+
+        <nb-tab tabTitle="Additional Details ">
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Attachments</label>
+                <div class="col-lg-8 col-xl-9">
+                  <input type="hidden" id="attachments" class="form-control" formControlName="attachments">
+
+                  <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
+                  <button (click)="uploadBills()" type="button" class="btn btn-primary float-right">Upload</button>
+                </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Vehicle Image</label>
+            <div class="col-lg-8 col-xl-9">
+              <input type="hidden" id="images" class="form-control" formControlName="images">
+
+                  <input type="file" id="attachImages" #attachimages multiple (change)="imageAdded($event)">
+                  <button (click)="uploadImages()" type="button" class="btn btn-primary float-right">Upload Image</button>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-lg-4 col-xl-3 col-form-label">Note</label>
+            <div class="col-lg-8 col-xl-9">
+              <textarea class="form-control" placeholder="Note" formControlName="note">
+              </textarea>
+            </div>
+          </div>
+    
+        </nb-tab>
+      </nb-tabset>
+    </div>
+    <div class="row no-gutters mt-3">
+      <div class="col-12 pr-4">
+        <button type="submit"  class="btn btn-primary float-right">Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div *ngIf="dialogBox">
+
+  <ngx-dailog-box (messageToEmit)="getMsg($event)" [msgObj]="msgObj"></ngx-dailog-box>
+</div>

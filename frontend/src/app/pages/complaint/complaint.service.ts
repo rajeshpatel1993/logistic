@@ -20,8 +20,8 @@ export class ComplaintService {
     return this.http.get(this.baseUrl+"/issues?page="+page);
   }
 
-  loadNote(noteId){
-    return this.http.get(this.baseUrl+"/notes/getNote/"+noteId);
+  loadIssue(issueId){
+    return this.http.get(this.baseUrl+"/issues/getIssue/"+issueId);
   }
 
 
