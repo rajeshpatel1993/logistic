@@ -29,8 +29,8 @@ export class ComplaintService {
     return this.http.post(this.baseUrl+"/issues/deleteIssues", data);
   }
 
-  updateNote(data){
-    return this.http.post(this.baseUrl+"/notes/updateNote",data);
+  updateComplain(data){
+    return this.http.post(this.baseUrl+"/issues/updateIssue",data);
   }
 
   loadPriorityStatus(){

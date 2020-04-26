@@ -9,6 +9,79 @@
           <a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/complaint/add-issue">Add Issue</a>
         </div>
       </div>
+
+
+      <form class="formbg-light">
+        <div class="form-row">
+          <!-- <div class="col-xs-12 col-sm-6 my-1">
+            <div class="daterange">
+              <input type="text" ngxDaterangepickerMd [(ngModel)]="dateforvehiclelist" [showCustomRangeLabel]="true"
+                [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [isInvalidDate]="isInvalidDate"
+                [showClearButton]="true" [ngModelOptions]="{standalone: true}" (ngModelChange)="dateRangeChange($event)"
+                placeholder="Select date range..." />
+            </div>
+          </div> -->
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="listVehicles" [searchKeyword]="keyword" placeHolder="Enter the Vehicle name"
+                (selected)='selectEvent($event, "vehicle")'
+               historyIdentifier="listVehicles" [itemTemplate]="itemTemplate"
+                [notFoundTemplate]="notFoundTemplate">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" placeHolder="Enter the Issue"
+                (selected)='selectEvent($event, "issues")' historyIdentifier="vehicleIssueStatusData" [itemTemplate]="itemTemplate1"
+                [notFoundTemplate]="notFoundTemplate1">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate1 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate1 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-3 my-1">
+            <div class="ng-autocomplete">
+              <ng-autocomplete [data]="priorityData" [searchKeyword]="keyword"
+                placeHolder="Enter the  Priority" (selected)='selectEvent($event, "vehiclereg")'
+                historyIdentifier="priorityData" [itemTemplate]="itemTemplate2"
+                [notFoundTemplate]="notFoundTemplate2">
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate2 let-item>
+                <a [innerHTML]="item.name"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate2 let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+            </div>
+          </div>
+  
+
+          <div class="col-xs-12 col-sm-3 my-1">
+            <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary"><i
+                class="fas fa-search"></i> Search</button>
+          </div>
+        </div>
+      </form>
+
+
       <nb-layout-column class="p-0">
         <div class="table-responsive">
           <table class="table table-hover mt-3">
@@ -94,30 +167,29 @@
           </table>
         </div>
         <div class="card-footer pb-0 pt-3 pb-3">
-          <!-- <ul *ngIf="
-          ['pages'] && pager['pages'].length" class="pagination justify-content-center">
+          <ul *ngIf="pager['pages'] && pager['pages'].length" class="pagination justify-content-center">
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item first-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{page: 1}" class="page-link"><i
+              <a [routerLink]="['/pages/complaint/list']" [queryParams]="{page: 1}" class="page-link"><i
                   class="fas fa-angle-double-left"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === 1}" class="page-item previous-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.currentPage - 1 }"
+              <a [routerLink]="['/pages/complaint/list']" [queryParams]="{ page: pager.currentPage - 1 }"
                 class="page-link"><i class="fas fa-angle-left"></i></a>
             </li>
             <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}"
               class="page-item number-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: page }"
+              <a [routerLink]="['/pages/complaint/list']" [queryParams]="{ page: page }"
                 class="page-link">{{page}}</a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item next-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.currentPage + 1 }"
+              <a [routerLink]="['/pages/complaint/list']" [queryParams]="{ page: pager.currentPage + 1 }"
                 class="page-link"><i class="fas fa-angle-right"></i></a>
             </li>
             <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}" class="page-item last-item">
-              <a [routerLink]="['/pages/notes/list']" [queryParams]="{ page: pager.totalPages }"
+              <a [routerLink]="['/pages/complaint/list']" [queryParams]="{ page: pager.totalPages }"
                 class="page-link"><i class="fas fa-angle-double-right"></i></a>
             </li>
-          </ul> -->
+          </ul>
         </div>
 
       </nb-layout-column>

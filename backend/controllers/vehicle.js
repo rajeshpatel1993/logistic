@@ -519,19 +519,6 @@ router.get("/getvehicle/:id", async (req, res) => {
 
     
 
-    // {
-
-    //     $lookup: {
-    //         from: "vehicleStatus", // collection to join
-    //         let: { "vehicleStatusID": "$vehicleStatusId" },
-    //         pipeline: [
-    //             { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vehicleStatusID"] }}},
-    //             { "$project": { "vehicleStatus": 1, "_id": 0 }}
-    //         ],
-    //         as: "vehicleStatuses"// output array field
-    //     }
-
-    // }
 
 
 
@@ -916,6 +903,21 @@ router.get("/regnos", async(req,res)=>{
         console.log(error);
     }
 });
+
+
+router.get("/listVehicles", async(req,res)=>{
+    try{
+        let regData = await Vehicle.find({},{"name":1});
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = regData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
 
 
 router.get("/assign_vehicles",async(req,res) => {

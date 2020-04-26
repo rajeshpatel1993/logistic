@@ -42,6 +42,8 @@ export class ListComponent implements OnInit {
   constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute, private fuelService : FuelService, private router: Router) { }
 
   ngOnInit() {
+
+
     this.activeRoute.queryParams.subscribe(queryParams => {
       let lentgthoffilterQueryString = this.filterQueryString.trim();
       if(lentgthoffilterQueryString.length > 0){

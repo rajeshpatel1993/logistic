@@ -29,13 +29,14 @@ export class AddComplaintComponent implements OnInit {
   public selectedFiles: any[] = [];
   public selectedImages: any[] = [];
   public vehicleDetail:String;
-  public employeeLists:any = [];
   public msgObj ={};
   public dialogBox : boolean = false;
   public submitted = false;
   public reportedData: [{'id': '1','name': 'a'}];
   public priorityData:any[] = [];
   public statusData: any[];
+  public employeeLists:any = [];
+
   
   
 
@@ -103,22 +104,6 @@ export class AddComplaintComponent implements OnInit {
   }
 
 
-  selectEventReportedBy(item){
-
-  }
-
-  selectAssignTo(item){
-
-
-  }
-
-  selectPriority(item){
-
-  }
-
-  selectStaus(item){
-    
-  }
 
   selectVehicleType(item){
     let vehicleTypeId = item.id;
@@ -146,6 +131,37 @@ export class AddComplaintComponent implements OnInit {
 
 
 
+ 
+
+
+  selectEvent($event){
+
+  }
+
+
+
+
+  selectEventReportedBy(item){
+
+  }
+
+  selectAssignTo(item){
+
+
+  }
+
+  selectPriority(item){
+
+  }
+
+  selectStaus(item){
+    
+  }
+
+
+  
+
+  
   loadvehicleIssueStatus(){
     this.vehicleservService.loadVehicleIssueStatus().subscribe((issueTyData:any) => {
       let issueTypeData = issueTyData.data;
@@ -158,12 +174,6 @@ export class AddComplaintComponent implements OnInit {
       // console.log(vehicleTypeData);
     });
   }
-
-
-  selectEvent($event){
-
-  }
-
 
 
   loadEmployee(){
@@ -179,6 +189,20 @@ export class AddComplaintComponent implements OnInit {
     });
   }
 
+
+
+  public loadPriorityStatus(){
+    this.complaintService.loadPriorityStatus().subscribe((prData:any) => {
+      let priorityListData = prData.data;
+      priorityListData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.priorityStatus;
+        this.priorityData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
 
 
   public loadVehiclesTypes(){
@@ -197,19 +221,7 @@ export class AddComplaintComponent implements OnInit {
   }
   
 
-  public loadPriorityStatus(){
-    this.complaintService.loadPriorityStatus().subscribe((prData:any) => {
-      let priorityListData = prData.data;
-      priorityListData.forEach((item,index) => {
-        let tmpObj = {};
-        tmpObj["id"] = item._id;
-        tmpObj["name"] = item.priorityStatus;
-        this.priorityData.push(tmpObj);
-      });
-      // console.log(vehicleTypeData);
-    });
-  }
-
+ 
   
   addComplain(){
     // console.log(this.complaintForm.value);

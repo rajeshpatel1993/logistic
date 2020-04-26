@@ -279,52 +279,68 @@ router.get("/getIssue/:id", async (req, res) => {
 
 
 
-router.post("/updateFuelEntry", async (req, res)=> {
+router.post("/updateIssue", async (req, res)=> {
     try{
 
         let imgUrl = "";
         let billUrls = "";
-        let {expiration_time, expiration_date, amount, odometer, modeofpayment,
-            cardno, couponfrom, couponto, couponvalue, type, priceunit, unit, vendorname,drivername,
-            comment,bill_file_unique_id, image_file_unique_id, fuel_entry_id} = req.body;
+        let {note, reported_date, reported_time, reportedBy, assignTo,
+            summary, description, odometer, priority, status, attachments, images, notify_assignee, issueId} = req.body;
            
-    
-        let fuelEntryImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
-        //  console.log(vehicleImage)
-            if(fuelEntryImage.length > 0){
-            imgUrl = fuelEntryImage[0].s3Urls[0];
+            let issueImage = await File.find({fileId:images }).select("s3Urls");
+            //  console.log(vehicleImage)
+            if(issueImage.length > 0){
+            imgUrl = issueImage[0].s3Urls;
             }
-
-        let fuelBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
     
-        if(fuelBills.length > 0){
-            billUrls = fuelBills[0].s3Urls;
-        }
-    
+            let issueBills = await File.find({fileId:attachments }).select("s3Urls");
+        
+            if(issueBills.length > 0){
+                issueBills = issueBills[0].s3Urls;
+            }
+        
 
 
         let updateData = {
-            expiration_date : expiration_date, expiration_time : expiration_time, amount : amount,
-            odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
-            couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
-            type: type,priceunit: priceunit,unit:unit,vendorname:vendorname,
-            comment: comment,image_file_unique_id, bill_file_unique_id, imageUrl: imgUrl,billUrl:billUrls
+            note : note, reported_date,reported_time, summary,
+            description, odometer,notify_assignee, imageUrl : imgUrl , billUrl : billUrls,
+            image_file_unique_id:images, bill_file_unique_id:attachments
         
         };
 
-        if(typeof drivername != "string"){
-            updateData['driver'] = drivername.id;
+        if(typeof reportedBy != "string"){
+            updateData['reportedBy'] = reportedBy.id;
 
         }
+
+        if(typeof assignTo != "string"){
+            updateData['assignTo'] = assignTo.id;
+
+        }
+
+
+        if(typeof priority != "string"){
+            updateData['priority'] = priority.id;
+
+        }
+
+        if(typeof status != "string"){
+            updateData['status'] = status.id;
+
+        }
+
+
+
+
 
 
         // console.log(updateData);
 
-        const filter = { _id: mongoose.Types.ObjectId(fuel_entry_id) };
+        const filter = { _id: mongoose.Types.ObjectId(issueId) };
         const update = updateData;
 
 
-        let doc = await FuelEntry.findOneAndUpdate(filter, updateData, {
+        let doc = await Issue.findOneAndUpdate(filter, updateData, {
             new: true,
             upsert: true // Make this update into an upsert
             });

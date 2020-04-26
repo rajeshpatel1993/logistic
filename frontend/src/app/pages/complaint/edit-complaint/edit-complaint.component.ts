@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ComplaintService } from '../complaint.service';
 import * as uuid from 'uuid';
 import { VehicleService } from '../../vehicles/vehicles.service';
+import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
 
 @Component({
   selector: 'ngx-edit-complaint',
@@ -14,6 +15,9 @@ export class EditComplaintComponent implements OnInit {
 
   submitted = false;
   public issueId:String;
+
+
+  keyword = 'name';
 
   public billfileuniqueid = uuid.v4();
   public imageFileUniqueId = uuid.v4();
@@ -29,13 +33,25 @@ export class EditComplaintComponent implements OnInit {
   public vehicleDetail:String;
   
 
+  public reportedData: [{'id': '1','name': 'a'}];
+  public priorityData:any[] = [];
+  public statusData: any[];
+  public employeeLists:any = [];
+  public vehicleIssueStatusData:any[] = [];
+
+
 
   public complaintForm: FormGroup;
 
-  constructor(private activeRoute: ActivatedRoute, private fb: FormBuilder, private complaintService : ComplaintService, private router: Router, private vehicleService : VehicleService) { }
+  constructor(private activeRoute: ActivatedRoute, private fb: FormBuilder, private complaintService : ComplaintService, private router: Router, private vehicleService : VehicleService, private vehicleservService: VehicleservService) { }
 
   ngOnInit() {
     this.issueId = this.activeRoute.snapshot.params.id;
+
+
+    this.loadvehicleIssueStatus();
+    this.loadPriorityStatus();
+    this.loadEmployee();
 
     this.createForm(this.issueId);
 
@@ -80,7 +96,7 @@ export class EditComplaintComponent implements OnInit {
       return;
     }
     
-    this.complaintService.addComplain(this.complaintForm.value).subscribe((data)=>{
+    this.complaintService.updateComplain(this.complaintForm.value).subscribe((data)=>{
 
       // console.log(data);
       this.msgObj["type"] = "success";
@@ -145,6 +161,70 @@ export class EditComplaintComponent implements OnInit {
     });
 
   }
+
+
+
+
+  selectEventReportedBy(item){
+
+  }
+
+  selectAssignTo(item){
+
+
+  }
+
+  selectPriority(item){
+
+  }
+
+  selectStaus(item){
+    
+  }
+  
+  loadvehicleIssueStatus(){
+    this.vehicleservService.loadVehicleIssueStatus().subscribe((issueTyData:any) => {
+      let issueTypeData = issueTyData.data;
+      issueTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.vehicleIssueStatus;
+        this.vehicleIssueStatusData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+  loadEmployee(){
+    this.vehicleService.loadEmployee().subscribe((employeesData:any) => {
+      let employeeData = employeesData.data;
+      employeeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.firstName;
+        this.employeeLists.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+
+  public loadPriorityStatus(){
+    this.complaintService.loadPriorityStatus().subscribe((prData:any) => {
+      let priorityListData = prData.data;
+      priorityListData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.priorityStatus;
+        this.priorityData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
 
 
 
