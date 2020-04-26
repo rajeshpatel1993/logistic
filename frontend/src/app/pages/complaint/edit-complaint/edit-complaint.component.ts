@@ -19,7 +19,7 @@ export class EditComplaintComponent implements OnInit {
 
   keyword = 'name';
 
-  public billfileuniqueid = uuid.v4();
+  public billFileUniqueId = uuid.v4();
   public imageFileUniqueId = uuid.v4();
 
   public imgSrc: any = [];
@@ -31,6 +31,9 @@ export class EditComplaintComponent implements OnInit {
   public vehicleCode: String;
   public vehicleImage: String;
   public vehicleDetail:String;
+  public selectedImages: any[] = [];
+  public selectedFiles: any[] = [];
+ 
   
 
   public reportedData: [{'id': '1','name': 'a'}];
@@ -226,6 +229,73 @@ export class EditComplaintComponent implements OnInit {
 
 
 
+
+  fileAdded(event) {
+    if(event.target.files.length){
+      for(let i=0 ; i < event.target.files.length ;i++){ 
+        this.selectedFiles.push(<File>event.target.files[i]);
+      }
+    }
+  }
+
+  imageAdded(event) {
+    if(event.target.files.length){
+      for(let i=0 ; i < event.target.files.length ;i++){ 
+        this.selectedImages.push(<File>event.target.files[i]);
+      }
+    }
+  }
+
+
+  uploadBills(){
+    // console.log(this.selectedFiles);
+
+   let formD = new FormData();
+   formD.append('fileId', this.billFileUniqueId);
+   formD.append('typeoffile', "bills");
+    if(this.selectedFiles.length){
+      for(let i=0 ; i < this.selectedFiles.length ; i++){
+        formD.append('files', this.selectedFiles[i],this.selectedFiles[i].name);
+      }
+    }
+
+    this.vehicleService.uploadFile(formD).subscribe((data) => {
+      // alert("successfully uploaded");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully uploaded";
+      this.dialogBox = true;
+
+    },(err)=>{
+      console.log(err);
+    });
+
+  }
+
+  uploadImages(){
+    // console.log(this.selectedFiles);
+
+   let formD = new FormData();
+   formD.append('fileId', this.imageFileUniqueId);
+   formD.append('typeoffile', "images");
+    if(this.selectedImages.length){
+      for(let i=0 ; i < this.selectedImages.length ; i++){
+        formD.append('files', this.selectedImages[i],this.selectedImages[i].name);
+      }
+    }
+
+    this.vehicleService.uploadFile(formD).subscribe((data) => {
+      // alert("successfully uploaded");
+
+      this.msgObj["type"] = "success";
+      this.msgObj["message"] = "successfully uploaded";
+      this.dialogBox = true;
+
+    },(err)=>{
+      console.log(err);
+    });
+
+  }
 
 
 }
