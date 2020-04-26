@@ -11,26 +11,26 @@ export class ComplaintService {
 
   public baseUrl = environment.baseUrl;
 
-  addNote(data){
-    return this.http.post(this.baseUrl+"/notes/add",data);
+  addComplain(data){
+    return this.http.post(this.baseUrl+"/issues/add",data);
   }
 
 
-  loadNotes(page){
-    return this.http.get(this.baseUrl+"/notes?page="+page);
+  loadComplains(page){
+    return this.http.get(this.baseUrl+"/issues?page="+page);
   }
 
-  loadNote(noteId){
-    return this.http.get(this.baseUrl+"/notes/getNote/"+noteId);
+  loadIssue(issueId){
+    return this.http.get(this.baseUrl+"/issues/getIssue/"+issueId);
   }
 
 
-  deleteNote(data) {
-    return this.http.post(this.baseUrl+"/notes/deleteNote", data);
+  deleteComplaint(data) {
+    return this.http.post(this.baseUrl+"/issues/deleteIssues", data);
   }
 
-  updateNote(data){
-    return this.http.post(this.baseUrl+"/notes/updateNote",data);
+  updateComplain(data){
+    return this.http.post(this.baseUrl+"/issues/updateIssue",data);
   }
 
   loadPriorityStatus(){

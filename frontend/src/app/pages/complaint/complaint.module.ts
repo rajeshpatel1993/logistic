@@ -12,9 +12,10 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ThemeModule } from '../../@theme/theme.module';
 import { CustomCommonModule } from '../custom-common.module';
+import { EditComplaintComponent } from './edit-complaint/edit-complaint.component';
 
 @NgModule({
-  declarations: [ComplaintComponent,ComplaintListComponent, AddComplaintComponent],
+  declarations: [ComplaintComponent,ComplaintListComponent, AddComplaintComponent, EditComplaintComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

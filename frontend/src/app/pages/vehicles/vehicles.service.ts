@@ -138,4 +138,9 @@ export class VehicleService {
   loadAssignedVehicleChartData(){
     return this.http.get(this.baseUrl+"/vehicles/assignevechiclewitcount");
   }
+
+  listVehicles(){
+    return this.http.get(this.baseUrl+"/vehicles/listVehicles");
+
+  }
 }
