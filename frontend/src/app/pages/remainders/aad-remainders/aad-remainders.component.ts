@@ -32,6 +32,15 @@ export class AadRemaindersComponent implements OnInit {
   public reminderTypeVal;
   public showExtraField : Number = 1;
   public vehicleTypesData = [];
+  public showServiceTypeData = 1;
+  public serviceTypesData:any[] = [];
+
+  showServiceType:boolean = false;
+
+
+
+  
+
 
   public remainderTypeDropDown = [{"name":"single","val":2},{"name":"common", "val":1}];
 
@@ -89,6 +98,10 @@ export class AadRemaindersComponent implements OnInit {
   // constructor(private fb: FormBuilder, protected ref: NbDialogRef<AadRemaindersComponent>, private remainderService: RemainderService) { }
 
 
+  getMsg(val){
+    this.dialogBox = false;
+  }
+  
   onChangeEvent(evt){
 
     this.showFormFields = 1;
@@ -107,11 +120,61 @@ export class AadRemaindersComponent implements OnInit {
 
   }
 
+
+
+  loadServiceType(){
+    this.vehicleservService.loadServiceType().subscribe((serviceTyData:any) => {
+      let serviceTypeData = serviceTyData.data;
+      serviceTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.serviceTaskName;
+        this.serviceTypesData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+  onChangeReminderCategory(evt){
+
+    let remType = evt.target.value;
+    if(remType == "5eae5e8755bd1858e0f72f16"){
+
+      this.showServiceType = true;
+      this.loadServiceType();
+    }else{
+      this.showServiceType = false;
+    }
+    // console.log(remType);
+
+
+    // this.showFormFields = 1;
+    // this.reminderTypeVal = evt.target.value;
+    // this.createForm();
+
+  
+   
+    // if(this.reminderTypeVal == 2){
+    //   this.showExtraField = 1;
+    // }else{
+    //   this.showExtraField = 0;
+    // }
+
+  }
+
+
+
   ngOnInit() {
 
     this.loadTypes();
 
     this.loadVehiclesTypes();
+
+  }
+
+  selectServiceType(evt){
+
 
   }
   selectEventD(item) {
@@ -171,7 +234,8 @@ export class AadRemaindersComponent implements OnInit {
       alert_after_expiration: [''],
       attach_file_unique_id: [this.attachFileUniqueId],
       vehicleTypef : [''],
-      vehicle: ['']
+      vehicle: [''],
+      service_type:['']
 
     };
 

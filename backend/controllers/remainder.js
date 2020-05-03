@@ -42,18 +42,24 @@ router.post("/add", async (req, res)=> {
     try{
 
         let imgUrl = "";
-        let {category, remainder_name, subject,expiration_date,expiration_time,interval, email_lists, owner, template, notes, enable,alert_after_expiration, attach_file_unique_id, reminderType, vehicleTypef, vehicle} = req.body;
+        let {category, remainder_name, subject,expiration_date,expiration_time,interval, email_lists, owner, template, notes, enable,alert_after_expiration, attach_file_unique_id, reminderType, vehicleTypef, vehicle, service_type} = req.body;
         let remainderImage = await File.find({fileId:attach_file_unique_id }).select("s3Urls");
          console.log(reminderType);
         if(remainderImage.length > 0){
           imgUrl = vehicleImage[0].s3Urls[0];
         }
 
+        let servType = null;
+        if(typeof service_type == "object"){
+            servType = service_type.id;
+        }
+       
+
         let savedata = {remainderType:category, remainderName: remainder_name, subject : subject , expirationDate: expiration_date, expirationTime : expiration_time , 
             remainderInterval : interval, emailList : email_lists, ownerEmail : owner,
             template: template, notes : notes , enabledisable : enable, afterexpiration: alert_after_expiration,
             fileId:attach_file_unique_id, remindert: reminderType, vehicleTypef:vehicleTypef.id, vehicle:vehicle.id,
-            imageUrl:imgUrl
+            imageUrl:imgUrl,  service_type:servType
         
         };
 

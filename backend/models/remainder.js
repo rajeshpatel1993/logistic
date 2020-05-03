@@ -14,6 +14,7 @@ const remainderSchema = new mongoose.Schema ({
     enabledisable: {type: String},
     afterexpiration: {type: String},
     fileId: {type: String},
+    service_type:{type: mongoose.Schema.Types.ObjectId, ref: 'ServiceType', default:null},
     imageUrl: {type: String},
     remindert:{
         type: Number,
