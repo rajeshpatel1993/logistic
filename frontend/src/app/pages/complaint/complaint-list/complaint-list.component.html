@@ -131,27 +131,28 @@
                 </td>
 
                 <td>
-                  <span [style.color]="item.priorityData[0].priorityColor">{{item.priorityData[0].priorityStatus}}</span>
+                  <h6 [style.background-color]="item.priorityData[0].priorityColor">{{item.priorityData[0].priorityStatus}}</h6>
                 </td>
 
                 <td>
-
-                  <div>
-                    <img [src]="item.employeedataAssignTo[0].empImage" width="200">
-                    <span> {{item.employeedataAssignTo[0].firstName}}</span>
-                  </div>
-
+                    <div class="VehicleDetail">
+                      <div class="VehicleDetail_image" style="width: 60px;">
+                        <img [src]="item.employeedataAssignTo[0].empImage" width="60">
+                      </div>
+                      <div class="VehicleDetail_name">
+                        <h5>{{item.employeedataAssignTo[0].firstName}}</h5>
+                      </div>
+                    </div>
                 </td>
-
-
-
                 <td>
-
-                  <div>
-                    <img [src]="item.employeedataReported[0].empImage" width="200">
-                    <span> {{item.employeedataReported[0].firstName}}</span>
+                  <div class="VehicleDetail">
+                    <div class="VehicleDetail_image" style="width: 60px;">
+                      <img [src]="item.employeedataReported[0].empImage" width="60">
+                    </div>
+                    <div class="VehicleDetail_name">
+                      <h5>{{item.employeedataReported[0].firstName}}</h5>
+                    </div>
                   </div>
-
                 </td>
 
 

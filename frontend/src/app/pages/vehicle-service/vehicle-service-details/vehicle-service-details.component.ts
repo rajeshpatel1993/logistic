@@ -61,6 +61,11 @@ export class VehicleServiceDetailsComponent implements OnInit {
 
 
 
+
+  selectServiceType(evt){
+    
+  }
+
   loadWorkLocations(){
     this.vehicleService.loadWorkLocation().subscribe((workLocations)=>{
       let workLocationsData = workLocations["data"];
