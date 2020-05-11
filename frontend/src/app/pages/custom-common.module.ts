@@ -5,6 +5,7 @@ import { DailogBoxComponent } from './dailog-box/dailog-box.component';
 import { CommonModule } from '@angular/common';  
 import { VehicleDetailSComponent } from './vehicle-service/vehicle-detail/vehicle-details-s.component';
 import {AssignedVehicleComponent} from './vehicles/assigned-vehicle/assigned-vehicle.component';
+import { SingleVehicleComponent } from './vehicles/single-vehicle/single-vehicle.component';
 
 
 
@@ -13,12 +14,14 @@ import {AssignedVehicleComponent} from './vehicles/assigned-vehicle/assigned-veh
   imports: [
     CommonModule,
   ],
-  exports: [DailogBoxComponent, VehicleDetailSComponent, AssignedVehicleComponent],
+  exports: [DailogBoxComponent, VehicleDetailSComponent, AssignedVehicleComponent, SingleVehicleComponent],
   declarations: [
     // JwPaginationComponent,
     DailogBoxComponent,
     VehicleDetailSComponent,
-    AssignedVehicleComponent
+    AssignedVehicleComponent,
+    SingleVehicleComponent    // DailogBoxComponent
+
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
