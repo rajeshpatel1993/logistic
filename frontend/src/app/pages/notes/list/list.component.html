@@ -78,7 +78,9 @@
             <thead>
               <tr>
                 <th>
-                  <table class="table innerTable p-0 m-0">
+
+                  Vehicle
+                  <!-- <table class="table innerTable p-0 m-0">
                     <thead>
                       <tr>
                         <th class="p-0 border-0">Vehicle</th>
@@ -87,7 +89,7 @@
                       
                       </tr>
                     </thead>
-                  </table>
+                  </table> -->
               </th>
                 <th>Note</th>
                 <th>Action</th>
@@ -96,7 +98,11 @@
             <tbody>
               <tr *ngFor="let item of noteList">
                 <td class="p-0">
-                  <ngx-vehicle-detail-s [vehicleId]="item.vehicle"></ngx-vehicle-detail-s>
+
+                  <ngx-single-vehicle [vehicleId]="item.vehicleData[0]._id">
+
+                  </ngx-single-vehicle>
+                  <!-- <ngx-vehicle-detail-s [vehicleId]="item.vehicle"></ngx-vehicle-detail-s> -->
 
                 </td>
       
