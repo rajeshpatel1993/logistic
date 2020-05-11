@@ -419,6 +419,18 @@ router.get("/getvehicle/:id", async (req, res) => {
     },
 
     {
+        $lookup: {
+            from: "vehicleStatus", // from collection name
+            let: { "vechStatusId": "$vehicleStatusId" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vechStatusId"] }}},
+                { "$project": { "vehicleStatus": 1, "_id": 0 }}
+            ],
+            as: "vehicleStatusArray"
+        }
+    },
+
+    {
 
         $lookup: {
             from: "brand", // collection to join

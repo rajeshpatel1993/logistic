@@ -81,8 +81,10 @@
               <tr>
 
                 <th scope="col">Vehicle</th>
-                <th scope="col">Type</th>
-                <th scope="col">Status</th>
+                <!-- <th scope="col">Type</th>
+                <th scope="col">Status</th> -->
+
+
                 <th scope="col">Insurance Expiry</th>
                 <th scope="col">Road Tax</th>
                 <th scope="col">Warranty</th>
@@ -106,20 +108,16 @@
                   </nb-card>
                 </ng-template>
                 <td>
-                  <div class="VehicleDetail">
-                    <div class="VehicleDetail_image">
-                      <img nbButton (click)="open(dialog)" src="{{item.vehicleImage}}" width="80">
-                    </div>
-                    <div class="VehicleDetail_name">
-                      <h5>Name:- {{item.name}}</h5>
-                      <p>Reg no:- {{item.regNo}}</p>
-                    </div>
-                  </div>
+
+                  <ngx-single-vehicle [vehicleId]="item._id">
+
+                  </ngx-single-vehicle>
+                 
                 </td>
-                <td>
+                <!-- <td>
                   <h6>{{item.vehicleTypesArray[0].vehicleType}} - {{item.vehicleDetailsArray[0].vehicleDetails}}</h6>
-                </td>
-                <td>
+                </td> -->
+                <!-- <td>
                   <div class="vehicleStatus">
                     <ul>
                       <li class="text-info" *ngIf="item.vehicleStatusArray[0].vehicleStatus == 'Working'"><i
@@ -138,7 +136,7 @@
                           class="fas fa-check-circle"></i> In Active</li>
                     </ul>
                   </div>
-                </td>
+                </td> -->
                 <td>
                   <div [ngSwitch]="item.vehicle_typeId">
                     <div *ngSwitchCase="'1'">

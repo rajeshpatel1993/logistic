@@ -50,7 +50,7 @@ import { CustomCommonModule} from '../custom-common.module';
     // JwPaginationComponent,
     EditVehicleComponent,
     AssignVehicleComponent,
-    AssignVehicleDetailsComponent    // DailogBoxComponent
+    AssignVehicleDetailsComponent,
   ],
   providers: [
     VehicleService

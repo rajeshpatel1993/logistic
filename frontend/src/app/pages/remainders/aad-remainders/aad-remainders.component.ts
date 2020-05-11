@@ -101,7 +101,7 @@ export class AadRemaindersComponent implements OnInit {
   getMsg(val){
     this.dialogBox = false;
   }
-  
+
   onChangeEvent(evt){
 
     this.showFormFields = 1;
@@ -174,7 +174,7 @@ export class AadRemaindersComponent implements OnInit {
   }
 
   selectServiceType(evt){
-
+      
 
   }
   selectEventD(item) {
