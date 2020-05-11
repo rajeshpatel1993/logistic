@@ -125,7 +125,7 @@ router.post("/add", async (req, res)=> {
                 let: { "vehicleId": "$vehicle" },
                 pipeline: [
                     { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
-                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1, "_id": 0 }}
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }}
                 ],
                 as: "vehicleData"// output array field
             }
