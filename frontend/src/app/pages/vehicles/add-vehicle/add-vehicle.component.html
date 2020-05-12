@@ -1,5 +1,5 @@
 <div class="VehicleAddTab">
-  <form [formGroup]="vehicleForm" novalidate>
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
     <div class="form-group row m-0 mb-3 vehbgcolor">
       <label for="vehicletype" class="col-lg-4 col-xl-3 col-form-label">VEHICLE TYPE<span class="star">*</span></label>
       <div class="col-lg-8 col-xl-9">
@@ -31,7 +31,7 @@
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="vehicleDetailsData" [itemTemplate]="itemTemplate1"
                   formControlName="vehicledetails" [notFoundTemplate]="notFoundTemplate1" [searchKeyword]="keyword"
-                  placeHolder="Enter the Vehicle Details" readonly>
+                  placeHolder="Enter the Vehicle Details" [ngClass]="{ 'is-invalid': submitted && f.vehicledetails.errors }">
 
 
                 </ng-autocomplete>
@@ -45,8 +45,16 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
+
+           
+
+
+                <!-- <div *ngIf="submitted && f.vehicledetails.errors" class="invalid-feedback">
+                   Vehicle Detail is required
+                </div> -->
+
                 <div class="errormsg"
-                  *ngIf="f.vehicledetails.invalid && (f.vehicledetails.dirty || f.vehicledetails.touched)">
+                  *ngIf="submitted && f.vehicledetails.errors">
                   Vehicle Detail is required
                 </div>
 
@@ -82,25 +90,22 @@
             <label for="vehiclename" class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
               <input type="text" id="vehiclename" class="form-control" placeholder="Vehicle Name"
-                formControlName="vehicleName">
-              <div class="errormsg" *ngIf="f.vehicleName.invalid && (f.vehicleName.dirty || f.vehicleName.touched)">
-                Vehicle Name is required
-              </div>
-
-
-              <!-- <div *ngIf="vehicleForm.get('vehicleName').hasError('required') && submitted" class="invalid-feedback">
-                  Vehicle  Name is required
-                </div> -->
+                formControlName="vehicleName" [ngClass]="{ 'is-invalid': submitted && f.vehicleName.errors }">
+                <div *ngIf="submitted && f.vehicleName.errors" class="invalid-feedback">
+                  <div *ngIf="f.vehicleName.errors.required">Vehicle Name is required</div>
+                </div>
 
             </div>
           </div>
           <div class="form-group row">
             <label for="regno" class="col-lg-4 col-xl-3 col-form-label">Reg no/serial nos<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
-              <input type="text" id="regno" class="form-control" placeholder="Reg No" formControlName="regNo">
-              <div class="errormsg" *ngIf="f.regNo.invalid && (f.regNo.dirty || f.regNo.touched)">
-                Reg no is required
+              <input type="text" id="regno" class="form-control" placeholder="Reg No" formControlName="regNo" [ngClass]="{ 'is-invalid': submitted && f.regNo.errors }">
+              <div *ngIf="submitted && f.regNo.errors" class="invalid-feedback">
+                <div *ngIf="f.regNo.errors.required"> Reg no is required</div>
               </div>
+
+
             </div>
 
           </div>
@@ -111,7 +116,7 @@
               <div class="ng-autocomplete">
                 <ng-autocomplete [data]="brandsList" [itemTemplate]="itemTemplate3" formControlName="brand"
                   [notFoundTemplate]="notFoundTemplate3" [searchKeyword]="keyword" placeHolder="Enter the Brand"
-                  (selected)='selectBrand($event)'>
+                  (selected)='selectBrand($event)' >
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate3 let-item>
@@ -122,9 +127,15 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div class="errormsg" *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
+
+                <div class="errormsg"
+                *ngIf="submitted && f.brand.errors">
+                Brand is required
+              </div>
+
+                <!-- <div class="errormsg" *ngIf="f.brand.invalid && (f.brand.dirty || f.brand.touched)">
                   Brand is required
-                </div>
+                </div> -->
 
               </div>
             </div>
@@ -147,9 +158,15 @@
                 </ng-template>
               </div>
 
-              <div class="errormsg" *ngIf="f.model.invalid && (f.model.dirty || f.model.touched)">
+              <!-- <div class="errormsg" *ngIf="f.model.invalid && (f.model.dirty || f.model.touched)">
                 Model is required
-              </div>
+              </div> -->
+
+              <div class="errormsg"
+              *ngIf="submitted && f.model.errors">
+              Model is required
+            </div>
+
             </div>
           </div>
 
@@ -169,9 +186,18 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div class="errormsg" *ngIf="f.color.invalid && (f.color.dirty || f.color.touched)">
+                <!-- <div class="errormsg" *ngIf="f.color.invalid && (f.color.dirty || f.color.touched)">
                   Color is required
-                </div>
+                </div> -->
+
+
+
+                <div class="errormsg"
+                *ngIf="submitted && f.color.errors">
+                Color is required
+              </div>
+
+                
 
               </div>
             </div>
@@ -180,22 +206,23 @@
             <label for="manufacture" class="col-lg-4 col-xl-3 col-form-label">Manufacture Year<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
               <input type="text" id="manufacture" placeholder="Manufacture Year" class="form-control"
-                formControlName="manufacture_year">
+                formControlName="manufacture_year" [ngClass]="{ 'is-invalid': submitted && f.manufacture_year.errors }">
 
-              <div class="errormsg"
-                *ngIf="f.manufacture_year.invalid && (f.manufacture_year.dirty || f.manufacture_year.touched)">
-                Manufacture year is required
+
+              <div *ngIf="submitted && f.manufacture_year.errors" class="invalid-feedback">
+                  <div *ngIf="f.manufacture_year.errors.required">  Manufacture year is required</div>
               </div>
+
 
             </div>
           </div>
           <div class="form-group row">
             <label for="engine" class="col-lg-4 col-xl-3 col-form-label">Engine No<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
-              <input type="text" id="engine" class="form-control" placeholder="Engine No" formControlName="engine_no">
+              <input type="text" id="engine" class="form-control" placeholder="Engine No" formControlName="engine_no" [ngClass]="{ 'is-invalid': submitted && f.engine_no.errors }">
 
-              <div class="errormsg" *ngIf="f.engine_no.invalid && (f.engine_no.dirty || f.engine_no.touched)">
-                Engine no is required
+              <div *ngIf="submitted && f.engine_no.errors" class="invalid-feedback">
+                <div *ngIf="f.engine_no.errors.required">  Engine no is required</div>
               </div>
 
             </div>
@@ -203,11 +230,12 @@
           <div class="form-group row">
             <label for="chassis" class="col-lg-4 col-xl-3 col-form-label">Chassis No<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
-              <input type="text" id="chassis" class="form-control" placeholder="Chassis No" formControlName="chasis_no">
+              <input type="text" id="chassis" class="form-control" placeholder="Chassis No" formControlName="chasis_no" [ngClass]="{ 'is-invalid': submitted && f.chasis_no.errors }">
 
-              <div class="errormsg" *ngIf="f.chasis_no.invalid && (f.chasis_no.dirty || f.chasis_no.touched)">
-                Chassis no is required
+              <div *ngIf="submitted && f.chasis_no.errors" class="invalid-feedback">
+                <div *ngIf="f.chasis_no.errors.required">  Chasis no is required</div>
               </div>
+
             </div>
           </div>
           <div class="form-group row">
@@ -217,13 +245,12 @@
                 formControlName="purchase_date"> -->
 
               <input class="form-control" nbInput placeholder="Purchase Date" [nbDatepicker]="purchasedate"
-                formControlName="purchase_date">
+                formControlName="purchase_date"  [ngClass]="{ 'is-invalid': submitted && f.purchase_date.errors }">
               <nb-datepicker #purchasedate></nb-datepicker>
 
-              <!-- <div class="errormsg"
-                *ngIf="f.purchase_date.invalid && (f.purchase_date.dirty || f.purchase_date.touched)">
-                Purchase date is required
-              </div> -->
+              <div *ngIf="submitted && f.purchase_date.errors" class="invalid-feedback">
+                <div *ngIf="f.purchase_date.errors.required">  Purchase Date is required</div>
+              </div>
 
             </div>
           </div>
@@ -234,14 +261,12 @@
                 formControlName="warranty_period"> -->
 
               <input class="form-control" nbInput placeholder="Warranty" [nbDatepicker]="warranty"
-                formControlName="warranty_period">
+                formControlName="warranty_period"  [ngClass]="{ 'is-invalid': submitted && f.warranty_period.errors }">
               <nb-datepicker #warranty></nb-datepicker>
 
-
-              <!-- <div class="errormsg"
-                *ngIf="f.warranty_period.invalid && (f.warranty_period.dirty || f.warranty_period.touched)">
-                Warranty Period is required
-              </div> -->
+              <div *ngIf="submitted && f.warranty_period.errors" class="invalid-feedback">
+                <div *ngIf="f.warranty_period.errors.required">  Warranty Period is required</div>
+              </div>
 
             </div>
           </div>
@@ -266,10 +291,18 @@
                 </ng-template>
 
 
-                <div class="errormsg"
+                <!-- <div class="errormsg"
                   *ngIf="f.fuelMeausrement.invalid && (f.fuelMeausrement.dirty || f.fuelMeausrement.touched)">
                   Fuel Measurement is required
-                </div>
+                </div> -->
+
+
+                <div class="errormsg"
+                *ngIf="submitted && f.fuelMeausrement.errors">
+                Fuel Measurement is required
+               </div>
+
+
 
               </div>
             </div>
@@ -293,9 +326,18 @@
                 </ng-template>
 
 
-                <div class="errormsg" *ngIf="f.fuel_type.invalid && (f.fuel_type.dirty || f.fuel_type.touched)">
+                <!-- <div class="errormsg" *ngIf="f.fuel_type.invalid && (f.fuel_type.dirty || f.fuel_type.touched)">
                   Fuel Type is required
-                </div>
+                </div> -->
+
+
+                <div class="errormsg"
+                *ngIf="submitted && f.fuel_type.errors">
+                Fuel Type is required
+               </div>
+
+
+                
 
               </div>
             </div>
@@ -320,10 +362,18 @@
                   <div [innerHTML]="notFound"></div>
                 </ng-template>
 
-                <div class="errormsg"
+                <!-- <div class="errormsg"
                   *ngIf="f.workLocation.invalid && (f.workLocation.dirty || f.workLocation.touched)">
                   Work Location is required
-                </div>
+                </div> -->
+
+
+                <div class="errormsg"
+                *ngIf="submitted && f.workLocation.errors">
+                Work Location is required
+               </div>
+
+
               </div>
             </div>
           </div>
@@ -338,11 +388,19 @@
                   class="star">*</span></label>
               <div class="col-lg-8 col-xl-9">
                 <input type="text" id="insurancepolicy" class="form-control" placeholder="Insurance Policy No"
-                  formControlName="insurance_policy_no">
-                <div class="errormsg"
+                  formControlName="insurance_policy_no"  [ngClass]="{ 'is-invalid': submitted && f.insurance_policy_no.errors }">
+
+
+                <!-- <div class="errormsg"
                   *ngIf="f.insurance_policy_no.invalid && (f.insurance_policy_no.dirty || f.insurance_policy_no.touched)">
                   Insurance Policy No is required
+                </div> -->
+
+                <div *ngIf="submitted && f.insurance_policy_no.errors" class="invalid-feedback">
+                  <div *ngIf="f.insurance_policy_no.errors.required">  Insurance Policy No is  required</div>
                 </div>
+
+                
               </div>
             </div>
 
@@ -351,10 +409,9 @@
                   class="star">*</span></label>
               <div class="col-lg-8 col-xl-9">
                 <input type="text" id="insurance_amount" class="form-control" placeholder="Insurance Amount"
-                  formControlName="insurance_amount">
-                <div class="errormsg"
-                  *ngIf="f.insurance_amount.invalid && (f.insurance_amount.dirty || f.insurance_amount.touched)">
-                  Insurance Amount is required
+                  formControlName="insurance_amount" [ngClass]="{ 'is-invalid': submitted && f.insurance_amount.errors }">
+                <div *ngIf="submitted && f.insurance_amount.errors" class="invalid-feedback">
+                  <div *ngIf="f.insurance_amount.errors.required">  Insurance Amount is  required</div>
                 </div>
               </div>
             </div>
@@ -368,12 +425,19 @@
                   placeholder="Policy expiry"> -->
 
                 <input class="form-control" nbInput placeholder="Policy Expiry" [nbDatepicker]="policyexpiry"
-                  formControlName="policy_expiry">
+                  formControlName="policy_expiry"  [ngClass]="{ 'is-invalid': submitted && f.policy_expiry.errors }">
                 <nb-datepicker #policyexpiry></nb-datepicker>
-                <div class="errormsg"
-                  *ngIf="f.policy_expiry.invalid && (f.policy_expiry.dirty || f.policy_expiry.touched)">
-                  Policy Expiry is required
+
+
+
+                <div *ngIf="submitted && f.policy_expiry.errors" class="invalid-feedback">
+                  <div *ngIf="f.policy_expiry.errors.required">  Policy Expiry is  required</div>
                 </div>
+
+
+             
+
+
               </div>
             </div>
 
@@ -395,10 +459,17 @@
                     <div [innerHTML]="notFound"></div>
                   </ng-template>
 
-                  <div class="errormsg"
+                  <!-- <div class="errormsg"
                     *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
                     Insurance Agent is required
-                  </div>
+                  </div> -->
+
+
+                  <div class="errormsg"
+                  *ngIf="submitted && f.insurance_agent.errors">
+                  Insurance Agent is required
+                 </div>
+
 
 
                 </div>
@@ -409,11 +480,15 @@
               <label for="roadtaxno" class="col-lg-4 col-xl-3 col-form-label">Road Tax No<span class="star">*</span></label>
               <div class="col-lg-8 col-xl-9">
                 <input type="text" id="roadtaxno" class="form-control" placeholder="Road Tax No"
-                  formControlName="road_tax_no">
-                <div class="errormsg"
-                  *ngIf="f.insurance_agent.invalid && (f.insurance_agent.dirty || f.insurance_agent.touched)">
-                  Insurance Agent is required
+                  formControlName="road_tax_no" [ngClass]="{ 'is-invalid': submitted && f.road_tax_no.errors }">
+
+
+                <div *ngIf="submitted && f.road_tax_no.errors" class="invalid-feedback">
+                    <div *ngIf="f.road_tax_no.errors.required"> Road Tax is  required</div>
                 </div>
+
+
+
               </div>
             </div>
 
@@ -421,11 +496,17 @@
               <label for="roadtaxamt" class="col-lg-4 col-xl-3 col-form-label">Road Tax Amount<span class="star">*</span></label>
               <div class="col-lg-8 col-xl-9">
                 <input type="text" id="roataxamt" class="form-control" placeholder="Road Tax Amount"
-                  formControlName="road_tax_amount">
-                <div class="errormsg"
+                  formControlName="road_tax_amount" [ngClass]="{ 'is-invalid': submitted && f.road_tax_amount.errors }">
+
+                  <div *ngIf="submitted && f.road_tax_amount.errors" class="invalid-feedback">
+                    <div *ngIf="f.road_tax_amount.errors.required"> Road Tax Amount is  required</div>
+                 </div>
+
+
+                <!-- <div class="errormsg"
                   *ngIf="f.road_tax_amount.invalid && (f.road_tax_amount.dirty || f.road_tax_amount.touched)">
                   Road Tax Amount is required
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -437,13 +518,19 @@
                   formControlName="road_tax_expiry"> -->
 
                 <input class="form-control" nbInput placeholder="Road Tax Expiry" [nbDatepicker]="roadtaxexpiry"
-                  formControlName="road_tax_expiry">
+                  formControlName="road_tax_expiry"  [ngClass]="{ 'is-invalid': submitted && f.road_tax_expiry.errors }">
                 <nb-datepicker #roadtaxexpiry></nb-datepicker>
 
-                <div class="errormsg"
+
+                <div *ngIf="submitted && f.road_tax_expiry.errors" class="invalid-feedback">
+                  <div *ngIf="f.road_tax_expiry.errors.required"> Road Tax Expiry is  required</div>
+               </div>
+
+
+                <!-- <div class="errormsg"
                   *ngIf="f.road_tax_expiry.invalid && (f.road_tax_expiry.dirty || f.road_tax_expiry.touched)">
                   Road Tax Expiry is required
-                </div>
+                </div> -->
 
               </div>
             </div>
@@ -468,10 +555,17 @@
                 </ng-template>
               </div>
 
-              <div class="errormsg"
+              <!-- <div class="errormsg"
                 *ngIf="f.ownership_status.invalid && (f.ownership_status.dirty || f.ownership_status.touched)">
                 Ownership Status is required
-              </div>
+              </div> -->
+
+              <div class="errormsg"
+              *ngIf="submitted && f.ownership_status.errors">
+             Ownership status is required
+             </div>
+
+
 
             </div>
           </div>
@@ -479,7 +573,7 @@
           <div class="form-group row">
             <label for="note" class="col-lg-4 col-xl-3 col-form-label">Note<span class="star"></span></label>
             <div class="col-lg-8 col-xl-9">
-              <input type="text" id="note" class="form-control" placeholder="Note" formControlName="note">
+              <input type="text" id="note" class="form-control" placeholder="Note" formControlName="note" >
               <!-- <div class="errormsg" *ngIf="f.note.invalid && (f.note.dirty || f.note.touched)">
                 Note is required
               </div> -->
@@ -490,13 +584,19 @@
           <div class="form-group row">
             <label for="status" class="col-lg-4 col-xl-3 col-form-label">Status<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
-              <select class="form-control" id="status" formControlName="vehicleStatus">
+              <select class="form-control" id="status" formControlName="vehicleStatus" [ngClass]="{ 'is-invalid': submitted && f.vehicleStatus.errors }">
                 <option *ngFor="let st of vehicleStatusList" [value]="st.id">{{st.name}}</option>
               </select>
-              <div class="errormsg"
+
+              <div *ngIf="submitted && f.vehicleStatus.errors" class="invalid-feedback">
+                <div *ngIf="f.vehicleStatus.errors.required"> vehicle Status is  required</div>
+             </div>
+
+
+              <!-- <div class="errormsg"
                 *ngIf="f.vehicleStatus.invalid && (f.vehicleStatus.dirty || f.vehicleStatus.touched)">
                 Vehicle Status is required
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -547,7 +647,7 @@
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
         <!-- [disabled]="vehicleForm.invalid"  -->
-        <button type="submit" (click)="addVehicle()" class="btn btn-primary float-right">Submit</button>
+        <button type="submit"  class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
 
