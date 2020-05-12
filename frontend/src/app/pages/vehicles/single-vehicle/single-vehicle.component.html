@@ -16,14 +16,9 @@
     <img nbButton (click)="open(dialog)" src="{{vehicleData.vehicleImage}}" width="80">
   </div>
   <div class="VehicleDetail_name">
-    <h5>Name:- {{vehicleData.name}}</h5>
-    <p>Reg no:- {{vehicleData.regNo}}</p>
-  </div>
-
-  Type:-  <h6>{{vehicleData.vehicleTypes[0].vehicleType}} - {{vehicleData.vehicleDetailsArray[0].vehicleDetails}}</h6>
-
-  Status:-   
+    <h5>{{vehicleData.name}}({{vehicleData.regNo}})</h5>
   <div class="vehicleStatus">
+    
     <ul>
       <li class="text-info" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'Working'"><i
           class="fas fa-wrench"></i> {{vehicleData.vehicleStatuss[0].vehicleStatus}}</li>
@@ -39,6 +34,9 @@
           class="fas fa-times-circle"></i> Not Working</li>
       <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'In-Active'"><i
           class="fas fa-check-circle"></i> In Active</li>
+
+      <li>&nbsp;{{vehicleData.vehicleTypes[0].vehicleType}} - {{vehicleData.vehicleDetailsArray[0].vehicleDetails}}</li>
     </ul>
+  </div>
   </div>
 </div>

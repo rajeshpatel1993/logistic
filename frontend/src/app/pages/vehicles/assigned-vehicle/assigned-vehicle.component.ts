@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { VehicleService } from '../vehicles.service';
 import { Subscription } from 'rxjs';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-assigned-vehicle',
@@ -13,24 +14,13 @@ export class AssignedVehicleComponent implements OnInit {
   public vehicleEmpData;
   public isAssigned: boolean = false;
   public vehicleAssignedSubscription: Subscription;
-  constructor(private vehicleService: VehicleService) { }
+  constructor(private vehicleService: VehicleService,private dialogService: NbDialogService) { }
 
   ngOnInit() {
     this.loadAssignedVehicle(this.vehicleId);
   
 
   }
-
-
-
-
-
-
-
-
-
-
-
   public loadAssignedVehicle(vehicleId){
     this.vehicleAssignedSubscription = this.vehicleService.loadAssignedVehicleDetail(vehicleId).subscribe((vehicleDetails:any) => {
       let vehicleDetailData = vehicleDetails.data;
@@ -46,7 +36,9 @@ export class AssignedVehicleComponent implements OnInit {
 
   }
 
-
+  open(dialog:any) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
+  }
 
 
 }

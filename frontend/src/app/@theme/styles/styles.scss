@@ -379,6 +379,15 @@ a:focus {
     border-radius: 4px;
     background-color: red !important;
     border-color: red !important;
+    color: #fff;
+  }
+  &.driverPopup{
+    width: 500px;
+    float: left;
+    nb-card-body {
+      width: 100%;
+      float: left;
+  }
   }
 }
 
@@ -388,6 +397,10 @@ a:focus {
   ul {
     list-style: none;
     padding: 0;
+    li{
+      display: inline-block;
+      color: #495057;
+    }
   }
 }
 
@@ -950,5 +963,10 @@ a:focus {
         width: 200px;
       }
     }
+  }
+}
+.input-group-append{
+  span{
+    background-color: #C2CC7F;
   }
 }

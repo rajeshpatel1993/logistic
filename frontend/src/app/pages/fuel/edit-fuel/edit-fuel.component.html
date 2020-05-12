@@ -73,14 +73,24 @@
             <label for="expiration" class="col-lg-4 col-xl-3 col-form-label">Date with Time<span class="star">*</span></label>
             <div class="col-lg-8 col-xl-9">
               <div class="row no-gutters">
-                <div class="col-12 col-md-6 col-lg-8">
+                <div class="col-12 col-md-6 col-lg-8 pr-3">
+                  <div class="input-group">
                   <input class="form-control" id="expiration" nbInput placeholder="Expiration" formControlName="expiration_date" [nbDatepicker]="expiration">
                   <nb-datepicker #expiration></nb-datepicker>
+                  <div class="input-group-append">
+                    <span class="input-group-text"><img src="assets/images/organization.png" alt=""></span>
+                  </div>
+                </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                   <div class="ngx-timepicker-field-example">
+                    <div class="input-group">
                     <input [ngxTimepicker]="picker" class="form-control" formControlName="expiration_time">
                     <ngx-material-timepicker #picker></ngx-material-timepicker>
+                    <div class="input-group-append">
+                      <span class="input-group-text"><img src="assets/images/time-and-date.png" alt=""></span>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>

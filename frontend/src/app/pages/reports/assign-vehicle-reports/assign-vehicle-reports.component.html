@@ -118,7 +118,7 @@
           <td>
 
             <ng-template #dialogdriver let-data let-refd="dialogRefd">
-              <nb-card class="popupImage">
+              <nb-card class="popupImage driverPopup">
                 <nb-card-body>
                   <img src="{{item.employee.empImage}}" alt=" ">
                   <button nbButton class="popupClose" (click)="refd.close()"><i
@@ -132,7 +132,7 @@
                 <img nbButton (click)="open(dialogdriver)" src="{{item.employee.empImage}}" width="80">
               </div>
               <div class="VehicleDetail_name">
-                <h5>{{item.employee.firstName}}</h5>
+                <h5><a href="#">{{item.employee.firstName}}</a></h5>
               </div>
             </div>
 
@@ -142,8 +142,8 @@
           <td>
 
             <div *ngIf="item.previousDriver">
-              <ng-template #dialogdriver let-data let-refd="dialogRefd">
-                <nb-card class="popupImage">
+              <ng-template #dialogdriverPrev let-data let-refd="dialogRefd">
+                <nb-card class="popupImage driverPopup">
                   <nb-card-body>
                     <img src="{{item.previousDriver.employee.empImage}}" alt=" ">
                     <button nbButton class="popupClose" (click)="refd.close()"><i
@@ -154,10 +154,10 @@
               </ng-template>
               <div class="VehicleDetail">
                 <div class="VehicleDetail_image">
-                  <img nbButton (click)="open(dialogdriver)" src="{{item.previousDriver.employee.empImage}}" width="80">
+                  <img nbButton (click)="open(dialogdriverPrev)" src="{{item.previousDriver.employee.empImage}}" width="80">
                 </div>
                 <div class="VehicleDetail_name">
-                  <h5>{{item.previousDriver.employee.firstName}}</h5>
+                  <h5><a href="#">{{item.previousDriver.employee.firstName}}</a></h5>
                 </div>
               </div>
             </div>
