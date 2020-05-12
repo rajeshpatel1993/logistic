@@ -75,8 +75,6 @@ async function getVehicleDataByInsuranceExpiry(noofday){
  <footer>
      <p>This mail send by <a href="#">Logistic</a></p>
  </footer>
-
-     
      `
      const mailOptions = {
         from: mail, // sender address

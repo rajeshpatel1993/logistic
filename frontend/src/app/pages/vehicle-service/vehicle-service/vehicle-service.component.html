@@ -3,7 +3,7 @@
     <nb-card-body>
       <div class="row no-gutters">
         <div class="col-sm-6 text-left">
-          <h5 class="pb-3"> Vehicles Services</h5>
+          <h4 class="pb-3"> Vehicles Services</h4>
         </div>
         <div class="col-sm-6 text-right">
           <a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/services/add-service">Add
@@ -78,7 +78,9 @@
             <thead>
               <tr>
                 <th>
-                  <table class="table innerTable p-0 m-0">
+
+                  Vehicle
+                  <!-- <table class="table innerTable p-0 m-0">
                     <thead>
                       <tr>
                         <th class="p-0 border-0">Vehicle</th>
@@ -87,7 +89,7 @@
                       
                       </tr>
                     </thead>
-                  </table>
+                  </table> -->
                 </th>
                 <th>service Type </th>
                 <th>Completion Date</th>
@@ -101,7 +103,12 @@
             <tbody>
               <tr *ngFor="let item of vehiclesList">
                 <td class="p-0">
-                  <ngx-vehicle-detail-s [vehicleId]="item.vehicle._id"></ngx-vehicle-detail-s>
+
+                  <ngx-single-vehicle [vehicleId]="item.vehicle._id">
+
+                  </ngx-single-vehicle>
+
+                  <!-- <ngx-vehicle-detail-s [vehicleId]="item.vehicle._id"></ngx-vehicle-detail-s> -->
                   
                 </td>
                 <td>

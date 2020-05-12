@@ -3,7 +3,7 @@
     <nb-card-body>
       <div class="row no-gutters">
         <div class="col-sm-6">
-          <h6>Fuel History</h6>
+          <h4>Fuel History</h4>
         </div>
         <div class="col-sm-6 text-right">
           <a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/fuel/add-fuel-entry">Add Fuel Entry</a>
@@ -148,7 +148,7 @@
                   </nb-card>
                 </ng-template>
                 <td>
-                  <div class="VehicleDetail">
+                  <!-- <div class="VehicleDetail">
                     <div class="VehicleDetail_image">
                       <img nbButton (click)="open(dialog)" src="{{item.vehicleData[0].vehicleImage}}" width="80">
                     </div>
@@ -156,7 +156,12 @@
                       <h5>Name:- {{item.vehicleData[0].name}}</h5>
                       <p>Reg no:- {{item.vehicleData[0].regNo}}</p>
                     </div>
-                  </div>
+                  </div> -->
+
+
+                  <ngx-single-vehicle [vehicleId]="item.vehicleData[0]._id">
+
+                  </ngx-single-vehicle>
                 </td>
 
 
