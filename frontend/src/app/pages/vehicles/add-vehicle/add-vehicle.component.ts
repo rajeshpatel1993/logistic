@@ -32,7 +32,7 @@ export class AddVehicleComponent implements OnInit {
   public msgObj ={};
   public lastVehcileCodeN;
   public selectedVehicleType;
-
+  isImageUploaded : boolean = false;
   // public documentSpecification: FormArray;
   constructor(private vehicleService: VehicleService, private fb: FormBuilder, private router: Router) { }
   public vehicleCode: String;
@@ -135,6 +135,7 @@ export class AddVehicleComponent implements OnInit {
       this.msgObj["type"] = "success";
       this.msgObj["message"] = "successfully uploaded";
       this.dialogBox = true;
+      this.isImageUploaded = true;
       // alert("successfully uploaded");
       this.imgSrc = [];
     },(err)=>{
@@ -329,12 +330,27 @@ export class AddVehicleComponent implements OnInit {
   // get t() { return this.f.documentSpecification as FormArray; }
 
 
-  addVehicle(){
+  onSubmit(){
     this.submitted = true;
     if (this.vehicleForm.invalid) {
-      alert("Please fill all required field");
+
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] = "Please Fill All required fields and Submit again";
+      this.dialogBox = true;
       return;
+
     }
+
+
+    if (!this.isImageUploaded) {
+
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] = "Please Upload Image and Resubmit ";
+      this.dialogBox = true;
+      return;
+
+    }
+
     
     this.vehicleService.addVehicle(this.vehicleForm.value).subscribe((data)=>{
       // console.log(data);
