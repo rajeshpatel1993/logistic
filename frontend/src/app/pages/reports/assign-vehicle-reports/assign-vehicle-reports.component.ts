@@ -12,6 +12,7 @@ import { ReportsService } from '../reports.service';
 import { VehicleService } from '../../vehicles/vehicles.service';
 
 
+
 @Component({
   selector: 'ngx-assign-vehicle-reports',
   templateUrl: './assign-vehicle-reports.component.html',
@@ -302,7 +303,9 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
   }
 
-
+  open(dialog:any) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
+  }
 
 
 

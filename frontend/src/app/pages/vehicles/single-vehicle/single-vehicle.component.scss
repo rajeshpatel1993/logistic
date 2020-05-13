@@ -1,0 +1,16 @@
+.VehicleDetail{
+    width: 100%;
+    float: left;
+    &_image{
+        width: 80px;
+        float: left;
+        margin-right: 5px;
+    }
+    &_name{
+        width: calc(100%- 55px);
+        float: left;
+        h5{
+            font-weight: 400;
+        }
+    }
+  }
