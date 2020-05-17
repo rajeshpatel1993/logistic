@@ -7,10 +7,14 @@ import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ComplaintModule } from './complaint/complaint.module';
 
-const routes: Routes = [{
+const routes: Routes = [
+  
+  {
   path: '',
   component: PagesComponent,
   children: [
+
+  
     {
       path: 'dashboard',
       component: ECommerceComponent,
@@ -119,6 +123,26 @@ const routes: Routes = [{
       loadChildren: () => import('./complaint/complaint.module')
       .then(m => m.ComplaintModule)
     },
+    {
+      path: 'employee',
+      loadChildren: () => import('./employee-management/employee-management.module')
+      .then(m => m.EmployeeManagementModule)
+    },
+
+    // {
+    //   path: 'employee',
+    //   loadChildren: () => import('./employee-management/employee-management.module')
+    //   .then(m => m.EmployeeManagementModule)
+    // },
+
+  
+
+    // {
+    //   path: 'login',
+    //   loadChildren: () => import('./login/login.module')
+    //   .then(m => m.LoginModule)
+    // },
+
     {
       path: '',
       redirectTo: 'dashboard',

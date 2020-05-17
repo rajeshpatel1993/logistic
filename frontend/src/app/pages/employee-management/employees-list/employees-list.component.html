@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row main-header-style">
+    <div class="col-md-8 employee-header-style">
+      <h4>Employees</h4>
+    </div>
+    <div class="col-md-4">
+        <app-input-search-bar [searchSuggestions]="employeeSuggestions" [loading]="loading" [showCloseIcon]="false"
+          (inputChange)="searchEmployee($event)" (onSelect)="onSelectEmployee($event)"></app-input-search-bar>
+    </div>
+  </div>
+  
+  <div class="row secondary-header-style">
+    <div class="col-md-6 button-box-style">
+      <button nbButton outline status="success" shape="rectangle" size="small"
+        (click)="addNewEmployee()">Create</button>
+      &nbsp;
+      <button nbButton outline status="info" shape="rectangle" size="small">Import</button>
+    </div>
+    <div class="col-md-6 filter-box-style">
+      <a>
+        <i class="fa fa-filter" aria-hidden="true"></i>
+        Filters
+      </a>
+      <a>
+        <i class="fa fa-star" aria-hidden="true"></i>
+        Favourites
+      </a>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4" *ngFor="let employee of employeesList">
+      <div class="card" (click)="goToEditPage(employee.employeeID)">
+        <div class="text-center">
+          <img src="{{employee.empImage}}" alt="John" style="width:100px; height: 100px;border-radius: 50%;">
+        </div>
+        <p class="title">{{employee.firstName}} {{employee.lastName}}</p>
+        <p>{{employee.jobTitle}} ({{employee.employeeCode}})</p>
+        <p><i class="fa fa-building" aria-hidden="true"></i> {{employee.workLocation}}</p>
+        <p><i class="fa fa-envelope" aria-hidden="true"></i> {{employee.emailAddress}}</p>
+        <p><i class="fa fa-phone" aria-hidden="true"></i> {{employee.primaryContact}}</p>
+      </div>
+    </div>
+    
+  </div>
+</div>

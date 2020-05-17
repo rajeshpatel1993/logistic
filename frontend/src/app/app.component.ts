@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { AnalyticsService } from './@core/utils/analytics.service';
 import { SeoService } from './@core/utils/seo.service';
 import { NbIconLibraries } from '@nebular/theme';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { NbIconLibraries } from '@nebular/theme';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private analytics: AnalyticsService, private seoService: SeoService,private iconLibraries: NbIconLibraries) {
+  constructor(private iconLibraries: NbIconLibraries, private router : Router) {
     this.iconLibraries.registerFontPack('font-awesome', { packClass: 'fa', iconClassPrefix: 'fa' });
     this.iconLibraries.registerFontPack('regular', { packClass: 'far', iconClassPrefix: 'fa' });
     this.iconLibraries.registerFontPack('solid', { packClass: 'fas', iconClassPrefix: 'fa' });
@@ -23,6 +24,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("test");
+
+    let loggedInToken = localStorage.getItem("access_token");
+    if(loggedInToken){
+      this.router.navigateByUrl("/pages/dashboard");
+    }else{
+      this.router.navigateByUrl("/auth/login");
+    }
     // this.analytics.trackPageViews();
     // this.seoService.trackCanonicalChanges();
   }

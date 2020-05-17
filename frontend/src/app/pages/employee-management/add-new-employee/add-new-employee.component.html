@@ -1,0 +1,112 @@
+<div class="container" *ngIf="!loading">
+    <div class="add-employee-style">
+        <div class="row">
+            <div class="col-md-12 header-style">
+                Create Employee
+            </div>
+        </div>
+
+        <div class="body-style">
+            <nb-accordion multi>
+                <nb-accordion-item expanded>
+                    <nb-accordion-item-header>
+                        Profile Information
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <app-profile [profileDataForm]="newEmployeeForm.get('profileForm')" [editOption]="true"></app-profile>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+
+                <nb-accordion-item expanded>
+                    <nb-accordion-item-header>
+                        Job Information
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <app-job-details [jobDataForm]="newEmployeeForm.get('jobTabForm')" [editOption]="true"></app-job-details>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+
+                <nb-accordion-item>
+                    <nb-accordion-item-header>
+                        Emergency Information
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <app-emergency-details [contactDataForm]="newEmployeeForm.get('emergencyTabForm')" [editOption]="true">
+                        </app-emergency-details>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+
+                <nb-accordion-item>
+                    <nb-accordion-item-header>
+                        Passport & NIN
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <app-passport-details [passportDataForm]="newEmployeeForm.get('passportTabForm')" [editOption]="true">
+                        </app-passport-details>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+
+                <nb-accordion-item>
+                    <nb-accordion-item-header>
+                        Attachments
+                    </nb-accordion-item-header>
+                    <nb-accordion-item-body>
+                        <div class="row attachments-style">
+                            <div class="col-md-2">
+                                Fitness Copy
+                            </div>
+                            <input type="file" (change)="uploadFile($event, 'fitnessCopy')"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" />
+                            <span class="error-style" *ngIf="showError">* Please Select only document or pdf</span>
+                        </div>
+                        <div class="row attachments-style">
+                            <div class="col-md-2">
+                                Gop Copy
+                            </div>
+                            <input type="file" (change)="uploadFile($event, 'gopCopy')"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" />
+                            <span class="error-style" *ngIf="showError">* Please Select only document or pdf</span>
+                        </div>
+                        <div class="row attachments-style">
+                            <div class="col-md-2">
+                                Nin Copy
+                            </div>
+                            <input type="file" (change)="uploadFile($event, 'ninCopy')"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" />
+                            <span class="error-style" *ngIf="showError">* Please Select only document or pdf</span>
+                        </div>
+                        <div class="row attachments-style">
+                            <div class="col-md-2">
+                                Offer Letter Copy
+                            </div>
+                            <input type="file" (change)="uploadFile($event, 'offerLetterCopy')"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" />
+                            <span class="error-style" *ngIf="showError">* Please Select only document or pdf</span>
+                        </div>
+                        <div class="row attachments-style">
+                            <div class="col-md-2">
+                                Passport Copy
+                            </div>
+                            <input type="file" (change)="uploadFile($event, 'passportCopy')"
+                                accept=".doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" />
+                            <span class="error-style" *ngIf="showError">* Please Select only document or pdf</span>
+                        </div>
+                    </nb-accordion-item-body>
+                </nb-accordion-item>
+            </nb-accordion>
+        </div>
+
+        <div class="row footer-style">
+            <div class="col-md-9"></div>
+            <div class="col-md-1">
+                <button nbButton>Clear</button>
+            </div>
+            <div class="col-md-1">
+                <button nbButton status="success" [disabled]="!newEmployeeForm.valid" (click)="addNewEmployee()">Add
+                    New</button>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+    </div>
+</div>

@@ -6,6 +6,7 @@ import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 import { ReportsService } from '../../../pages/reports/reports.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -51,7 +52,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private userService: UserData,
               private layoutService: LayoutService,
               private reportService: ReportsService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private router : Router
+              ) {
   }
 
   ngOnInit() {
@@ -106,5 +109,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },(error)=>{
 
     });
+  }
+
+  logout(){
+
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('organization_key');
+    this.router.navigate(['/auth/login']);
+
+
+
   }
 }

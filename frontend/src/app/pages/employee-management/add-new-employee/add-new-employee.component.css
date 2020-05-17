@@ -1,0 +1,41 @@
+.add-employee-style {
+    background-color: white;
+    height: 90vh;
+    width: 80vw;
+    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+.header-style {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: lightseagreen;
+}
+
+.body-style {
+    margin: 5px;
+    width: 100%;
+}
+
+.footer-style {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+}
+
+.attachments-style {
+    margin: 5px;
+}
+
+.error-style {
+    color: red;
+}

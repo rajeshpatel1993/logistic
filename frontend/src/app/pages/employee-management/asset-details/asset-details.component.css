@@ -1,0 +1,19 @@
+.main-header-style {
+    height: 5vh;
+}
+
+.asset-header-style {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.asset-detail {
+    margin-top: 40px;
+}
+
+.top-bar {
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}

@@ -4,12 +4,21 @@ const mongoose = require("mongoose");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require('cors');
+
 const bodyParser = require('body-parser');
 const config = require("./config/config");
+const dbConfig = require('./config/database.config.js');
+const compression = require('compression');
+const autoIncrement = require('mongoose-auto-increment');
+mongoose.Promise = global.Promise;
 
-
+require('dotenv').config();
 require('./connection');
 let server_port = config["app"].port;
+
+const router = express.Router();
+
+
 
 // import {orderUpdate} from "./controllers/orderUpdate";
 // const config = require('config');
@@ -28,11 +37,20 @@ const fuelController = require("./controllers/fuel");
 const noteController = require("./controllers/notes");
 const issueController = require("./controllers/issue");
 
+
 const app = express();
 app.use(cors());
 app.use(helmet()); // better status code
 app.use(morgan('tiny')); // logs reqs meta data in console
 app.use(bodyParser.json({limit: '10mb', extended: true}));
+
+
+
+//employee module integrations
+
+const loginRouter = require('./routes/loginRouter')(router);
+
+
 
 app.use('/api/vehicles', vehicleController);
 app.use('/api/employees', employeeController);

@@ -8,13 +8,32 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { LoginComponent } from './pages/login/login.component';
+import { EmployeesListComponent } from './pages/employee-management/employees-list/employees-list.component';
 
 const routes: Routes = [
+
   {
     path: 'pages',
-    loadChildren: () => import('app/pages/pages.module')
+    loadChildren: () => import('../app/pages/pages.module')
       .then(m => m.PagesModule),
   },
+
+  // {
+  //   path: 'employee',
+  //   loadChildren: () => import('../app/employee/employee.module')
+  //   .then(m => m.EmployeeModule)
+  // },
+
+
+
+
+
+  // {
+
+  //   path: 'employee',
+  //   component: EmployeesListComponent
+  // },
   {
     path: 'auth',
     component: NbAuthComponent,
@@ -25,7 +44,7 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        component: NbLoginComponent,
+        component: LoginComponent,
       },
       {
         path: 'register',

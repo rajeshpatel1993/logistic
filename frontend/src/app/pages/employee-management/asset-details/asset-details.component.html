@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- <div class="col-md-12 top-bar">
+      Asset Details
+    </div> -->
+  </div>
+  <div class="asset-detail" *ngIf="!loading">
+    <nb-card>
+      <nb-card-body>
+        <nb-tabset fullWidth (changeTab)="changeTab($event)">
+          <nb-tab tabTitle="Assigned">
+            <ng2-smart-table [settings]="settings" [source]="assetList"
+              (userRowSelect)="showAssetDetails($event)"></ng2-smart-table>
+          </nb-tab>
+          <nb-tab tabTitle="UnAssigned">
+              <ng2-smart-table [settings]="unassignedSettings" [source]="unAssignedList"
+                (userRowSelect)="showAssetDetails($event)"></ng2-smart-table>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<ng-template #dialog let-ref="dialogRef">
+  <app-main-dialog [headerTitle]="'Asset Details'"
+    [dialogSize]="'large'"
+    (closeButtonClicked)="closeDialog($event)">
+      <app-asset [assetForm]="assetForm" [userId]="userId" 
+        [assignStatuses]="assignStatuses" [selectedAssetDetails]="selectedAssetDetails"
+        (closeDialog)="closeDialog($event)"></app-asset>
+  </app-main-dialog>
+</ng-template>
