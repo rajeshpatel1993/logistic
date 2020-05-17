@@ -1,0 +1,103 @@
+.main-header-style {
+    margin: 5px;
+    padding: 5px;
+    border-bottom: 1px solid lightgray;
+}
+.secondary-header-style {
+    margin: 5px;
+    padding: 5px;
+    border-bottom: 1px solid lightgray;
+}
+
+.content-style {
+    height: 70vh;
+    overflow-y: scroll;
+}
+
+.employee-header-style {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.button-box-style {
+    display: flex;
+    align-items: center;
+}
+
+.filter-box-style {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.filter-box-style a {
+    padding: 5px;
+    text-decoration: none;
+    color: black;
+}
+
+.inner-card-style {
+    display: flex;
+    flex-direction: row;
+}
+
+.detail-style {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.detail-style span {
+    margin: 5px;
+}
+
+.name-style {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.designation-style {
+    color: grey;
+    font-weight: bold;
+    text-transform: capitalize
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.card {
+    max-width: 300px;
+    margin: 10px;
+    padding: 15px;
+    text-align: center;
+    background-color: #edf1f7;
+    font: 14px/18px "ProximaNovaRegular", Arial, Helvetica, sans-serif;
+}
+
+.card:hover {
+    cursor: pointer;
+    padding: 15px !important;
+    background-color: white;
+    border: 1px solid #00d68f;
+    box-shadow: 0 0 23px 0 #ddd;
+}
+  
+.card .title {
+    color: black;
+    margin-top: 17px;
+    font: 14px/18px "ProximaNovaRegular", Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.card p {
+    color: grey;
+    font: 14px/17px "ProximaNovaLight", Arial, Helvetica, sans-serif;
+    margin-bottom: 0.8rem;
+}
+

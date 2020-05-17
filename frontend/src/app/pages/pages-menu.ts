@@ -54,6 +54,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
     // link: '',
     // home: true,
   },
+
+  {
+    title: 'Employee',
+    icon: {
+      icon: 'file-invoice-dollar',
+      pack: 'solid'},
+
+      children: [
+        {
+          title: 'List',
+          link: '/pages/employee/empList',
+        }
+        
+        // ,
+        // {
+        //   title: 'Summary',
+        //   link: '/pages/reports/expense-summary',
+        // }
+      ]
+    // link: '',
+    // home: true,
+  },
   {
     title: 'Repairs/Complaint',
     icon: {

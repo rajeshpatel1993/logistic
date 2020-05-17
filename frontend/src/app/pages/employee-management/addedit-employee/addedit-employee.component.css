@@ -1,0 +1,105 @@
+.main-header {
+    padding: 5px;
+    border-bottom: 1px solid lightgray;
+}
+
+.photo-style {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profileNameStyle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.additionalDetailStyle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 5px;
+    font-size: .9rem;
+}
+
+.header-style {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.main-content {
+    margin: 10px;
+    height: 60vh;
+    overflow-y: auto;
+}
+
+.field-style {
+    display: flex;
+    margin: 5px;
+    flex-direction: column;
+}
+
+.field-style input {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.field-style input:focus {
+    border-bottom: 1px solid green;
+}
+
+.field-style label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.multiple-column-field-style {
+    display: flex;
+    flex-direction: row;
+}
+
+.multiple-column-field-style input {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.multiple-column-field-style input:focus {
+    border-bottom: 1px solid green;
+}
+
+.multiple-column-field-style label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.multiple-field-style {
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+@media only screen and (max-width: 600px) {
+    .photo-style {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px
+    }
+    .header-style {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

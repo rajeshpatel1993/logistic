@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
+import { AuthService } from '../services/auth.service';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'ngx-pages',
@@ -16,5 +18,18 @@ import { MENU_ITEMS } from './pages-menu';
 })
 export class PagesComponent {
 
+  
+
+
   menu = MENU_ITEMS;
+
+  constructor(){
+
+
+   
+
+}
+
+
+
 }
