@@ -36,6 +36,7 @@ import { AddNewEmployeeComponent } from './add-new-employee/add-new-employee.com
 // import { CreateAssetComponent } from './create-asset/create-asset.component';
 import { LeaveDataService } from '../../shared/services/leave-data.service';
 import { EmployeeComponent } from './employee.component';
+import { AddeditEmployeeComponent } from './addedit-employee/addedit-employee.component';
 // import { AddNewDocumentComponent } from './add-new-document/add-new-document.component';
 // import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 // import { AssetComponent } from './asset/asset.component';
@@ -50,6 +51,7 @@ export function tokenGetter() {
     EmployeesListComponent,
     AssetDetailsComponent,
     EmployeeComponent,
+    AddeditEmployeeComponent,
     // DashboardComponent,
     // LeaveDashboardComponent,
     // DocumentManagementComponent,
