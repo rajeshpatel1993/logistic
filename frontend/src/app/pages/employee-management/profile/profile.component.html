@@ -1,0 +1,41 @@
+<div class="container" [formGroup]="profileDataForm" [ngClass]="{'disable-pointer-events': editOption === false}">
+  <div class="row field-style">
+    <label>First Name</label>
+    <input type="text" nbInput placeholder="First Name" formControlName="firstName"/>
+  </div>
+  <div class="row field-style">
+    <label>Middle Name</label>
+    <input type="text" nbInput placeholder="Middle Name" formControlName="middleName"/>
+  </div>
+  <div class="row field-style">
+    <label>Last Name</label>
+    <input type="text" nbInput placeholder="Last Name" formControlName="lastName"/>
+  </div>
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Date of Birth</label>
+      <input [nbDatepicker]="birthdatepicker" nbInput placeholder="Date of Birth" formControlName="DOB"/>
+      <nb-datepicker #birthdatepicker></nb-datepicker>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Gender</label>
+      <nb-select placeholder="Select Gender" formControlName="gender">
+        <nb-option *ngFor="let gen of genderOptions" value="{{gen.genderId}}"> {{gen.gender}}</nb-option>
+      </nb-select>
+    </div>
+  </div>
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Martial Status</label>
+      <nb-select placeholder="Martial Status" formControlName="martialStatus">
+        <nb-option *ngFor="let mar of martialOptions" value="{{mar.martialStatusId}}"> {{mar.martialStatus}}</nb-option>
+      </nb-select>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Blood Group</label>
+      <nb-select placeholder="Select Blood Group" formControlName="bloodGroup">
+        <nb-option *ngFor="let blood of bloodGroupOptions" value="{{blood.bloodGroupId}}"> {{blood.bloodGroup}}</nb-option>
+      </nb-select>
+    </div>
+  </div>
+</div>

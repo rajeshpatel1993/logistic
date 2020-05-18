@@ -1,0 +1,65 @@
+<div class="container">
+  <!-- <nb-card *ngFor="let attachment of attachments">
+    <ng-container *ngIf="attachmentsData[attachment]; else nodata">
+      <nb-card-header class="attachment-header">
+        <div class="row">
+          <div class="col-md-9">{{attachment}}</div>
+          <div class="col-md-3" *ngIf="needEditDelete">
+              <button nbButton outline status="success" size="small"
+              (click)="editDocument(attachment)">Edit</button>
+              &nbsp;
+              <button nbButton outline status="danger" size="small"
+              (click)="deleteDocument(attachment)">Delete</button>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <a (click)="getDocument(attachmentsData[attachment])">{{attachment}}.pdf</a>
+        <div class="card-style">
+            <div class="img-style">
+            </div>
+            <div class="content-style">
+              <span>{{attachment}}</span>
+            </div>
+          </div>
+      </nb-card-body>
+    </ng-container>
+    <ng-template #nodata>
+      <nb-card-header>
+        {{attachment}}
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-12">
+            No data Present
+          </div>
+        </div>
+      </nb-card-body>
+    </ng-template>
+  </nb-card> -->
+  <div class="row">
+    <ng-container *ngFor="let attachment of attachments">
+      <div class="col-md-4" *ngIf="attachmentsData[attachment]">
+        <div class="card-style" [ngClass]="{ 'edit-enabled-style': needEditDelete === true }">
+          <div class="img-style" (click)="getDocument(attachmentsData[attachment])">
+            <ng-container *ngIf="attachmentsData[attachment]['fileType'] === 'pdf'">
+              <img src="../../../assets/pdf.png" />
+            </ng-container>
+            <ng-container *ngIf="attachmentsData[attachment]['fileType'] !== 'pdf'">
+              <img src="../../../assets/docx.png">
+            </ng-container>
+          </div>
+          <div class="content-style" (click)="getDocument(attachmentsData[attachment]['url'])">
+            <span>{{attachment}}</span>
+          </div>
+          <div class="icon-style" *ngIf="needEditDelete">
+              <i class="fa fa-edit icon-main-style" aria-hidden="true"  
+                data-toggle="tooltip" title="Edit" (click)="editDocument(attachment)"></i>
+              <i class="fa fa-trash icon-main-style" aria-hidden="true"  
+                data-toggle="tooltip" title="Delete" (click)="deleteDocument(attachment)"></i>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

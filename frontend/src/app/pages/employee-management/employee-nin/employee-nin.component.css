@@ -1,0 +1,45 @@
+.field-style {
+    display: flex;
+    margin: 5px;
+    flex-direction: column;
+}
+
+.field-style input {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.field-style input:focus {
+    border-bottom: 1px solid green;
+}
+
+.field-style label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.multiple-column-field-style {
+    display: flex;
+    flex-direction: row;
+}
+
+.multiple-column-field-style input {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid lightgray;
+}
+
+.multiple-column-field-style input:focus {
+    border-bottom: 1px solid green;
+}
+
+.multiple-column-field-style label {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.multiple-field-style {
+    display: flex;
+    flex-direction: column;
+}

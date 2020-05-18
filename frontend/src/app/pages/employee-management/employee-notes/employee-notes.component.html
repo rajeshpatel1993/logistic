@@ -1,0 +1,20 @@
+<div class="container" *ngIf="notesData.length">
+  <nb-card accent="info" *ngFor="let notes of notesData">
+    <nb-card-header>
+
+    </nb-card-header>
+    <nb-card-body>
+      {{notes.notesDesc}}
+    </nb-card-body>
+  </nb-card>
+</div>
+<div class="container" *ngIf="!notesData.length">
+    <nb-card accent="info" >
+        <nb-card-header>
+    
+        </nb-card-header>
+        <nb-card-body>
+          No Notes Added
+        </nb-card-body>
+      </nb-card>
+</div>

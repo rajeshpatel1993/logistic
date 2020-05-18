@@ -15,7 +15,7 @@ import { NbToastrService } from '@nebular/theme';
   styleUrls: ['./addedit-employee.component.css']
 })
 export class AddeditEmployeeComponent implements OnInit {
-  userId: string;
+  userId: string = '1';
   employeeId: string;
   employeeDetails: IEmployee;
   loading: boolean = true;
@@ -36,7 +36,8 @@ export class AddeditEmployeeComponent implements OnInit {
   ngOnInit() {
     combineLatest([this.route.parent.parent.paramMap, this.route.paramMap]).subscribe(([parentParams, currentParams]) => {
       console.log('Inside Join');
-      this.userId = parentParams.get('userId');
+      // this.userId = parentParams.get('userId');
+      this.userId ='1';
       this.employeeId = currentParams.get('employeeId');
       this.intializeEmployeeDetails();
     });
@@ -45,7 +46,7 @@ export class AddeditEmployeeComponent implements OnInit {
 
   intializeEmployeeDetails() {
     this.employeeService.getEmployeeDetailsById(this.userId, this.employeeId).then((data: IEmployee) => {
-      console.log(data);
+      console.log(`reached emp details`);
       this.employeeDetails = data;
       if(this.employeeDetails) {
         this.profileForm = this.fb.group({

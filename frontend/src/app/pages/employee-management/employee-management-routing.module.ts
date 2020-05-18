@@ -3,6 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 // import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeesListComponent } from './employees-list/employees-list.component';
 import { EmployeeComponent } from './employee.component';
+import { AddeditEmployeeComponent } from './addedit-employee/addedit-employee.component';
+import { ProfileComponent } from './profile/profile.component';
+import { JobDetailsComponent } from './job-details/job-details.component';
+import { EmergencyDetailsComponent } from './emergency-details/emergency-details.component';
+import { PassportDetailsComponent } from './passport-details/passport-details.component';
+import { EmployeeNotesComponent } from './employee-notes/employee-notes.component';
+import { EmployeeNinComponent } from './employee-nin/employee-nin.component';
+import { EmployeeFilesComponent } from './employee-files/employee-files.component';
 // import { AssetDetailsComponent } from './asset-details/asset-details.component';
 // import { LeaveDashboardComponent } from './leave-dashboard/leave-dashboard.component';
 // import { DocumentManagementComponent } from './document-management/document-management.component';
@@ -31,7 +39,51 @@ const routes: Routes = [
       {
         path: 'empList',
         component: EmployeesListComponent
-      }
+      },
+
+
+      {
+          path: 'edit/:employeeId',
+          component: AddeditEmployeeComponent,
+          children: [{
+            path: "",
+            component: AddeditEmployeeComponent
+
+          },
+            
+            {
+            path: 'profile',
+            component: ProfileComponent
+          },
+          
+          {
+            path: 'jobDetails',
+            component: JobDetailsComponent
+          }
+          
+          , {
+            path: 'emergency',
+            component: EmergencyDetailsComponent
+          }
+          
+          , {
+            path: 'passport',
+            component: PassportDetailsComponent
+          }, {
+            path: 'notes',
+            component: EmployeeNotesComponent
+          }, {
+            path: 'files',
+            component: EmployeeFilesComponent
+          }, {
+            path: 'nin',
+            component: EmployeeNinComponent
+          }
+        
+        ]
+        
+       }
+
     ]
   }
   

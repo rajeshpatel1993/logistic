@@ -37,9 +37,20 @@ import { AddNewEmployeeComponent } from './add-new-employee/add-new-employee.com
 import { LeaveDataService } from '../../shared/services/leave-data.service';
 import { EmployeeComponent } from './employee.component';
 import { AddeditEmployeeComponent } from './addedit-employee/addedit-employee.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CustomCommonModule } from '../custom-common.module';
+import { JobDetailsComponent } from './job-details/job-details.component';
+import { EmergencyDetailsComponent } from './emergency-details/emergency-details.component';
+import { PassportDetailsComponent } from './passport-details/passport-details.component';
+import { EmployeeNotesComponent } from './employee-notes/employee-notes.component';
+import { EmployeeFilesComponent } from './employee-files/employee-files.component';
+import { EmployeeNinComponent } from './employee-nin/employee-nin.component';
+import { FileUploadService } from '../../services/file-upload.service';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 // import { AddNewDocumentComponent } from './add-new-document/add-new-document.component';
 // import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 // import { AssetComponent } from './asset/asset.component';
+import { AngularFireModule } from 'angularfire2';
 
 
 export function tokenGetter() {
@@ -58,13 +69,13 @@ export function tokenGetter() {
     // ReportsComponent,
     // DocumentRemindersComponent,
     // AddeditEmployeeComponent,
-    // ProfileComponent,
-    // JobDetailsComponent,
-    // EmergencyDetailsComponent,
-    // PassportDetailsComponent,
-    // EmployeeNotesComponent,
-    // EmployeeFilesComponent,
-    // EmployeeNinComponent,
+    ProfileComponent,
+    JobDetailsComponent,
+    EmergencyDetailsComponent,
+    PassportDetailsComponent,
+    EmployeeNotesComponent,
+    EmployeeFilesComponent,
+    EmployeeNinComponent,
     // AddLeaveComponent,
     // CreateAssetComponent,
     // AssetContainerComponent,
@@ -79,6 +90,8 @@ export function tokenGetter() {
   imports: [
     CommonModule,
     FormsModule,
+    CustomCommonModule,
+    AngularFireStorageModule,
     // CoreModule,
     ReactiveFormsModule,
     ScrollingModule,
@@ -95,10 +108,16 @@ export function tokenGetter() {
     NbAccordionModule,
     NbSpinnerModule,
     NbSelectModule,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyCVD_FPhsprqzSFWjy6baM_Fw63hwSWJHE",
+      authDomain: "nirmal-hockey.firebaseapp.com",
+      storageBucket: "nirmal-hockey.appspot.com",
+      projectId: "nirmal-hockey",
+    }),
     Ng2SmartTableModule
   ],
   // entryComponents: [ButtonViewComponent, AddNewEmployeeComponent],
-  providers: [ EmployeeListService, AssetService, LeaveDataService ],
+  providers: [ EmployeeListService, AssetService, LeaveDataService, FileUploadService ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
