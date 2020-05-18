@@ -1,0 +1,88 @@
+<div class="container" [formGroup]="jobDataForm" [ngClass]="{'disable-pointer-events': editOption === false}">
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Role</label>
+      <input type="text" nbInput placeholder="Role" formControlName="role"/>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Work Location</label>
+      <nb-select placeholder="Work Location" formControlName="workLocation">
+        <nb-option *ngFor="let location of workLocationOptions" value="{{location.workLocationId}}">
+          {{location.workLocation}}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
+
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Job Title</label>
+      <nb-select placeholder="Job Title" formControlName="jobTitle">
+        <nb-option *ngFor="let job of jobTitleOptions" value="{{job.jobTitleId}}">
+          {{job.jobTitle}}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Email</label>
+      <input type="text" nbInput placeholder="Email Address" formControlName="emailAddress"/>
+    </div>
+  </div>
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Employment Type</label>
+      <nb-select placeholder="Employment Type" formControlName="status">
+        <nb-option *ngFor="let type of employmentTypeOptions" value="{{type.employmentStatusId}}">
+          {{type.employmentStatus}}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Employment Status</label>
+      <nb-select placeholder="Employee Status" formControlName="employmentStatusId">
+        <nb-option *ngFor="let status of employeeStatusOptions" value="{{status.employeeStatusId}}">
+          {{status.employeeStatus}}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>DOJ</label>
+      <input [nbDatepicker]="dojdatepicker" nbInput placeholder="Date of Birth" formControlName="DOJ"/>
+      <nb-datepicker #dojdatepicker></nb-datepicker>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>DOR</label>
+      <input [nbDatepicker]="dordatepicker" nbInput placeholder="Date of Birth" formControlName="DOR"/>
+      <nb-datepicker #dordatepicker></nb-datepicker>
+    </div>
+  </div>
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Project</label>
+      <nb-select placeholder="Project" formControlName="projectID">
+        <nb-option *ngFor="let pro of projectOptions" value="{{pro.projectId}}">
+          {{pro.projectName}}
+        </nb-option>
+      </nb-select>
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Project Type</label>
+      <nb-select placeholder="Employee Status" formControlName="projectTypeId">
+        <nb-option *ngFor="let prot of projectTypeOptions" value="{{prot.projectTypeId}}">
+          {{prot.projectTypeName}}
+        </nb-option>
+      </nb-select>
+    </div>
+  </div>
+  <div class="row field-style">
+    <label>User Group</label>
+    <nb-select placeholder="User Group" outline status="primary">
+      <nb-option value="1">Option 1</nb-option>
+      <nb-option value="2">Option 2</nb-option>
+      <nb-option value="3">Option 3</nb-option>
+      <nb-option value="4">Option 4</nb-option>
+    </nb-select>
+  </div>
+</div>

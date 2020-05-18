@@ -1,0 +1,55 @@
+<div class="container" [formGroup]="passportDataForm" [ngClass]="{'disable-pointer-events': editOption === false}">
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Passport Number</label>
+      <input type="text" nbInput placeholder="Passport Number" formControlName="passportNo" />
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Valid Until</label>
+      <input [nbDatepicker]="passportdatepicker" nbInput placeholder="Valid Until" formControlName="passportValid" />
+      <nb-datepicker #passportdatepicker></nb-datepicker>
+    </div>
+  </div>
+  <div class="row multiple-column-field-style">
+    <div class="col-md-6 multiple-field-style">
+      <label>Gop No</label>
+      <input type="text" nbInput placeholder="Gop Number" formControlName="gopNo" />
+    </div>
+    <div class="col-md-6 multiple-field-style">
+      <label>Valid Until</label>
+      <input [nbDatepicker]="gopdatepicker" nbInput placeholder="Valid Until" formControlName="gopValid" />
+      <nb-datepicker #gopdatepicker></nb-datepicker>
+    </div>
+  </div>
+  <div class="row multiple-column-field-style">
+      <div class="col-md-6 multiple-field-style">
+        <label>NIN No</label>
+        <input type="text" nbInput placeholder="Gop Number" formControlName="ninNo" />
+      </div>
+      <div class="col-md-6 multiple-field-style">
+        <label>Valid Until</label>
+        <input [nbDatepicker]="nindatepicker" nbInput placeholder="Valid Until" formControlName="ninValid" />
+        <nb-datepicker #nindatepicker></nb-datepicker>
+      </div>
+    </div>
+  <!-- <div class="row field-style">
+    <label>Place of Issue</label>
+    <input type="text" nbInput placeholder="Contact" />
+  </div>
+  <div class="row field-style">
+    <label>Comments</label>
+    <input type="text" nbInput placeholder="Contact" />
+  </div> -->
+  <div class="row field-style">
+    <label>Attachments</label>
+    <ng-container *ngIf="passportDataForm.get('passportCopy').value">
+      <a href="{{passportDataForm.get('passportCopy').value}}" target="_blank">Passport Copy</a>
+    </ng-container>
+    <ng-container *ngIf="passportDataForm.get('gopCopy').value">
+      <a href="{{passportDataForm.get('gopCopy').value}}" target="_blank">Gop Copy</a>
+    </ng-container>
+    <ng-container *ngIf="passportDataForm.get('ninCopy').value">
+        <a href="{{passportDataForm.get('ninCopy').value}}" target="_blank">NIN Copy</a>
+    </ng-container>
+  </div>
+</div>
