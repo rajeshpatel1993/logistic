@@ -43,17 +43,21 @@ body {
   font-size: 14px;
   color: #777777;
 }
-nb-layout .layout{
-  font-family: 'Raleway'!important;
+
+nb-layout .layout {
+  font-family: 'Raleway' !important;
 }
-*:focus{
+
+*:focus {
   outline: none;
 }
-.nb-theme-default{
-  --card-text-font-family: 'Raleway'!important;
-  --card-header-text-font-family: 'Raleway'!important;
-  --header-text-font-family: 'Raleway'!important;
+
+.nb-theme-default {
+  --card-text-font-family: 'Raleway' !important;
+  --card-header-text-font-family: 'Raleway' !important;
+  --header-text-font-family: 'Raleway' !important;
 }
+
 h1,
 h2,
 h3,
@@ -89,26 +93,30 @@ nb-sidebar .scrollable {
   background-color: #C2CC7F;
   border-color: #C2CC7F;
 }
+
 .created-by {
   color: #b2b0b0;
   font-size: 13px;
 }
+
 nb-menu .menu-item {
   a {
-    color: #777777!important;
+    color: #777777 !important;
+
     &.active {
-      color: #C2CC7F!important;
+      color: #C2CC7F !important;
 
       .menu-icon {
         color: #C2CC7F;
       }
-      &::before{
-        background-color: #C2CC7F!important;
+
+      &::before {
+        background-color: #C2CC7F !important;
       }
     }
 
     &:hover {
-      color: #C2CC7F!important;
+      color: #C2CC7F !important;
 
       .menu-icon {
         color: #C2CC7F;
@@ -380,13 +388,15 @@ a:focus {
     border-color: red !important;
     color: #fff;
   }
-  &.driverPopup{
+
+  &.driverPopup {
     width: 500px;
     float: left;
+
     nb-card-body {
       width: 100%;
       float: left;
-  }
+    }
   }
 }
 
@@ -396,7 +406,8 @@ a:focus {
   ul {
     list-style: none;
     padding: 0;
-    li{
+
+    li {
       display: inline-block;
       color: #495057;
     }
@@ -428,7 +439,8 @@ a:focus {
   }
 }
 
-.Reports,.Fuel {
+.Reports,
+.Fuel {
   nb-tabset {
     .tab-link {
       padding: 20px 10px !important;
@@ -444,40 +456,48 @@ a:focus {
       overflow-x: auto;
     }
   }
-  .md-drppicker{
-    &.double{
+
+  .md-drppicker {
+    &.double {
       width: 600px;
     }
-    .ranges{
-      ul{
-        li{
-          button{
-            &.active{
+
+    .ranges {
+      ul {
+        li {
+          button {
+            &.active {
               background-color: #C2CC7F;
             }
           }
         }
       }
     }
-    td{
-      &.active{
+
+    td {
+      &.active {
         background-color: #C2CC7F;
-        &:hover{
+
+        &:hover {
           background-color: #C2CC7F;
         }
       }
     }
-    .btn{
+
+    .btn {
       background-color: #C2CC7F;
       padding: 0px 15px;
-      &:hover{
+
+      &:hover {
         background-color: #777777;
       }
     }
-    .clear svg{
+
+    .clear svg {
       vertical-align: text-bottom;
     }
   }
+
   @media (min-width: 768px) and (max-width: 991.98px) {
     .md-drppicker.double {
       width: 600px;
@@ -532,6 +552,7 @@ a:focus {
         border: 1px solid #C2CC7F;
         color: #C2CC7F !important;
         background-color: #fff;
+
         &.current {
           background: #C2CC7F;
           border-color: #C2CC7F;
@@ -614,7 +635,7 @@ a:focus {
         color: #fff;
       }
     }
-    
+
   }
 
   // Middle column css
@@ -638,6 +659,7 @@ a:focus {
       padding: 10px 0;
       width: 100%;
       display: table;
+
       h3,
       h5 {
         text-align: center;
@@ -656,24 +678,30 @@ a:focus {
       }
     }
   }
-  .EcommerceCol1,.EcommerceCol2,.EcommerceCol3{
-    nb-card-header{
+
+  .EcommerceCol1,
+  .EcommerceCol2,
+  .EcommerceCol3 {
+    nb-card-header {
       color: #777777;
       font-family: 'Raleway';
       font-weight: 500;
       line-height: 26px;
       font-size: 18px;
     }
-    .highcharts-title{
-      tspan{
+
+    .highcharts-title {
+      tspan {
         display: none;
       }
     }
-    nb-list-item{
+
+    nb-list-item {
       font-size: 14px;
       color: #777777;
     }
   }
+
   .ServiceReminder,
   .RenewalReminder {
     width: 100%;
@@ -688,7 +716,7 @@ a:focus {
       h3 {
         color: red;
       }
-      
+
     }
 
     .duesoon {
@@ -733,18 +761,21 @@ a:focus {
           margin-right: 15px;
           float: left;
         }
-        .card-title{
+
+        .card-title {
           font-size: 28px;
           line-height: 32px;
           font-weight: 100;
           color: #333333;
           text-align: right;
           margin: 0;
-          span{
+
+          span {
             color: #f00;
           }
         }
-        .cardstats{
+
+        .cardstats {
           font-size: 12px;
           margin-bottom: 10px;
           background-color: #aeaeae;
@@ -888,7 +919,8 @@ a:focus {
         text-align: center;
       }
     }
-    nb-card-header{
+
+    nb-card-header {
       color: #777777;
       font-family: 'Raleway';
       font-weight: 500;
@@ -921,51 +953,83 @@ a:focus {
   }
 
 }
-.expence_report_chart{
-  .highcharts-title{
-      font-size: 12px !important;
+
+.expence_report_chart {
+  .highcharts-title {
+    font-size: 12px !important;
   }
 }
-.angular-editor-textarea{
-  min-height: 200px!important;
+
+.angular-editor-textarea {
+  min-height: 200px !important;
 }
-.ngx-timepicker{
-    height: calc(1.5em + 0.75rem + 2px);
-    padding: 2px;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  .ngx-timepicker-control__arrow{
+
+.ngx-timepicker {
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 2px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  .ngx-timepicker-control__arrow {
     height: 10px;
   }
 }
-.timepicker__header,.clock-face__number > span.active,.clock-face__clock-hand{
-  background-color: #C2CC7F!important;
+
+.timepicker__header,
+.clock-face__number>span.active,
+.clock-face__clock-hand {
+  background-color: #C2CC7F !important;
 }
-.timepicker-button{
-  color: #C2CC7F!important;
+
+.timepicker-button {
+  color: #C2CC7F !important;
 }
+
 .template img {
   width: 100%;
 }
-.innerTable{
-  tr{
-    th{
+
+.innerTable {
+  tr {
+    th {
       width: 100px;
-      &:first-child{
+
+      &:first-child {
         width: 200px;
       }
     }
   }
 }
-.input-group-append{
-  span{
+
+.input-group-append {
+  span {
     background-color: #C2CC7F;
   }
 }
+
+  nb-layout {
+    .layout {
+      .layout-container {
+        .content {
+          .columns {
+            nb-layout-column {
+              padding: 0 !important;
+              nb-card{
+                height: 100%;
+              }
+            }
+          }
+        }
+      }
+      nb-card-header{
+        display: none!important;
+    }
+    }
+  }
