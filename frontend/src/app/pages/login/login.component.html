@@ -1,26 +1,21 @@
-<nb-layout>
-    <nb-layout-column>
-        <div class="login-container">
-            <nb-card class="card-style">
-                <nb-card-header>Login</nb-card-header>
-                <nb-card-body>
-                    <form [formGroup]="userForm">
-                        <div class="form-control-group">
-                            <label class="label" for="input-email">Email address:</label>
-                            <input nbInput formControlName="username" fullWidth />
-                        </div>
-                        <div class="form-control-group">
-                            <label class="label" for="input-password">Password:</label>
-                            <input nbInput type="password" formControlName="password" fullWidth />
-                        </div>
-                        <div class="btn-style">
-                            <button nbButton fullWidth status="primary" size="large" (click)="login()">
-                                Log In
-                            </button>
-                        </div>
-                    </form>
-                </nb-card-body>
-            </nb-card>
-        </div>
-    </nb-layout-column>
-</nb-layout>
+<div class="login-container">
+    <nb-card>
+        <nb-card-body class="p-0">
+            <form [formGroup]="userForm">
+                <div class="form-control-group">
+                    <label class="label" for="input-email">Email address:</label>
+                    <input nbInput formControlName="username" class="form-control" fullWidth />
+                </div>
+                <div class="form-control-group">
+                    <label class="label" for="input-password">Password:</label>
+                    <input nbInput type="password" formControlName="password" class="form-control" fullWidth />
+                </div>
+                <div class="form-control-group text-right m-0">
+                    <button nbButton fullWidth class="btn btn-default btn-login" status="primary" size="large" (click)="login()">
+                        Log In
+                    </button>
+                </div>
+            </form>
+        </nb-card-body>
+    </nb-card>
+</div>

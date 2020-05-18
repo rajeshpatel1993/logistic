@@ -89,3 +89,15 @@
     }
   }
 }
+.logout{
+  padding: 18px 0;
+  .btn-logout{
+    background-color: #C2CC7F;
+    color: #fff;
+    width: 128px;
+    cursor: pointer;
+    &:hover{
+      background-color: #777;
+    }
+  }
+}
