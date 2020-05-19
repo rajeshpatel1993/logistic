@@ -17,7 +17,7 @@
   <div class="row multiple-column-field-style">
     <div class="col-md-6 multiple-field-style">
       <label>Job Title</label>
-      <nb-select placeholder="Job Title" formControlName="jobTitle">
+      <nb-select placeholder="Job Title" formControlName="jobTitleId">
         <nb-option *ngFor="let job of jobTitleOptions" value="{{job.jobTitleId}}">
           {{job.jobTitle}}
         </nb-option>
@@ -25,13 +25,13 @@
     </div>
     <div class="col-md-6 multiple-field-style">
       <label>Email</label>
-      <input type="text" nbInput placeholder="Email Address" formControlName="emailAddress"/>
+      <input type="text" nbInput placeholder="Email Address" formControlName="email"/>
     </div>
   </div>
   <div class="row multiple-column-field-style">
     <div class="col-md-6 multiple-field-style">
       <label>Employment Type</label>
-      <nb-select placeholder="Employment Type" formControlName="status">
+      <nb-select placeholder="Employment Type" formControlName="employmentStatus">
         <nb-option *ngFor="let type of employmentTypeOptions" value="{{type.employmentStatusId}}">
           {{type.employmentStatus}}
         </nb-option>
@@ -39,7 +39,7 @@
     </div>
     <div class="col-md-6 multiple-field-style">
       <label>Employment Status</label>
-      <nb-select placeholder="Employee Status" formControlName="employmentStatusId">
+      <nb-select placeholder="Employee Status" formControlName="employeeStatus">
         <nb-option *ngFor="let status of employeeStatusOptions" value="{{status.employeeStatusId}}">
           {{status.employeeStatus}}
         </nb-option>
@@ -49,19 +49,19 @@
   <div class="row multiple-column-field-style">
     <div class="col-md-6 multiple-field-style">
       <label>DOJ</label>
-      <input [nbDatepicker]="dojdatepicker" nbInput placeholder="Date of Birth" formControlName="DOJ"/>
+      <input [nbDatepicker]="dojdatepicker" nbInput placeholder="Date of Birth" formControlName="doj"/>
       <nb-datepicker #dojdatepicker></nb-datepicker>
     </div>
     <div class="col-md-6 multiple-field-style">
       <label>DOR</label>
-      <input [nbDatepicker]="dordatepicker" nbInput placeholder="Date of Birth" formControlName="DOR"/>
+      <input [nbDatepicker]="dordatepicker" nbInput placeholder="Date of Birth" formControlName="dor"/>
       <nb-datepicker #dordatepicker></nb-datepicker>
     </div>
   </div>
   <div class="row multiple-column-field-style">
     <div class="col-md-6 multiple-field-style">
       <label>Project</label>
-      <nb-select placeholder="Project" formControlName="projectID">
+      <nb-select placeholder="Project" formControlName="project">
         <nb-option *ngFor="let pro of projectOptions" value="{{pro.projectId}}">
           {{pro.projectName}}
         </nb-option>
@@ -69,7 +69,7 @@
     </div>
     <div class="col-md-6 multiple-field-style">
       <label>Project Type</label>
-      <nb-select placeholder="Employee Status" formControlName="projectTypeId">
+      <nb-select placeholder="Employee Status" formControlName="projectType">
         <nb-option *ngFor="let prot of projectTypeOptions" value="{{prot.projectTypeId}}">
           {{prot.projectTypeName}}
         </nb-option>

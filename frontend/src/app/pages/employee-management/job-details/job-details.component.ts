@@ -23,6 +23,9 @@ export class JobDetailsComponent implements OnInit {
   constructor(private appService: AppService, private fb: FormBuilder) { }
 
   ngOnInit() {
+
+    console.log(this.jobDataForm);
+    
     /* this.jobDetailsForm = this.fb.group({}); */
     this.demographicsData = this.appService.demographicsData;
     if(this.demographicsData) {

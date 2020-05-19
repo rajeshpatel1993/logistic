@@ -116,7 +116,7 @@ export function tokenGetter() {
     }),
     Ng2SmartTableModule
   ],
-  // entryComponents: [ButtonViewComponent, AddNewEmployeeComponent],
+  entryComponents: [ButtonViewComponent, AddNewEmployeeComponent],
   providers: [ EmployeeListService, AssetService, LeaveDataService, FileUploadService ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
