@@ -25,7 +25,11 @@
         }
         th,td{
             padding: 1rem 0.75rem;
-            white-space: nowrap;
+            white-space: normal;
+            width: 250px;
+            &:last-child{
+                width: 90px;
+            }
         }
         tbody{
             background-color: #fff;
@@ -44,6 +48,7 @@
             width: 60px;
             float: left;
             margin-right: 5px;
+            cursor: pointer;
             img{
                 width: 100%;
             }
@@ -63,6 +68,7 @@
             width: 80px;
             float: left;
             margin-right: 5px;
+            cursor: pointer;
         }
         &_name{
             width: calc(100%- 55px);

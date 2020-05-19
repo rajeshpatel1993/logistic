@@ -5,8 +5,12 @@
             font-size: 0.8rem;
         }
         th,td{
-            padding: 1rem 0.50rem;
-            white-space: nowrap;
+            padding: 1rem 0.75rem;
+            white-space: normal;
+            width: 250px;
+            &:last-child{
+                width: 90px;
+            }
         }
         tbody{
             background-color: #fff;

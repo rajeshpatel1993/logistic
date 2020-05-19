@@ -35,6 +35,10 @@
             width: 80px;
             float: left;
             margin-right: 5px;
+            cursor: pointer;
+            img{
+                cursor: pointer;
+            }
         }
         &_name{
             width: calc(100%- 55px);

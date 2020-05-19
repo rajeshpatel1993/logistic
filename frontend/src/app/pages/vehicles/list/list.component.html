@@ -12,7 +12,7 @@
       </div>
       <form class="formbg-light">
         <div class="form-row">
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
@@ -32,7 +32,7 @@
 
           <!-- vehicleStatusList -->
 
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
                 (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
@@ -50,7 +50,7 @@
             </div>
 
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
                 placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
@@ -68,7 +68,7 @@
               </ng-template>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary"><i
                 class="fas fa-search"></i> Search</button>
           </div>
@@ -81,10 +81,6 @@
               <tr>
 
                 <th scope="col">Vehicle</th>
-                <!-- <th scope="col">Type</th>
-                <th scope="col">Status</th> -->
-
-
                 <th scope="col">Insurance Expiry</th>
                 <th scope="col">Road Tax</th>
                 <th scope="col">Warranty</th>
@@ -98,7 +94,7 @@
               <tr *ngFor="let item of vehiclesList">
                 <!-- List Image popup design -->
                 <ng-template #dialog let-data let-ref="dialogRef">
-                  <nb-card class="popupImage">
+                  <nb-card class="vehiclepopupImage">
                     <nb-card-body>
                       <img src="{{item.vehicleImage}}" alt=" ">
                       <button nbButton class="popupClose" (click)="ref.close()"><i
