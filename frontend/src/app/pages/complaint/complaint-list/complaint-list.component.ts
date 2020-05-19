@@ -4,6 +4,7 @@ import { ComplaintService } from '../complaint.service';
 import { VehicleServiceModule } from '../../vehicle-service/vehicles-service.module';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { VehicleservService } from '../../vehicle-service/vehicleserv.service';
+import { NbDialogService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-complaint-list',
@@ -31,7 +32,7 @@ export class ComplaintListComponent implements OnInit {
   public priorityData:any[] = [];
 
 
-  constructor(private activeRoute: ActivatedRoute,  private router: Router, private complaintService: ComplaintService, private vehicleService : VehicleService, private vehicleservService: VehicleservService ) { }
+  constructor(private activeRoute: ActivatedRoute,  private router: Router, private complaintService: ComplaintService, private vehicleService : VehicleService, private vehicleservService: VehicleservService,private dialogService: NbDialogService ) { }
 
   ngOnInit() {
 
@@ -222,6 +223,8 @@ export class ComplaintListComponent implements OnInit {
   }
 
 
-
+  open(dialog:any) {
+    this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
+  }
 
 }

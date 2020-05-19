@@ -11,7 +11,7 @@
       </div>
       <form class="formbg-light">
         <div class="form-row">
-          <div class="col-xs-12 col-sm-6 my-1">
+          <div class="col-xs-12 col-sm-4 my-1">
             <div class="daterange">
               <input type="text" ngxDaterangepickerMd [(ngModel)]="dateforvehiclelist" [showCustomRangeLabel]="true"
                 [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [isInvalidDate]="isInvalidDate"
@@ -19,7 +19,7 @@
                 placeholder="Select date range..." />
             </div>
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
@@ -36,7 +36,7 @@
               </ng-template>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
                 (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
@@ -54,7 +54,7 @@
             </div>
 
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
                 placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
@@ -72,7 +72,7 @@
               </ng-template>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="fuelType" [searchKeyword]="keyword"
                 placeHolder="Enter Fuel Type" (selected)='selectEvent($event, "fueltyp")'
@@ -90,7 +90,7 @@
               </ng-template>
             </div>
           </div>
-         <div class="col-xs-12 col-sm-3 my-1">
+         <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="driveName" [searchKeyword]="keyword"
                 placeHolder="Enter Driver Name" (selected)='selectEvent($event, "drivernm")'
@@ -108,7 +108,7 @@
               </ng-template>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-3 my-1">
+          <div class="form-col my-1">
             <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary"><i
                 class="fas fa-search"></i> Search</button>
           </div>
@@ -130,7 +130,7 @@
                 <th scope="col">Work Location</th>
                 <th scope="col">Project</th>
                 <th scope="col">Usage</th>
-                <th scope="col">Price/Unit</th>
+                <th scope="col">Price / Unit</th>
                 <th scope="col">Volume </th>
                 <th scope="col">Action </th>
               </tr>

@@ -1,16 +1,26 @@
 .VehicleDetail{
     width: 100%;
     float: left;
+    padding: 1rem 0.75rem;
     &_image{
         width: 80px;
         float: left;
         margin-right: 5px;
     }
     &_name{
-        width: calc(100%- 55px);
+        width: calc(100% - 0px);
         float: left;
         h5{
+            font-size: 12px;
             font-weight: 400;
+            padding: 3px 0;
+        }
+        .vehicleStatus{
+            ul{
+                li{
+                    padding: 2px 0;
+                }
+            }
         }
     }
   }
