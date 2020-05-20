@@ -90,7 +90,7 @@ export class EditRemaindersComponent implements OnInit {
   }
   selectEventD(item) { }
   onChange(event) {
-    console.log('changed');
+    //console.log('changed');
   }
 
 
@@ -119,7 +119,7 @@ export class EditRemaindersComponent implements OnInit {
 
 
   onBlur(event) {
-    console.log('blur ' + event);
+    //console.log('blur ' + event);
   }
 
   onChange2(event) {

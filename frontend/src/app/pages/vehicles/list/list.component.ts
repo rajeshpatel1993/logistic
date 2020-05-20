@@ -144,7 +144,7 @@ export class ListComponent {
      this.totalItems, this.pageOfItems = vehicleData.data; 
      this.pager = vehicleData.page;
     //  this.pageOfItems = vehicleData.data;
-      console.log(this.vehiclesList);
+      //console.log(this.vehiclesList);
     },(error)=>{
 
     });

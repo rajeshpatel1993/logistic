@@ -16,15 +16,15 @@ export class FileUploadService {
             let storageRef = firebase.storage().ref();
             let uploadTask = storageRef.child(`${filename}`).put(file);
             uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
-                console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                //console.log((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             }, (error) => {
                 console.log('error');
                 console.log(error);
                 reject('error');
             }, () => {
-                console.log('success');
+                //console.log('success');
                 uploadTask.snapshot.ref.getDownloadURL().then((downloadUrl) => {
-                    console.log(downloadUrl);
+                   // console.log(downloadUrl);
                     resolve(downloadUrl);
                 })
             });
@@ -55,7 +55,7 @@ export class FileUploadService {
             let storageRef = firebase.storage().ref();
             let fileRef = storageRef.child(filepath)
             fileRef.getDownloadURL().then((url) => {
-                console.log(url);
+                //console.log(url);
                 resolve(url);
             }).catch((err) => { 
                 console.log(err);

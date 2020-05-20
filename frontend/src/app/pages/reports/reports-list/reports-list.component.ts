@@ -192,7 +192,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
   loadGraphData(){
     this.reportService.loadServiceReportGraphData().subscribe((d)=>{
-      console.log(d);
+      //console.log(d);
 
     }, (error) => {
 
@@ -215,7 +215,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   }
 
   onChange(val){
-    console.log(val);
+    //console.log(val);
   }
 
   exportToPdf(){

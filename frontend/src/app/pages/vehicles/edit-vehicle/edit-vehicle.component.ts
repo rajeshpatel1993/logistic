@@ -349,7 +349,7 @@ uploadImage(){
 
       let veh_type_id = this.vehicleData["vehicle_typeId"];
 
-      console.log(this.vehicleData);
+      //console.log(this.vehicleData);
       if(veh_type_id == 1 || veh_type_id ==2){
         this.showExtraField = true;
       }else{
@@ -447,7 +447,7 @@ uploadImage(){
       this.loadBrandsData(this.vehicleData['vehicle_type']);
 
 
-      console.log(d);
+      //console.log(d);
     }, (error) => {
   
     });
@@ -681,7 +681,7 @@ uploadImage(){
 
       let num = this.formatNumber(this.lastVehcileCodeN);
       this.vehicleCode = vehCode+" "+num;
-      console.log(this.vehicleCode)
+      //console.log(this.vehicleCode)
 
       this.vehicleForm.patchValue({"vehicleCode":this.vehicleCode});
       // console.log(this.vehicleCode);

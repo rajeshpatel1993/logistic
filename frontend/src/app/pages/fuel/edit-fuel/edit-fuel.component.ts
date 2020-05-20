@@ -386,7 +386,7 @@ export class EditFuelComponent implements OnInit {
     this.fuelService.loadPaymentModes().subscribe((dat)=>{
       // console.log(dat);
       this.paymentModes = dat["data"];
-      console.log(this.paymentModes);
+      //console.log(this.paymentModes);
     },(err)=>{
 
     });

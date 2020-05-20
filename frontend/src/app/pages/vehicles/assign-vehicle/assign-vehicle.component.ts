@@ -65,7 +65,7 @@ export class AssignVehicleComponent implements OnInit {
     let p = page || 1;
     this.vehicleService.loadAssignVehicles(p).subscribe((vehicleData:any)=>{
      this.vehiclesList = vehicleData.data;
-     console.log(this.vehiclesList);
+     //console.log(this.vehiclesList);
      
      this.totalItems, this.pageOfItems = vehicleData.data; 
      this.pager = vehicleData.page;
@@ -143,7 +143,7 @@ export class AssignVehicleComponent implements OnInit {
 
       })
 
-    console.log(vehicleId);
+    //console.log(vehicleId);
   }
 
 }

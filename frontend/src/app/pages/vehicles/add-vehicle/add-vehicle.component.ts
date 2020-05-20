@@ -527,7 +527,7 @@ selectEventD(item) {
 
       let num = this.formatNumber(this.lastVehcileCodeN);
       this.vehicleCode = vehCode+" "+num;
-      console.log(this.vehicleCode)
+      //console.log(this.vehicleCode)
 
       this.vehicleForm.patchValue({"vehicleCode":this.vehicleCode});
       // console.log(this.vehicleCode);

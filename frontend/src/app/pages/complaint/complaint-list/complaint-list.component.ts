@@ -203,7 +203,7 @@ export class ComplaintListComponent implements OnInit {
         tmpObj["name"] = item.name;
         this.listVehicles.push(tmpObj);
       });
-       console.log(this.listVehicles);
+       //console.log(this.listVehicles);
     });
   }
 
