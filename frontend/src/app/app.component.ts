@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("test");
+   // console.log("test");
 
     let loggedInToken = localStorage.getItem("access_token");
     if(!loggedInToken){

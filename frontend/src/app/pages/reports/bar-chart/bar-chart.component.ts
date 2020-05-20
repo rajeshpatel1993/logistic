@@ -97,7 +97,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       }
 
       setTimeout(()=>{
-        console.log(this.options);
+        //console.log(this.options);
         Highcharts.chart('bar-chart-container', this.options);
 
       },1000);

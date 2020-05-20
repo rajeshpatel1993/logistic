@@ -53,8 +53,8 @@ export class EmployeeListService {
     displayModify(employeeData: IEmployee[]) {
         const demographics: IDemographicsModel = this.appService.demographicsData;
 
-        console.log(`testing things`);
-        console.log(demographics);
+        //console.log(`testing things`);
+        //console.log(demographics);
         const modifiedEmployee = employeeData.map((employee) => {
             const jobTitle = demographics.jobTitles.find((job) => job.jobTitleId === employee.jobTitle).jobTitle;
             const workLocation = demographics.workLocations.find((location) => location.workLocationId === employee.workLocation).workLocation;

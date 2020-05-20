@@ -8,7 +8,7 @@ export class AuthGuardService implements CanActivate {
     constructor(private auth: AuthService, private router: Router) {}
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        console.log('Inside Auth Check');
+        //console.log('Inside Auth Check');
         if (!this.auth.isUserAutheticated) {
             this.router.navigate(['/login']);
             return false;

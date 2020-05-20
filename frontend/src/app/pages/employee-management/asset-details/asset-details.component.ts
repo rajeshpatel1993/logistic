@@ -63,7 +63,7 @@ export class AssetDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.parent.parent.parent.paramMap.subscribe((routeparams) => {
-      console.log(routeparams.get('userId'));
+      //console.log(routeparams.get('userId'));
       this.userId = routeparams.get('userId');
       if(this.userId) {
         this.getListOfAssignedAssets();
@@ -101,7 +101,7 @@ export class AssetDetailsComponent implements OnInit {
           renderComponent: ButtonViewComponent,
           onComponentInitFunction(instance) {
             instance.save.subscribe(row => {
-              console.log(row.empId);
+             // console.log(row.empId);
             });
           }
         },
@@ -111,7 +111,7 @@ export class AssetDetailsComponent implements OnInit {
           renderComponent: ButtonViewComponent,
           onComponentInitFunction(instance) {
             instance.save.subscribe(row => {
-              console.log(row.empId);
+              //console.log(row.empId);
             });
           }
         }
@@ -141,7 +141,7 @@ export class AssetDetailsComponent implements OnInit {
   }
 
   changeTab(event) {
-    console.log(event.tabTitle);
+    //console.log(event.tabTitle);
     //this.loading = true;
     if(event.tabTitle === 'UnAssigned') {
       this.getListOfUnAssignedAssets();
@@ -152,14 +152,14 @@ export class AssetDetailsComponent implements OnInit {
 
   getAssignStatus() {
     this.assetService.getAssignStatus(this.userId).then((data: IAssignStatus[]) => {
-      console.log(data);
+      //console.log(data);
       this.assignStatuses = data;
     })
   }
 
   getListOfAssignedAssets() {
     this.assetService.getListOfAssignedAssets(this.userId).then((data: any) => {
-      console.log(data);
+      //console.log(data);
       if(data.message === 'success') {
         const modified = data.assets.map((asset) => ({
           ...asset, 
@@ -179,7 +179,7 @@ export class AssetDetailsComponent implements OnInit {
   getListOfUnAssignedAssets() {
     this.assetService.getListOfUnAssignedAssets(this.userId).then((data: any) => {
       if(data.message === 'success') {
-        console.log(data);
+        //console.log(data);
         const modified = data.assets.map((asset) => ({
           ...asset, 
           assetCategory: asset.assetcategory ? `${asset.assetcategory.assetCategory}` : '',
@@ -193,7 +193,7 @@ export class AssetDetailsComponent implements OnInit {
   }
 
   showAssetDetails(event) {
-    console.log(event);
+    //console.log(event);
     if(event && event.data) {
       this.selectedAssetDetails = event.data;
       const asset = event.data;
@@ -219,7 +219,7 @@ export class AssetDetailsComponent implements OnInit {
   }
 
   closeDialog(event) {
-    console.log('test');
+    //console.log('test');
     this.dialogRef.close();
     if(event.refetch) {
       this.getListOfAssignedAssets();

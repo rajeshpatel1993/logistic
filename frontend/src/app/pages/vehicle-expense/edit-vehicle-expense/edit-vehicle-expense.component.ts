@@ -59,7 +59,7 @@ export class EditVehicleExpenseComponent implements OnInit {
 
   getMsg(val){
     this.dialogBox = false;
-    console.log(val);
+    //console.log(val);
   }
 
 
@@ -188,7 +188,7 @@ export class EditVehicleExpenseComponent implements OnInit {
 
   selectEventVehicle(item) {
     this.vehicleService.loadVehicle(item.id).subscribe((vehData) => {
-      console.log(vehData);
+      //console.log(vehData);
 
       let veData = vehData["data"][0];
       this.vehicleRegNo = veData.regNo;

@@ -58,7 +58,7 @@ export class AddComplaintComponent implements OnInit {
 
   getMsg(val){
     this.dialogBox = false;
-    console.log(val);
+    //console.log(val);
   }
 
 

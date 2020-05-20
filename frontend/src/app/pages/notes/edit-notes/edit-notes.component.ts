@@ -54,7 +54,7 @@ export class EditNotesComponent implements OnInit {
 
   getMsg(val){
     this.dialogBox = false;
-    console.log(val);
+    //console.log(val);
   }
 
 
@@ -78,7 +78,7 @@ export class EditNotesComponent implements OnInit {
   
   
   updateNote(){
-    console.log(this.notesForm.value);
+    //console.log(this.notesForm.value);
      this.submitted = true;
     if (this.notesForm.invalid) {
       alert("Please fill all required field");

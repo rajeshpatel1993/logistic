@@ -35,7 +35,7 @@ export class AddeditEmployeeComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.parent.parent.paramMap, this.route.paramMap]).subscribe(([parentParams, currentParams]) => {
-      console.log('Inside Join');
+      //console.log('Inside Join');
       // this.userId = parentParams.get('userId');
       this.userId ='1';
       this.employeeId = currentParams.get('employeeId');
@@ -46,7 +46,7 @@ export class AddeditEmployeeComponent implements OnInit {
 
   intializeEmployeeDetails() {
     this.employeeService.getEmployeeDetailsById(this.userId, this.employeeId).then((data: IEmployee) => {
-      console.log(`reached emp details`);
+      //console.log(`reached emp details`);
       this.employeeDetails = data;
       if(this.employeeDetails) {
         this.profileForm = this.fb.group({
@@ -171,7 +171,7 @@ export class AddeditEmployeeComponent implements OnInit {
 
   getNotes() {
     this.employeeService.getNotesByEmployeeId(this.userId, this.employeeId).then((data: INotes[]) => {
-      console.log(data);
+      //console.log(data);
       this.notesTabData = data.map((note) => ({ 
         notesDesc: note.notesDesc,
         notesId: note.notesId,
@@ -194,7 +194,7 @@ export class AddeditEmployeeComponent implements OnInit {
     };
     console.log(modifiedFields);
     this.employeeService.updateEmployee(this.userId, this.employeeId, modifiedFields).then((data: any) => {
-      console.log(data);
+      //console.log(data);
       if(data.errors &&  Object.keys(data.errors).length) {
         Object.keys(data.errors).map((errorKey) => {
           this.showToast('warning', data.errors[errorKey].message);

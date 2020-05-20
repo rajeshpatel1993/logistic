@@ -27,12 +27,12 @@ export class EmployeesListComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log("Employee List .......");
+    //console.log("Employee List .......");
     this.route.parent.parent.paramMap.subscribe((routeparams) => {
-      console.log(routeparams.get('userId'));
+      //console.log(routeparams.get('userId'));
       // this.userId = routeparams.get('userId');
       if(this.userId) {
-        console.log(this.employeesList);
+        //console.log(this.employeesList);
         this.getEmployeesList();
       }
     });
@@ -40,7 +40,7 @@ export class EmployeesListComponent implements OnInit {
 
   getEmployeesList() {
     this.employeeListService.getEmployeesList(this.userId).then((data: IEmployee[]) => {
-      console.log(data);
+      //console.log(data);
       this.employeesList = this.employeeListService.displayModify(data);
     });
   }
@@ -48,7 +48,7 @@ export class EmployeesListComponent implements OnInit {
   searchEmployee(inputText: string) {
     this.loading = true;
     this.employeeListService.searchEmployee(this.userId, inputText).subscribe((data: ISearchEmployeeResponse[]) => {
-      console.log(data);
+      //console.log(data);
       this.employeeSuggestions = data.map((emp) => ({ displayText: `(${emp.employeeCode}) - ${emp.firstName} ${emp.lastName}`, value: emp.employeeID }));
       this.loading = false;
     })
@@ -65,7 +65,7 @@ export class EmployeesListComponent implements OnInit {
   addNewEmployee() {
     this.dialogService.open(AddNewEmployeeComponent, { closeOnBackdropClick: false })
       .onClose.subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         if(data && data.creation === 'success') {
           this.getEmployeesList();
         }

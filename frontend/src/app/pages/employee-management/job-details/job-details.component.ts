@@ -24,7 +24,7 @@ export class JobDetailsComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.jobDataForm);
+    //console.log(this.jobDataForm);
     
     /* this.jobDetailsForm = this.fb.group({}); */
     this.demographicsData = this.appService.demographicsData;
@@ -35,7 +35,7 @@ export class JobDetailsComponent implements OnInit {
       this.jobTitleOptions = this.demographicsData.jobTitles;
       this.projectOptions = this.demographicsData.projects;
       this.projectTypeOptions = this.demographicsData.projectTypes;
-      console.log(this.employeeStatusOptions);
+     // console.log(this.employeeStatusOptions);
     }
   }
 

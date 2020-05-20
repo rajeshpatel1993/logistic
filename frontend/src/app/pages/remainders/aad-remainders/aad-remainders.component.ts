@@ -210,7 +210,7 @@ export class AadRemaindersComponent implements OnInit {
 
 
   onChange(event) {
-    console.log('changed');
+    //console.log('changed');
   }
 
 
@@ -248,7 +248,7 @@ export class AadRemaindersComponent implements OnInit {
 
 
   onBlur(event) {
-    console.log('blur ' + event);
+    //console.log('blur ' + event);
   }
 
   onChange2(event) {

@@ -64,7 +64,7 @@ export class AssignVehicleDetailsComponent implements OnInit {
 
   getMsg(val){
     this.dialogBox = false;
-    console.log(val);
+    //console.log(val);
   }
 
   loadWorkLocations(){
@@ -282,7 +282,7 @@ export class AssignVehicleDetailsComponent implements OnInit {
 
 
     },(error)=>{});
-    console.log(this.assignVehicleForm.value);
+    //console.log(this.assignVehicleForm.value);
   }
 
 }

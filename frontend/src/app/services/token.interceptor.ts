@@ -30,10 +30,10 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log(request.url);
-        console.log("token interceptor");
+        //console.log(request.url);
+        //console.log("token interceptor");
         const loadCheck = APPURLS.blackListedUrls.some((url) => request.url === `${APPURLS.APIURL}${url}`);
-        console.log('LoadCheck', loadCheck);
+        //console.log('LoadCheck', loadCheck);
         if (request.url.indexOf('/login/checkUser') < 0) {
             const token = localStorage.getItem('access_token');
             const userId = request.params.get('userId') ? request.params.get('userId') : this.appService.loggedInUser ? this.appService.loggedInUser.userId : '';
@@ -49,8 +49,8 @@ export class TokenInterceptor implements HttpInterceptor {
                 });
             }
         }
-        console.log(request);
-        console.log('Inside Intercept');
+        //console.log(request);
+        //console.log('Inside Intercept');
         // HACK: Change the loading to each component
         if(!loadCheck && this.dialogRef === null) {
             this.openDialog();

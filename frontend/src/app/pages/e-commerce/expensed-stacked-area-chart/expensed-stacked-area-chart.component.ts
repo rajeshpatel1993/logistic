@@ -164,7 +164,7 @@ public loadExpenseVehicleChartData(){
           tmpObj["y"] = dat[i]["totalno"];
           this.chartData.push(tmpObj);
       }
-      console.log(this.chartData);
+      //console.log(this.chartData);
       // Highcharts.chart('container', this.options);
   },(err)=>{
       console.log(err);
