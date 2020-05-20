@@ -24,6 +24,11 @@ export class ReportsService {
     return this.http.get(this.baseUrl+"/reports/getReports");
   }
 
+  loadFuelHistory(){
+    return this.http.get(this.baseUrl+"/reports/getFuelHistory");
+  }
+
+
   loadAssignVehicles(){
     return this.http.get(this.baseUrl+"/reports/assign_vehicles");
   }

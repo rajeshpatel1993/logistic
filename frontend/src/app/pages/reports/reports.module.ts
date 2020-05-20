@@ -29,6 +29,7 @@ import { ExpenseTypesComponent } from './expense-summary/expense-types/expense-t
 import { AssignVehicleReportsComponent } from './assign-vehicle-reports/assign-vehicle-reports.component';
 import { ServiceReportComponent } from './service-report/service-report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
+import { FuelReportComponent } from './fuel-report/fuel-report.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { ExpenseReportComponent } from './expense-report/expense-report.componen
     ExpenseTypesComponent,
     AssignVehicleReportsComponent,
     ServiceReportComponent,
-    ExpenseReportComponent
+    ExpenseReportComponent,
+    FuelReportComponent
     // ,
     // VehicleServiceDetailsComponent
   ],

@@ -26,11 +26,13 @@ export class AppComponent implements OnInit {
     console.log("test");
 
     let loggedInToken = localStorage.getItem("access_token");
-    if(loggedInToken){
-      this.router.navigateByUrl("/pages/dashboard");
-    }else{
+    if(!loggedInToken){
       this.router.navigateByUrl("/auth/login");
     }
+    
+    // else{
+    //   this.router.navigateByUrl("/auth/login");
+    // }
     // this.analytics.trackPageViews();
     // this.seoService.trackCanonicalChanges();
   }

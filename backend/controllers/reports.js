@@ -23,6 +23,7 @@ const { upload } = require("../utils/upload_file_to_s3");
 const { ProjectType } = require("../models/projectType");
 const {Expense} = require("../models/expense");
 const {ServiceTask} = require("../models/serviceTask");
+const {FuelEntry} =  require("../models/fuelEntry");
 
 const multer = require('multer');
 
@@ -356,6 +357,135 @@ router.get("/regnos", async(req,res)=>{
     }
 });
 
+
+
+
+
+router.get("/getFuelHistory",async(req,res) => {
+    const modifiedData = [];
+
+    // const resPerPage = 2; // results per page
+    // const page = parseInt(req.query.page) || 1; // Page 
+    // const skipd = (resPerPage * page) - resPerPage;
+
+
+    try {
+       
+
+        // const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
+        // console.log(nooitems);
+        //  // get pager object for specified page
+        //  const pager = paginate(nooitems, page,resPerPage);
+
+        let fuelEntryData = await FuelEntry.aggregate([{
+    
+            $match: {
+                "isDeleted":0
+            }
+           }
+            ,
+           {
+            $lookup: {
+                from: "vehicle", // collection to join
+                let: { "vehicleId": "$vehicle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }},
+                    { "$lookup": {
+                        "from": "vehicleType",
+                        "let": { "vehTypeId": "$vehicle_typeId" },
+                        "pipeline": [
+                          { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vehTypeId"] }}},
+                          { "$project": { "vehicleType":1 }},
+                        ],
+                        "as": "vehicletypedata"
+                      }},
+                    { 
+                        "$unwind" : {
+                            "path" : "$vehicletypedata", 
+                            "preserveNullAndEmptyArrays" : false
+                        }
+                    }, 
+                ],
+                as: "vehicleData"// output array field
+            }
+        }
+            , {
+                $lookup: {
+                    from: "fuelEntryMode", // collection to join
+                    let: { "fuelEntryId": "$modeofpayment" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$fuelEntryId"] }}},
+                        { "$project": { "fuelEntryMode":1, "_id": 0 }}
+                    ],
+                    as: "paymentModeData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "employeesId": "$driver" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$employeesId"] }}},
+                        { "$project": { "firstName":1,"empImage":1, "_id": 0 }}
+                    ],
+                    as: "employeeData"// output array field
+                }
+            }
+            //,
+            
+            // {
+            //     $skip: skipd
+            // },
+            // {
+            //     $limit:resPerPage
+            // }
+           
+        
+        ]);
+
+    //  for(let i=0;i<vehicleData.length;i++){
+    //     let ele = {};
+    //     let elemId = vehicleData[i]._id;
+    //     let assignedVal = Object.assign(ele,vehicleData[i]);
+    //     let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId, isDeleted:0}).populate('employee').populate('projects').populate('projectsType');
+    //     assignedVal["assign_data"] = assignVehicleCollection;
+
+    //     let totalExpenses = await Expense.aggregate([
+    //         {
+    //         $match : { vehicle: elemId,  isDeleted:0},
+
+    //         },
+
+    //         {
+    //             $group : {
+    //                 _id : null,
+    //                 total : {
+    //                     $sum : {"$toDouble": "$amount"} 
+    //                 }
+    //             }
+    //         }
+    //     ]);
+    //     assignedVal["total_expense"] = totalExpenses;
+
+
+    //     let lastExpense = await Expense.find({vehicle:elemId, isDeleted:0}, {expense_type:1, amount:1}).populate('expense_type', 'expenseType').sort({createdAt: 1}).limit(1);
+    //     assignedVal["last_expense"] = lastExpense;
+
+
+    //     modifiedData.push(assignedVal);
+    // }
+
+        let responseData = {};
+        responseData["status"] = 200;
+        // responseData["page"] = pager;
+        responseData["data"] = fuelEntryData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
 router.get("/getReports",async(req,res) => {

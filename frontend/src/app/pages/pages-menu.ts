@@ -149,6 +149,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
               {
                 title: 'Expenses',
                 link: '/pages/reports/vehicle-expenses'
+              },
+              {
+                title: 'Fuel',
+                link: '/pages/reports/fuel'
               }
       ]
     // link: '/pages/reports/list',

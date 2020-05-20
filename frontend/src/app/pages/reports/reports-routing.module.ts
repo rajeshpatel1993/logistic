@@ -8,6 +8,7 @@ import { VehicleReportComponent } from './vehicle-report/vehicle-report.componen
 import { AssignVehicleReportsComponent } from './assign-vehicle-reports/assign-vehicle-reports.component';
 import { ServiceReportComponent } from './service-report/service-report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
+import { FuelReportComponent } from './fuel-report/fuel-report.component';
 
 const routes: Routes = [{
   path: '',
@@ -36,6 +37,10 @@ const routes: Routes = [{
       {
         path: 'vehicle-expenses',
         component: ExpenseReportComponent
+      },
+      {
+        path: 'fuel',
+        component: FuelReportComponent
       }
 
   ],
