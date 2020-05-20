@@ -34,12 +34,12 @@ export class SingleVehicleComponent implements OnInit {
       // console.log(data);
        this.vehicleData = vehData["data"][0];
       this.showPage = true;
-       console.log("vehdata", this.vehicleData);
+       //console.log("vehdata", this.vehicleData);
     },(error)=>{
 
     });
 
-    console.log(vehicleId);
+    //console.log(vehicleId);
 
   }
 

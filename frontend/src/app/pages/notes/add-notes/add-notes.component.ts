@@ -47,7 +47,7 @@ export class AddNotesComponent implements OnInit {
 
   getMsg(val){
     this.dialogBox = false;
-    console.log(val);
+    //console.log(val);
   }
 
 
@@ -143,7 +143,7 @@ export class AddNotesComponent implements OnInit {
   
   
   addNotes(){
-    console.log(this.notesForm.value);
+    //console.log(this.notesForm.value);
     this.submitted = true;
     if (this.notesForm.invalid) {
       alert("Please fill all required field");

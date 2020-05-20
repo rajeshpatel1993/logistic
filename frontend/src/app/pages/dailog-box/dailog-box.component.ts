@@ -14,7 +14,7 @@ export class DailogBoxComponent implements OnInit {
   showDialog:string = 'false';
 
   ngOnInit() {
-    console.log(this.msgObj);
+    //(this.msgObj);
   }
 
   showDialogF(){

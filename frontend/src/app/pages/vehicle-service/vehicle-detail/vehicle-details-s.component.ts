@@ -23,7 +23,7 @@ export class VehicleDetailSComponent implements OnInit {
     this.vehicleService.loadVehicle(vehicleId).subscribe((vehicleData:any)=>{
       // console.log(vehicleData);
      this.vehicleDetails = vehicleData.data[0];
-     console.log(this.vehicleDetails);
+     //console.log(this.vehicleDetails);
     },(error)=>{
 
     });

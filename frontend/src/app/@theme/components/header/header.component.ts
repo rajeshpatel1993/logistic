@@ -105,7 +105,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loadOrganization(){
     this.organizationSubscription = this.reportService.loadOrganizationData().subscribe((d)=>{
       this.organization = d["data"];
-      console.log(this.organization);
+      //console.log(this.organization);
     },(error)=>{
 
     });

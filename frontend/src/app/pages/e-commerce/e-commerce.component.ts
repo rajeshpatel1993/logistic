@@ -57,7 +57,7 @@ export class ECommerceComponent {
     const token = this.authService.getToken();
     if(token) {
       const decodedToken = this.authService.decodeToken(token);
-      console.log(decodedToken);
+      //console.log(decodedToken);
       this.userId = decodedToken.userId;
       // this.intializaMenuItems(decodedToken.userId);
   
@@ -72,11 +72,11 @@ export class ECommerceComponent {
             const user = userDetails.user;
             this.organizationName = organizationDetails.organization ? organizationDetails.organization.organizationName : '';
             this.displayName = user ? `${user.firstName} ${user.lastName}` : 'User name';
-            console.log(this.organizationName);
+            //console.log(this.organizationName);
             this.appService.setLoggedInUser(user);
             this.appService.setDemographicsData(demographicsData.data);
             this.appService.setOrganizationDetails(organizationDetails.organization);
-            console.log('Inside COns')
+            //console.log('Inside COns')
             this.loading = false;
           }
         })

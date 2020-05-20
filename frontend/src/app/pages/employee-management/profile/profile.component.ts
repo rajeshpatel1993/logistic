@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
       this.genderOptions = this.demographicsData.gender;
       this.martialOptions = this.demographicsData.martialStatus;
       this.bloodGroupOptions = this.demographicsData.bloodGroups;
-      console.log(this.martialOptions);
+      //console.log(this.martialOptions);
     }
   }
 

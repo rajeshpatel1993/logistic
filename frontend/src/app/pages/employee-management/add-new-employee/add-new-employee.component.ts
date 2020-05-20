@@ -27,8 +27,8 @@ export class AddNewEmployeeComponent implements OnInit {
   ngOnInit() {
     this.userId = this.appService.loggedInUser.userId;
     this.organizationId = this.appService.organizationDetails.organizationId;
-    console.log(this.userId);
-    console.log(this.organizationId);
+    //console.log(this.userId);
+    //console.log(this.organizationId);
     this.intializeForm();
     this.loading = false;
   }
@@ -87,12 +87,12 @@ export class AddNewEmployeeComponent implements OnInit {
         ...this.selectedFiles,
         [fileObj]: event.target.files[0]
       };
-      console.log(this.selectedFiles);
+      //console.log(this.selectedFiles);
     }
   }
 
   addNewEmployee() {
-    console.log(this.newEmployeeForm.value);
+    //console.log(this.newEmployeeForm.value);
     const profileDetails: IProfile = this.newEmployeeForm.get('profileForm').value;
     const jobDetails: IJob = this.newEmployeeForm.get('jobTabForm').value;
     const contactDetails: IEmergencyTab = this.newEmployeeForm.get('emergencyTabForm').value;
@@ -137,10 +137,10 @@ export class AddNewEmployeeComponent implements OnInit {
       organizationId: this.organizationId,
       employmentStatusId: jobDetails.employmentStatus
     };
-    console.log(this.newEmployee);
+    //console.log(this.newEmployee);
     const formData = this.toFormData();
     this.employeeService.addNewEmployee(this.userId, formData).then((data: any) => {
-      console.log(data);
+      //console.log(data);
       if(data) {
         if(data.errors &&  Object.keys(data.errors).length) {
           Object.keys(data.errors).map((errorKey) => {
@@ -170,7 +170,7 @@ export class AddNewEmployeeComponent implements OnInit {
       const value = this.selectedFiles[key];
       formData.append(key, value);
     }
-    console.log(formData);
+    //console.log(formData);
     return formData;
   }
 

@@ -106,7 +106,7 @@ export class AddFuelComponent implements OnInit {
     this.endDateVehicle = event.endDate?event.endDate.toISOString():null;
   }
   addFuel(){
-    console.log(this.fuelEntryForm.value);
+    //(this.fuelEntryForm.value);
 
     this.submitted = true;
     if (this.fuelEntryForm.invalid) {
@@ -160,7 +160,7 @@ export class AddFuelComponent implements OnInit {
     this.vehicleservService.loadVehiclesByTypeId(vehicleTypeId).subscribe((vehicleData)=>{
       let vehcilesData = vehicleData["data"];
       vehcilesData.forEach((item,index) => {
-        console.log(item);
+        //console.log(item);
         let tmpObj = {};
         tmpObj["id"] = item._id;
         tmpObj["name"] = item.name;
@@ -337,7 +337,7 @@ export class AddFuelComponent implements OnInit {
     }
 
 
-    console.log(this.showCardOption);
+    //console.log(this.showCardOption);
 
 
 

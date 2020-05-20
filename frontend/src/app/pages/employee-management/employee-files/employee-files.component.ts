@@ -40,7 +40,7 @@ export class EmployeeFilesComponent implements OnInit {
       const filePath = selectedDocument.split('/')[1];
       this.openDialog();
       this.fileUploadService.getFile(filePath).then((url: string) => {
-        console.log(url);
+        //console.log(url);
         this.closeDialog();
         window.open(url, '_blank');
       }).catch((err) => {
