@@ -6,6 +6,7 @@ const {File} = require("../models/files");
 const {fuelEntryMode} = require("../models/fuelEntryMode");
 const {FuelEntry} =  require("../models/fuelEntry");
 const {Remainder} = require("../models/remainder");
+const {FuelType} = require("../models/fuelType");
 
 const paginate = require('jw-paginate');
 
@@ -21,6 +22,20 @@ router.get("/paymentmodes", async(req,res)=>{
         console.log(error);
     }
 });
+
+router.get("/fuelTypeList", async(req,res)=>{
+    try{
+        let fuelTypeData = await FuelType.find();
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = fuelTypeData;
+        res.status(200).json(responseData);
+
+    }catch(error){
+        console.log(error);
+    }
+});
+
 
 
 router.post("/deleteFuelEntry", async (req, res) => {
@@ -47,8 +62,8 @@ router.post("/add", async (req, res)=> {
         let imgUrl = "";
         let billUrls = "";
         let {vehicleTypef, vehiclename,expiration_time, expiration_date, amount, odometer, modeofpayment,
-            cardno, couponfrom, couponto, couponvalue, type, priceunit, unit, vendorname,drivername,
-            comment,bill_file_unique_id, image_file_unique_id} = req.body;
+            cardno, couponfrom, couponto, couponvalue, priceunit, unit, vendorname,drivername,
+            comment,bill_file_unique_id, image_file_unique_id, fuelType} = req.body;
            
     
         let fuelEntryImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
@@ -64,10 +79,12 @@ router.post("/add", async (req, res)=> {
         }
     
         let savedata = {vehicle:vehiclename.id , 
-            expiration_date : expiration_date, expiration_time : expiration_time, amount : amount,
+            // expiration_date : expiration_date, expiration_time : expiration_time,
+             amount : amount,
             odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
             couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
-            type: type,priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivername.id,
+           priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivername.id,
+            fuelType: fuelType.id,
             comment: comment,image_file_unique_id, bill_file_unique_id, imageUrl: imgUrl,billUrl:billUrls
         
         };

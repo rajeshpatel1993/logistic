@@ -19,6 +19,8 @@ export class AddFuelComponent implements OnInit {
   public keyword = 'name';
   public vehicleNamesData:any[] = [];
   public vehicleTypesData = [];
+  fuelTypesData = [];
+
   public paymentModes = [];
 
   public vehicleName:String;
@@ -58,6 +60,7 @@ export class AddFuelComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loadVehiclesTypes();
+    this.loadFuelTypes();
     this.loadEmployee();
     this.loadPaymentMethods();
 
@@ -72,16 +75,17 @@ export class AddFuelComponent implements OnInit {
       vehicledetails: [''],
       // vehicle: ['', Validators.required],
       vehiclename: ['',Validators.required],
-      expiration_time: ['',Validators.required],
-      expiration_date: ['',Validators.required],
+      expiration_time: [''],
+      expiration_date: [''],
       amount: ['',Validators.required],
       odometer: [''],
-      modeofpayment: ['',Validators.required],
+      fuelType: [''],
+      modeofpayment: ['5d31705ece00403b7c9ee959',Validators.required],
       cardno: [''],
       couponfrom: [''],
       couponto: [''],
       couponvalue: [''],
-      type: ['',Validators.required],
+      // type: ['',Validators.required],
       priceunit: ['',Validators.required],
       unit: ['',Validators.required],
       vendorname: [''],
@@ -149,6 +153,10 @@ export class AddFuelComponent implements OnInit {
 
   selectEmployee(item){
 
+  }
+
+  selectFuelType(item){
+    
   }
   
   selectEventVeh(item){
@@ -316,8 +324,23 @@ export class AddFuelComponent implements OnInit {
   }
 
 
+  public loadFuelTypes(){
+    this.fuelService.loadFuelTypes().subscribe((fuelTypeData:any) => {
+      let fTypeData = fuelTypeData.data;
+      fTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item._id;
+        tmpObj["name"] = item.fuelTypeName;
+        this.fuelTypesData.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
+
   public showCardOption : boolean = false;
-  public showCouponOption: boolean = false;
+  public showCouponOption: boolean = true;
 
   onChangeEvent(evt){
 
@@ -368,6 +391,17 @@ export class AddFuelComponent implements OnInit {
 
     });
 
+  }
+
+
+  CalculateCouponValue(evt){
+    let couponFrom = this.fuelEntryForm.get("couponfrom").value;
+    let couponTo = this.fuelEntryForm.get("couponto").value;
+    let totalCoupon = (parseInt(couponTo) + 1) - parseInt(couponFrom);
+    let couponValue = parseInt(evt.target.value);
+    let totalAmount = couponValue * totalCoupon;
+    this.fuelEntryForm.patchValue({"amount": totalAmount});
+    // alert(couponFrom);
   }
 
 

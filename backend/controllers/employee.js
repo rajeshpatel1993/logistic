@@ -80,7 +80,7 @@ router.get("/emp_list", async(req,res)=>{
                         ],
                         "as": "vehicledata"
                       }},
-                      { 
+                    { 
                         "$unwind" : {
                             "path" : "$vehicledata", 
                             "preserveNullAndEmptyArrays" : false

@@ -36,4 +36,10 @@ export class FuelService {
   }
 
 
+  loadFuelTypes(){
+    return this.http.get(this.baseUrl+"/fuel/fuelTypeList");
+
+  }
+
+
 }
