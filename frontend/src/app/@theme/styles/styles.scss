@@ -371,10 +371,10 @@ a:focus {
       }
       .form-control{
         font-size: 12px;
-          height: 36px;
+          height: 32px;
       }
-      label{
-        font-size: 12px;
+      .col-form-label{
+        font-size: 11px!important;
       }
     }
   }
