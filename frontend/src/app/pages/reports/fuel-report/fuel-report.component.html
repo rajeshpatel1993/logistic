@@ -85,7 +85,11 @@
       <thead>
         <tr>
           <th>Vehicle</th>
-          <th>Driver </th>
+           <th>Driver </th>
+           <th>Price/Unit</th>
+           <th>Total</th>
+           <th>pay mode</th>
+           <!--
           <th>Location</th>
           <th>Vehicle Type </th>
           <th>Status</th>
@@ -99,31 +103,36 @@
           <th>Driver License due </th>
           <th>Project Name</th>
           <th>Overall expense </th>
-          <th>Recent expense </th>
+          <th>Recent expense </th> -->
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of vehiclesList">
+        <tr *ngFor="let item of fuelList">
           <td>
-            <ng-template #dialog let-data let-ref="dialogRef">
-              <nb-card class="popupImage">
-                <nb-card-body>
-                  <img src="{{item.vehicleImage}}" alt=" ">
-                  <button nbButton class="popupClose" (click)="ref.close()"><i class="fas fa-times-circle"></i></button>
-                </nb-card-body>
+            <ngx-single-vehicle [vehicleId]="item.vehicleData[0]._id">
 
-              </nb-card>
-            </ng-template>
-            <div class="VehicleDetail">
-              <div class="VehicleDetail_image">
-                <img nbButton (click)="open(dialog)" src="{{item.vehicleImage}}" width="80">
-              </div>
-              <div class="VehicleDetail_name">
-                <h5>{{item.name}}</h5>
-              </div>
-            </div>
+            </ngx-single-vehicle>
           </td>
           <td>
+            <span>{{ item.employeeData[0].firstName }}</span>
+            <!-- <ngx-assigned-vehicle [vehicleId]="item.vehicleData[0]._id"></ngx-assigned-vehicle> -->
+
+          </td>
+
+          <td>
+            {{ item.priceunit }}
+
+          </td>
+
+          <td>
+            {{ item.amount }}
+
+          </td>
+
+          <td></td>
+
+
+          <!-- <td>
 
             <div class="row no-gutters">
 
@@ -320,7 +329,7 @@
           <td>Driver License due </td>
           <td>{{item.assign_data?.projects.projectName}}</td>
           <td>{{item.total_expense[0]?.total}} </td>
-          <td>{{item.last_expense[0]?.expense_type.expenseType}} </td>
+          <td>{{item.last_expense[0]?.expense_type.expenseType}} </td> -->
         </tr>
 
       </tbody>
