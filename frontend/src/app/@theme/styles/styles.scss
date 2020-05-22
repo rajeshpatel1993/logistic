@@ -98,10 +98,7 @@ nb-sidebar .scrollable {
   color: #b2b0b0;
   font-size: 13px;
 }
-.form-control,.form-group .autocomplete-container .input-container input{
-  font-size: 1rem!important;
-  height: 42px;
-}
+
 
 nb-menu .menu-item {
   a {
@@ -343,7 +340,7 @@ a:focus {
 
       .input-container input {
         padding: 0.375rem 0.75rem;
-        font-size: 12px;
+        font-size: 16px;
         font-weight: 400;
         line-height: 1.5;
         color: #495057;
@@ -363,6 +360,23 @@ a:focus {
       }
     }
 
+  }
+  &.fuel{
+    .form-group{
+      .autocomplete-container{
+        .input-container input{
+          font-size: 12px;
+          height: 36px;
+        }
+      }
+      .form-control{
+        font-size: 12px;
+          height: 36px;
+      }
+      label{
+        font-size: 12px;
+      }
+    }
   }
 }
 
