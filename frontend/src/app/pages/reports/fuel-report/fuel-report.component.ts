@@ -144,32 +144,24 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     let tmpArr = [];
 
     
-    for(let i=0;i<this.vehiclesList.length;i++){
+    for(let i=0;i<this.fuelList.length;i++){
       
   
-      tmpArr.push(this.vehiclesList[i].name);
+      tmpArr.push(this.fuelList[i]["vehicleData"][0].name);
 
-      let  employeefirstname  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data) ? this.vehiclesList[i].assign_data.employee.firstName : 'Not Assigned';
+      let  driver  = (this.fuelList[i].hasOwnProperty("employeeData") && this.fuelList[i].employeeData) ? this.fuelList[i].employeeData[0].firstName : 'Not Assigned';
      
-      tmpArr.push(employeefirstname);
-      tmpArr.push(this.vehiclesList[i].workLocationArray[0].workLocation);
-      tmpArr.push(this.vehiclesList[i].vehicleTypesArray[0].vehicleType);
-      tmpArr.push(this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus);
-      tmpArr.push(this.vehiclesList[i].regNo);
-      let roadTaxValid = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? this.vehiclesList[i].roadTaxValid: 'N.A.';
-      tmpArr.push(roadTaxValid);
-      let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? this.vehiclesList[i].insuranceValid: 'N.A.';
-      tmpArr.push(insuranceDue);
+      tmpArr.push(driver);
+      tmpArr.push(this.fuelList[i].priceunit);
+      tmpArr.push(this.fuelList[i].amount);
+      tmpArr.push(this.fuelList[i].paymentModeData[0].fuelEntryMode);
+      tmpArr.push(this.fuelList[i].fuelTypeData[0].fuelTypeName);
+      tmpArr.push(this.fuelList[i].couponfrom);
+      tmpArr.push(this.fuelList[i].couponto);
+      tmpArr.push(this.fuelList[i].vehicleData[0]["workLocationData"]["workLocation"]);
+      tmpArr.push("Over");
 
-      let  projectName  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data )? this.vehiclesList[i].assign_data.projects.projectName : 'Not Assigned';
-      tmpArr.push(projectName);
-
-      let overallExpense = this.vehiclesList[i].total_expense.length > 0 ? this.vehiclesList[i].total_expense[0].total : 'No Expense';
-      tmpArr.push(overallExpense);
-
-      let lastExpense = this.vehiclesList[i].last_expense.length > 0 ? this.vehiclesList[i].last_expense[0].expense_type.expenseType : 'No Expense';
-
-      tmpArr.push(lastExpense);
+      // tmpArr.push(lastExpense);
 
       bodyData.push(tmpArr);
       tmpArr = [];
@@ -177,7 +169,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     }
 
     let optData = {
-      head: [['Name', 'Driver', 'Location','Vehicle Type', 'Status', 'Reg No', 'Road Tax Due','Insurance Due','Project Name','Overall Expense','Recent Expense']],
+      head: [['Vehicle_name', 'Driver', 'Priceunit','Total', 'Pay_mode', 'Fuel_type', 'Coupon_from','Coupon_to','Work_location','Fuel_consumption_status']],
       body: bodyData,
     };
 
@@ -191,44 +183,45 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
   exportToExcel(){
     this.jsonData = [];
-    let columns = ['name', 'driver', 'location','vehicletype', 'status', 'regno', 'roadtaxdue','insurancedue','projectname','overallexpense','recentexpense'];
-    for(let i=0;i<this.vehiclesList.length;i++){
+    let columns = ['Vehicle_name', 'Driver', 'Priceunit','Total', 'Pay_mode', 'Fuel_type', 'Coupon_from','Coupon_to','Work_location','Fuel_consumption_status'];
+    for(let i=0;i<this.fuelList.length;i++){
       
   
 
-      let  employeefirstname  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data) ? this.vehiclesList[i].assign_data.employee.firstName : 'Not Assigned';
-      let roadTaxValid = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? this.vehiclesList[i].roadTaxValid: 'N.A.';
-      let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? this.vehiclesList[i].insuranceValid: 'N.A.';
+      let  driver  = (this.fuelList[i].hasOwnProperty("employeeData") && this.fuelList[i].employeeData) ? this.fuelList[i].employeeData[0].firstName : 'Not Assigned';
+      // let vehicleName = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? this.vehiclesList[i].roadTaxValid: 'N.A.';
+    
+      // let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? this.vehiclesList[i].insuranceValid: 'N.A.';
 
-      let  projectName  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data )? this.vehiclesList[i].assign_data.projects.projectName : 'Not Assigned';
+      // let  projectName  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data )? this.vehiclesList[i].assign_data.projects.projectName : 'Not Assigned';
 
-      let overallExpense = this.vehiclesList[i].total_expense.length > 0 ? this.vehiclesList[i].total_expense[0].total : 'No Expense';
+      // let overallExpense = this.vehiclesList[i].total_expense.length > 0 ? this.vehiclesList[i].total_expense[0].total : 'No Expense';
 
-      let lastExpense = this.vehiclesList[i].last_expense.length > 0 ? this.vehiclesList[i].last_expense[0].expense_type.expenseType : 'No Expense';
+      // let lastExpense = this.vehiclesList[i].last_expense.length > 0 ? this.vehiclesList[i].last_expense[0].expense_type.expenseType : 'No Expense';
 
 
 
 
       let tmpObj = {};
-      tmpObj["name"] = this.vehiclesList[i].name;
-      tmpObj["driver"] = employeefirstname;
-      tmpObj["location"] = this.vehiclesList[i].workLocationArray[0].workLocation;
-      tmpObj["vehicletype"] = this.vehiclesList[i].vehicleTypesArray[0].vehicleType;
-      tmpObj["status"] = this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus;
-      tmpObj["regno"] = this.vehiclesList[i].regNo;
+      tmpObj["Vehicle_name"] = this.fuelList[i]["vehicleData"][0].name;
+      tmpObj["Driver"] = driver;
+      tmpObj["Priceunit"] = this.fuelList[i].priceunit;
+      tmpObj["Total"] =this.fuelList[i].amount;
+      tmpObj["Pay_mode"] = this.fuelList[i].paymentModeData[0].fuelEntryMode;
+      tmpObj["Fuel_type"] = this.fuelList[i].fuelTypeData[0].fuelTypeName;
 
 
-      tmpObj["roadtaxdue"] = roadTaxValid;
-      tmpObj["insurancedue"] = insuranceDue;
-      tmpObj["projectname"] = projectName;
-      tmpObj["overallexpense"] = overallExpense;
-      tmpObj["recentexpense"] = lastExpense;
+      tmpObj["Coupon_from"] = this.fuelList[i].couponfrom;
+      tmpObj["Coupon_to"] = this.fuelList[i].couponto;
+      tmpObj["Work_location"] = this.fuelList[i].vehicleData[0]["workLocationData"]["workLocation"];
+      tmpObj["Fuel_consumption_status"] = "Over";
+     
 
       this.jsonData.push(tmpObj);
 
     }
 
-    this.reportService.downloadFile(this.jsonData, 'vehicle', columns);
+    this.reportService.downloadFile(this.jsonData, 'fuel_report', columns);
 
 
   }
@@ -237,9 +230,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   public loadFuelHistory(){
     this.reportService.loadFuelHistory().subscribe((fuelData:any)=>{
      this.fuelList = fuelData.data;
-
-    console.log(this.fuelList);
-    // this.dtTrigger.next();
+    this.dtTrigger.next();
 
     },(error)=>{
 
