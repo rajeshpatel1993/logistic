@@ -89,6 +89,11 @@
            <th>Price/Unit</th>
            <th>Total</th>
            <th>pay mode</th>
+          <th>Fuel Type</th>
+          <th>Coupon From</th>
+          <th>Coupon To</th>
+          <th>Work Location</th>
+          <th>Fuel Consumption Status</th>
            <!--
           <th>Location</th>
           <th>Vehicle Type </th>
@@ -129,7 +134,28 @@
 
           </td>
 
-          <td></td>
+          <td>
+
+            {{item.paymentModeData[0].fuelEntryMode}}
+          </td>
+
+
+          <td>
+            {{item.fuelTypeData[0].fuelTypeName}}
+          </td>
+          <td>
+            {{item.couponfrom}}
+          </td>
+
+          <td>
+            {{item.couponto}}
+          </td>
+
+          <td>
+            {{item.vehicleData[0].workLocationData.workLocation}}
+          </td>
+
+          <td><span style="color:red;">Over</span></td>
 
 
           <!-- <td>
