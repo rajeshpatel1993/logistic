@@ -155,7 +155,22 @@
             {{item.vehicleData[0].workLocationData.workLocation}}
           </td>
 
-          <td><span style="color:red;">Over</span></td>
+          <td>
+           <span *ngIf="(+item.amount) > (+item.vehicleData[0].assignedVehicleData.fuelLimit)">
+            <i class="fa fa-gas-pump" style="color:red"></i>
+            {{item.amount}}  ||  {{item.vehicleData[0].assignedVehicleData.fuelLimit}}
+           </span>
+
+           <span *ngIf="(+item.amount) < (+item.vehicleData[0].assignedVehicleData.fuelLimit)">
+            <i class="fa fa-gas-pump"></i>
+            {{item.amount}}  ||  {{item.vehicleData[0].assignedVehicleData.fuelLimit}}
+           </span>
+
+
+         
+
+
+          </td>
 
 
           <!-- <td>

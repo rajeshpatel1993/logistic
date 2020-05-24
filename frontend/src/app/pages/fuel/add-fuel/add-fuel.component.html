@@ -1,5 +1,5 @@
 <div class="VehicleAddTab fuel">
-  <form [formGroup]="fuelEntryForm">
+  <form [formGroup]="fuelEntryForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="col-6">
         <div class="form-group row">
@@ -17,6 +17,13 @@
               <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]="notFound"></div>
               </ng-template>
+
+
+            <div class="errormsg"
+              *ngIf="submitted && f.vehicleTypef.errors">
+              Vehicle Type is required
+            </div>
+
             </div>
             <!-- <input type="hidden" id="vehicletypeformcontrol" class="form-control" formControlName="vehicleTypef"> -->
           </div>
@@ -36,6 +43,12 @@
               <ng-template #notFoundTemplate1 let-notFound>
                 <div [innerHTML]="notFound"></div>
               </ng-template>
+
+            <div class="errormsg"
+              *ngIf="submitted && f.vehiclename.errors">
+              Vehicle Name is required
+            </div>
+
             </div>
           </div>
         </div>
@@ -78,38 +91,44 @@
               <ng-template #notFoundTemplate1 let-notFound>
                 <div [innerHTML]="notFound"></div>
               </ng-template>
+
+              <div class="errormsg"
+              *ngIf="submitted && f.drivername.errors">
+              Driver Name is required
+            </div>
+
             </div>
           </div>
         </div>
-        <!-- <div class="form-group row">
-          <label for="expiration" class="col-lg-4 col-xl-3 col-form-label">Date with Time<span
+        <div class="form-group row">
+          <label for="expiration" class="col-lg-4 col-xl-3 col-form-label">Date<span
               class="star">*</span></label>
           <div class="col-lg-8 col-xl-9">
             <div class="row no-gutters">
               <div class="col-12 col-md-6 col-lg-8 pr-3">
                 <div class="input-group">
                   <input class="form-control" id="expiration" nbInput formControlName="expiration_date"
-                    [nbDatepicker]="expiration">
+                    [nbDatepicker]="expiration" readonly>
                   <nb-datepicker #expiration></nb-datepicker>
                   <div class="input-group-append">
                     <span class="input-group-text"><img src="assets/images/organization.png" alt="" width="16"></span>
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-6 col-lg-4">
+              <!-- <div class="col-12 col-md-6 col-lg-4">
                 <div class="ngx-timepicker-field-example">
                   <div class="input-group">
-                    <input [ngxTimepicker]="picker" class="form-control" formControlName="expiration_time">
+                    <input [ngxTimepicker]="picker" class="form-control" formControlName="expiration_time" [defaultTime]="'03:00'">
                     <ngx-material-timepicker #picker></ngx-material-timepicker>
                     <div class="input-group-append">
                       <span class="input-group-text"><img src="assets/images/time-and-date.png" width="16" alt=""></span>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div class="form-group row">
           <label for="drivern" p class="col-lg-4 col-xl-3 col-form-label">Fuel Type<span class="star">*</span></label>
@@ -127,6 +146,12 @@
               <ng-template #notFoundTemplateFuelType let-notFound>
                 <div [innerHTML]="notFound"></div>
               </ng-template>
+
+              <div class="errormsg"
+              *ngIf="submitted && f.fuelType.errors">
+              Fuel Type is required
+            </div>
+              
             </div>
           </div>
         </div>
@@ -142,6 +167,12 @@
             <select formControlName="modeofpayment" class="form-control" (change)="onChangeEvent($event)" [value]="'5d31705ece00403b7c9ee959'">
               <option *ngFor="let mp of paymentModes" [value]="mp._id" [selected]="mp._id === '5d31705ece00403b7c9ee959'">{{mp.fuelEntryMode}}</option>
             </select>
+
+            <div class="errormsg"
+            *ngIf="submitted && f.modeofpayment.errors">
+            Mode of payment is required
+          </div>
+
           </div>
         </div>
         <div class="form-group row" *ngIf="showCardOption">
@@ -162,7 +193,7 @@
           <label for="coupont" class="col-lg-4 col-xl-3 col-form-label">Coupon to<span class="star">*</span></label>
           <div class="col-lg-8 col-xl-9">
             <input type="text" id="coupont" class="form-control" placeholder="Enter Coupon To"
-              formControlName="couponto" [readonly]="!showCouponOption" />
+              formControlName="couponto" [readonly]="!showCouponOption" (focusout)="CalculateCouponValue($event)"/>
           </div>
         </div>
         
@@ -171,19 +202,24 @@
       </div>
       <div class="col-6">
         
-        <div class="form-group row" *ngIf="showCouponOption">
+        <div class="form-group row">
+          <div *ngIf="showCouponOption">
           <label for="couponv" p class="col-lg-4 col-xl-3 col-form-label">Coupon value<span
               class="star">*</span></label>
           <div class="col-lg-8 col-xl-9">
             <input type="number" id="coponv" class="form-control" placeholder="Enter Coupon Value"
               formControlName="couponvalue" (focusout)="CalculateCouponValue($event)" >
           </div>
+        </div>
           <div class="col-12 mt-3">
             <div class="form-group row">
               <label for="amounts" class="col-lg-4 col-xl-3 col-form-label">Amount<span class="star">*</span></label>
               <div class="col-lg-8 col-xl-9">
                 <input type="number" id="amounts" class="form-control" placeholder="Enter Amount"
-                  formControlName="amount">
+                  formControlName="amount" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }">
+                  <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                    <div *ngIf="f.amount.errors.required">Fuel Amount is required</div>
+                  </div>
               </div>
             </div>
             <div class="form-group row">
@@ -273,7 +309,7 @@
 
     <div class="row no-gutters mt-3">
       <div class="col-12 pr-4">
-        <button type="submit" (click)="addFuel()" class="btn btn-primary float-right">Submit</button>
+        <button type="submit" class="btn btn-primary float-right">Submit</button>
       </div>
     </div>
 

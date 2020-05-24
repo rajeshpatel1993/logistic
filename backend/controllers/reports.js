@@ -390,7 +390,7 @@ router.get("/getFuelHistory",async(req,res) => {
                 let: { "vehicleId": "$vehicle" },
                 pipeline: [
                     { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
-                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }},
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1, "workLocationId": 1 }},
                     { "$lookup": {
                         "from": "vehicleType",
                         "let": { "vehTypeId": "$vehicle_typeId" },
@@ -400,6 +400,56 @@ router.get("/getFuelHistory",async(req,res) => {
                         ],
                         "as": "vehicletypedata"
                       }},
+
+                      { 
+                        "$lookup": {
+                        "from": "worklocation",
+                        "let": { "workLocationId": "$workLocationId" },
+                        "pipeline": [
+                          { "$match": { "$expr": { "$eq": ["$workLocationId", "$$workLocationId"] }}},
+                          { "$project": { "workLocation":1 }},
+                        ],
+                        "as": "workLocationData"
+                      }
+                    
+                    },
+
+                      {
+                        
+                            "$lookup": {
+                            "from": "assignVehicle",
+                            "let": { "vehId": "$_id" },
+                            "pipeline": [
+                              { "$match": { "$expr": { "$eq": ["$vehicle", "$$vehId"] }}},
+                              { "$project": { "fuelLimit":1 }},
+                            ],
+                            "as": "assignedVehicleData"
+                          }
+                        
+
+
+                      },
+
+                      {
+                        "$unwind": {
+                            "path" : "$assignedVehicleData", 
+                            "preserveNullAndEmptyArrays" : false
+
+                        }
+
+                      },
+
+                      {
+                        "$unwind": {
+                            "path" : "$workLocationData", 
+                            "preserveNullAndEmptyArrays" : false
+
+                        }
+
+                      },
+
+
+
                     { 
                         "$unwind" : {
                             "path" : "$vehicletypedata", 
@@ -432,7 +482,20 @@ router.get("/getFuelHistory",async(req,res) => {
                     ],
                     as: "employeeData"// output array field
                 }
+            },
+
+            {
+                $lookup: {
+                    from: "fuelType", // collection to join
+                    let: { "fuelTypeId": "$fuelType" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$fuelTypeId"] }}},
+                        { "$project": { "fuelTypeName":1, "_id": 0 }}
+                    ],
+                    as: "fuelTypeData"// output array field
+                }
             }
+
             //,
             
             // {

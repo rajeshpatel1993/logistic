@@ -70,21 +70,21 @@ export class AddFuelComponent implements OnInit {
 
   createForm() {
     this.fuelEntryForm = this.fb.group({
-      vehicleTypef: [],
+      vehicleTypef: ['', Validators.required],
       vehicleCode: [''],
       vehicledetails: [''],
       // vehicle: ['', Validators.required],
       vehiclename: ['',Validators.required],
-      expiration_time: [''],
-      expiration_date: [''],
+      // expiration_time: [''],
+      expiration_date: [new Date(), ''],
       amount: ['',Validators.required],
       odometer: [''],
-      fuelType: [''],
+      fuelType: ['', Validators.required],
       modeofpayment: ['5d31705ece00403b7c9ee959',Validators.required],
       cardno: [''],
       couponfrom: [''],
       couponto: [''],
-      couponvalue: [''],
+      couponvalue: [100, ''],
       // type: ['',Validators.required],
       priceunit: ['',Validators.required],
       unit: ['',Validators.required],
@@ -109,14 +109,19 @@ export class AddFuelComponent implements OnInit {
     this.startDateVehicle = event.startDate?event.startDate.toISOString():null;
     this.endDateVehicle = event.endDate?event.endDate.toISOString():null;
   }
-  addFuel(){
+  onSubmit(){
     //(this.fuelEntryForm.value);
 
     this.submitted = true;
     if (this.fuelEntryForm.invalid) {
-      alert("Please fill all required field");
+
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] = "Please Fill All required fields and Submit again";
+      this.dialogBox = true;
       return;
+
     }
+
 
     
     this.fuelService.addFuel(this.fuelEntryForm.value).subscribe((data)=>{
@@ -189,7 +194,9 @@ export class AddFuelComponent implements OnInit {
       this.vehicleRegNo = veData.regNo;
       this.vehicleCode = veData.vehicle_code;
       this.vehicleImage = veData.vehicleImage;
-      this.vehicleDetail = veData.vehicleDetailsArray[0].vehicleDetails;    },
+      this.vehicleDetail = veData.vehicleDetailsArray[0].vehicleDetails; 
+      this.loadAssignedVehicle(veData._id);
+    },
     (error)=>{
       console.log(error);
     });
@@ -356,6 +363,8 @@ export class AddFuelComponent implements OnInit {
         this.showCardOption = false;
         break;
       default:
+        this.showCardOption = false;
+
         // code block
     }
 
@@ -393,12 +402,26 @@ export class AddFuelComponent implements OnInit {
 
   }
 
+  public loadAssignedVehicle(vehicleId){
+
+    this.vehicleService.loadAssignedVehicleDetail(vehicleId).subscribe((da)=>{
+      let assVehData = da["data"];
+      let empData = assVehData.employee["firstName"];
+      console.log(empData);
+      this.fuelEntryForm.get("drivername").patchValue(empData);
+
+
+    });
+  }
+
 
   CalculateCouponValue(evt){
     let couponFrom = this.fuelEntryForm.get("couponfrom").value;
     let couponTo = this.fuelEntryForm.get("couponto").value;
+    let couponValue = this.fuelEntryForm.get("couponvalue").value;
+    console.log(couponValue);
+
     let totalCoupon = (parseInt(couponTo) + 1) - parseInt(couponFrom);
-    let couponValue = parseInt(evt.target.value);
     let totalAmount = couponValue * totalCoupon;
     this.fuelEntryForm.patchValue({"amount": totalAmount});
     // alert(couponFrom);
