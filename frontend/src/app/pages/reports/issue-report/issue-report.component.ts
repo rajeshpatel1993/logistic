@@ -39,6 +39,32 @@ export class IssueReportComponent implements OnInit {
   public selectedItem = '';
   public selectedPage = '';
   public jsonData = [];
+  listVehicles = [];
+  vehicleIssueStatusData=[];
+  priorityData=[];
+
+
+  selectEvent(item, typeofautoselect) {
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = item.id;
+        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.loadVehicleDetails(item.id);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = item.id;
+        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = item.name;
+        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+  }
+
 
  
 
@@ -47,6 +73,22 @@ export class IssueReportComponent implements OnInit {
     // And reassign the 'data' which is binded to 'data' property.
   }
 
+
+  public loadVehicleDetails(vehicleTypeId){
+    this.vehicleService.loadVehicleDetails(vehicleTypeId).subscribe((vehicleDetails:any) => {
+      let vehicleDetailData = vehicleDetails.data;
+      vehicleDetailData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.vehicleDetailsId;
+        tmpObj["name"] = item.vehicleDetails;
+        this.vehicleDetails.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+
+  }
+
+  
 
   onFocused(e) {
     // do something
