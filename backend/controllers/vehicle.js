@@ -375,6 +375,8 @@ router.post("/deleteVehicle", async (req, res) => {
 router.get("/getvehicle/:id", async (req, res) => {
     const id = req.params.id; //or use req.param('id')
     const filter = { _id: mongoose.Types.ObjectId(id) };
+
+    try{
     const vehicle = await Vehicle.aggregate([{$match:filter},{
         
             $lookup: {
@@ -544,7 +546,9 @@ router.get("/getvehicle/:id", async (req, res) => {
     responseData["data"] = vehicle;
     res.status(200).json(responseData);
     
-
+}catch(error){
+    console.log(error);
+}
 
 });
 

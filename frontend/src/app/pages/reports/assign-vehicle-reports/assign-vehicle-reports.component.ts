@@ -192,11 +192,10 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
   exportToPdfAssignVehicle(){
-    const doc = new jsPDF()
-    doc.autoTable({ html: '#my-table' });
+    let reportTitle = "Assign Vehicle Report";
     let bodyData = [];
     let tmpArr = [];
-
+    
     let columns = ['vehiclename', 'vehiclecode', 'currentdrivername', 'driverlicenseno', 'location','astartdate','aenddate','start_meter','end_meter'];
 
 
@@ -235,17 +234,8 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
-    let optData = {
-      head: [columns],
-      body: bodyData,
-    };
+    this.reportService.downloadPdfFile(reportTitle, "assign_vehicle_report.pdf",columns,bodyData);
 
-
-  //  console.log(optData);
-
-  doc.autoTable(optData)
-
-  doc.save('assignvehicle.pdf');
 
   }
 

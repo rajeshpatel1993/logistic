@@ -27,7 +27,7 @@ export class FuelReportComponent implements OnInit, OnDestroy {
   public vehicleStatusList: any = [];
   public workLocationsList: any[] = [];
   public fuelList : any[]= [];
-
+  public organizationData;
   public selectedVehicleDetail;
   public selectedVehicleReg;
 
@@ -115,6 +115,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   ngOnInit() {
 
     this.loadFuelHistory();
+    this.loadOrganization();
 
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -138,11 +139,14 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
   }
   exportToPdf(){
-    const doc = new jsPDF()
-    doc.autoTable({ html: '#my-table' });
+
+    let reportTitle = "Fuel Report";
     let bodyData = [];
     let tmpArr = [];
+    let columns = ['Vehicle_name', 'Driver', 'Priceunit','Total', 'Pay_mode', 'Fuel_type', 'Coupon_from','Coupon_to','Work_location'];
+    
 
+  
     
     for(let i=0;i<this.fuelList.length;i++){
       
@@ -159,7 +163,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
       tmpArr.push(this.fuelList[i].couponfrom);
       tmpArr.push(this.fuelList[i].couponto);
       tmpArr.push(this.fuelList[i].vehicleData[0]["workLocationData"]["workLocation"]);
-      tmpArr.push("Over");
+      // tmpArr.push("Over");
 
       // tmpArr.push(lastExpense);
 
@@ -168,16 +172,9 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
     }
 
-    let optData = {
-      head: [['Vehicle_name', 'Driver', 'Priceunit','Total', 'Pay_mode', 'Fuel_type', 'Coupon_from','Coupon_to','Work_location','Fuel_consumption_status']],
-      body: bodyData,
-    };
+    this.reportService.downloadPdfFile(reportTitle, "fuel_report.pdf",columns,bodyData);
 
-  //  console.log(optData);
 
-  doc.autoTable(optData)
-
-  doc.save('vehicle-report.pdf');
 
   }
 
@@ -273,6 +270,16 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
       // console.log(vehicleTypeData);
     });
 
+  }
+
+  public loadOrganization(){
+
+    this.reportService.loadOrganizationData().subscribe((d)=>{
+      this.organizationData = d["data"];
+      // console.log(this.organization);
+    },(error)=>{
+
+    });
   }
 
 

@@ -95,14 +95,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Transaction',
-    icon: {
-      icon: 'money-bill-wave',
-      pack: 'solid'},
-    link: '/pages/transaction',
-    home: true,
-  },
-  {
     title: 'Notes',
     icon: {
       icon: 'clipboard',
@@ -153,6 +145,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
               {
                 title: 'Fuel',
                 link: '/pages/reports/fuel'
+              },
+              {
+                title: 'Issue',
+                link: '/pages/reports/issue'
+              },
+              {
+                title: 'Contact',
+                link: '/pages/reports/contact'
               }
       ]
     // link: '/pages/reports/list',

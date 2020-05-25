@@ -1,0 +1,73 @@
+<div class="Reports">
+  <table id="my-table">
+
+    <!-- ... -->
+  </table>
+
+  <div class="row no-gutters mt-3 mb-3">
+    <div class="col-12 text-right">
+      <button class="btn btn-outline-primary custom" (click)="exportToPdf()"> Export to PDF</button>
+      <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcel()"> Export to CSV</button>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Designation</th>
+          <th>Work Location</th>
+          <th>Emp code</th>
+          <th>Phone number</th>
+          <th>Vehicle assigned</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of contactList">
+          <!-- <td>
+            <ngx-single-vehicle [vehicleId]="item.vehicle">
+
+            </ngx-single-vehicle>
+          </td> -->
+          <td>
+            <span>{{ item.firstName }} {{item.middleName}} {{item.lastName}}</span>
+
+          </td>
+
+          <td>
+           {{item.jobTitleData.jobTitle}}
+
+          </td>
+
+          <td>
+            {{item.workLocationData.workLocation}}
+
+          </td>
+
+          <td>
+
+            {{item.employeeCode}}
+          </td>
+
+
+          <td>
+            
+            {{item.primaryContact}}
+          </td>
+        
+          <td>
+
+            <ngx-single-vehicle [vehicleId]="item.assignVehicleData[0]?.vehicle">
+
+            </ngx-single-vehicle>
+            
+           
+          </td>
+     
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

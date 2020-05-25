@@ -1,0 +1,125 @@
+<div class="Reports">
+  <table id="my-table">
+
+    <!-- ... -->
+  </table>
+
+  <div class="row no-gutters mt-3 mb-3">
+    <div class="col-12 text-right">
+      <button class="btn btn-outline-primary custom" (click)="exportToPdf()"> Export to PDF</button>
+      <button class="btn btn-outline-primary custom ml-2" (click)="exportToExcel()"> Export to CSV</button>
+    </div>
+  </div>
+  <form class="formbg-light mb-3">
+    <div class="form-row">
+      
+      <div class="form-col my-1">
+        <div class="ng-autocomplete">
+          <ng-autocomplete [data]="listVehicles" [searchKeyword]="keyword" placeHolder="Enter the Vehicle name"
+            (selected)='selectEvent($event, "vehicle")'
+           historyIdentifier="listVehicles" [itemTemplate]="itemTemplate"
+            [notFoundTemplate]="notFoundTemplate">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.name"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+      <div class="form-col my-1">
+        <div class="ng-autocomplete">
+          <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" placeHolder="Enter the Issue"
+            (selected)='selectEvent($event, "issues")' historyIdentifier="vehicleIssueStatusData" [itemTemplate]="itemTemplate1"
+            [notFoundTemplate]="notFoundTemplate1">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate1 let-item>
+            <a [innerHTML]="item.name"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate1 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+
+      </div>
+      <div class="form-col my-1">
+        <div class="ng-autocomplete">
+          <ng-autocomplete [data]="priorityData" [searchKeyword]="keyword"
+            placeHolder="Enter the  Priority" (selected)='selectEvent($event, "vehiclereg")'
+            historyIdentifier="priorityData" [itemTemplate]="itemTemplate2"
+            [notFoundTemplate]="notFoundTemplate2">
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate2 let-item>
+            <a [innerHTML]="item.name"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate2 let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+        </div>
+      </div>
+
+
+      <div class="col-xs-12 col-sm-2 co-md-2 col-lg-2 mt-2">
+        <button type="button" nbButton status="Filter" (click)="filterData()" class="btn btn-primary w-100"><i
+            class="fas fa-search"></i> Filter</button>
+      </div>
+    </div>
+  </form>
+  <div class="table-responsive">
+    <table class="table table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
+        <tr>
+          <th>Vehicle</th>
+           <th>Issue </th>
+           <th>Status</th>
+           <th>Priority</th>
+           <th>Employee Assign To</th>
+          <th>Employee Reported To</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of issueList">
+          <td>
+            <ngx-single-vehicle [vehicleId]="item.vehicle">
+
+            </ngx-single-vehicle>
+          </td>
+          <td>
+            <span>{{ item.description }}</span>
+
+          </td>
+
+          <td>
+            {{ item.issueStatusData[0].vehicleIssueStatus }}
+
+          </td>
+
+          <td>
+            {{ item.priorityData[0].priorityStatus }}
+
+          </td>
+
+          <td>
+
+            {{item.employeedataAssignTo[0].firstName}}
+          </td>
+
+
+          <td>
+            {{item.employeedataReported[0].firstName}}  {{item.employeedataReported[0].lastName}}
+          </td>
+        
+     
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -30,6 +30,8 @@ import { AssignVehicleReportsComponent } from './assign-vehicle-reports/assign-v
 import { ServiceReportComponent } from './service-report/service-report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
 import { FuelReportComponent } from './fuel-report/fuel-report.component';
+import { IssueReportComponent } from './issue-report/issue-report.component';
+import { ContactReportComponent } from './contact-report/contact-report.component';
 
 
 @NgModule({
@@ -65,7 +67,9 @@ import { FuelReportComponent } from './fuel-report/fuel-report.component';
     AssignVehicleReportsComponent,
     ServiceReportComponent,
     ExpenseReportComponent,
-    FuelReportComponent
+    FuelReportComponent,
+    IssueReportComponent,
+    ContactReportComponent
     // ,
     // VehicleServiceDetailsComponent
   ],
