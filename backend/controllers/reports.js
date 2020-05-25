@@ -24,6 +24,8 @@ const { ProjectType } = require("../models/projectType");
 const {Expense} = require("../models/expense");
 const {ServiceTask} = require("../models/serviceTask");
 const {FuelEntry} =  require("../models/fuelEntry");
+const {Issue} = require("../models/issue");
+const {Employee} = require("../models/employee");
 
 const multer = require('multer');
 
@@ -358,25 +360,186 @@ router.get("/regnos", async(req,res)=>{
 });
 
 
+router.get("/getIssues",async(req,res) => {
+
+    
+    try {
+    
+        let issueData = await Issue.aggregate([{
+    
+            $match: {
+                "isDeleted":0
+            }
+           }
+            ,
+           {
+            $lookup: {
+                from: "vehicle", // collection to join
+                let: { "vehicleId": "$vehicle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }}
+                ],
+                as: "vehicleData"// output array field
+            }
+        }
+            , {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "empId": "$reportedBy" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
+                    ],
+                    as: "employeedataReported"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "empId": "$assignTo" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
+                    ],
+                    as: "employeedataAssignTo"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "priorityStatus", // collection to join
+                    let: { "priorityId": "$priority" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$priorityId"] }}},
+                        { "$project": { "priorityStatus":1, "priorityColor": 1}}
+                    ],
+                    as: "priorityData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "vehicleIssueStatus", // collection to join
+                    let: { "statusId": "$status" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$statusId"] }}},
+                        { "$project": { "vehicleIssueStatus":1}}
+                    ],
+                    as: "issueStatusData"// output array field
+                }
+            },
+
+            
+          
+           
+        
+        ]);
+    
+
+        let responseData = {};
+        responseData["status"] = 200;
+        // responseData["page"] = pager;
+        responseData["data"] = issueData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+
+router.get("/getContacts",async(req,res) => {
+
+    
+    try {
+    
+        let empData = await Employee.aggregate([
+            
+            
+       //     {
+    
+        //     $match: {
+        //         "isDeleted":0
+        //     }
+        //    }
+        //     ,
+        {
+            $lookup: {
+                from: "worklocation", // collection to join
+                let: { "workLocationId": "$workLocation" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$workLocationId", "$$workLocationId"] }}},
+                    { "$project": { "workLocation":1, "workLocationCode":1 }}
+                ],
+                as: "workLocationData"// output array field
+            }
+        },
+
+        {
+            $lookup: {
+                from: "jobtitle", // collection to join
+                let: { "jobTitleId": "$jobTitle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$jobTitleId", "$$jobTitleId"] }}},
+                    { "$project": { "jobTitle":1}}
+                ],
+                as: "jobTitleData"// output array field
+            }
+        },
+        {
+            $lookup: {
+                from: "assignVehicle", // collection to join
+                let: { "empid": "$_id" },
+                pipeline: [
+                    { "$match": { "$expr":  { "$eq": ["$employee", "$$empid"] }}},
+                    { "$project": { "vehicle":1 }},
+                    { "$lookup": {
+                        "from": "vehicle",
+                        "let": { "vehId": "$vehicle" },
+                        "pipeline": [
+                          { "$match": { "$expr": { "$eq": ["$_id", "$$vehId"] }}},
+                          { "$project": { "name":1 }},
+                        ],
+                        "as": "vehicledata"
+                      }},
+                    { 
+                        "$unwind" : {
+                            "path" : "$vehicledata", 
+                            "preserveNullAndEmptyArrays" : false
+                        }
+                    }, 
+                ],
+                as: "assignVehicleData"// output array field
+            }
+        }
+        ,
+        { $unwind : "$jobTitleData" },
+        { $unwind : "$workLocationData" }
+
+            
+          
+           
+        
+        ]);
+    
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = empData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
 
 router.get("/getFuelHistory",async(req,res) => {
     const modifiedData = [];
-
-    // const resPerPage = 2; // results per page
-    // const page = parseInt(req.query.page) || 1; // Page 
-    // const skipd = (resPerPage * page) - resPerPage;
-
-
     try {
        
-
-        // const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
-        // console.log(nooitems);
-        //  // get pager object for specified page
-        //  const pager = paginate(nooitems, page,resPerPage);
-
         let fuelEntryData = await FuelEntry.aggregate([{
     
             $match: {
@@ -496,49 +659,9 @@ router.get("/getFuelHistory",async(req,res) => {
                 }
             }
 
-            //,
-            
-            // {
-            //     $skip: skipd
-            // },
-            // {
-            //     $limit:resPerPage
-            // }
-           
         
         ]);
 
-    //  for(let i=0;i<vehicleData.length;i++){
-    //     let ele = {};
-    //     let elemId = vehicleData[i]._id;
-    //     let assignedVal = Object.assign(ele,vehicleData[i]);
-    //     let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId, isDeleted:0}).populate('employee').populate('projects').populate('projectsType');
-    //     assignedVal["assign_data"] = assignVehicleCollection;
-
-    //     let totalExpenses = await Expense.aggregate([
-    //         {
-    //         $match : { vehicle: elemId,  isDeleted:0},
-
-    //         },
-
-    //         {
-    //             $group : {
-    //                 _id : null,
-    //                 total : {
-    //                     $sum : {"$toDouble": "$amount"} 
-    //                 }
-    //             }
-    //         }
-    //     ]);
-    //     assignedVal["total_expense"] = totalExpenses;
-
-
-    //     let lastExpense = await Expense.find({vehicle:elemId, isDeleted:0}, {expense_type:1, amount:1}).populate('expense_type', 'expenseType').sort({createdAt: 1}).limit(1);
-    //     assignedVal["last_expense"] = lastExpense;
-
-
-    //     modifiedData.push(assignedVal);
-    // }
 
         let responseData = {};
         responseData["status"] = 200;

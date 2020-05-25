@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
+import * as jsPDF from 'jspdf';
+
+import 'jspdf-autotable';
+
 // const TOTAL_PAGES = 7;
 
 // export class NewsPost {
@@ -15,8 +19,13 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class ReportsService {
+  public organizationData;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+
+    this.loadOrganization();
+
+  }
 
   public baseUrl = environment.baseUrl;
 
@@ -27,6 +36,16 @@ export class ReportsService {
   loadFuelHistory(){
     return this.http.get(this.baseUrl+"/reports/getFuelHistory");
   }
+
+
+  loadIssues(){
+    return this.http.get(this.baseUrl+"/reports/getIssues");
+  }
+
+  loadContacts(){
+    return this.http.get(this.baseUrl+"/reports/getContacts");
+  }
+
 
 
   loadAssignVehicles(){
@@ -70,96 +89,87 @@ export class ReportsService {
     return this.http.post(this.baseUrl+"/expenses/vehicleExpensesbyVehicle/",data);
   }
 
-  // loadVehicleDetails(vehicleId?){
-  //   return this.http.get(this.baseUrl+"/vehicles/details/"+vehicleId);
+  downloadPdfFile(reportTitle, reportFileName, head, bodyData, myTableHtml?){
 
-  // }
+    const doc = new jsPDF()
+    doc.autoTable({ html: '#my-table' });
+    let totalPagesExp = doc.internal.getNumberOfPages();
+    //console.log(this.organizationData);
+    let logo = this.organizationData.logobase64;
+    console.log(logo);
+    //let base64img = this.getBase64Image(this.organizationData.organizationLogo);
+    // console.log(base64img);
+    let organizationName = this.organizationData.organizationName;
+    let todayDateTime = this.todayDateTime();
 
-  // loadOrganizationData(){
-  //   return this.http.get(this.baseUrl+"/organization/");
-  // }
-
-  // loadFiltereddata(querystring:String, page){
-  //   return this.http.get(this.baseUrl+"/vehicles/filtervehicle?"+querystring, page);
-  // }
-
-  // loadModelsData(brandId?){
-  //   return this.http.get(this.baseUrl+"/vehicles/models/"+brandId);
-  // }
-
-  // loadBrandsData(){
-  //   return this.http.get(this.baseUrl+"/vehicles/brands");
-  // }
-
-  // loadColorsData(){
-  //   return this.http.get(this.baseUrl+"/vehicles/colors");
-  // }
   
-  // loadFuelTypeData(measureMentId?){
-  //   return this.http.get(this.baseUrl+"/vehicles/fueltype/"+measureMentId);
-  // }
-
-  // loadFuelMesaurementData(){
-  //   return this.http.get(this.baseUrl+"/vehicles/fuelMeasurement");
-  // }
-
-  // loadAgentData(){
-  //   return this.http.get(this.baseUrl+"/vehicles/agents");
-  // }
-
-  // loadOwnerShipData(){
-  //   return this.http.get(this.baseUrl+"/vehicles/ownerships");
-  // }
-
-  // uploadFile(formdata){
-  //   return this.http.post(this.baseUrl+"/vehicles/fileupload", formdata);
-  // }
-
-  // addVehicle(data){
-  //   return this.http.post(this.baseUrl+"/vehicles/add",data);
-  // }
-
-  // addAssignVehicle(data){
-  //   return this.http.post(this.baseUrl+"/vehicles/add-assign",data);
-  // }
-
-  // loadVehicleStatus(){
-  //   return this.http.get(this.baseUrl+"/vehicles/vehicleStatus");
-  // }
-  // loadWorkLocation(){
-  //   return this.http.get(this.baseUrl+"/vehicles/workLocations");
-  // }
-
-  // deleteVehicle(data) {
-  //   return this.http.post(this.baseUrl+"/vehicles/deleteVehicle", data);
-  // }
-
-  // loadVehicle(vehicleId){
-  //   return this.http.get(this.baseUrl+"/vehicles/getvehicle/"+vehicleId);
-  // }
-
-  // updateVehicle(data){
-  //   return this.http.post(this.baseUrl+"/vehicles/updateVehicle",data);
-  // }
-
-  // loadAssignedVehiclesById(vehicleId){
-  //   return this.http.get(this.baseUrl+"/vehicles/getAssignVehicle/"+vehicleId);
-  // }
-
-  // loadEmployee(){
-  //   return this.http.get(this.baseUrl+"/employees");
-  // }
-
-  // loadProjectType(){
-  //   return this.http.get(this.baseUrl+"/project/projecttypes");
-  // }
-
-  // loadProjects(projectTypeId){
-  //   return this.http.get(this.baseUrl+"/project/"+projectTypeId);
-  // }
+    
 
 
-  downloadFile(data, filename='data', columns) {
+    let optData = {
+      head: [head],
+      body: bodyData,
+      startY: 45,
+      didDrawPage: function(data) {
+
+        // Header
+       // doc.setFontSize(15);
+        // doc.setTextColor(40);
+        // doc.setFontStyle('normal');
+        // if (base64Img) {
+        //   doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
+        // }
+        doc.addImage(logo, 'PNG', data.settings.margin.left+70, 5, 40, 30);
+
+
+        // doc.text(logo, data.settings.margin.left + 80, 8);
+        // doc.text(organizationName, data.settings.margin.left + 80, 8);
+
+
+        // doc.addImage(logo, 'PNG', 15, 40, 200, 114);
+
+        doc.setFontSize(15);
+        doc.setTextColor(80);
+        doc.setFontStyle('normal');
+        // if (base64Img) {
+        //   doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
+        // }
+        doc.text(reportTitle, data.settings.margin.left + 80, 40);
+
+
+        
+        doc.setFontSize(7);
+        doc.setTextColor(80);
+        doc.setFontStyle('normal');
+        doc.text(todayDateTime, data.settings.margin.left + 160, 6)
+
+        // Footer
+        var str = "Page " + doc.internal.getNumberOfPages()
+        // Total page number plugin only available in jspdf v1.0+
+        if (typeof doc.putTotalPages === 'function') {
+          str = str + " of " + totalPagesExp;
+        }
+        doc.setFontSize(10);
+
+        // jsPDF 1.4+ uses getWidth, <1.4 uses .width
+        var pageSize = doc.internal.pageSize;
+        var pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+        doc.text(str, data.settings.margin.left, pageHeight - 10);
+      }
+
+    };
+
+ 
+
+  doc.autoTable(optData)
+
+  doc.save(reportFileName);
+
+
+
+  }
+
+downloadFile(data, filename='data', columns) {
       let csvData = this.ConvertToCSV(data, columns);
       let blob = new Blob(['\ufeff' + csvData], { type: 'text/csv;charset=utf-8;' });
       let dwldLink = document.createElement("a");
@@ -174,9 +184,9 @@ export class ReportsService {
       document.body.appendChild(dwldLink);
       dwldLink.click();
       document.body.removeChild(dwldLink);
-  }
+}
 
-  ConvertToCSV(objArray, headerList) {
+ConvertToCSV(objArray, headerList) {
       let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
       let str = '';
       let row = 'S.No,';
@@ -196,6 +206,28 @@ export class ReportsService {
           str += line + '\r\n';
       }
       return str;
+}
+
+  public loadOrganization(){
+    this.loadOrganizationData().subscribe((d)=>{
+      console.log(d);
+       this.organizationData = d["data"];
+      // console.log(this.organization);
+    },(error)=>{
+
+    });
   }
+
+  todayDateTime(){
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+    return dateTime;
+
+  }
+
+
+
   
 }

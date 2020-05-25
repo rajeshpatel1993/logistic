@@ -144,11 +144,9 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   }
   exportToPdfService(){
 
-    const doc = new jsPDF()
-    doc.autoTable({ html: '#my-table' });
+    let reportTitle = "Service Report";
     let bodyData = [];
     let tmpArr = [];
-
     let columns = ['vehiclename', 'vehiclecode', 'drivername', 'location','status','servicetype','lastperformeddate','lastservicecost'];
 
 
@@ -182,17 +180,8 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
-    let optData = {
-      head: [columns],
-      body: bodyData,
-    };
+    this.reportService.downloadPdfFile(reportTitle, "service_report.pdf",columns,bodyData);
 
-
-  //  console.log(optData);
-
-    doc.autoTable(optData)
-
-    doc.save('service.pdf');
   }
   exportToExcelService(){
     this.jsonData = [];

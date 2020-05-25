@@ -9,6 +9,8 @@ import { AssignVehicleReportsComponent } from './assign-vehicle-reports/assign-v
 import { ServiceReportComponent } from './service-report/service-report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
 import { FuelReportComponent } from './fuel-report/fuel-report.component';
+import { IssueReportComponent } from './issue-report/issue-report.component';
+import { ContactReportComponent } from './contact-report/contact-report.component';
 
 const routes: Routes = [{
   path: '',
@@ -41,6 +43,14 @@ const routes: Routes = [{
       {
         path: 'fuel',
         component: FuelReportComponent
+      },
+      {
+        path: 'issue',
+        component: IssueReportComponent
+      },
+      {
+        path: 'contact',
+        component: ContactReportComponent
       }
 
   ],

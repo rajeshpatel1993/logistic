@@ -144,8 +144,7 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   }
   exportToPdfExpense(){
 
-    const doc = new jsPDF()
-    doc.autoTable({ html: '#my-table' });
+    let reportTitle = "Expense Report";
     let bodyData = [];
     let tmpArr = [];
 
@@ -188,17 +187,8 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
 
 
 
-    let optData = {
-      head: [columns],
-      body: bodyData,
-    };
+    this.reportService.downloadPdfFile(reportTitle, "expense_report.pdf",columns,bodyData);
 
-
-  //  console.log(optData);
-
-    doc.autoTable(optData)
-
-    doc.save('expense.pdf');
 
   }
 
