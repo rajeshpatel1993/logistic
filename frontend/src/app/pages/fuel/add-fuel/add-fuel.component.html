@@ -105,7 +105,10 @@
               class="star">*</span></label>
           <div class="col-lg-8 col-xl-9">
             <div class="row no-gutters">
-              <div class="col-12 col-md-6 col-lg-8 pr-3">
+
+              <input type="text" id="timest" class="form-control" placeholder="Enter Timestamp" value="{{today | date:'dd-MM-yyyy hh:mm:ss a':'+0400'}}"
+              readonly />
+              <!-- <div class="col-12 col-md-6 col-lg-8 pr-3">
                 <div class="input-group">
                   <input class="form-control" id="expiration" nbInput formControlName="expiration_date"
                     [nbDatepicker]="expiration" readonly>
@@ -114,7 +117,7 @@
                     <span class="input-group-text"><img src="assets/images/organization.png" alt="" width="16"></span>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <!-- <div class="col-12 col-md-6 col-lg-4">
                 <div class="ngx-timepicker-field-example">
                   <div class="input-group">
@@ -126,6 +129,8 @@
                   </div>
                 </div>
               </div> -->
+
+
             </div>
           </div>
         </div>

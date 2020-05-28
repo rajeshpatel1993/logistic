@@ -1,0 +1,14 @@
+FROM node:12-alpine
+
+
+WORKDIR /home/node/app/logistic-backend/
+
+COPY package*.json ./
+
+
+COPY . .
+
+
+EXPOSE 8083
+RUN npm install
+ENTRYPOINT node reminder.js	

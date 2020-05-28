@@ -1,8 +1,17 @@
-<div class="container" *ngIf="!loading">
+<div class="container addemppopup" *ngIf="!loading">
     <div class="add-employee-style">
+
         <div class="row">
-            <div class="col-md-12 header-style">
+            <div class="col-md-6 header-style">
                 Create Employee
+            </div>
+
+            <div class="col-md-5">
+
+                <button class="closebtn" nbButton outline status="danger" shape="rectangle" size="small" (click)="cancelEmployee()">Cancel</button>
+
+                <!-- <button class="closebutton" nbButton status="success" closable (close)="onClose()" >Close</button> -->
+
             </div>
         </div>
 
