@@ -54,6 +54,7 @@ export class AddFuelComponent implements OnInit {
   public imgSrc: any = [];
   public msgObj ={};
   public dialogBox : boolean = false;
+  today = Date.now();
 
   constructor(private router: Router, private dialogService: NbDialogService,private fb: FormBuilder, private vehicleService : VehicleService, public vehicleservService : VehicleservService, private fuelService: FuelService) { }
 

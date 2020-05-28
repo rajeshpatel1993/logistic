@@ -78,6 +78,12 @@ export class AddNewEmployeeComponent implements OnInit {
     });
   }
 
+
+cancelEmployee() {
+    this.dialogRef.close();
+}
+
+
   uploadFile(event, fileObj) {
     //this.uploadService.upload(event.target.files[0], 'testdoc');
     if(event.target.files[0].type != "application/pdf" && event.target.files[0].type != "application/msword" && event.target.files[0].type != "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {

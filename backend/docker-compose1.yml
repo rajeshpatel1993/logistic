@@ -1,0 +1,13 @@
+#docker file for logistic Backend
+version: "2"
+services:
+  node_reminder:
+    restart: always
+    mem_limit: 200m
+    build:
+      dockerfile: dockerfile1
+      context: .
+
+    environment:
+      - NODE_ENV=prod
+

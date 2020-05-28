@@ -141,7 +141,7 @@ async function getReminderData(noofday){
 
 function runCronJob(emails,template,interv,subject,veh){
     // let emails = ["rajesh.patelp3034@gmail.com","raazpatel03@gmail.com"];
-    cron.schedule(`*/${interv} * * * *`, () => {
+    cron.schedule(`*0 */${interv} * * *`, () => {
         sendEmailSendGrid(emails,subject,template)
     });
 

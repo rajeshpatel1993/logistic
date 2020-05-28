@@ -20,6 +20,17 @@
     color: lightseagreen;
 }
 
+.closebtn{
+    float: right;
+    margin: 10px;
+}
+.addemppopup{
+    position: relative;
+    top: 70px;
+}
+.closebutton{
+    float: right;
+}
 .body-style {
     margin: 5px;
     width: 100%;
