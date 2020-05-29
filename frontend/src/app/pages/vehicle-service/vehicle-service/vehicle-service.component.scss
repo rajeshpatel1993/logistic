@@ -8,16 +8,24 @@
         margin-top: 12px;
     }
     .table{
+        margin: 0;
         th{
             font-size: 0.8rem;
         }
        
         th,td{
-            padding: 1rem 0.75rem;
+            padding: 1rem 0.5rem;
             white-space: normal;
-            width: 250px;
+            width: 170px;
             &:last-child{
                 width: 90px;
+            }
+            
+            &:nth-of-type(2),&:nth-of-type(3),&:nth-of-type(5),&:nth-of-type(7){
+                width: 100px;
+            }
+            &:nth-of-type(6){
+                width: 60px;
             }
         }
         tbody{

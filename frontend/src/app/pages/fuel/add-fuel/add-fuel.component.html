@@ -3,9 +3,9 @@
     <div class="row">
       <div class="col-6">
         <div class="form-group row">
-          <label for="vehicleTypef" class="col-lg-4 col-xl-3 col-form-label">Vehicle Type<span
+          <label for="vehicleTypef" class="col-lg-4 col-form-label">Vehicle Type<span
               class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleTypesData" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEventD($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
@@ -19,19 +19,18 @@
               </ng-template>
 
 
-            <div class="errormsg"
-              *ngIf="submitted && f.vehicleTypef.errors">
-              Vehicle Type is required
-            </div>
+              <div class="errormsg" *ngIf="submitted && f.vehicleTypef.errors">
+                Vehicle Type is required
+              </div>
 
             </div>
             <!-- <input type="hidden" id="vehicletypeformcontrol" class="form-control" formControlName="vehicleTypef"> -->
           </div>
         </div>
         <div class="form-group row">
-          <label for="vehiclename" class="col-lg-4 col-xl-3 col-form-label">Vehicle Name<span
+          <label for="vehiclename" class="col-lg-4 col-form-label">Vehicle Name<span
               class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleNamesData" [itemTemplate]="itemTemplate1" formControlName="vehiclename"
                 [notFoundTemplate]="notFoundTemplate1" (selected)='selectEventVeh($event)' [searchKeyword]="keyword"
@@ -44,40 +43,39 @@
                 <div [innerHTML]="notFound"></div>
               </ng-template>
 
-            <div class="errormsg"
-              *ngIf="submitted && f.vehiclename.errors">
-              Vehicle Name is required
-            </div>
+              <div class="errormsg" *ngIf="submitted && f.vehiclename.errors">
+                Vehicle Name is required
+              </div>
 
             </div>
           </div>
         </div>
         <div class="form-group row">
-          <label for="vehicledetails" class="col-lg-4 col-xl-3 col-form-label">Vehicle Details<span
+          <label for="vehicledetails" class="col-lg-4 col-form-label">Vehicle Details<span
               class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
             <input type="text" [value]="vehicleDetail" placeholder="Vehicle Detail" class="form-control" readonly />
           </div>
         </div>
         <div class="form-group row">
-          <label for="vehiclereg" class="col-lg-4 col-xl-3 col-form-label">Vehicle Reg/Serial No<span
+          <label for="vehiclereg" class="col-lg-4 col-form-label">Vehicle Reg/Serial No<span
               class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
             <input type="text" id="vehiclereg" class="form-control" placeholder="Vehicle Reg No" [value]="vehicleRegNo"
               readonly>
           </div>
         </div>
         <div class="form-group row">
-          <label for="vehiclecode" class="col-lg-4 col-xl-3 col-form-label">Vehicle Code<span
+          <label for="vehiclecode" class="col-lg-4 col-form-label">Vehicle Code<span
               class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
             <input type="text" id="vehiclecode" class="form-control" placeholder="Vehicle Code" [value]="vehicleCode"
               readonly>
           </div>
         </div>
         <div class="form-group row">
-          <label for="drivern" p class="col-lg-4 col-xl-3 col-form-label">Driver Name<span class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="drivern" p class="col-lg-4 col-form-label">Driver Name<span class="star">*</span></label>
+          <div class="col-lg-8">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="employeeLists" [searchKeyword]="keyword" (selected)='selectEmployee($event)'
                 placeHolder="Enter the Driver" formControlName="drivername" [itemTemplate]="itemTemplate1"
@@ -92,22 +90,20 @@
                 <div [innerHTML]="notFound"></div>
               </ng-template>
 
-              <div class="errormsg"
-              *ngIf="submitted && f.drivername.errors">
-              Driver Name is required
-            </div>
+              <div class="errormsg" *ngIf="submitted && f.drivername.errors">
+                Driver Name is required
+              </div>
 
             </div>
           </div>
         </div>
         <div class="form-group row">
-          <label for="expiration" class="col-lg-4 col-xl-3 col-form-label">Date<span
-              class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="expiration" class="col-lg-4 col-form-label">Date<span class="star">*</span></label>
+          <div class="col-lg-8">
             <div class="row no-gutters">
 
-              <input type="text" id="timest" class="form-control" placeholder="Enter Timestamp" value="{{today | date:'dd-MM-yyyy hh:mm:ss a':'+0400'}}"
-              readonly />
+              <input type="text" id="timest" class="form-control" placeholder="Enter Timestamp"
+                value="{{today | date:'dd-MM-yyyy hh:mm:ss a':'+0400'}}" readonly />
               <!-- <div class="col-12 col-md-6 col-lg-8 pr-3">
                 <div class="input-group">
                   <input class="form-control" id="expiration" nbInput formControlName="expiration_date"
@@ -136,8 +132,8 @@
         </div>
 
         <div class="form-group row">
-          <label for="drivern" p class="col-lg-4 col-xl-3 col-form-label">Fuel Type<span class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="drivern" p class="col-lg-4 col-form-label">Fuel Type<span class="star">*</span></label>
+          <div class="col-lg-8">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="fuelTypesData" [searchKeyword]="keyword" (selected)='selectFuelType($event)'
                 placeHolder="Enter the Fuel Type" formControlName="fuelType" [itemTemplate]="itemTemplateFuelType"
@@ -152,98 +148,100 @@
                 <div [innerHTML]="notFound"></div>
               </ng-template>
 
-              <div class="errormsg"
-              *ngIf="submitted && f.fuelType.errors">
-              Fuel Type is required
-            </div>
-              
+              <div class="errormsg" *ngIf="submitted && f.fuelType.errors">
+                Fuel Type is required
+              </div>
+
             </div>
           </div>
         </div>
 
 
         <div class="form-group row">
-          <label for="modeaym" p class="col-lg-4 col-xl-3 col-form-label">Mode of Payment<span
+          <label for="modeaym" p class="col-lg-4 col-form-label">Mode of Payment<span
               class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
 
 
 
-            <select formControlName="modeofpayment" class="form-control" (change)="onChangeEvent($event)" [value]="'5d31705ece00403b7c9ee959'">
-              <option *ngFor="let mp of paymentModes" [value]="mp._id" [selected]="mp._id === '5d31705ece00403b7c9ee959'">{{mp.fuelEntryMode}}</option>
+            <select formControlName="modeofpayment" class="form-control" (change)="onChangeEvent($event)"
+              [value]="'5d31705ece00403b7c9ee959'">
+              <option *ngFor="let mp of paymentModes" [value]="mp._id"
+                [selected]="mp._id === '5d31705ece00403b7c9ee959'">{{mp.fuelEntryMode}}</option>
             </select>
 
-            <div class="errormsg"
-            *ngIf="submitted && f.modeofpayment.errors">
-            Mode of payment is required
-          </div>
+            <div class="errormsg" *ngIf="submitted && f.modeofpayment.errors">
+              Mode of payment is required
+            </div>
 
           </div>
         </div>
         <div class="form-group row" *ngIf="showCardOption">
-          <label for="card" class="col-lg-4 col-xl-3 col-form-label">Card No<span class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="card" class="col-lg-4 col-form-label">Card No<span class="star">*</span></label>
+          <div class="col-lg-8">
             <input type="number" id="card" class="form-control" placeholder="Enter Card Number" formControlName="cardno"
               [readonly]="!showCardOption" />
           </div>
         </div>
         <div class="form-group row" *ngIf="showCouponOption">
-          <label for="couponf" class="col-lg-4 col-xl-3 col-form-label">Coupon From<span class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="couponf" class="col-lg-4 col-form-label">Coupon From<span class="star">*</span></label>
+          <div class="col-lg-8">
             <input type="text" id="couponf" class="form-control" placeholder="Enter Coupon From"
               formControlName="couponfrom" [readonly]="!showCouponOption" />
           </div>
         </div>
         <div class="form-group row" *ngIf="showCouponOption">
-          <label for="coupont" class="col-lg-4 col-xl-3 col-form-label">Coupon to<span class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="coupont" class="col-lg-4 col-form-label">Coupon to<span class="star">*</span></label>
+          <div class="col-lg-8">
             <input type="text" id="coupont" class="form-control" placeholder="Enter Coupon To"
-              formControlName="couponto" [readonly]="!showCouponOption" (focusout)="CalculateCouponValue($event)"/>
+              formControlName="couponto" [readonly]="!showCouponOption" (focusout)="CalculateCouponValue($event)" />
           </div>
         </div>
-        
+
 
 
       </div>
       <div class="col-6">
-        
+
         <div class="form-group row">
-          <div *ngIf="showCouponOption">
-          <label for="couponv" p class="col-lg-4 col-xl-3 col-form-label">Coupon value<span
-              class="star">*</span></label>
-          <div class="col-lg-8 col-xl-9">
-            <input type="number" id="coponv" class="form-control" placeholder="Enter Coupon Value"
-              formControlName="couponvalue" (focusout)="CalculateCouponValue($event)" >
+          <div class="col-12" *ngIf="showCouponOption">
+            <div class="form-group row">
+              <label for="couponv" p class="col-lg-4 col-form-label">Coupon value<span
+                  class="star">*</span></label>
+              <div class="col-lg-8">
+                <input type="number" id="coponv" class="form-control" placeholder="Enter Coupon Value"
+                  formControlName="couponvalue" (focusout)="CalculateCouponValue($event)">
+              </div>
+            </div>
           </div>
-        </div>
           <div class="col-12 mt-3">
             <div class="form-group row">
-              <label for="amounts" class="col-lg-4 col-xl-3 col-form-label">Amount<span class="star">*</span></label>
-              <div class="col-lg-8 col-xl-9">
+              <label for="amounts" class="col-lg-4 col-form-label">Amount<span class="star">*</span></label>
+              <div class="col-lg-8">
                 <input type="number" id="amounts" class="form-control" placeholder="Enter Amount"
                   formControlName="amount" [ngClass]="{ 'is-invalid': submitted && f.amount.errors }">
-                  <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
-                    <div *ngIf="f.amount.errors.required">Fuel Amount is required</div>
-                  </div>
+                <div *ngIf="submitted && f.amount.errors" class="invalid-feedback">
+                  <div *ngIf="f.amount.errors.required">Fuel Amount is required</div>
+                </div>
               </div>
             </div>
             <div class="form-group row">
-              <label for="odometers" class="col-lg-4 col-xl-3 col-form-label">Odometer</label>
-              <div class="col-lg-8 col-xl-9">
+              <label for="odometers" class="col-lg-4 col-form-label">Odometer</label>
+              <div class="col-lg-8">
                 <input type="number" id="odometers" class="form-control" placeholder="Enter Odometer"
                   formControlName="odometer">
               </div>
             </div>
             <!-- <div class="form-group row">
-              <label for="types" class="col-lg-4 col-xl-3 col-form-label">Fuel Type<span class="star">*</span></label>
-              <div class="col-lg-8 col-xl-9">
+              <label for="types" class="col-lg-4 col-form-label">Fuel Type<span class="star">*</span></label>
+              <div class="col-lg-8">
                 <input type="text" id="types" class="form-control" placeholder="Enter Fuel Type"
                   formControlName="type" />
               </div>
             </div> -->
             <div class="form-group row mb-0">
-              <label for="price" class="col-lg-4 col-xl-3 col-form-label">Price</label>
-              <div class="col-lg-8 col-xl-9">
+              <label for="price" class="col-lg-4 col-form-label">Price</label>
+              <div class="col-lg-8">
                 <input type="text" id="price" class="form-control" placeholder="Enter Price"
                   formControlName="priceunit" />
               </div>
@@ -251,26 +249,26 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="units" class="col-lg-4 col-xl-3 col-form-label">Unit</label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="units" class="col-lg-4 col-form-label">Unit</label>
+          <div class="col-lg-8">
             <input type="text" id="units" class="form-control" placeholder="" formControlName="unit" />
           </div>
         </div>
         <div class="form-group row">
-          <label for="vendern" class="col-lg-4 col-xl-3 col-form-label">Vendor Name</label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="vendern" class="col-lg-4 col-form-label">Vendor Name</label>
+          <div class="col-lg-8">
             <input type="text" id="vendern" class="form-control" placeholder="Enter Vender Name"
               formControlName="vendorname" />
           </div>
         </div>
-        
+
 
         <div class="form-group row">
           <input type="hidden" id="bill_file_unique_id" class="form-control" formControlName="bill_file_unique_id">
 
-          <label for="attachdoc" class="col-lg-4 col-xl-3 col-form-label">Attach Documents(Bill)<span
+          <label for="attachdoc" class="col-lg-4 col-form-label">Attach Documents(Bill)<span
               class="star"></span></label>
-          <div class="col-lg-8 col-xl-9">
+          <div class="col-lg-8">
             <input type="file" id="attachdoc" #attachdoc multiple (change)="fileAdded($event)">
             <button (click)="uploadBills()" class="btn btn-primary float-right">Upload</button>
           </div>
@@ -278,8 +276,8 @@
 
 
         <!-- <div class="form-group row">
-          <label for="attachimg" class="col-lg-4 col-xl-3 col-form-label">Attach Image</label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="attachimg" class="col-lg-4 col-form-label">Attach Image</label>
+          <div class="col-lg-8">
             <input type="hidden" id="image_file_unique_id" class="form-control" formControlName="image_file_unique_id">
 
             <div class="row no-gutters">
@@ -302,8 +300,8 @@
           </div>
         </div> -->
         <div class="form-group row">
-          <label for="comments" class="col-lg-4 col-xl-3 col-form-label">Comments</label>
-          <div class="col-lg-8 col-xl-9">
+          <label for="comments" class="col-lg-4 col-form-label">Comments</label>
+          <div class="col-lg-8">
             <textarea id="comments" style="height: 100px;" class="form-control" placeholder="Enter Comments"
               formControlName="comment"></textarea>
           </div>
