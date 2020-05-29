@@ -1,7 +1,11 @@
 .spinner-card-body {
     padding: 1rem;
+    
 }
 
 ::ng-deep .nb-theme-corporate .nb-spinner-container{
     padding: 2rem;
+}
+.cdk-overlay-container {
+    z-index: 99999;
 }
