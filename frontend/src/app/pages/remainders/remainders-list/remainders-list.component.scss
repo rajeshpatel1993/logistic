@@ -36,7 +36,14 @@
         }
         th,td{
             padding: 1rem 0.75rem;
-            white-space: nowrap;
+            white-space: normal;
+            word-break: normal;
+            &:nth-of-type(5){
+                width: 50px;
+            }
+            &:nth-of-type(4){
+                width: 100px;
+            }
         }
         tbody{
             background-color: #fff;

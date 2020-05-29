@@ -1,11 +1,12 @@
 
 .Fuel{
     .table{
+        margin: 0;
         th{
             font-size: 0.8rem;
         }
         th,td{
-            padding: 1rem 0.75rem;
+            padding: 1rem 0.5rem;
             white-space: normal;
             width: 250px;
             &:last-child{
