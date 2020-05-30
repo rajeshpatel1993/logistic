@@ -11,7 +11,8 @@ const dev = {
         pwd: process.env.PASS,
         cron_to_email: process.env.CRON_TO_MAIL,
         send_grid_key: process.env.SEND_GRID_API_KEY,
-        send_grid_verified_sender : process.env.SEND_GRID_VERIFIED_SENDER
+        send_grid_verified_sender : process.env.SEND_GRID_VERIFIED_SENDER,
+        pagination_size: process.env.PAGINATION_SIZE
     },
     db: {
         mongo_uri: process.env.MONGO_URI,
@@ -36,7 +37,9 @@ const prod = {
         pwd: process.env.PASS,
         cron_to_email: process.env.CRON_TO_MAIL,
         send_grid_key: process.env.SEND_GRID_API_KEY,
-        send_grid_verified_sender : process.env.SEND_GRID_VERIFIED_SENDER
+        send_grid_verified_sender : process.env.SEND_GRID_VERIFIED_SENDER,
+        pagination_size: process.env.PAGINATION_SIZE
+
 
 
 

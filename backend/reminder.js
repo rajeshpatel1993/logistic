@@ -60,19 +60,30 @@ async function getReminderData(noofday){
             let templates = reminderData[i].template;
             let subject = reminderData[i].subject;
             let veh = reminderData[i].vehicle;
+            let expData = reminderData[i].expirationDate;
+            let expTime = reminderData[i].expirationTime;
+            let dt = moment(expTime, ["h:mm A"]).format("HH:mm:ss");
 
+            // console.log(expTime);
+            let getDateFromExpData =  moment(expData).format('YYYY-MM-DD');
+            let concatenatedDateTime = getDateFromExpData + ' ' + dt;
+            let finalRemDate = new Date(concatenatedDateTime);
+            let currdateandtime = new Date();
+            console.log(finalRemDate);
+            console.log(currdateandtime);
             
-            switch(reminderType) {
-                case "Insurance":
-                // sendEmail("rks@gmail.com")
-                runCronJob(toEmails,templates,reminderInterval,subject,veh);
-                  break;
-                case "Road Tax":
-                    runCronJob(toEmails,templates,reminderInterval,subject,veh);
-                    break;
-                default:
-                  // code block
-              }
+            
+            // switch(reminderType) {
+            //     case "Insurance":
+            //     // sendEmail("rks@gmail.com")
+            //     runCronJob(toEmails,templates,reminderInterval,subject,veh);
+            //       break;
+            //     case "Road Tax":
+            //         runCronJob(toEmails,templates,reminderInterval,subject,veh);
+            //         break;
+            //     default:
+            //       // code block
+            //   }
             // console.log(reminderData)
         }
 

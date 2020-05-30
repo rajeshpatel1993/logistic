@@ -8,6 +8,10 @@ const {File} = require("../models/files");
 const {ExpenseType} = require("../models/expenseType");
 const {VehicleIssueStatus} = require("../models/vehicleIssueStatus");
 const {Expense} = require("../models/expense");
+
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
+
 const paginate = require('jw-paginate');
 
 router.get("/types", async(req,res)=>{
@@ -192,7 +196,7 @@ router.get("/expensetypebyexpenseid/:expenseId", async (req, res) => {
 
 
 router.get("/vehicle_expenses",async(req,res) => {
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
     try {
@@ -224,7 +228,7 @@ function getLastMonths(n) {
 
 
 router.get("/vehicle_expenses_by_vehicle",async(req,res) => {
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
     let noofitems;

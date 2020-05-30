@@ -8,7 +8,8 @@ const {Issue} = require("../models/issue");
 
 const paginate = require('jw-paginate');
 
-
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
 
 router.get("/getPriorityStatus", async(req,res)=>{
     try{
@@ -100,7 +101,7 @@ router.post("/add", async (req, res)=> {
 
 
     router.get("/",async(req,res) => {
-        const resPerPage = 2; // results per page
+        const resPerPage = paginationSize; // results per page
         const page = parseInt(req.query.page) || 1; // Page 
         const skipd = (resPerPage * page) - resPerPage;
     

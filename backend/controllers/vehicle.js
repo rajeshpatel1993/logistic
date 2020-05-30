@@ -22,7 +22,8 @@ const {WorkLocation} = require("../models/workLocation");
 const { upload } = require("../utils/upload_file_to_s3");
 const { uploadSingleFile } = require("../utils/upload_file_to_s3");
 const { ProjectType } = require("../models/projectType");
-
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
 const multer = require('multer');
 
 const paginate = require('jw-paginate');
@@ -569,7 +570,7 @@ router.get("/filtervehicle", async(req,res)=>{
     if(vehicleReg){
         matchCondition.push({regNo : vehicleReg});
     }
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
     let nooitems ;
@@ -937,7 +938,7 @@ router.get("/listVehicles", async(req,res)=>{
 
 
 router.get("/assign_vehicles",async(req,res) => {
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
     const modifiedData = [];
@@ -991,7 +992,7 @@ router.get("/assign_vehicles",async(req,res) => {
 
 
 router.get("/",async(req,res) => {
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
 
