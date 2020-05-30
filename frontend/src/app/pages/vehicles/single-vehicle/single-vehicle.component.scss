@@ -1,7 +1,7 @@
 .VehicleDetail{
     width: 100%;
     float: left;
-    padding: 1rem 0.75rem;
+    padding: 0;
     &_image{
         width: 80px;
         float: left;
@@ -17,7 +17,9 @@
         }
         .vehicleStatus{
             ul{
+                margin: 0;
                 li{
+                    font-size: 13px;
                     padding: 2px 0;
                 }
             }

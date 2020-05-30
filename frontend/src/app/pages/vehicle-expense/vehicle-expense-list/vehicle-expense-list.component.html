@@ -102,7 +102,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of vehiclesList">
-                <td class="p-0">
+                <td>
 
                   <ngx-single-vehicle [vehicleId]="item.vehicle._id">
 
@@ -131,10 +131,11 @@
                 <td>
                   {{item.issue_status. vehicleIssueStatus}}
                 </td>
-
+                <td>
                 <button class="btn btn-default p-0" (click)="deleteVehicleExpense(item._id)">
                   <i class="fas fa-trash-alt text-danger"></i></button> | <button class="btn btn-default p-0"
                   (click)="editVehicleExpense(item._id)"><i class="fas fa-edit text-primary"></i></button>
+                </td>
               </tr>
 
             </tbody>
