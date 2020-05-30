@@ -389,8 +389,8 @@ a:focus {
 }
 
 .popupImage {
-  width: 500px;
-  min-width: 420px;
+  width: 350px;
+  min-width: 220px;
 
   img {
     width: 100%;
@@ -408,7 +408,7 @@ a:focus {
   }
 
   &.driverPopup {
-    width: 500px;
+    width: 350px;
     float: left;
 
     nb-card-body {
@@ -419,7 +419,7 @@ a:focus {
 }
 
 .vehiclepopupImage {
-  width: 800px;
+  width: 500px;
   height: auto;
   float: left;
   margin: 0;
