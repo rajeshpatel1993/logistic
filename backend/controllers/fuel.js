@@ -8,6 +8,9 @@ const {FuelEntry} =  require("../models/fuelEntry");
 const {Remainder} = require("../models/remainder");
 const {FuelType} = require("../models/fuelType");
 
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
+
 const paginate = require('jw-paginate');
 
 router.get("/paymentmodes", async(req,res)=>{
@@ -113,7 +116,7 @@ router.post("/add", async (req, res)=> {
 
 
     router.get("/",async(req,res) => {
-        const resPerPage = 2; // results per page
+        const resPerPage = paginationSize; // results per page
         const page = parseInt(req.query.page) || 1; // Page 
         const skipd = (resPerPage * page) - resPerPage;
     

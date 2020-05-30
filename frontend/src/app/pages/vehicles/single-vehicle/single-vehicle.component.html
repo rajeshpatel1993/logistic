@@ -20,19 +20,19 @@
   <div class="vehicleStatus">
     
     <ul>
-      <li class="text-info" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'Working'"><i
+      <li class="text-info" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'Working'"><i
           class="fas fa-wrench"></i> {{vehicleData.vehicleStatuss[0].vehicleStatus}}</li>
-      <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'Active'"><i
+      <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'Active'"><i
           class="fas fa-check-circle"></i> Active</li>
-      <li class="text-warning" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'In-Service'"><img
+      <li class="text-warning" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'In-Service'"><img
           src="assets/images/repair.png" alt=""> In-Service</li>
-      <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'Complaint'"><i
+      <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'Complaint'"><i
           class="fas fa-file-signature"></i> Complaint</li>
-      <li class="text-danger" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'Accident'"><i
+      <li class="text-danger" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'Accident'"><i
           class="fas fa-car-crash"></i> Accident</li>
-      <li class="text-danger" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'Not-Working'"><i
+      <li class="text-danger" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'Not-Working'"><i
           class="fas fa-times-circle"></i> Not Working</li>
-      <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0].vehicleStatus == 'In-Active'"><i
+      <li class="text-success" *ngIf="vehicleData.vehicleStatuss[0]?.vehicleStatus == 'In-Active'"><i
           class="fas fa-check-circle"></i> In Active</li>
 
       <li>&nbsp;{{vehicleData.vehicleTypes[0].vehicleType}} - {{vehicleData.vehicleDetailsArray[0].vehicleDetails}}</li>

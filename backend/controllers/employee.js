@@ -5,6 +5,9 @@ const paginate = require('jw-paginate');
 
 const {Employee} = require("../models/employee");
 
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
+
 
 router.get("/", async(req,res)=>{
     try{
@@ -22,7 +25,7 @@ router.get("/", async(req,res)=>{
 
 
 router.get("/emp_list", async(req,res)=>{
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
 

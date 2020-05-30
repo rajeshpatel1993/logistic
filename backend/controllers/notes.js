@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const {Notes} =  require("../models/notes");
 const paginate = require('jw-paginate');
 
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
+
 router.get("/paymentmodes", async(req,res)=>{
     try{
         let paymentModeData = await fuelEntryMode.find();
@@ -66,7 +69,7 @@ router.post("/add", async (req, res)=> {
 
 
     router.get("/",async(req,res) => {
-        const resPerPage = 2; // results per page
+        const resPerPage = paginationSize; // results per page
         const page = parseInt(req.query.page) || 1; // Page 
         const skipd = (resPerPage * page) - resPerPage;
     

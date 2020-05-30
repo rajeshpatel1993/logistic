@@ -5,6 +5,11 @@ const mongoose = require('mongoose');
 const {File} = require("../models/files");
 const {ServiceType} = require("../models/serviceType");
 const {ServiceTask} = require("../models/serviceTask");
+
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
+
+
 const paginate = require('jw-paginate');
 
 router.get("/types", async(req,res)=>{
@@ -137,7 +142,7 @@ router.post("/add", async (req, res)=> {
 
 
 router.get("/vehicle_services",async(req,res) => {
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
 

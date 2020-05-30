@@ -27,6 +27,9 @@ const {FuelEntry} =  require("../models/fuelEntry");
 const {Issue} = require("../models/issue");
 const {Employee} = require("../models/employee");
 
+const config = require("../config/config");
+const paginationSize = parseInt(config['app'].pagination_size);
+
 const multer = require('multer');
 
 const paginate = require('jw-paginate');
@@ -50,7 +53,7 @@ router.get("/filtervehicle", async(req,res)=>{
     if(vehicleReg){
         matchCondition.push({regNo : vehicleReg});
     }
-    const resPerPage = 2; // results per page
+    const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
     let nooitems ;
