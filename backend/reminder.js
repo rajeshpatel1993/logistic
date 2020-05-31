@@ -47,7 +47,7 @@ async function getReminderData(noofday){
     // {"insuranceValid":{$lt:noofdaysback}}
     try{
      let reminderData = await Remainder.find({$and: [{"expirationDate":{$gte: todayIso}}, {"isDeleted":0}]}).populate("remainderType");
-    // console.log(reminderData);
+     console.log(reminderData);
 
     for(let i = 0; i < reminderData.length; i++){
         if(reminderData[i].remindert == 1){
@@ -61,10 +61,12 @@ async function getReminderData(noofday){
             let subject = reminderData[i].subject;
             let veh = reminderData[i].vehicle;
             let expData = reminderData[i].expirationDate;
+            console.log(expData);
+
             let expTime = reminderData[i].expirationTime;
             let dt = moment(expTime, ["h:mm A"]).format("HH:mm:ss");
 
-            // console.log(expTime);
+             console.log(veh);
             let getDateFromExpData =  moment(expData).format('YYYY-MM-DD');
             let concatenatedDateTime = getDateFromExpData + ' ' + dt;
             let finalRemDate = new Date(concatenatedDateTime);
@@ -72,7 +74,8 @@ async function getReminderData(noofday){
             console.log(finalRemDate);
             console.log(currdateandtime);
             
-            
+            runCronJob(toEmails,templates,reminderInterval,subject,veh);
+
             // switch(reminderType) {
             //     case "Insurance":
             //     // sendEmail("rks@gmail.com")
@@ -152,8 +155,15 @@ async function getReminderData(noofday){
 
 function runCronJob(emails,template,interv,subject,veh){
     // let emails = ["rajesh.patelp3034@gmail.com","raazpatel03@gmail.com"];
-    cron.schedule(`*0 */${interv} * * *`, () => {
-        sendEmailSendGrid(emails,subject,template)
+    cron.schedule(`*/1 * * * *`, () => {
+        try{
+
+            sendEmailSendGrid(emails,subject,template)
+
+        }catch(error){
+            console.log(error);
+        }
+        
     });
 
   
@@ -180,11 +190,12 @@ function runCronJob(emails,template,interv,subject,veh){
 //    }
 // }
 
-function getVehicleData(vehId){
+// function getVehicleData(vehId){
 
-}
+// }
 
-function sendEmailSendGrid(emails, subject,template){
+async function sendEmailSendGrid(emails, subject,template){
+    console.log(emails);
     sgMail.setApiKey(sendGridApiKey);
     const msg = {
     to: emails,
@@ -192,7 +203,12 @@ function sendEmailSendGrid(emails, subject,template){
     subject: subject,
     html: template,
     };
-    sgMail.send(msg).then((result)=>console.log(result)).catch(error => console.log(error.response.body));
+    try{
+        let result = await sgMail.send(msg);
+    }catch(error){
+        console.log(error);
+    }
+    //then((result)=>console.log(result)).catch(error => console.log(error.response.body));
 
 }
 getReminderData();

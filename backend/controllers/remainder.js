@@ -51,7 +51,9 @@ router.post("/add", async (req, res)=> {
         if(remainderImage.length > 0){
           imgUrl = vehicleImage[0].s3Urls[0];
         }
-
+        
+        let email_lists_arr = email_lists.split(",");
+        console.log(email_lists_arr);
         let servType = null;
         if(typeof service_type == "object"){
             servType = service_type.id;
@@ -59,7 +61,7 @@ router.post("/add", async (req, res)=> {
        
 
         let savedata = {remainderType:category, remainderName: remainder_name, subject : subject , expirationDate: expiration_date, expirationTime : expiration_time , 
-            remainderInterval : interval, emailList : email_lists, ownerEmail : owner,
+            remainderInterval : interval, emailList : email_lists_arr, ownerEmail : owner,
             template: template, notes : notes , enabledisable : enable, afterexpiration: alert_after_expiration,
             fileId:attach_file_unique_id, remindert: reminderType, vehicleTypef:vehicleTypef.id, vehicle:vehicle.id,
             imageUrl:imgUrl,  service_type:servType
@@ -71,7 +73,7 @@ router.post("/add", async (req, res)=> {
         const remainder_instance = new Remainder(savedata);
         let sData = await remainder_instance.save();
         // console.log(sData);
-        res.status(200).send(sData);
+         res.status(200).send(sData);
         // res.status(200).json(req.body);
     }catch(err){
         // res.status(400).send(err);

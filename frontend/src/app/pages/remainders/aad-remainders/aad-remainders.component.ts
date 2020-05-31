@@ -18,6 +18,7 @@ export class AadRemaindersComponent implements OnInit {
 
   public remidnerType = [];
   keyword = 'name';
+  submitted = false;
   public remainderTypeData: any = [];
   form: FormGroup;
   public vehicleNamesData:any[] = [];
@@ -34,13 +35,9 @@ export class AadRemaindersComponent implements OnInit {
   public vehicleTypesData = [];
   public showServiceTypeData = 1;
   public serviceTypesData:any[] = [];
-
   showServiceType:boolean = false;
-
-
-
-  
-
+  group = {};
+  reminderIntervals = [];
 
   public remainderTypeDropDown = [{"name":"single","val":2},{"name":"common", "val":1}];
 
@@ -104,19 +101,21 @@ export class AadRemaindersComponent implements OnInit {
 
   onChangeEvent(evt){
 
-    this.showFormFields = 1;
+    this.group = {};
+
     this.reminderTypeVal = evt.target.value;
-
-    
-    this.createForm();
-
-  
-   
     if(this.reminderTypeVal == 2){
       this.showExtraField = 1;
+      this.group["vehicleTypef"] =  ['', Validators.required] ;
+      this.group["vehicle"] = ['', Validators.required] ;
+      this.group["service_type"] = [''];
+
     }else{
       this.showExtraField = 0;
     }
+
+    this.showFormFields = 1;
+    this.createForm(this.group);
 
   }
 
@@ -137,29 +136,19 @@ export class AadRemaindersComponent implements OnInit {
 
 
   onChangeReminderCategory(evt){
-
     let remType = evt.target.value;
     if(remType == "5eae5e8755bd1858e0f72f16"){
-
       this.showServiceType = true;
+      this.reminderForm.get('service_type').setValidators([Validators.required]);
       this.loadServiceType();
+      this.reminderForm.get('service_type').updateValueAndValidity();
     }else{
       this.showServiceType = false;
+      this.reminderForm.get('service_type').clearValidators();
+      this.reminderForm.get('service_type').updateValueAndValidity();
+
     }
-    // console.log(remType);
 
-
-    // this.showFormFields = 1;
-    // this.reminderTypeVal = evt.target.value;
-    // this.createForm();
-
-  
-   
-    // if(this.reminderTypeVal == 2){
-    //   this.showExtraField = 1;
-    // }else{
-    //   this.showExtraField = 0;
-    // }
 
   }
 
@@ -167,8 +156,9 @@ export class AadRemaindersComponent implements OnInit {
 
   ngOnInit() {
 
-    this.loadTypes();
+    // this.reminderIntervals = Array(5).fill().map((x,i)=>i); // [0,1,2,3,4]
 
+    this.loadTypes();
     this.loadVehiclesTypes();
 
   }
@@ -180,10 +170,6 @@ export class AadRemaindersComponent implements OnInit {
   selectEventD(item) {
     this.vehicleDetailsData = [];
     this.selectVehicleType(item);
-
-
-
-    // console.log(this.vehicleCode);
   }
 
 
@@ -206,8 +192,6 @@ export class AadRemaindersComponent implements OnInit {
   }
  
 
-  
-
 
   onChange(event) {
     //console.log('changed');
@@ -217,8 +201,8 @@ export class AadRemaindersComponent implements OnInit {
 
 
 
-  createForm() {
-    let group = {
+  createForm(group) {
+    let group1 = {
       reminderType:[this.reminderTypeVal],
       category: ['', Validators.required],
       remainder_name: ['', Validators.required],
@@ -229,18 +213,16 @@ export class AadRemaindersComponent implements OnInit {
       owner: ['', Validators.required],
       template: ['', Validators.required],
       expiration_time: ['', Validators.required],
-      notes: ['', Validators.required],
+      notes: [''],
       enable: ['', Validators.required],
       alert_after_expiration: [''],
-      attach_file_unique_id: [this.attachFileUniqueId],
-      vehicleTypef : [''],
-      vehicle: [''],
-      service_type:['']
+      attach_file_unique_id: [this.attachFileUniqueId]
 
     };
 
- 
-    this.reminderForm = this.fb.group(group);
+    let fObject = {...group, ...group1};
+    console.log(fObject);
+    this.reminderForm = this.fb.group(fObject);
   }
 
   get f() { return this.reminderForm.controls; }
@@ -258,10 +240,12 @@ export class AadRemaindersComponent implements OnInit {
   uploadBills() { }
 
 
-  addRemainder() {
-
+  onSubmit() {
+    this.submitted = true;
     if (this.reminderForm.invalid) {
-      alert("Please fill all required field");
+      this.msgObj["type"] = "error";
+      this.msgObj["message"] = "Please Fill All required fields and Submit again";
+      this.dialogBox = true;
       return;
     }
 
