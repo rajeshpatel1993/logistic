@@ -10,7 +10,7 @@
     </div>
   </div>
   <div *ngIf="showFormFields == 1">
-    <form [formGroup]="reminderForm" novalidate>
+    <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()">
 
       <div class="showvehicleField" *ngIf="showExtraField == 1">
         <div class="form-group row">
@@ -29,6 +29,14 @@
               <ng-template #notFoundTemplate let-notFound>
                 <div [innerHTML]="notFound"></div>
               </ng-template>
+
+
+              <div class="errormsg"
+              *ngIf="submitted && f.vehicleTypef.errors">
+              Vehicle Type is required
+             </div>
+
+
             </div>
 
           </div>
@@ -52,6 +60,12 @@
               <ng-template #notFoundTemplate2 let-notFound>
                 <div [innerHTML]="notFound"></div>
               </ng-template>
+
+              <div class="errormsg"
+              *ngIf="submitted && f.vehicle.errors">
+              Vehicle Name is required
+             </div>
+
             </div>
           </div>
         </div>
@@ -92,6 +106,12 @@
             <ng-template #notFoundTemplate3 let-notFound>
               <div [innerHTML]="notFound"></div>
             </ng-template>
+
+            <div class="errormsg"
+            *ngIf="submitted && f.service_type.errors">
+             Service Type is required
+           </div>
+
           </div>
         </div>
       </div>
@@ -102,13 +122,24 @@
         <label for="name" class="col-sm-3 col-form-label">Remainder Name<span class="star">*</span></label>
         <div class="col-sm-9">
           <input type="text" id="name" class="form-control" formControlName="remainder_name"
-            placeholder="Remainder Name">
+            placeholder="Remainder Name" [ngClass]="{ 'is-invalid': submitted && f.remainder_name.errors }">
+
+            <div *ngIf="submitted && f.remainder_name.errors" class="invalid-feedback">
+              <div *ngIf="f.remainder_name.errors.required">  Reminder Name is  required</div>
+            </div>
+
+
         </div>
       </div>
       <div class="form-group row">
         <label for="esubject" class="col-sm-3 col-form-label"> Subject<span class="star">*</span></label>
         <div class="col-sm-9">
-          <input type="text" id="esubject" class="form-control" formControlName="subject" placeholder=" Subject">
+          <input type="text" id="esubject" class="form-control" formControlName="subject" placeholder=" Subject" [ngClass]="{ 'is-invalid': submitted && f.subject.errors }">
+
+          <div *ngIf="submitted && f.subject.errors" class="invalid-feedback">
+            <div *ngIf="f.subject.errors.required">  Subject is  required</div>
+          </div>
+
         </div>
       </div>
       <div class="form-group row">
@@ -123,6 +154,12 @@
                 <div class="input-group-append">
                   <span class="input-group-text"><img src="assets/images/organization.png" alt=""></span>
                 </div>
+
+                <div *ngIf="submitted && f.expiration_date.errors" class="invalid-feedback">
+                  <div *ngIf="f.expiration_date.errors.required">  Expiration Date is  required</div>
+                </div>
+
+
               </div>
             </div>
             <div class="col-12 col-md-6 col-lg-4">
@@ -133,6 +170,12 @@
                   <div class="input-group-append">
                     <span class="input-group-text"><img src="assets/images/time-and-date.png" alt=""></span>
                   </div>
+
+                  <div *ngIf="submitted && f.expiration_time.errors" class="invalid-feedback">
+                    <div *ngIf="f.expiration_time.errors.required">  Expiration Time is  required</div>
+                  </div>
+
+                  
                 </div>
               </div>
             </div>
@@ -144,17 +187,27 @@
             class="star">*</span></label>
         <div class="col-sm-9">
           <select class="form-control" id="remainderinterval" formControlName="interval">
-            <option value="0">Select Interval</option>
-            <option value="6">6 hour</option>
-            <option value="12">12 hour</option>
+            <option value="si">Select Interval</option>
+            <option [value]="i" *ngFor="let item of [].constructor(24); let i = index">{{i}} hour</option>
+            <!-- <option value="12">12 hour</option> -->
 
           </select>
+
+          <div *ngIf="submitted && f.interval.errors" class="invalid-feedback">
+            <div *ngIf="f.interval.errors.required">  Interval is  required</div>
+          </div>
+
         </div>
       </div>
       <div class="form-group row">
         <label for="owner" class="col-sm-3 col-form-label">Email lists<span class="star">*</span></label>
         <div class="col-sm-9">
-          <input type="text" id="emaillists" class="form-control" formControlName="email_lists">
+          <input type="text" id="emaillists" class="form-control" placeholder="Email Lists" formControlName="email_lists" [ngClass]="{ 'is-invalid': submitted && f.email_lists.errors }">
+
+
+          <div *ngIf="submitted && f.email_lists.errors" class="invalid-feedback">
+            <div *ngIf="f.email_lists.errors.required">  Email Lists is  required</div>
+          </div>
 
           <input type="hidden" id="remainderTypef" class="form-control" formControlName="reminderType">
 
@@ -164,7 +217,12 @@
       <div class="form-group row">
         <label for="alert" class="col-sm-3 col-form-label"> Owner Email</label>
         <div class="col-sm-9">
-          <input type="text" id="alert" class="form-control" formControlName="owner">
+          <input type="text" id="alert" class="form-control" placeholder="Owner Email Lists" formControlName="owner" [ngClass]="{ 'is-invalid': submitted && f.owner.errors }">
+
+          <div *ngIf="submitted && f.owner.errors" class="invalid-feedback">
+            <div *ngIf="f.owner.errors.required">  Owner Emails is  required</div>
+          </div>
+
         </div>
       </div>
       <div class="form-group row">
@@ -206,7 +264,7 @@
 
       <div class="form-group row">
         <div class="col-12">
-          <button (click)="addRemainder()" class="btn btn-primary float-right">Add Remainder</button>
+          <button type="submit" class="btn btn-primary float-right">Add Remainder</button>
         </div>
       </div>
 

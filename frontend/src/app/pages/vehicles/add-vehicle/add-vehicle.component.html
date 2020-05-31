@@ -390,12 +390,6 @@
                 <input type="text" id="insurancepolicy" class="form-control" placeholder="Insurance Policy No"
                   formControlName="insurance_policy_no"  [ngClass]="{ 'is-invalid': submitted && f.insurance_policy_no.errors }">
 
-
-                <!-- <div class="errormsg"
-                  *ngIf="f.insurance_policy_no.invalid && (f.insurance_policy_no.dirty || f.insurance_policy_no.touched)">
-                  Insurance Policy No is required
-                </div> -->
-
                 <div *ngIf="submitted && f.insurance_policy_no.errors" class="invalid-feedback">
                   <div *ngIf="f.insurance_policy_no.errors.required">  Insurance Policy No is  required</div>
                 </div>
