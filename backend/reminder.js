@@ -46,7 +46,7 @@ async function getReminderData(noofday){
     noofdaysback =  moment().add(noofday, 'days').startOf('day').toISOString();
     // {"insuranceValid":{$lt:noofdaysback}}
     try{
-     let reminderData = await Remainder.find({$and: [{"expirationDate":{$gte: todayIso}}, {"isDeleted":0}]}).populate("remainderType");
+     let reminderData = await Remainder.find({$and: [{"expirationDate":{$lt: todayIso}}, {"isDeleted":0}]}).populate("remainderType");
      console.log(reminderData);
 
     for(let i = 0; i < reminderData.length; i++){
@@ -155,7 +155,19 @@ async function getReminderData(noofday){
 
 function runCronJob(emails,template,interv,subject,veh){
     // let emails = ["rajesh.patelp3034@gmail.com","raazpatel03@gmail.com"];
-    cron.schedule(`*/1 * * * *`, () => {
+    let cronjobtiming ;
+    switch(interv) {
+        case 1 :
+            cronjobtiming = `0 * * * *`;
+            break;
+        case 0 :
+            cronjobtiming = `0 0 * * *`;
+            break;
+        default:
+            cronjobtiming = `0 */${interv} * * *`;
+            break;
+    }
+    cron.schedule(cronjobtiming, () => {
         try{
 
             sendEmailSendGrid(emails,subject,template)
