@@ -1,0 +1,4 @@
+[0;36mMongoose:[0m vehicle.createIndex({ name: [33m1[39m }, { unique: [33mtrue[39m, background: [33mtrue[39m })
+[0;36mMongoose:[0m remainders.find({ [32m'$and'[39m: [ { expirationDate: { [32m'$lt'[39m: [32m'2020-06-01T18:30:00.000Z'[39m } }, { isDeleted: [33m0[39m } ]}, { projection: {} })
+connected to Mongodb..
+[]
