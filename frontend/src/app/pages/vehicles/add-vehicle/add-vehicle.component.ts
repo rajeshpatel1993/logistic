@@ -203,7 +203,7 @@ export class AddVehicleComponent implements OnInit {
         tmpObj["name"] = item.brand;
         this.brandsList.push(tmpObj);
       });
-      // console.log(vehicleTypeData);
+       console.log(this.brandsList);
     });
 
   }
@@ -434,7 +434,7 @@ selectEventD(item) {
     this.loadLastVehicleCode(item.id, item.code);
     this.showallfields = true;
     this.vehicleDetailsData = [];
-
+    this.brandsList = [];
     this.selectedVehicleType = item;
     this.loadBrandsData(item.id);
     this.loadVehicleDetails(item.id);

@@ -6,3 +6,4 @@ backend/temp/
 frontend/package-lock.json
 backend/logs/cron.
 frontend/package-lock.json
+run_reminder.sh
