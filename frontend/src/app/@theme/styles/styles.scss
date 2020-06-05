@@ -1146,3 +1146,15 @@ nb-layout {
   //   background-color: rgba($color: #000000, $alpha: 0.8)
   // }
 }
+
+.nb-theme-default nb-layout ::-webkit-scrollbar {
+  
+  width: 12px;
+}
+.nb-theme-default nb-layout ::-webkit-scrollbar-thumb {
+  background: #89898b;
+}
+
+.nb-theme-default nb-layout ::-webkit-scrollbar-track{
+  background-color: #DADADA;
+}
