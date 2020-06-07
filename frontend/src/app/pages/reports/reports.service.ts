@@ -91,8 +91,10 @@ export class ReportsService {
 
   downloadPdfFile(reportTitle, reportFileName, head, bodyData, myTableHtml?){
 
-    const doc = new jsPDF()
-    doc.autoTable({ html: '#my-table' });
+    const doc = new jsPDF('p','mm', 'a2')
+    doc.autoTable({ 
+      html: '#my-table',
+    });
     let totalPagesExp = doc.internal.getNumberOfPages();
     //console.log(this.organizationData);
     let logo = this.organizationData.logobase64;
@@ -106,9 +108,12 @@ export class ReportsService {
     let optData = {
       head: [head],
       body: bodyData,
+      margin: {
+        top: 200,
+    },
       startY: 45,
       didDrawPage: function(data) {
-
+      
         // Header
        // doc.setFontSize(15);
         // doc.setTextColor(40);
@@ -116,7 +121,7 @@ export class ReportsService {
         // if (base64Img) {
         //   doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
         // }
-        doc.addImage(logo, 'PNG', data.settings.margin.left+70, 5, 40, 30);
+        doc.addImage(logo, 'PNG', data.settings.margin.left+150, 5, 0, 0);
 
 
         // doc.text(logo, data.settings.margin.left + 80, 8);
@@ -125,20 +130,20 @@ export class ReportsService {
 
         // doc.addImage(logo, 'PNG', 15, 40, 200, 114);
 
-        doc.setFontSize(15);
-        doc.setTextColor(80);
+        doc.setFontSize(16);
+        doc.setTextColor('#C2CC7F');
         doc.setFontStyle('normal');
         // if (base64Img) {
         //   doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
         // }
-        doc.text(reportTitle, data.settings.margin.left + 80, 40);
-
+        doc.text(reportTitle, data.settings.margin.left+0, 25, 0, 0,'left');
+        
 
         
-        doc.setFontSize(7);
+        doc.setFontSize(14);
         doc.setTextColor(80);
         doc.setFontStyle('normal');
-        doc.text(todayDateTime, data.settings.margin.left + 160, 6)
+        doc.text(todayDateTime, doc.internal.pageSize.width, 25, null, null, 'right',)
 
         // Footer
         var str = "Page " + doc.internal.getNumberOfPages()
@@ -146,7 +151,7 @@ export class ReportsService {
         if (typeof doc.putTotalPages === 'function') {
           str = str + " of " + totalPagesExp;
         }
-        doc.setFontSize(10);
+        doc.setFontSize(8);
 
         // jsPDF 1.4+ uses getWidth, <1.4 uses .width
         var pageSize = doc.internal.pageSize;
