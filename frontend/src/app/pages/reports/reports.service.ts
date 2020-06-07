@@ -102,9 +102,6 @@ export class ReportsService {
     let organizationName = this.organizationData.organizationName;
     let todayDateTime = this.todayDateTime();
 
-  
-    
-
 
     let optData = {
       head: [head],
