@@ -90,64 +90,67 @@ export class ReportsService {
   }
 
   downloadPdfFile(reportTitle, reportFileName, head, bodyData, myTableHtml?){
+    const applicationName = "Application Name";
+    const companyName = "Company Name";
+    const address = "Address";
+    const reportName = "Vehicle Report";
 
     const doc = new jsPDF('p','mm', 'a2')
     doc.autoTable({ 
       html: '#my-table',
     });
     let totalPagesExp = doc.internal.getNumberOfPages();
-    //console.log(this.organizationData);
     let logo = this.organizationData.logobase64;
-    console.log(logo);
-    //let base64img = this.getBase64Image(this.organizationData.organizationLogo);
-    // console.log(base64img);
     let organizationName = this.organizationData.organizationName;
     let todayDateTime = this.todayDateTime();
-
 
     let optData = {
       head: [head],
       body: bodyData,
       margin: {
         top: 200,
-    },
+      },
       startY: 45,
-      didDrawPage: function(data) {
-      
-        // Header
-       // doc.setFontSize(15);
-        // doc.setTextColor(40);
-        // doc.setFontStyle('normal');
-        // if (base64Img) {
-        //   doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
+
+      willDrawCell: function (data) {
+        let rows = data.row;
+        // console.log(rows);
+        if(rows.section == "head"){
+          doc.setFillColor(110,214,84);
+        }
+        // console.log(data);
+        // Colspan
+        // doc.setFontStyle('bold');
+        // doc.setFontSize(10);
+        // if ($(row.raw[0]).hasClass("innerHeader")) {
+        //     doc.setTextColor(200, 0, 0);
+        //     doc.setFillColor(110,214,84);
+        //     doc.rect(data.settings.margin.left, row.y, data.table.width, 20, 'F');
+        //     doc.autoTableText("", data.settings.margin.left + data.table.width / 2, row.y + row.height / 2, {
+        //         halign: 'center',
+        //         valign: 'middle'
+        //     });
+        //    /*  data.cursor.y += 20; */
+        // };
+
+        // if (row.index % 5 === 0) {
+        //     var posY = row.y + row.height * 6 + data.settings.margin.bottom;
+        //     if (posY > doc.internal.pageSize.height) {
+        //         data.addPage();
+        //     }
         // }
+    },
+      didDrawPage: function(data) {
         doc.addImage(logo, 'PNG', data.settings.margin.left+150, 5, 0, 0);
-
-
-        // doc.text(logo, data.settings.margin.left + 80, 8);
-        // doc.text(organizationName, data.settings.margin.left + 80, 8);
-
-
-        // doc.addImage(logo, 'PNG', 15, 40, 200, 114);
-
         doc.setFontSize(16);
         doc.setTextColor('#C2CC7F');
         doc.setFontStyle('normal');
-        // if (base64Img) {
-        //   doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
-        // }
         doc.text(reportTitle, data.settings.margin.left+0, 25, 0, 0,'left');
-        
-
-        
         doc.setFontSize(14);
         doc.setTextColor(80);
         doc.setFontStyle('normal');
         doc.text(todayDateTime, doc.internal.pageSize.width, 25, null, null, 'right',)
-
-        // Footer
         var str = "Page " + doc.internal.getNumberOfPages()
-        // Total page number plugin only available in jspdf v1.0+
         if (typeof doc.putTotalPages === 'function') {
           str = str + " of " + totalPagesExp;
         }
@@ -160,8 +163,6 @@ export class ReportsService {
       }
 
     };
-
- 
 
   doc.autoTable(optData)
 
