@@ -7,7 +7,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 router.get("/", async(req,res)=>{
     try{
-        let organizationData = await Organization.findOne().select("organizationLogo  organizationName logobase64");
+        let organizationData = await Organization.findOne();
         let responseData = {};
         responseData["status"] = 200;
         responseData["data"] = organizationData;
