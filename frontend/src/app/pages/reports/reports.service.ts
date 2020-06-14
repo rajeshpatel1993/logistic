@@ -22,8 +22,10 @@ export class ReportsService {
   public organizationData;
 
   constructor(private http: HttpClient) {
-
+   
     this.loadOrganization();
+    
+  
 
   }
 
@@ -57,9 +59,10 @@ export class ReportsService {
 
   }
 
-  loadOrganizationData(){
+  loadOrganizationData(): Observable<any>{
     return this.http.get(this.baseUrl+"/organization/");
   }
+
 
 
   loadServiceTaskData(){
@@ -90,10 +93,11 @@ export class ReportsService {
   }
 
   downloadPdfFile(reportTitle, reportFileName, head, bodyData, myTableHtml?){
-    const applicationName = "Application Name";
-    const companyName = "Company Name";
-    const address = "Address";
-    const reportName = "Vehicle Report";
+    console.log(this.organizationData);
+    const applicationName = this.organizationData.applicationName;
+    const companyName = this.organizationData.organizationFullName;
+    const address = this.organizationData.organizationAddress;
+   
 
     const doc = new jsPDF('p','mm', 'a2')
     doc.autoTable({ 
@@ -118,34 +122,20 @@ export class ReportsService {
         if(rows.section == "head"){
           doc.setFillColor(110,214,84);
         }
-        // console.log(data);
-        // Colspan
-        // doc.setFontStyle('bold');
-        // doc.setFontSize(10);
-        // if ($(row.raw[0]).hasClass("innerHeader")) {
-        //     doc.setTextColor(200, 0, 0);
-        //     doc.setFillColor(110,214,84);
-        //     doc.rect(data.settings.margin.left, row.y, data.table.width, 20, 'F');
-        //     doc.autoTableText("", data.settings.margin.left + data.table.width / 2, row.y + row.height / 2, {
-        //         halign: 'center',
-        //         valign: 'middle'
-        //     });
-        //    /*  data.cursor.y += 20; */
-        // };
-
-        // if (row.index % 5 === 0) {
-        //     var posY = row.y + row.height * 6 + data.settings.margin.bottom;
-        //     if (posY > doc.internal.pageSize.height) {
-        //         data.addPage();
-        //     }
-        // }
     },
       didDrawPage: function(data) {
-        doc.addImage(logo, 'PNG', data.settings.margin.left+150, 5, 0, 0);
+        doc.addImage(logo, 'PNG', data.settings.margin.left+0, 5, 0, 0);
         doc.setFontSize(16);
         doc.setTextColor('#C2CC7F');
         doc.setFontStyle('normal');
-        doc.text(reportTitle, data.settings.margin.left+0, 25, 0, 0,'left');
+        doc.text(applicationName, data.settings.margin.left+150, 5, 0, 0,'left');
+        doc.text(companyName, data.settings.margin.left+150, 10, 0, 0,'left');
+        doc.text(address, data.settings.margin.left+150, 15, 0, 0,'left');
+
+        doc.setFontSize(16);
+        doc.setTextColor('#C2CC7F');
+        doc.setFontStyle('normal');
+        doc.text(reportTitle, data.settings.margin.left+150, 20, 0, 0,'left');
         doc.setFontSize(14);
         doc.setTextColor(80);
         doc.setFontStyle('normal');
@@ -211,15 +201,14 @@ ConvertToCSV(objArray, headerList) {
       return str;
 }
 
-  public loadOrganization(){
+public loadOrganization(){
     this.loadOrganizationData().subscribe((d)=>{
-      console.log(d);
        this.organizationData = d["data"];
       // console.log(this.organization);
     },(error)=>{
 
     });
-  }
+}
 
   todayDateTime(){
     let today = new Date();
