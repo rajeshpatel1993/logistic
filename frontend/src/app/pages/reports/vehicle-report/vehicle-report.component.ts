@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
+import {formatDate} from '@angular/common';
 
 import * as jsPDF from 'jspdf';
 
@@ -141,24 +142,49 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     let reportTitle = "Vehicle Report";
     let bodyData = [];
     let tmpArr = [];
-    let columns = ['Name', 'Driver', 'Location','Vehicle Type', 'Status', 'Reg No', 'Road Tax Due','Insurance Due','Project Name','Overall Expense','Recent Expense'];
-  
+    let columns = ['Vehicle', 'Driver', 'Location','Vehicle Type', 'Status', 'Reg No','Current Issue Date','Fuel Consumption', 'Road Tax Due','Insurance Due','Driver License Due','Project Name','Overall Expense','Recent Expense'];
+    console.log(this.vehiclesList);
     for(let i=0;i<this.vehiclesList.length;i++){
       
-  
+      
       tmpArr.push(this.vehiclesList[i].name);
 
       let  employeefirstname  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data) ? this.vehiclesList[i].assign_data.employee.firstName : 'Not Assigned';
-     
+      let currIssueDate;
+      let fuelConsumption;
+      let driverLicenseDue;
+
+      if(this.vehiclesList[i].issueData.length > 0){
+        currIssueDate = formatDate(this.vehiclesList[i].issueData[0].createdDate, 'mediumDate','en-US');
+      }else{
+        currIssueDate = "N.A.";
+      }
+
+      if(this.vehiclesList[i].fuelData.length > 0){
+        fuelConsumption = this.vehiclesList[i].fuelData[0].total;
+      }else{
+        fuelConsumption = "N.A.";
+      }
+
+
+      if(this.vehiclesList[i].assignMentStatus == 1){
+        driverLicenseDue = formatDate(this.vehiclesList[i].assign_data.driving_license_valid, 'mediumDate','en-US');
+      }else{
+        driverLicenseDue = "N.A.";
+      }
+
       tmpArr.push(employeefirstname);
       tmpArr.push(this.vehiclesList[i].workLocationArray[0].workLocation);
       tmpArr.push(this.vehiclesList[i].vehicleTypesArray[0].vehicleType);
       tmpArr.push(this.vehiclesList[i].vehicleStatusArray[0].vehicleStatus);
       tmpArr.push(this.vehiclesList[i].regNo);
-      let roadTaxValid = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? this.vehiclesList[i].roadTaxValid: 'N.A.';
+      tmpArr.push(currIssueDate);
+      tmpArr.push(fuelConsumption);
+      let roadTaxValid = this.vehiclesList[i].hasOwnProperty("roadTaxValid") ? formatDate(this.vehiclesList[i].roadTaxValid,"mediumDate","en-US"): 'N.A.';
       tmpArr.push(roadTaxValid);
-      let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? this.vehiclesList[i].insuranceValid: 'N.A.';
+      let insuranceDue = this.vehiclesList[i].hasOwnProperty("insuranceValid") ? formatDate(this.vehiclesList[i].insuranceValid,"mediumDate","en-US"): 'N.A.';
       tmpArr.push(insuranceDue);
+      tmpArr.push(driverLicenseDue);
 
       let  projectName  = (this.vehiclesList[i].hasOwnProperty("assign_data") && this.vehiclesList[i].assign_data )? this.vehiclesList[i].assign_data.projects.projectName : 'Not Assigned';
       tmpArr.push(projectName);
