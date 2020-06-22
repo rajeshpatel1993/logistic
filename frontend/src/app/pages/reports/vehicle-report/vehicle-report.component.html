@@ -93,7 +93,7 @@
           <th>Current issue date</th>
           <th>Fuel consumption </th>
           <th>Previous service date</th>
-          <th>Service due </th>
+          <!-- <th>Service due </th> -->
           <th>Road tax due </th>
           <th>Insurance due </th>
           <th>Driver License due </th>
@@ -173,10 +173,51 @@
           <td>
             {{item.regNo}}
           </td>
-          <td>Current issue date</td>
-          <td>.Fuel consumption </td>
-          <td>.Previous service date</td>
-          <td>Service due </td>
+          <td>
+
+          <ng-container
+            *ngIf="item.issueData.length > 0; then isIssueData; else noIssueData">
+          </ng-container>
+
+          <ng-template #isIssueData>
+            {{item.issueData[0].createdDate | date}}
+          </ng-template>
+          <ng-template #noIssueData>
+            N.A.
+          </ng-template>
+
+          </td>
+          <td>
+            
+            
+          <ng-container
+            *ngIf="item.fuelData.length > 0; then isFuelData; else noFuelData">
+          </ng-container>
+
+          <ng-template #isFuelData>
+            {{item.fuelData[0].total}}
+          </ng-template>
+          <ng-template #noFuelData>
+            N.A.
+          </ng-template>
+
+          
+          </td>
+          <td>
+
+            <ng-container
+              *ngIf="item.serviceData.length > 0; then isServiceData; else noServiceData">
+            </ng-container>
+
+            <ng-template #isServiceData>
+              {{item.serviceData[0].createdAt | date}}
+            </ng-template>
+            <ng-template #noServiceData>
+              N.A.
+            </ng-template>
+
+          </td>
+          <!-- <td>Service due </td> -->
           <td>
 
             <div [ngSwitch]="item.vehicle_typeId">
@@ -317,10 +358,67 @@
 
             </div>
           </td>
-          <td>Driver License due </td>
-          <td>{{item.assign_data?.projects.projectName}}</td>
-          <td>{{item.total_expense[0]?.total}} </td>
-          <td>{{item.last_expense[0]?.expense_type.expenseType}} </td>
+          <td>
+
+            <ng-container *ngIf="item.hasOwnProperty('assign_data')">
+              {{item.assign_data?.driving_license_valid | date}}
+            </ng-container>
+
+            <ng-container *ngIf="!item.assign_data">
+             N.A.
+            </ng-container>
+
+             </td>
+          <td>
+
+          <ng-container
+            *ngIf="item.assignMentStatus == 1; then isProjectData; else noProjectData">
+          </ng-container>
+
+          <ng-template #isProjectData>
+            {{item.assign_data?.projects.projectName}}
+          </ng-template>
+          <ng-template #noProjectData>
+            N.A.
+          </ng-template>
+
+            
+            <!-- {{item.assign_data?.projects.projectName}} -->
+          
+          </td>
+          <td>
+            
+          <ng-container
+            *ngIf="item.total_expense.length > 0; then isTotalExpenseData; else noTotalExpenseData">
+          </ng-container>
+
+          <ng-template #isTotalExpenseData>
+            {{item.total_expense[0]?.total}}
+          </ng-template>
+          <ng-template #noTotalExpenseData>
+            N.A.
+          </ng-template>
+
+            <!-- {{item.total_expense[0]?.total}}  -->
+          
+          </td>
+          <td>
+            
+          <ng-container
+            *ngIf="item.last_expense.length > 0; then isLastExpenseData; else noLastExpenseData">
+          </ng-container>
+
+          <ng-template #isLastExpenseData>
+            {{item.last_expense[0]?.expense_type.expenseType}}
+          </ng-template>
+          <ng-template #noLastExpenseData>
+            N.A.
+          </ng-template>
+
+
+            <!-- {{item.last_expense[0]?.expense_type.expenseType}}  -->
+          
+          </td>
         </tr>
 
       </tbody>

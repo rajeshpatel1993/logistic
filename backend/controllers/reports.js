@@ -710,10 +710,9 @@ router.get("/getReports",async(req,res) => {
                 ],
                 as: "vehicleDetailsArray"// output array field
             }
-        },{
-
-
-            
+        },
+        
+        {
                 $lookup: {
                     from: "vehicleType", // from collection name
                     let: { "vechTypeId": "$vehicle_typeId" },
@@ -748,6 +747,56 @@ router.get("/getReports",async(req,res) => {
                 as: "workLocationArray"
             }
         },
+        {
+            $lookup: {
+                from: "issues", // from collection name
+                let: { "vehId": "$_id" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$vehicle", "$$vehId"] }}},
+                    { "$project": { "createdDate": 1, "_id": 0 }},
+                    {$limit:1},
+                    {$sort: {"createdDate":-1}}
+                ],
+                as: "issueData"
+            }
+        },
+
+        {
+            $lookup: {
+                from: "fuelEntry", // from collection name
+                let: { "vehId": "$_id" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$vehicle", "$$vehId"] }}},
+                    {
+                        $group : {
+                            _id : null,
+                            total : {
+                                $sum : {"$toDouble": "$amount"} 
+                            }
+                        }
+                    }
+                ],
+                as: "fuelData"
+            }
+        },
+        {
+            $lookup: {
+                from: "servicetask", // from collection name
+                let: { "vehId": "$_id" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$vehicle", "$$vehId"] }}},
+                    { "$project": { "createdAt": 1, "_id": 0 }},
+                    {$limit:1},
+                    {$sort: {"createdAt":-1}}
+                ],
+                as: "serviceData"
+            }
+        },
+
+        // { '$unwind': { 'path': '$issueData', 'preserveNullAndEmptyArrays': true } },
+
+        // ,
+        // { $unwind : "$issueData" }
         // {
         //     $skip: skipd
         // },
