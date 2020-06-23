@@ -128,14 +128,14 @@ export class ReportsService {
         doc.setFontSize(16);
         doc.setTextColor('#C2CC7F');
         doc.setFontStyle('normal');
-        doc.text(applicationName, data.settings.margin.left+150, 5, 0, 0,'left');
-        doc.text(companyName, data.settings.margin.left+150, 10, 0, 0,'left');
-        doc.text(address, data.settings.margin.left+150, 15, 0, 0,'left');
+        doc.text(applicationName, 220, 10, 'center');
+        doc.text(companyName, 220,17, 'center');
+        doc.text(address, 220, 25, 'center');
 
         doc.setFontSize(16);
         doc.setTextColor('#C2CC7F');
         doc.setFontStyle('normal');
-        doc.text(reportTitle, data.settings.margin.left+150, 20, 0, 0,'left');
+        doc.text(reportTitle, 220, 32,'center');
         doc.setFontSize(14);
         doc.setTextColor(80);
         doc.setFontStyle('normal');
