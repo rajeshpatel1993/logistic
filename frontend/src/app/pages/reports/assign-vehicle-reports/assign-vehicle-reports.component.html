@@ -187,7 +187,7 @@
             {{item.assignmentStartDate | date}}
           </td>
           <td>{{ item.assignmentEndDate | date }}</td>
-          <td>duration </td>
+          <td>{{  calculateDuration(item.assignmentStartDate, item.assignmentEndDate) }}  days</td>
           <td>N.A. </td>
           <td>N.A. </td>
           <td>N.A. </td>

@@ -82,6 +82,18 @@ export class AssignVehicleReportsComponent implements OnInit, OnDestroy {
     });
   }
 
+  calculateDuration(startDate, endDate){
+
+    console.log(startDate);
+    let start = moment(startDate, "YYYY-MM-DD");
+    let end = endDate ? moment(endDate, "YYYY-MM-DD") : moment().startOf('day');
+    
+    console.log(start);
+    let noofdays = moment.duration(end.diff(start)).asDays();
+    return noofdays;
+
+  }
+
   public startDateVehicle ;
   public endDateVehicle ;
   public assignedVehicles = [];
