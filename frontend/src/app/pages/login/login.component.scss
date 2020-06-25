@@ -8,9 +8,12 @@
         font-size: 16px;
     }
     .btn-login{
-        background-color: #C2CC7F;
+        background-color: #00b76e;
         color: #fff;
         padding: 10px 20px;
+        &:hover{
+            background-color: #3d4140;
+        }
     }
     .form-control{
         height: 40px;
