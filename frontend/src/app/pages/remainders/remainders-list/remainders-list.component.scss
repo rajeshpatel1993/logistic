@@ -155,16 +155,7 @@
             height: 40px;
         }
     }
-    .btn-outline-primary{
-        &.custom{
-            border-color: #C2CC7F;
-            color: #C2CC7F;
-            &:hover{
-                background-color: #C2CC7F;
-                color: #fff;
-            }
-        }
-    }
+    
     .template{
         width: 120px;
         float: left;
