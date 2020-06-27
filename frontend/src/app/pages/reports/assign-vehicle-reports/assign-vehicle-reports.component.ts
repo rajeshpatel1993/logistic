@@ -83,12 +83,8 @@ export class AssignVehicleReportsComponent implements OnInit, OnDestroy {
   }
 
   calculateDuration(startDate, endDate){
-
-    console.log(startDate);
     let start = moment(startDate, "YYYY-MM-DD");
     let end = endDate ? moment(endDate, "YYYY-MM-DD") : moment().startOf('day');
-    
-    console.log(start);
     let noofdays = moment.duration(end.diff(start)).asDays();
     return noofdays;
 
@@ -154,27 +150,36 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
   exportToExcelAssignVehicle(){
     this.jsonData = [];
 
-    let columns = ['vehiclename', 'vehiclecode', 'currentdrivername','previousdrivername', 'driverlicenseno', 'driverlicensedue', 'location','status','astartdate','aenddate','duration','start_meter','end_meter','distance_in_Kms'];
+   // let columns = ['vehiclename', 'vehiclecode', 'currentdrivername','previousdrivername', 'driverlicenseno', 'driverlicensedue', 'location','status','astartdate','aenddate','duration','start_meter','end_meter','distance_in_Kms'];
+   let columns = ['vehiclename', 'regno','vehiclecode', 'currentdrivername','previousdrivername', 'driverlicenseno', 'driverlicensedue', 'location','status','astartdate','aenddate','duration'];
 
     for(let i=0;i<this.assignedVehicles.length;i++){
       
       let vehicleName = this.assignedVehicles[i].vehicle.name;
+      let regNo = this.assignedVehicles[i].vehicle.regNo;
       let vehiclecode = this.assignedVehicles[i].vehicle.vehicle_code;
       let currentDrivername = this.assignedVehicles[i].employee.firstName;
       let previousDrivername = this.assignedVehicles[i].previousDriver ? this.assignedVehicles[i].previousDriver.employee.firstName : 'N. A.';
       let driverLicenseNo = 'N. A.';
       let driverLicenseDue = this.assignedVehicles[i].driving_license_valid;
       let location = this.assignedVehicles[i].workLocations.workLocation;
-      let status = 'N.A.';
+      let stat = this.assignedVehicles[i].vehicleStatus;
+      let status;
+      if(stat){
+        status = this.assignedVehicles[i].vehicleStatus.vehicleStatus;
+      }else{
+         status = 'N.A.';
+      }
       let assignmentStartDate = this.assignedVehicles[i].assignmentStartDate;
       let assignmentEndDate = this.assignedVehicles[i].assignmentEndDate;
-      let duration = 'N.A.';
-      let startMeter = 'N.A.';
-      let endMeter = 'N.A.';
-      let distanceinkms = 'N.A.';
+      let duration = this.calculateDuration(assignmentStartDate,assignmentEndDate);
+      // let startMeter = 'N.A.';
+      // let endMeter = 'N.A.';
+      // let distanceinkms = 'N.A.';
 
       let tmpObj = {};
       tmpObj["vehiclename"] = vehicleName;
+      tmpObj["regno"] = regNo;
       tmpObj["vehiclecode"] = vehiclecode;
       tmpObj["currentdrivername"] = currentDrivername;
       tmpObj["previousdrivername"] = previousDrivername;
@@ -186,10 +191,10 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
       tmpObj["astartdate"] = assignmentStartDate;
       tmpObj["aenddate"] = assignmentEndDate;
       tmpObj["duration"] = duration;
-      tmpObj["start_meter"] = startMeter;
-      tmpObj["end_meter"] = endMeter;
+      // tmpObj["start_meter"] = startMeter;
+      // tmpObj["end_meter"] = endMeter;
 
-      tmpObj["distance_in_Kms"] = distanceinkms;
+      // tmpObj["distance_in_Kms"] = distanceinkms;
 
 
       this.jsonData.push(tmpObj);
@@ -208,35 +213,47 @@ invalidDates: moment.Moment[] = [moment().add(2, 'days'), moment().add(3, 'days'
     let bodyData = [];
     let tmpArr = [];
     
-    let columns = ['vehiclename', 'vehiclecode', 'currentdrivername', 'driverlicenseno', 'location','astartdate','aenddate','start_meter','end_meter'];
+   // let columns = ['vehiclename', 'vehiclecode', 'currentdrivername', 'driverlicenseno', 'location','astartdate','aenddate','start_meter','end_meter'];
+   let columns = ['vehiclename', 'vehiclecode','regno', 'currentdrivername', 'driverlicenseno', 'location','status','astartdate','aenddate','duration'];
+
 
 
     for(let i=0;i<this.assignedVehicles.length;i++){
       
       let vehicleName = this.assignedVehicles[i].vehicle.name;
+      let regNo = this.assignedVehicles[i].vehicle.regNo;
       let vehiclecode = this.assignedVehicles[i].vehicle.vehicle_code;
       let currentDrivername = this.assignedVehicles[i].employee.firstName;
       let previousDrivername = this.assignedVehicles[i].previousDriver ? this.assignedVehicles[i].previousDriver.employee.firstName : 'N. A.';
       let driverLicenseNo = 'N. A.';
       let driverLicenseDue = this.assignedVehicles[i].driving_license_valid;
       let location = this.assignedVehicles[i].workLocations.workLocation;
-      let status = 'N.A.';
+      let stat = this.assignedVehicles[i].vehicleStatus;
+      let status;
+      if(stat){
+        status = this.assignedVehicles[i].vehicleStatus.vehicleStatus;
+      }else{
+         status = 'N.A.';
+      }
       let assignmentStartDate = this.assignedVehicles[i].assignmentStartDate;
       let assignmentEndDate = this.assignedVehicles[i].assignmentEndDate;
-      let duration = 'N.A.';
-      let startMeter = 'N.A.';
-      let endMeter = 'N.A.';
-      let distanceinkms = 'N.A.';
+      let duration = this.calculateDuration(assignmentStartDate,assignmentEndDate);
+      // let startMeter = 'N.A.';
+      // let endMeter = 'N.A.';
+      // let distanceinkms = 'N.A.';
 
       tmpArr.push(vehicleName);
+      tmpArr.push(regNo);
       tmpArr.push(vehiclecode);
       tmpArr.push(currentDrivername);
       tmpArr.push(driverLicenseNo);
       tmpArr.push(location);
+      tmpArr.push(status);
       tmpArr.push(assignmentStartDate);
       tmpArr.push(assignmentEndDate);
-      tmpArr.push(startMeter);
-      tmpArr.push(endMeter);
+      tmpArr.push(duration);
+      // tmpArr.push(startMeter);
+      // tmpArr.push(endMeter);
 
       bodyData.push(tmpArr);
       tmpArr = [];

@@ -74,10 +74,10 @@
           </div>
           <div class="form-col my-1">
             <div class="ng-autocomplete">
-              <ng-autocomplete [data]="fuelType" [searchKeyword]="keyword"
-                placeHolder="Enter Fuel Type" (selected)='selectEvent($event, "fueltyp")'
+              <ng-autocomplete [data]="fuelTypesData" [searchKeyword]="keyword"
+                placeHolder="Enter Fuel Type" (selected)='selectEvent($event, "fueltype")'
                 (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="fuelType" [itemTemplate]="itemTemplate3"
+                historyIdentifier="fuelTypesData" [itemTemplate]="itemTemplate3"
                 [notFoundTemplate]="notFoundTemplate3">
               </ng-autocomplete>
 
@@ -114,7 +114,7 @@
           </div>
         </div>
       </form>
-      <nb-layout-column class="p-0" *ngIf="!showNoRecord">
+      <nb-layout-column class="p-0" *ngIf="!norecord">
         <div class="table-responsive">
           <table class="table table-hover mt-4">
             <thead>
@@ -170,7 +170,22 @@
                 <td>{{item.paymentModeData[0].fuelEntryMode}}</td>
                 <td>{{item.cardno}}</td>
                 <td>{{item.couponfrom}}</td>
-                <td>{{item.employeeData[0].firstName}}</td>
+                <td>
+
+                  <ng-container
+                  *ngIf="item.employeeData.length>0; then isEmpData; else noEmpData">
+                </ng-container>
+      
+                <ng-template #isEmpData>
+                  {{item.employeeData[0].firstName}}
+                </ng-template>
+                <ng-template #noEmpData>
+                  N.A.
+                </ng-template>
+
+                  
+                
+                </td>
                 <td>Work Location</td>
                 <td>
                   Project
@@ -230,13 +245,13 @@
      
     </nb-card-body>
 
-    <div class="row" *ngIf="showNoRecord">
+    <div class="row" *ngIf="norecord">
       <div class="col-12">
         <h5 class="text-center text-danger p-4"> No records Found</h5>
       </div>
     </div>
 
-
+ 
   </nb-card>
 </div>
 

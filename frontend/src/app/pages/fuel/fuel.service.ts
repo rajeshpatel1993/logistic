@@ -41,5 +41,10 @@ export class FuelService {
 
   }
 
+  loadFiltereddata(querystring:String, page){
+    return this.http.get(this.baseUrl+"/fuel/filterFuels"+querystring, page);
+  }
+
+
 
 }
