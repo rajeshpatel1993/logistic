@@ -82,7 +82,7 @@ label {
 }
 
 .btn-primary:hover {
-  background-color: #3d4140;
+  background-color: #90b9af!important;
 }
 
 nb-sidebar .scrollable {
@@ -90,8 +90,8 @@ nb-sidebar .scrollable {
 }
 
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle,.btn-primary {
-  background-color:  #00b76e;
-  border-color:  #00b76e;
+  background-color:  #00b76e !important;
+  border-color:  #00b76e !important;
 }
 .btn-outline-primary{
   &.custom{
