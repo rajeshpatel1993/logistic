@@ -156,6 +156,7 @@
           </td>
 
           <td>
+            <ng-container *ngIf="item.vehicleData[0].hasOwnProperty('assignedVehicleData')">
            <span *ngIf="(+item.amount) > (+item.vehicleData[0].assignedVehicleData.fuelLimit)">
             <i class="fa fa-gas-pump" style="color:red"></i>
             {{item.amount}}  ||  {{item.vehicleData[0].assignedVehicleData.fuelLimit}}
@@ -166,7 +167,11 @@
             {{item.amount}}  ||  {{item.vehicleData[0].assignedVehicleData.fuelLimit}}
            </span>
 
+            </ng-container>
 
+            <ng-container *ngIf="!item.vehicleData[0].hasOwnProperty('assignedVehicleData')">
+              <span>N.A.</span>
+            </ng-container>
          
 
 
