@@ -90,9 +90,9 @@
           <th>Assignment Start date</th>
           <th>Assignment End date </th>
           <th>Duration</th>
-          <th>Start meter </th>
+          <!-- <th>Start meter </th>
           <th>End meter</th>
-          <th>Distance in Kms </th>
+          <th>Distance in Kms </th> -->
         </tr>
       </thead>
       <tbody>
@@ -181,16 +181,29 @@
             {{item.workLocations.workLocation}}
           </td>
           <td>
+
+          <ng-container
+            *ngIf="item.vehicleStatus; then isVehStatusData; else noVehStatusData">
+          </ng-container>
+
+          <ng-template #isVehStatusData>
+            {{item.vehicleStatus.vehicleStatus}}
+          </ng-template>
+          <ng-template #noVehStatusData>
             N.A.
+          </ng-template>
+
+
+           
           </td>
           <td>
             {{item.assignmentStartDate | date}}
           </td>
           <td>{{ item.assignmentEndDate | date }}</td>
           <td>{{  calculateDuration(item.assignmentStartDate, item.assignmentEndDate) }}  days</td>
+          <!-- <td>N.A. </td>
           <td>N.A. </td>
-          <td>N.A. </td>
-          <td>N.A. </td>
+          <td>N.A. </td> -->
         </tr>
 
       </tbody>
