@@ -14,7 +14,7 @@ const routes: Routes = [
         component: ContactListComponent,
       },
       {
-        path:'view-contact',
+        path:'view-contact/:id',
         component: ViewContactComponent,
       }
     ]

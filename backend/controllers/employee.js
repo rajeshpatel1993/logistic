@@ -22,6 +22,18 @@ router.get("/", async(req,res)=>{
     }
 });
 
+router.get("/:empId", async (req, res) => {
+
+    const id = req.params.empId; //or use req.param('id')
+ 
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+    let empData = await Employee.findOne(filter);
+    let responseData = {};
+    responseData["status"] = 200;
+    responseData["data"] = empData;
+    res.status(200).json(responseData);
+    
+});
 
 
 router.get("/emp_list", async(req,res)=>{
