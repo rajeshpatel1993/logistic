@@ -204,7 +204,7 @@ export class ListComponent implements OnInit {
       }
       this.totalItems, this.pageOfItems = filterData.data; 
       this.pager = filterData.page;
-      console.log(this.norecord);
+     // console.log(this.norecord);
       // console.log(filterData);
     });
 

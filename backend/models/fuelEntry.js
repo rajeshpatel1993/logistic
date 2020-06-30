@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 const fuelSchema = new mongoose.Schema ({
     vehicle:{type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
+    vehicleForSearch: {type: Object, required: true},
     // expiration_date: {type: String, required: true},
     // expiration_time: {type: String, required: true},
     amount: {type: String, required: true},
-    odometer: {type: String, required: true},
+    odometer: {type: String},
     modeofpayment: {type: mongoose.Schema.Types.ObjectId, ref: 'fuelEntryMode'},
     fuelType: {type: mongoose.Schema.Types.ObjectId, ref: 'FuelType'},
     cardno: {type: String},
@@ -42,6 +43,8 @@ const fuelSchema = new mongoose.Schema ({
 
 
 });
+
+
 
 
 const FuelEntry = mongoose.model("FuelEntry", fuelSchema, 'fuelEntry');

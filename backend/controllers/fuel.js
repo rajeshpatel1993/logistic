@@ -7,7 +7,7 @@ const {fuelEntryMode} = require("../models/fuelEntryMode");
 const {FuelEntry} =  require("../models/fuelEntry");
 const {Remainder} = require("../models/remainder");
 const {FuelType} = require("../models/fuelType");
-
+const {Vehicle} = require("../models/vehicle");
 const config = require("../config/config");
 const paginationSize = parseInt(config['app'].pagination_size);
 
@@ -76,6 +76,9 @@ router.post("/add", async (req, res)=> {
             }
 
         let fuelBills = await File.find({fileId:bill_file_unique_id }).select("s3Urls");
+        let vehicleDat = await Vehicle.findOne({"_id":mongoose.Types.ObjectId(vehiclename.id)});
+        //console.log(vehicleDat);
+
     
         if(fuelBills.length > 0){
             billUrls = fuelBills[0].s3Urls;
@@ -83,6 +86,7 @@ router.post("/add", async (req, res)=> {
     
         let savedata = {vehicle:vehiclename.id , 
             // expiration_date : expiration_date, expiration_time : expiration_time,
+            vehicleForSearch: vehicleDat,
              amount : amount,
             odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
             couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
@@ -95,6 +99,7 @@ router.post("/add", async (req, res)=> {
         try{
             const fuel_instance = new FuelEntry(savedata);
             let sData = await fuel_instance.save();
+           // let sPopData = fuel_instance.populate('vehicle').execPopulate();
             res.status(200).send(sData);
             
         }catch(err){
@@ -104,8 +109,9 @@ router.post("/add", async (req, res)=> {
      
         // res.status(200).json(req.body);
     }catch(err){
-        res.status(400).send(err);
         // console.log(err);
+        res.status(400).send(err);
+        
     }
     
     
@@ -113,6 +119,125 @@ router.post("/add", async (req, res)=> {
 
     
     
+
+
+router.get("/filterFuels", async(req,res)=>{
+   
+    let matchCondition = [];
+    let vehicleType = req.query.vehicleType;
+    let vehicleDetail = req.query.vehicleDetail;
+    let vehicleReg = req.query.vehicleReg;
+    let fuelType = req.query.fuelType;
+    let driver = req.query.driverName;
+    let startDate = req.query.startDate;
+    let endDate = req.query.endDate;
+
+    if(vehicleType){
+        matchCondition.push({"vehicleForSearch.vehicle_typeId" : vehicleType });
+    }
+    if(vehicleDetail){
+        matchCondition.push({"vehicleForSearch.vehicleDetailsId": vehicleDetail});
+    }
+    if(vehicleReg){
+        matchCondition.push({"vehicleForSearch.regNo" : vehicleReg});
+    }
+
+    if(fuelType){
+        matchCondition.push({"fuelType" : mongoose.Types.ObjectId(fuelType)});
+    }
+
+    if(driver){
+        matchCondition.push({"driver" : mongoose.Types.ObjectId(driver)});
+    }
+
+    matchCondition.push({ "isDeleted":0});
+    const resPerPage = paginationSize; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+
+    try {
+       
+
+        const nooitemsAggregate = await FuelEntry.aggregate([
+            {$match: {$and: matchCondition}},
+            {$count : "noofitems"}
+        ]);
+
+        console.log(nooitemsAggregate);
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
+        const pager = paginate(nooitems, page,resPerPage);
+
+
+  
+
+    let fuelEntryData = await FuelEntry.aggregate([
+        
+        { $match: { $and: matchCondition } },
+       {
+        $lookup: {
+            from: "vehicle", // collection to join
+            let: { "vehicleId": "$vehicle" },
+            pipeline: [
+                { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
+                { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }}
+            ],
+            as: "vehicleData"// output array field
+        }
+    }
+        , 
+    {
+            $lookup: {
+                from: "fuelEntryMode", // collection to join
+                let: { "fuelEntryId": "$modeofpayment" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$fuelEntryId"] }}},
+                    { "$project": { "fuelEntryMode":1, "_id": 0 }}
+                ],
+                as: "paymentModeData"// output array field
+            }
+        },
+
+        {
+            $lookup: {
+                from: "employees", // collection to join
+                let: { "employeesId": "$driver" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$employeesId"] }}},
+                    { "$project": { "firstName":1,"empImage":1, "_id": 0 }}
+                ],
+                as: "employeeData"// output array field
+            }
+        },
+        
+        {
+            $skip: skipd
+        },
+        {
+            $limit:resPerPage
+        }
+       
+    
+    ]);
+
+    //console.log(fuelEntryData);
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = fuelEntryData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 
     router.get("/",async(req,res) => {

@@ -599,7 +599,7 @@ router.get("/getFuelHistory",async(req,res) => {
                       {
                         "$unwind": {
                             "path" : "$assignedVehicleData", 
-                            "preserveNullAndEmptyArrays" : false
+                            "preserveNullAndEmptyArrays" : true
 
                         }
 
@@ -862,11 +862,17 @@ router.get("/assign_vehicles",async(req,res) => {
             
              let ele = {};
             let elemId = assignVehicleCollection[i].vehicle._id;
+            let vehStatusId = assignVehicleCollection[i].vehicle.vehicleStatusId;
             let assignedVal = Object.assign(ele,assignVehicleCollection[i]);
             // console.log(assignedVal);
 
+
             let previousDriver = await AssignVehicleHistory.findOne({vehicle:elemId}).populate('employee');
             assignedVal["previousDriver"] = previousDriver;
+            modifiedData.push(assignedVal);
+
+            let vehStatus = await VehicleStatus.findOne({vehicleStatusId:vehStatusId});
+            assignedVal["vehicleStatus"] = vehStatus;
             modifiedData.push(assignedVal);
         }
         let responseData = {};

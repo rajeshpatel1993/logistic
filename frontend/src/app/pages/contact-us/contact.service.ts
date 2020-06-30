@@ -15,6 +15,12 @@ export class ContactService {
     return this.http.get(this.baseUrl+"/employees/emp_list?page="+page);
   }
 
+  
+
+  getContactDetail(empId){
+    return this.http.get(this.baseUrl+"/employees/"+empId);
+  }
+
 
   // getEmployeeList(){
   //   return this.http.get(this.baseUrl+"/employees/emp_list");
