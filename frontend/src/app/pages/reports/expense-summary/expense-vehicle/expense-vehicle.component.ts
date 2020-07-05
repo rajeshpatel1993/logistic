@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, SimpleChanges, ElementRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import * as Highcharts from 'highcharts';
 import { ReportsService } from '../../reports.service';
@@ -24,10 +24,11 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
   @Input() startDateVehicle = null;
   @Input() endDateVehicle = null;
   @Input() indexOfVehicle=1;
+  @Input() paginationValue;
   public chartData:any[] = [];
   public categories:any[] = [];
 
-  constructor(private reportService : ReportsService) { }
+  constructor(private reportService : ReportsService, private elementRef: ElementRef) { }
 
   ngOnInit() {
 
@@ -65,6 +66,9 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
         column: {
             pointPadding: 0.2,
             borderWidth: 0
+        },
+        series: {
+            color: '#00b76e'
         }
     },
     series: [{
@@ -81,6 +85,7 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
 
 
   public loadExpenseTypeAmount(vehicleId){
+      console.log(vehicleId);
     this.chartData = [];
     let tmpData = {};
     tmpData["vehicleId"] = vehicleId;
@@ -88,6 +93,7 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
     tmpData["endDate"] = this.endDateVehicle;
     this.assignedVehicleChartSubscription = this.reportService.loadExpenseSummaryChartData(tmpData).subscribe((d)=>{
         let dat = d["data"];
+        console.log(dat);
 
         for(let i=0;i<dat.length;i++){
             this.categories.push(dat[i]["expensesTypes"].expenseType);
@@ -99,8 +105,8 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
     
         this.options["series"][0]["data"] = this.chartData;
         this.options["xAxis"]["categories"] = this.categories;
-
         Highcharts.chart('container-'+this.indexOfVehicle, this.options);
+        
     },(err)=>{
         console.log(err);
     });
@@ -108,9 +114,13 @@ export class ExpenseVehicleComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-        this.loadExpenseTypeAmount(this.vehicleId)
+        
 
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loadExpenseTypeAmount(this.vehicleId)
+   }
 
 
 
