@@ -24,6 +24,11 @@ export class AddFuelComponent implements OnInit {
   public paymentModes = [];
 
   public vehicleName:String;
+  public driverN:String = "";
+  public fuelT:String ="";
+  public driverNid:String = "";
+  public fuelTid:String ="";
+
   public vehicleRegNo:String = "";
   public vehicleCode: String = "";
   public vehicleImage: String = "";
@@ -80,7 +85,7 @@ export class AddFuelComponent implements OnInit {
       expiration_date: [new Date(), ''],
       amount: ['',Validators.required],
       odometer: [''],
-      fuelType: ['', Validators.required],
+      fuelTypeid: [''],
       modeofpayment: ['5d31705ece00403b7c9ee959',Validators.required],
       cardno: [''],
       couponfrom: [''],
@@ -90,7 +95,7 @@ export class AddFuelComponent implements OnInit {
       priceunit: [''],
       unit: [''],
       vendorname: [''],
-      drivername: ['',Validators.required],
+      drivernameid: [''],
       comment: [''],
       bill_file_unique_id: [this.billfileuniqueid],
       image_file_unique_id: [this.imageFileUniqueId],
@@ -193,10 +198,14 @@ export class AddFuelComponent implements OnInit {
     this.vehicleService.loadVehicle(item.id).subscribe((vehData) => {
       let veData = vehData["data"][0];
       this.vehicleRegNo = veData.regNo;
+      this.fuelT = veData.fuelTypes[0].fuelTypeName;
+      this.fuelTid = veData.fuelTypes[0]._id;
       this.vehicleCode = veData.vehicle_code;
       this.vehicleImage = veData.vehicleImage;
       this.vehicleDetail = veData.vehicleDetailsArray[0].vehicleDetails; 
       this.loadAssignedVehicle(veData._id);
+      this.fuelEntryForm.get("fuelTypeid").patchValue(this.fuelTid);
+
     },
     (error)=>{
       console.log(error);
@@ -407,9 +416,19 @@ export class AddFuelComponent implements OnInit {
 
     this.vehicleService.loadAssignedVehicleDetail(vehicleId).subscribe((da)=>{
       let assVehData = da["data"];
-      let empData = assVehData.employee["firstName"];
-      console.log(empData);
-      this.fuelEntryForm.get("drivername").patchValue(empData);
+      let empData;
+      if(assVehData){
+        empData = assVehData.employee["firstName"];
+        this.driverNid = assVehData.employee["_id"];
+      }else{
+        empData = "Unassigned";
+        this.driverNid = null;
+      }
+      this.driverN = empData;
+      
+
+      
+      this.fuelEntryForm.get("drivernameid").patchValue(this.driverNid);
 
 
     });

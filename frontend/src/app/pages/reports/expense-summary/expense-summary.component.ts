@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import { VehicleService } from '../../vehicles/vehicles.service';
 import { Subscription } from 'rxjs';
@@ -20,14 +20,16 @@ import { NbDialogService } from '@nebular/theme';
   styleUrls: ['./expense-summary.component.scss'],
   providers: [VehicleExpenseService]
 })
-export class ExpenseSummaryComponent implements OnInit {
+export class ExpenseSummaryComponent implements OnInit, OnDestroy{
 
   public startDateVehicle ;
   public endDateVehicle ;
   // public vehicleId;
   public showNoDataFound:boolean = false;
   dateforvehiclelist;
-
+  public pageButtons;
+  public btns;
+  currentPageNo=1;
   
 
   dtOptions: any = {};
@@ -88,12 +90,20 @@ series: [{
 
 
 
-  constructor(public reportService: ReportsService, public expenseService: VehicleExpenseService, private activeRoute: ActivatedRoute, private dialogService: NbDialogService) { }
+  constructor(private elementRef: ElementRef,public reportService: ReportsService, public expenseService: VehicleExpenseService, private activeRoute: ActivatedRoute, private dialogService: NbDialogService) { }
 
   ngOnInit() {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 2
+      pageLength: 2,
+      drawCallback: () => {
+        this.pageButtons = this.elementRef.nativeElement.getElementsByClassName('paginate_button');
+        this.btns = this.pageButtons.length;
+        for (let i = 0; i < this.btns; i++) {
+          this.pageButtons[i].addEventListener('click', this.onClick.bind(this));
+        }
+
+      }
     };
 
     // this.vehicleId = this.activeRoute.snapshot.params.vehicleId;
@@ -102,6 +112,12 @@ series: [{
     this.loadExpenseByVehicleList();
   }
 
+
+
+  onClick(): void {
+    this.currentPageNo = this.currentPageNo + 1;
+    
+  }
 
 
   dateRangeChange(event){
@@ -143,4 +159,15 @@ series: [{
   open(dialog:any) {
     this.dialogService.open(dialog, { context: 'this is some additional data passed to dialog' });
   }
+
+  ngOnDestroy(): void {
+    this.pageButtons = this.elementRef.nativeElement.getElementsByClassName('paginate_button');
+    this.btns = this.pageButtons.length;
+    if(this.btns>0){
+      for (let i = 0; i < this.btns; i++) {
+        this.pageButtons[i].removeEventListener('click');
+      }
+    }
+  }
+
 }

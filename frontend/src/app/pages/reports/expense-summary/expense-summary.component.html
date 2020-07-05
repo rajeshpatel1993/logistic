@@ -36,7 +36,6 @@
                     <th>Vehicle</th>
                     <th>Status</th>
                     <th>Expense Dates </th>
-
                     <th>Expense Types</th>
                     <th>Descriptions</th>
                     <th>Amount</th>
@@ -130,7 +129,7 @@
 
                     <td>
 
-                      <ngx-expense-vehicle [vehicleId]="item._id" [indexOfVehicle]="i+1"></ngx-expense-vehicle>
+                      <ngx-expense-vehicle [vehicleId]="item._id" [indexOfVehicle]="i+1" [paginationValue]="currentPageNo"></ngx-expense-vehicle>
                     </td>
 
                   </tr>

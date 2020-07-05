@@ -51,6 +51,7 @@ export class ListComponent implements OnInit {
   constructor(private dialogService: NbDialogService, private activeRoute: ActivatedRoute, private fuelService : FuelService, private router: Router, private vehicleService: VehicleService) { }
 
   updateQueryStringParameter(uri, key, value) {
+    console.log("called");
     var re = new RegExp("([?&])" + key + "=.*?(&|#|$)", "i");
     if (uri.match(re)) {
       return uri.replace(re, '$1' + key + "=" + value + '$2');
@@ -73,7 +74,7 @@ export class ListComponent implements OnInit {
     this.loadEmployee();
     this.activeRoute.queryParams.subscribe(queryParams => {
       let lentgthoffilterQueryString = this.filterQueryString.trim();
-      if(lentgthoffilterQueryString.length > 0){
+      if(lentgthoffilterQueryString.length > 0 ){
         this.filterData();
       }else{
         this.loadFuelEntry(queryParams.page);
@@ -216,8 +217,10 @@ export class ListComponent implements OnInit {
   dateRangeChange(event){
     this.startDateVehicle = event.startDate?event.startDate.toISOString():null;
     this.endDateVehicle = event.endDate?event.endDate.toISOString():null;
-    this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "startDate",this.startDateVehicle);
-    this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "endDate",this.endDateVehicle);
+    if(this.startDateVehicle || this.endDateVehicle){
+      this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "startDate",this.startDateVehicle);
+      this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "endDate",this.endDateVehicle);
+    }
 
   }
   open(dialog:any) {
