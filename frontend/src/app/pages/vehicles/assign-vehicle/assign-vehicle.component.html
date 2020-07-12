@@ -8,7 +8,7 @@
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                (inputFocused)='onFocused($event)' (inputCleared)	='clearEvent($event, "vehicletype")' [itemTemplate]="itemTemplate"
                 [notFoundTemplate]="notFoundTemplate">
               </ng-autocomplete>
 
@@ -25,8 +25,8 @@
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword"
                 placeHolder="Enter the Vehicle Details" (selected)='selectEvent($event, "vehicledetails")'
-                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
+                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' (inputCleared)	='clearEvent($event, "vehicledetails")'
+                [itemTemplate]="itemTemplate1"
                 [notFoundTemplate]="notFoundTemplate1">
               </ng-autocomplete>
 
@@ -44,8 +44,8 @@
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
                 placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
-                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
+                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' (inputCleared)	='clearEvent($event, "vehiclereg")'
+                 [itemTemplate]="itemTemplate2"
                 [notFoundTemplate]="notFoundTemplate2">
               </ng-autocomplete>
 
@@ -116,7 +116,22 @@
                   </td>
                   <td>{{item.assign_data.assignmentStartDate | date}}</td>
                   <td>{{item.assign_data.workLocations?.workLocation}}</td>
-                  <td>{{item.assign_data.projectsType.projectTypeName}}</td>
+                  <td>
+
+                    <ng-container
+                    *ngIf="item.assign_data.hasOwnProperty('projectsType'); then isProjectData; else noProjectData">
+                  </ng-container>
+        
+                  <ng-template #isProjectData>
+                    {{item.assign_data.projectsType.projectTypeName}}
+                  </ng-template>
+                  <ng-template #noProjectData>
+                    N.A.
+                  </ng-template>
+
+
+                    
+                    </td>
                   <td>{{item.assign_data.fuelLimit}}</td>
                   <td><a class="btn btn-primary" href="javascript:void(0)" routerLink="/pages/vehicles/assign-vehicle-details/{{item._id}}/1">Reassign</a></td>
 
@@ -186,5 +201,14 @@
 
       </nb-layout-column>
     </nb-card-body>
+
+
+    <div class="row" *ngIf="norecord">
+      <div class="col-12">
+        <h5 class="text-center text-danger p-4"> No records Found</h5>
+      </div>
+    </div>
+
+
   </nb-card>
 </div>
