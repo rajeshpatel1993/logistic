@@ -48,6 +48,26 @@ export class ListComponent {
     }
   }
 
+  clearEvent(item,typeofautoselect){
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+
+  }
+  
   selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
       case "vehicletype":

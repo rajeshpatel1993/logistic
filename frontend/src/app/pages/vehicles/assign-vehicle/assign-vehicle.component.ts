@@ -17,6 +17,7 @@ export class AssignVehicleComponent implements OnInit {
   public selectedVehicleType;
   public selectedVehicleDetail;
   public selectedVehicleReg;
+  public norecord : boolean = false;
   public currentPage:String;
   keyword = 'name';
 
@@ -33,31 +34,79 @@ export class AssignVehicleComponent implements OnInit {
 
   ngOnInit() {
     this.loadVehiclesTypes();
+    this.loadVehicleRegistration();
+
     this.activeRoute.queryParams.subscribe(queryParams => {
-      this.loadVehicles(queryParams.page);
+      let lentgthoffilterQueryString = this.filterQueryString.trim();
+      if(lentgthoffilterQueryString.length > 0){
+        this.filterData();
+      }else{
+        this.loadVehicles(queryParams.page);
+
+      }
+      // console.log(lentgthoffilterQueryString.length);
     });
 
+
   }
+
+
+
+  updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)", "i");
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+      var hash =  '';
+      if( uri.indexOf('#') !== -1 ){
+          hash = uri.replace(/.*#/, '#');
+          uri = uri.replace(/#.*/, '');
+      }
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";    
+      return uri + separator + key + "=" + value + hash;
+    }
+  }
+
 
   selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
       case "vehicletype":
         this.selectedVehicleType = item.id;
-        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
         this.loadVehicleDetails(item.id);
         break;
       case "vehicledetails":
         this.selectedVehicleDetail = item.id;
-        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
 
         break;
       case "vehiclereg":
         this.selectedVehicleReg = item.name;
-        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
 
       default:
         // this.selectedVehicleType = item.id;
     }
+  }
+
+  clearEvent(item,typeofautoselect){
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+
   }
 
 
@@ -94,6 +143,34 @@ export class AssignVehicleComponent implements OnInit {
   }
 
 
+  public loadVehicleRegistration(){
+    this.vehicleService.loadVehicleRegistrations().subscribe((vehicleRegs:any) => {
+      let vehicleRegsData = vehicleRegs.data;
+      vehicleRegsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = index;
+        tmpObj["name"] = item;
+        this.vehicleRegistrations.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+
+  }
+
+  public loadVehiclesRegistrations(vehicletype?,vehicleDetail?){
+    this.vehicleService.loadVehiclesTypes().subscribe((vehicleType:any) => {
+      let vehicleTypeData = vehicleType.data;
+      vehicleTypeData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = item.vehicleTypeId;
+        tmpObj["name"] = item.vehicleType;
+        this.vehicleTypes.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+  }
+
+
   public loadVehicleDetails(vehicleTypeId){
     this.vehicleService.loadVehicleDetails(vehicleTypeId).subscribe((vehicleDetails:any) => {
       let vehicleDetailData = vehicleDetails.data;
@@ -109,19 +186,26 @@ export class AssignVehicleComponent implements OnInit {
   }
 
 
+
+ 
+
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
-    this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
+    this.vehicleService.loadAssignedFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
       this.vehiclesList = filterData.data;
+      if(filterData.page.totalItems == 0){
+        this.norecord = true;
+      }else{
+        this.norecord = false;
+      }
       this.totalItems, this.pageOfItems = filterData.data; 
       this.pager = filterData.page;
       // console.log(filterData);
     });
   }
 
-  onChangeSearch(search: string) {
-    // fetch remote data from here
-    // And reassign the 'data' which is binded to 'data' property.
+  onChangeSearch(evt) {
+    console.log(evt);
   }
 
   onFocused(e) {

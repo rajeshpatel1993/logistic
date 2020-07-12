@@ -62,6 +62,13 @@ export class VehicleservService {
     return this.http.get(this.baseUrl+"/expenses/vehicleExpense/"+expenseId);
   }
 
+  loadServiceFilteredData(querystring:String, page){
+    return this.http.get(this.baseUrl+"/service/filterServiceVehicle"+querystring, page);
+  }
+
+  loadExpenseFilteredData(querystring:String, page){
+    return this.http.get(this.baseUrl+"/expenses/filterExpenseVehicle"+querystring, page);
+  }
 
   deleteVehicle(data) {
     return this.http.post(this.baseUrl+"/service/deleteService", data);

@@ -45,6 +45,11 @@ export class VehicleService {
     return this.http.get(this.baseUrl+"/vehicles/filtervehicle"+querystring, page);
   }
 
+  loadAssignedFiltereddata(querystring:String, page){
+    return this.http.get(this.baseUrl+"/vehicles/filterAssignedVehicle"+querystring, page);
+  }
+
+
   loadModelsData(brandId?){
     return this.http.get(this.baseUrl+"/vehicles/models/"+brandId);
   }

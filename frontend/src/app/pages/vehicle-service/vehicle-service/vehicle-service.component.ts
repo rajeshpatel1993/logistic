@@ -20,6 +20,7 @@ export class VehicleServiceComponent implements OnInit {
   public selectedVehicleDetail;
   public selectedVehicleReg;
   public currentPage:String;
+  public norecord : boolean = false;
   keyword = 'name';
 
   public filterQueryString = "";
@@ -35,32 +36,70 @@ export class VehicleServiceComponent implements OnInit {
 
   ngOnInit() {
     this.loadVehiclesTypes();
+    this.loadVehicleRegistration();
     this.activeRoute.queryParams.subscribe(queryParams => {
       this.loadServicesData(queryParams.page);
     });
 
   }
 
+  updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)", "i");
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+      var hash =  '';
+      if( uri.indexOf('#') !== -1 ){
+          hash = uri.replace(/.*#/, '#');
+          uri = uri.replace(/#.*/, '');
+      }
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";    
+      return uri + separator + key + "=" + value + hash;
+    }
+  }
+
   selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
       case "vehicletype":
         this.selectedVehicleType = item.id;
-        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
         this.loadVehicleDetails(item.id);
         break;
       case "vehicledetails":
         this.selectedVehicleDetail = item.id;
-        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
 
         break;
       case "vehiclereg":
         this.selectedVehicleReg = item.name;
-        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
 
       default:
         // this.selectedVehicleType = item.id;
     }
   }
+
+
+  clearEvent(item,typeofautoselect){
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+
+  }
+
 
 
   public loadVehicles(page?){
@@ -128,10 +167,29 @@ export class VehicleServiceComponent implements OnInit {
   }
 
 
+  public loadVehicleRegistration(){
+    this.vehicleService.loadVehicleRegistrations().subscribe((vehicleRegs:any) => {
+      let vehicleRegsData = vehicleRegs.data;
+      vehicleRegsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = index;
+        tmpObj["name"] = item;
+        this.vehicleRegistrations.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+
+  }
+
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
-    this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
+    this.vehicleservService.loadServiceFilteredData(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
       this.vehiclesList = filterData.data;
+      if(filterData.page.totalItems == 0){
+        this.norecord = true;
+      }else{
+        this.norecord = false;
+      }
       this.totalItems, this.pageOfItems = filterData.data; 
       this.pager = filterData.page;
       // console.log(filterData);

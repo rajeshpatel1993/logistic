@@ -16,7 +16,7 @@
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleTypes" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Types"
                 (selected)='selectEvent($event, "vehicletype")' (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)' historyIdentifier="vehicleTypes" [itemTemplate]="itemTemplate"
+                (inputFocused)='onFocused($event)' (inputCleared)	='clearEvent($event, "vehicletype")' [itemTemplate]="itemTemplate"
                 [notFoundTemplate]="notFoundTemplate" autofocus>
               </ng-autocomplete>
 
@@ -36,7 +36,7 @@
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="vehicleDetails" [searchKeyword]="keyword" placeHolder="Enter the Vehicle Details"
                 (selected)='selectEvent($event, "vehicledetails")' (inputChanged)='onChangeSearch($event)'
-                (inputFocused)='onFocused($event)' historyIdentifier="vehicleDetails" [itemTemplate]="itemTemplate1"
+                (inputFocused)='onFocused($event)' (inputCleared)	='clearEvent($event, "vehicledetails")' [itemTemplate]="itemTemplate1"
                 [notFoundTemplate]="notFoundTemplate1">
               </ng-autocomplete>
 
@@ -55,7 +55,7 @@
               <ng-autocomplete [data]="vehicleRegistrations" [searchKeyword]="keyword"
                 placeHolder="Enter the Vehicle Registration" (selected)='selectEvent($event, "vehiclereg")'
                 (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                historyIdentifier="vehicleRegistrations" [itemTemplate]="itemTemplate2"
+                (inputCleared)	='clearEvent($event, "vehiclereg")' [itemTemplate]="itemTemplate2"
                 [notFoundTemplate]="notFoundTemplate2">
               </ng-autocomplete>
 
