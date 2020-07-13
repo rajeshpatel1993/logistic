@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const serviceTaskSchema = new mongoose.Schema ({
     vehicleType:{type: mongoose.Schema.Types.ObjectId, ref: 'VehicleType'},
     vehicle: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
+    vehicleForSearch: {type: Object, required: true},
     serviceType: {type: mongoose.Schema.Types.ObjectId, ref: 'ServiceType'},
     odometer: {
         type: String

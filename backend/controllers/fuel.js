@@ -65,8 +65,8 @@ router.post("/add", async (req, res)=> {
         let imgUrl = "";
         let billUrls = "";
         let {vehicleTypef, vehiclename,expiration_time, expiration_date, amount, odometer, modeofpayment,
-            cardno, couponfrom, couponto, couponvalue, priceunit, unit, vendorname,drivername,
-            comment,bill_file_unique_id, image_file_unique_id, fuelType} = req.body;
+            cardno, couponfrom, couponto, couponvalue, priceunit, unit, vendorname,drivernameid,
+            comment,bill_file_unique_id, image_file_unique_id, fuelTypeid} = req.body;
            
     
         let fuelEntryImage = await File.find({fileId:image_file_unique_id }).select("s3Urls");
@@ -90,8 +90,8 @@ router.post("/add", async (req, res)=> {
              amount : amount,
             odometer: odometer, modeofpayment : modeofpayment , cardno : cardno,
             couponfrom : couponfrom,  couponto: couponto, couponvalue: couponvalue,
-           priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivername.id,
-            fuelType: fuelType.id,
+           priceunit: priceunit,unit:unit,vendorname:vendorname,driver:drivernameid,
+            fuelType: fuelTypeid,
             comment: comment,image_file_unique_id, bill_file_unique_id, imageUrl: imgUrl,billUrl:billUrls
         
         };
@@ -109,8 +109,8 @@ router.post("/add", async (req, res)=> {
      
         // res.status(200).json(req.body);
     }catch(err){
-        // console.log(err);
-        res.status(400).send(err);
+         console.log(err);
+       // res.status(400).send(err);
         
     }
     
@@ -443,6 +443,82 @@ router.post("/updateFuelEntry", async (req, res)=> {
 
     }
     
+    
+});
+
+
+
+
+
+
+
+router.post("/fuelExpensesByDays", async (req, res) => {
+    let {startDate,endDate} = req.body;
+    // let vehicleId = req.params.vehicleId;
+    let filter;
+    // if(startDate && endDate){
+
+    //     filter = {$and: [{"isDeleted":0}, {"createdAt" : 
+    //     {
+    //         "$gte" : new Date(startDate), 
+    //         "$lt" : new Date(endDate) 
+    //     }}] };
+        
+    // }else{
+    //     filter = {$and: [{ vehicle:  mongoose.Types.ObjectId(vehicleId)},{"isDeleted":0}] };
+    // }
+
+    filter = {$and: [{"isDeleted":0}] };
+ 
+
+    try{
+    let fuelExpenseData = await FuelEntry.aggregate([
+        {
+            $match: filter
+        }
+        ,
+
+        {
+            $project: {
+                "createdAtWeek": { "$week": "$createdDate" },
+                "createdAtMonth": { "$month": "$createdDate" },
+                "amount": 1
+            }
+        },
+        {
+            "$group": {
+                "_id": "$createdAtWeek",
+                total: { 
+                    $sum: {"$toDouble":"$amount" }
+                } ,
+                "month": { "$first": "$createdAtMonth" }
+            }
+       },
+        
+        
+        
+
+    //     { "$lookup": {
+    //         "from": "expenseType",
+    //         "localField": "_id",
+    //         "foreignField": "_id",
+    //         "as": "expensesTypes"
+    //    }},
+    //    { "$unwind": { "path" : "$expensesTypes" } },
+
+        
+    ]);
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = fuelExpenseData;
+        res.status(200).json(responseData);
+        
+    }catch(error){
+        console.log(error);
+    }
+   
+
     
 });
 

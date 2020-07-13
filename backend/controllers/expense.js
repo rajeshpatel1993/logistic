@@ -8,7 +8,7 @@ const {File} = require("../models/files");
 const {ExpenseType} = require("../models/expenseType");
 const {VehicleIssueStatus} = require("../models/vehicleIssueStatus");
 const {Expense} = require("../models/expense");
-
+const {Vehicle} = require("../models/vehicle");
 const config = require("../config/config");
 const paginationSize = parseInt(config['app'].pagination_size);
 
@@ -143,8 +143,9 @@ router.post("/add", async (req, res)=> {
             imageurls = imageFiles[0].s3Urls; 
         }
 
+        let vehicleDat = await Vehicle.findOne({"_id":mongoose.Types.ObjectId(vehicle.id)});
 
-        const vehicle_expense_instance = new Expense({vehicleType:vehicle_type._id, vehicle: vehicle.id, expense_type : expense_type.id , 
+        const vehicle_expense_instance = new Expense({vehicleType:vehicle_type._id, vehicle: vehicle.id, vehicleForSearch:vehicleDat, expense_type : expense_type.id , 
             expense_date : expense_date , 
             vendor : vendor,  details:details, amount: amount,issue_status:issue_status.id, attachments : filesurls , images : imageurls,
                note: note
@@ -212,6 +213,73 @@ router.get("/vehicle_expenses",async(req,res) => {
         console.log(error);
     }
 });
+
+
+router.get("/filterExpenseVehicle", async(req,res)=>{
+   
+    let matchCondition = [];
+    let vehicleType = req.query.vehicleType;
+    let vehicleDetail = req.query.vehicleDetail;
+    let vehicleReg = req.query.vehicleReg;
+    let vehicleData;
+    let expenseData;
+
+    if(vehicleType && vehicleType != 'null'){
+        matchCondition.push({"vehicleForSearch.vehicle_typeId" : vehicleType });
+    }
+    if(vehicleDetail && vehicleDetail != 'null'){
+        matchCondition.push({"vehicleForSearch.vehicleDetailsId" : vehicleDetail});
+    }
+    if(vehicleReg && vehicleReg != 'null'){
+        matchCondition.push({"vehicleForSearch.regNo" : vehicleReg});
+    }
+
+    matchCondition.push({"isDeleted":0});
+    const resPerPage = paginationSize; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+    let pager;
+
+    try {
+       if(matchCondition.length > 0){
+        const nooitemsAggregate = await Expense.aggregate([
+            {$match: {$and: matchCondition}},
+            {$count : "noofitems"}
+        ]);
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
+         pager = paginate(nooitems, page,resPerPage);
+
+
+        expenseData = await Expense.find({$and: matchCondition}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type').skip(skipd).limit(resPerPage);
+
+
+
+    }else{
+        nooitems = await Expense.countDocuments({"isDeleted": 0});
+        pager = paginate(nooitems, page,resPerPage);
+        expenseData = await Expense.find({"isDeleted": 0}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type').skip(skipd).limit(resPerPage);
+    }
+
+ 
+
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = expenseData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 
 function getLastMonths(n) {

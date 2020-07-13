@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const expenseSchema = new mongoose.Schema ({
     vehicleType:{type: mongoose.Schema.Types.ObjectId, ref: 'VehicleType'},
     vehicle: {type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
+    vehicleForSearch: {type: Object, required: true},
     expense_type: {type: mongoose.Schema.Types.ObjectId, ref: 'ExpenseType'},
     expense_date:{
         type: Date

@@ -23,7 +23,7 @@ export class ListComponent implements OnInit {
   keyword = 'name';
 
   public filterQueryString = "";
-  public showNoRecord : boolean = false;
+  public norecord : boolean = false;
   public noteList: any[] = [];
   public totalItems: any;
   public pager = {};
@@ -34,7 +34,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.loadVehiclesTypes();
-
+    this.loadVehicleRegistration();
     this.activeRoute.queryParams.subscribe(queryParams => {
       let lentgthoffilterQueryString = this.filterQueryString.trim();
       if(lentgthoffilterQueryString.length > 0){
@@ -49,21 +49,57 @@ export class ListComponent implements OnInit {
    
   }
 
-  selectEvent(item, typeofautoselect) {
+  updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|#|$)", "i");
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+      var hash =  '';
+      if( uri.indexOf('#') !== -1 ){
+          hash = uri.replace(/.*#/, '#');
+          uri = uri.replace(/#.*/, '');
+      }
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";    
+      return uri + separator + key + "=" + value + hash;
+    }
+  }
+
+
+  clearEvent(item,typeofautoselect){
+    switch (typeofautoselect) {
+      case "vehicletype":
+        this.selectedVehicleType = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
+        break;
+      case "vehicledetails":
+        this.selectedVehicleDetail = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
+        break;
+      case "vehiclereg":
+        this.selectedVehicleReg = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+
+  }
+
+ selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
       case "vehicletype":
         this.selectedVehicleType = item.id;
-        this.filterQueryString += "vehicleType="+this.selectedVehicleType;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
         this.loadVehicleDetails(item.id);
         break;
       case "vehicledetails":
         this.selectedVehicleDetail = item.id;
-        this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
 
         break;
       case "vehiclereg":
         this.selectedVehicleReg = item.name;
-        this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
 
       default:
         // this.selectedVehicleType = item.id;
@@ -78,7 +114,7 @@ export class ListComponent implements OnInit {
      if(this.noteList.length > 0){
       this.totalItems, this.pageOfItems = noteData.data; 
       this.pager = noteData.page;
-      this.showNoRecord = false;
+      this.norecord = false;
 
       if(this.pager["totalPages"] < p){
         this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
@@ -92,7 +128,7 @@ export class ListComponent implements OnInit {
        }
 
       // this.router.navigateByUrl('/pages/notes/list?page='+(p-1));
-       this.showNoRecord = true;
+       this.norecord = true;
      }
      
     },(error)=>{
@@ -147,8 +183,13 @@ export class ListComponent implements OnInit {
 
   filterData(){
     this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
-    this.vehicleService.loadFiltereddata(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
+    this.noteService.loadNoteFilteredData(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
       this.noteList = filterData.data;
+      if(filterData.page.totalItems == 0){
+        this.norecord = true;
+      }else{
+        this.norecord = false;
+      }
       this.totalItems, this.pageOfItems = filterData.data; 
       this.pager = filterData.page;
       // console.log(filterData);
@@ -171,6 +212,20 @@ export class ListComponent implements OnInit {
   editNotes(notesId){
     
     this.router.navigateByUrl('/pages/notes/edit-notes/'+notesId);
+  }
+
+  public loadVehicleRegistration(){
+    this.vehicleService.loadVehicleRegistrations().subscribe((vehicleRegs:any) => {
+      let vehicleRegsData = vehicleRegs.data;
+      vehicleRegsData.forEach((item,index) => {
+        let tmpObj = {};
+        tmpObj["id"] = index;
+        tmpObj["name"] = item;
+        this.vehicleRegistrations.push(tmpObj);
+      });
+      // console.log(vehicleTypeData);
+    });
+
   }
 
 }

@@ -38,7 +38,7 @@
                   <ul>
                     <li *ngFor="let vh of item.assignVehicleData">
                       <a routerLink="pages/vehicles/edit-vehicle/{{vh.vehicle}}">
-                        {{vh.vehicledata.name}}
+                        {{vh?.vehicledata.name}}
                       </a>
                     </li>
                   </ul>

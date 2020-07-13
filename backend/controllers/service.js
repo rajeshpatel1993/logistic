@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const {File} = require("../models/files");
 const {ServiceType} = require("../models/serviceType");
 const {ServiceTask} = require("../models/serviceTask");
+const {Vehicle} = require("../models/vehicle");
 
 const config = require("../config/config");
 const paginationSize = parseInt(config['app'].pagination_size);
@@ -113,14 +114,16 @@ router.post("/add", async (req, res)=> {
         }
 
         let imageFiles = await File.find({fileId:images }).select("s3Urls");
-        console.log(imageFiles);
+        
         if(imageFiles.length > 0){
             imageurls = imageFiles[0].s3Urls; 
         }
 
+        let vehicleDat = await Vehicle.findOne({"_id":mongoose.Types.ObjectId(vehicle.id)});
+
 
         const vehicle_service_instance = new ServiceTask(
-            {vehicleType:vehicle_type._id, vehicle: vehicle.id, serviceType : service_type.id , odometer: odometer,
+            {vehicleType:vehicle_type._id,vehicleForSearch:vehicleDat, vehicle: vehicle.id, serviceType : service_type.id , odometer: odometer,
              completion_date_time : completion_date_time , 
              start_date : start_date, vendor :vendor, reference : reference, description:description, amount: amount, attachments : filesurls , images : imageurls,
              employee : in_charge.id,  comments: comment
@@ -160,6 +163,74 @@ router.get("/vehicle_services",async(req,res) => {
         console.log(error);
     }
 });
+
+
+router.get("/filterServiceVehicle", async(req,res)=>{
+   
+    let matchCondition = [];
+    let vehicleType = req.query.vehicleType;
+    let vehicleDetail = req.query.vehicleDetail;
+    let vehicleReg = req.query.vehicleReg;
+    let vehicleData;
+    let serviceTaskData;
+
+    if(vehicleType && vehicleType != 'null'){
+        matchCondition.push({"vehicleForSearch.vehicle_typeId" : vehicleType });
+    }
+    if(vehicleDetail && vehicleDetail != 'null'){
+        matchCondition.push({"vehicleForSearch.vehicleDetailsId" : vehicleDetail});
+    }
+    if(vehicleReg && vehicleReg != 'null'){
+        matchCondition.push({"vehicleForSearch.regNo" : vehicleReg});
+    }
+    matchCondition.push({"isDeleted":0});
+
+    const resPerPage = paginationSize; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+    let pager;
+
+    try {
+       if(matchCondition.length > 0){
+        const nooitemsAggregate = await ServiceTask.aggregate([
+            {$match: {$and: matchCondition}},
+            {$count : "noofitems"}
+        ]);
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
+         pager = paginate(nooitems, page,resPerPage);
+
+
+        serviceTaskData = await ServiceTask.find({$and: matchCondition}).populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType').skip(skipd).limit(resPerPage);
+
+
+
+    }else{
+        nooitems = await ServiceTask.countDocuments({"isDeleted": 0});
+        pager = paginate(nooitems, page,resPerPage);
+        serviceTaskData = await ServiceTask.find({"isDeleted": 0}).populate('employee').populate('vehicle').populate('vehicleType').populate('serviceType').skip(skipd).limit(resPerPage);
+
+    }
+
+ 
+
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = serviceTaskData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 
 router.post("/deleteService", async (req, res) => {
     try{

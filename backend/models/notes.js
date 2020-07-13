@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const notesSchema = new mongoose.Schema ({
     vehicle:{type: mongoose.Schema.Types.ObjectId, ref: 'Vehicle'},
+    vehicleForSearch: {type: Object, required: true},
+
     note:{
         type: String
     },

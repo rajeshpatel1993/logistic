@@ -31,6 +31,11 @@ export class NoteService {
     return this.http.post(this.baseUrl+"/notes/updateNote",data);
   }
 
+  loadNoteFilteredData(querystring:String, page){
+    return this.http.get(this.baseUrl+"/notes/filterNote"+querystring, page);
+  }
+
+
 
 
 
