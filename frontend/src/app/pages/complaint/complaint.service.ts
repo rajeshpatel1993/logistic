@@ -20,6 +20,10 @@ export class ComplaintService {
     return this.http.get(this.baseUrl+"/issues?page="+page);
   }
 
+  loadComplaintFilteredData(querystring:String, page){
+    return this.http.get(this.baseUrl+"/issues/filterIssueData"+querystring, page);
+  }
+
   loadIssue(issueId){
     return this.http.get(this.baseUrl+"/issues/getIssue/"+issueId);
   }

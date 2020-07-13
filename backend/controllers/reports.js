@@ -851,6 +851,104 @@ router.get("/getReports",async(req,res) => {
 
 
 
+router.get("/fuel_entry_by_vehicle",async(req,res) => {
+    const resPerPage = paginationSize; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let noofitems;
+    try {
+
+        const nooitemsAggregate = await FuelEntry.aggregate([
+            {$match: {"isDeleted":0}},
+            {$group: {_id: "$vehicle"}},
+            {$count : "noofitems"}
+        ]);
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
+
+       
+        const pager = paginate(nooitems, page,resPerPage);
+
+        const vehiclesIds = await FuelEntry.aggregate([
+            {$match: {"isDeleted":0}},
+            {
+                $group:{
+                    _id: "$vehicle",
+                    driver: { $push: "$driver" } ,
+                    type: {$push:"$fuelType"},
+                    amounts: {$push: "$amount"}
+
+                }
+            },
+            
+            {
+                $lookup:{
+                    
+                    "from": "employees",
+                    "foreignField": "_id",
+                    "localField": "driver",
+                    "as": "employeeListData"
+                }
+            },
+            {
+                $lookup:{
+                    
+                    "from": "vehicle",
+                    "let": { "vehId": "$_id" },
+                    "pipeline": [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$vehId"]}}},
+                        { "$project": { "vehicleStatusId": 1, "name": 1 , "vehicle_code":1, "vehicleImage":1,}}
+                      ],
+                      "as": "vehicleDetail"
+                }
+            },
+            // {   $unwind:"$vehicleDetail" },     // $unwind used for getting data in object or for one record only
+
+            // {
+            //     $lookup:{
+                    
+            //         "from": "vehicleStatus",
+            //         "let": { "vehId": "$vehicleDetail.vehicleStatusId" },
+            //         "pipeline": [
+            //             { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vehId"] }}},
+            //             { "$project": { "vehicleStatusId": 1, "vehicleStatus": 1 }}
+            //           ],
+            //           "as": "vehicleStatus"
+
+            //     }
+            // },
+
+            // {   $unwind:"$vehicleStatus" },     // $unwind used for getting data in object or for one record only
+
+
+
+             
+        // {
+        //     $skip: skipd
+        // },
+        // {
+        //     $limit:resPerPage
+        // }
+       
+        ]);
+        // let expenseData = await Expense.find({"isDeleted": 0}).populate('issue_status').populate('vehicle').populate('vehicleType').populate('expense_type').skip(skipd).limit(resPerPage);
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = vehiclesIds;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+
 router.get("/assign_vehicles",async(req,res) => {
     const modifiedData = [];
 

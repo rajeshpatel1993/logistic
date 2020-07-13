@@ -20,15 +20,16 @@ export class ComplaintListComponent implements OnInit {
   public listVehicles:any[] = [];
   public pager = {};
   public vehicleDetails = [];
-  public showNoRecord : boolean = false;
+  public currentPage:String;
+
   public pageOfItems = [];
   public filterQueryString = "";
   keyword = 'name';
   public vehicleIssueStatusData:any[] = [];
   public vehicleRegistrations = [];
-  public selectedVehicleType;
-  public selectedVehicleDetail;
-  public selectedVehicleReg;
+  public selectedVehicleName;
+  public selectedVehicleIssueStatus;
+  public selectedPriority;
   public priorityData:any[] = [];
 
 
@@ -54,7 +55,22 @@ export class ComplaintListComponent implements OnInit {
   }
 
 
-  filterData(){}
+  filterData(){
+
+    this.currentPage = this.activeRoute.snapshot.queryParams.page || 1;
+    this.complaintService.loadComplaintFilteredData(this.filterQueryString, this.currentPage).subscribe((filterData:any) => {
+      this.complainDataList = filterData.data;
+      if(filterData.page.totalItems == 0){
+        this.norecord = true;
+      }else{
+        this.norecord = false;
+      }
+      this.totalItems, this.pageOfItems = filterData.data; 
+      this.pager = filterData.page;
+      // console.log(filterData);
+    });
+
+  }
 
 
   public loadPriorityStatus(){
@@ -79,7 +95,7 @@ export class ComplaintListComponent implements OnInit {
      if(this.complainDataList.length > 0){
       this.totalItems, this.pageOfItems = vehicleData.data; 
       this.pager = vehicleData.page;
-      this.showNoRecord = false;
+      this.norecord = false;
 
       if(this.pager["totalPages"] < p){
         this.router.navigateByUrl('/pages/complaint/list?page='+(p-1));
@@ -88,7 +104,7 @@ export class ComplaintListComponent implements OnInit {
 
 
      }else{
-       this.showNoRecord = true;
+       this.norecord = true;
      }
      
     },(error)=>{
@@ -167,30 +183,43 @@ export class ComplaintListComponent implements OnInit {
 
   selectEvent(item, typeofautoselect) {
     switch (typeofautoselect) {
-      case "vehicletype":
-        this.selectedVehicleType = item.id;
-        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleType",this.selectedVehicleType);
-        // if(!this.filterQueryString.includes('vehicleType') ){
-        //   this.filterQueryString += "vehicleType="+this.selectedVehicleType;
-        // }
-        this.loadVehicleDetails(item.id);
+      case "vehicleName":
+        this.selectedVehicleName = item.id;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleName",this.selectedVehicleName);
         break;
-      case "vehicledetails":
-        this.selectedVehicleDetail = item.id;
-        // this.filterQueryString += "&vehicleDetail="+this.selectedVehicleDetail;
-        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleDetail",this.selectedVehicleDetail);
+      case "issuesStatus":
+        this.selectedVehicleIssueStatus = item.id;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "issuesStatus",this.selectedVehicleIssueStatus);
 
         break;
-      case "vehiclereg":
-        this.selectedVehicleReg = item.name;
-        // this.filterQueryString += "&vehicleReg="+this.selectedVehicleReg;
-        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleReg",this.selectedVehicleReg);
-
-
+      case "priority":
+        this.selectedPriority = item.name;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "priority",this.selectedPriority);
       default:
         // this.selectedVehicleType = item.id;
     }
   }
+
+  clearEvent(item,typeofautoselect){
+    switch (typeofautoselect) {
+      case "vehicleName":
+        this.selectedVehicleName = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "vehicleName",this.selectedVehicleName);
+        break;
+      case "issuesStatus":
+        this.selectedVehicleIssueStatus = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "issuesStatus",this.selectedVehicleIssueStatus);
+        break;
+      case "vehiclereg":
+        this.selectedPriority = null;
+        this.filterQueryString = this.updateQueryStringParameter(this.filterQueryString, "priority",this.selectedPriority);
+
+      default:
+        // this.selectedVehicleType = item.id;
+    }
+
+  }
+
 
 
 

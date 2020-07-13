@@ -22,18 +22,7 @@ router.get("/", async(req,res)=>{
     }
 });
 
-router.get("/:empId", async (req, res) => {
 
-    const id = req.params.empId; //or use req.param('id')
- 
-    const filter = { _id: mongoose.Types.ObjectId(id) };
-    let empData = await Employee.findOne(filter);
-    let responseData = {};
-    responseData["status"] = 200;
-    responseData["data"] = empData;
-    res.status(200).json(responseData);
-    
-});
 
 
 router.get("/emp_list", async(req,res)=>{
@@ -98,7 +87,7 @@ router.get("/emp_list", async(req,res)=>{
                     { 
                         "$unwind" : {
                             "path" : "$vehicledata", 
-                            "preserveNullAndEmptyArrays" : false
+                            "preserveNullAndEmptyArrays" : true
                         }
                     }, 
                 ],
@@ -106,9 +95,19 @@ router.get("/emp_list", async(req,res)=>{
             }
         }
         ,
-        { $unwind : "$jobTitleData" },
-        { $unwind : "$workLocationData" }
-            ,
+        {
+        "$unwind" : {
+            "path" : "$jobTitleData", 
+            "preserveNullAndEmptyArrays" : true
+        }
+        },
+        {
+            "$unwind" : {
+                "path" : "$workLocationData", 
+                "preserveNullAndEmptyArrays" : true
+            }
+        },
+       
             
             {
                 $skip: skipd
@@ -132,7 +131,25 @@ router.get("/emp_list", async(req,res)=>{
 });
 
 
+router.get("/:empId", async (req, res) => {
 
+    const id = req.params.empId; //or use req.param('id')
+ 
+    const filter = { _id: mongoose.Types.ObjectId(id) };
+
+    try{
+        let empData = await Employee.findOne(filter);
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["data"] = empData;
+        res.status(200).json(responseData);
+    }catch(error){
+        console.log(error);
+    }
+   
+
+    
+});
 
 
 

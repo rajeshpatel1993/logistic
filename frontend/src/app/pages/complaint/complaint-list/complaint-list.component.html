@@ -24,8 +24,9 @@
           <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="listVehicles" [searchKeyword]="keyword" placeHolder="Enter the Vehicle name"
-                (selected)='selectEvent($event, "vehicle")'
-               historyIdentifier="listVehicles" [itemTemplate]="itemTemplate"
+                (selected)='selectEvent($event, "vehicleName")'
+                (inputCleared)	='clearEvent($event, "vehicleName")'
+                [itemTemplate]="itemTemplate"
                 [notFoundTemplate]="notFoundTemplate">
               </ng-autocomplete>
 
@@ -40,8 +41,9 @@
           </div>
           <div class="form-col my-1">
             <div class="ng-autocomplete">
-              <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" placeHolder="Enter the Issue"
-                (selected)='selectEvent($event, "issues")' historyIdentifier="vehicleIssueStatusData" [itemTemplate]="itemTemplate1"
+              <ng-autocomplete [data]="vehicleIssueStatusData" [searchKeyword]="keyword" placeHolder="Enter the Issue Status"
+                (selected)='selectEvent($event, "issuesStatus")'
+                (inputCleared)	='clearEvent($event, "issuesStatus")' [itemTemplate]="itemTemplate1"
                 [notFoundTemplate]="notFoundTemplate1">
               </ng-autocomplete>
 
@@ -58,8 +60,8 @@
           <div class="form-col my-1">
             <div class="ng-autocomplete">
               <ng-autocomplete [data]="priorityData" [searchKeyword]="keyword"
-                placeHolder="Enter the  Priority" (selected)='selectEvent($event, "vehiclereg")'
-                historyIdentifier="priorityData" [itemTemplate]="itemTemplate2"
+                placeHolder="Enter the  Priority" (selected)='selectEvent($event, "priority")'
+                (inputCleared)	='clearEvent($event, "priority")' [itemTemplate]="itemTemplate2"
                 [notFoundTemplate]="notFoundTemplate2">
               </ng-autocomplete>
 
@@ -220,7 +222,7 @@
       </nb-layout-column>
     </nb-card-body>
 
-    <div class="row" *ngIf="showNoRecord">
+    <div class="row" *ngIf="norecord">
       <div class="col-12">
         <h5 class="text-center text-danger p-4"> No records Found</h5>
       </div>

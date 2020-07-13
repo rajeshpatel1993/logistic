@@ -26,6 +26,219 @@ router.get("/getPriorityStatus", async(req,res)=>{
 
 
 
+router.get("/filterIssueData", async(req,res)=>{
+   
+    let matchCondition = [];
+    let vehicleName = req.query.vehicleName;
+    let issuesStatus = req.query.issuesStatus;
+    let priority = req.query.priority;
+    let issueData;
+
+    if(vehicleName && vehicleName != 'null'){
+        matchCondition.push({"vehicle" : mongoose.Types.ObjectId(vehicleName) });
+    }
+    if(issuesStatus && issuesStatus != 'null'){
+        matchCondition.push({"status" : mongoose.Types.ObjectId(issuesStatus)});
+    }
+    if(priority && priority != 'null'){
+        matchCondition.push({"priority" : mongoose.Types.ObjectId(priority)});
+    }
+
+    matchCondition.push({"isDeleted":0});
+    const resPerPage = paginationSize; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+    let pager;
+
+    try {
+       if(matchCondition.length > 0){
+        const nooitemsAggregate = await Issue.aggregate([
+            {$match: {$and: matchCondition}},
+            {$count : "noofitems"}
+        ]);
+
+        if(nooitemsAggregate.length > 0){
+            nooitems = nooitemsAggregate[0].noofitems;
+        }else{
+            nooitems = 0;
+
+        }
+         pager = paginate(nooitems, page,resPerPage);
+
+
+          issueData = await Issue.aggregate([
+            {$match: {$and: matchCondition}}
+            ,
+           {
+            $lookup: {
+                from: "vehicle", // collection to join
+                let: { "vehicleId": "$vehicle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }}
+                ],
+                as: "vehicleData"// output array field
+            }
+        }
+            , {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "empId": "$reportedBy" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
+                    ],
+                    as: "employeedataReported"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "empId": "$assignTo" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
+                    ],
+                    as: "employeedataAssignTo"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "priorityStatus", // collection to join
+                    let: { "priorityId": "$priority" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$priorityId"] }}},
+                        { "$project": { "priorityStatus":1, "priorityColor": 1}}
+                    ],
+                    as: "priorityData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "vehicleIssueStatus", // collection to join
+                    let: { "statusId": "$status" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$statusId"] }}},
+                        { "$project": { "vehicleIssueStatus":1}}
+                    ],
+                    as: "issueStatusData"// output array field
+                }
+            },
+
+            
+            {
+                $skip: skipd
+            },
+            {
+                $limit:resPerPage
+            }
+           
+        
+        ]);
+
+
+    }else{
+
+
+       
+            const nooitems = await Issue.countDocuments({"isDeleted": +0});
+
+            const pager = paginate(nooitems, page,resPerPage);
+    
+           let issueData = await Issue.aggregate([{
+    
+            $match: {
+                "isDeleted":0
+            }
+           }
+            ,
+           {
+            $lookup: {
+                from: "vehicle", // collection to join
+                let: { "vehicleId": "$vehicle" },
+                pipeline: [
+                    { "$match": { "$expr": { "$eq": ["$_id", "$$vehicleId"] }}},
+                    { "$project": { "vehicle_typeId":1, "vehicle_code":1,"vehicleImage":1,"name": 1,"regNo":1 }}
+                ],
+                as: "vehicleData"// output array field
+            }
+        }
+            , {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "empId": "$reportedBy" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
+                    ],
+                    as: "employeedataReported"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "employees", // collection to join
+                    let: { "empId": "$assignTo" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$empId"] }}},
+                        { "$project": { "firstName":1, "empImage": 1,  "middleName":1, "lastName":1}}
+                    ],
+                    as: "employeedataAssignTo"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "priorityStatus", // collection to join
+                    let: { "priorityId": "$priority" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$priorityId"] }}},
+                        { "$project": { "priorityStatus":1, "priorityColor": 1}}
+                    ],
+                    as: "priorityData"// output array field
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "vehicleIssueStatus", // collection to join
+                    let: { "statusId": "$status" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$_id", "$$statusId"] }}},
+                        { "$project": { "vehicleIssueStatus":1}}
+                    ],
+                    as: "issueStatusData"// output array field
+                }
+            },
+
+            
+            {
+                $skip: skipd
+            },
+            {
+                $limit:resPerPage
+            }
+           
+        
+        ]);
+    }
+
+ 
+
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = issueData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 
 

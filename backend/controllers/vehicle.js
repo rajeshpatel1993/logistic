@@ -454,7 +454,7 @@ router.get("/getvehicle/:id", async (req, res) => {
             let: { "fuelTypeID": "$fuelTypeId" },
             pipeline: [
                 { "$match": { "$expr": { "$eq": ["$fuelTypeId", "$$fuelTypeID"] }}},
-                { "$project": { "fuelTypeName": 1, "_id": 0 }}
+                { "$project": { "fuelTypeName": 1 }}
             ],
             as: "fuelTypes"// output array field
         }
@@ -554,30 +554,33 @@ router.get("/getvehicle/:id", async (req, res) => {
 });
 
 
-router.get("/filtervehicle", async(req,res)=>{
+
+router.get("/filterAssignedVehicle", async(req,res)=>{
    
     let matchCondition = [];
     let vehicleType = req.query.vehicleType;
     let vehicleDetail = req.query.vehicleDetail;
     let vehicleReg = req.query.vehicleReg;
+    let vehicleData;
+    const modifiedData = [];
 
-    if(vehicleType){
+    if(vehicleType && vehicleType != 'null'){
         matchCondition.push({vehicle_typeId : vehicleType });
     }
-    if(vehicleDetail){
+    if(vehicleDetail && vehicleDetail != 'null'){
         matchCondition.push({vehicleDetailsId : vehicleDetail});
     }
-    if(vehicleReg){
+    if(vehicleReg && vehicleReg != 'null'){
         matchCondition.push({regNo : vehicleReg});
     }
     const resPerPage = paginationSize; // results per page
     const page = parseInt(req.query.page) || 1; // Page 
     const skipd = (resPerPage * page) - resPerPage;
     let nooitems ;
+    let pager;
 
     try {
-       
-
+       if(matchCondition.length > 0){
         const nooitemsAggregate = await Vehicle.aggregate([
             {$match: {$and: matchCondition}},
             {$count : "noofitems"}
@@ -589,10 +592,10 @@ router.get("/filtervehicle", async(req,res)=>{
             nooitems = 0;
 
         }
-        const pager = paginate(nooitems, page,resPerPage);
+         pager = paginate(nooitems, page,resPerPage);
 
 
-       let vehicleData = await Vehicle.aggregate([ 
+       vehicleData = await Vehicle.aggregate([ 
         { $match: { $and: matchCondition } },
    
         {
@@ -654,6 +657,224 @@ router.get("/filtervehicle", async(req,res)=>{
        
     
     ]);
+    }else{
+        const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
+         pager = paginate(nooitems, page,resPerPage);
+
+        vehicleData = await Vehicle.aggregate([{
+
+        $match: {
+            "isDeleted":"0"
+        }
+       }
+        
+
+        
+        ,
+        {
+            $skip: skipd
+        },
+        {
+            $limit:resPerPage
+        }
+       
+    
+    ]);
+
+    }
+
+    for(let i=0;i<vehicleData.length;i++){
+        let ele = {};
+        let elemId = vehicleData[i]._id;
+        let assignedVal = Object.assign(ele,vehicleData[i]);
+        let assignVehicleCollection = await AssignVehicle.findOne({vehicle:elemId, isDeleted:0}).populate('employee').populate('vehicle').populate('projects').populate('workLocations').populate('projectsType');
+
+        assignedVal["assign_data"] = assignVehicleCollection;
+        modifiedData.push(assignedVal);
+    }
+
+
+
+        let responseData = {};
+        responseData["status"] = 200;
+        responseData["page"] = pager;
+        responseData["data"] = modifiedData;
+        res.status(200).json(responseData);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+
+
+router.get("/filtervehicle", async(req,res)=>{
+   
+    let matchCondition = [];
+    let vehicleType = req.query.vehicleType;
+    let vehicleDetail = req.query.vehicleDetail;
+    let vehicleReg = req.query.vehicleReg;
+    let pager;
+    if(vehicleType && vehicleType != 'null'){
+        matchCondition.push({vehicle_typeId : vehicleType });
+    }
+    if(vehicleDetail && vehicleDetail != 'null'){
+        matchCondition.push({vehicleDetailsId : vehicleDetail});
+    }
+    if(vehicleReg && vehicleReg != 'null'){
+        matchCondition.push({regNo : vehicleReg});
+    }
+    const resPerPage = paginationSize; // results per page
+    const page = parseInt(req.query.page) || 1; // Page 
+    const skipd = (resPerPage * page) - resPerPage;
+    let nooitems ;
+    let vehicleData;
+
+    try {
+       
+        if(matchCondition.length > 0){
+            const nooitemsAggregate = await Vehicle.aggregate([
+                {$match: {$and: matchCondition}},
+                {$count : "noofitems"}
+            ]);
+
+            if(nooitemsAggregate.length > 0){
+                nooitems = nooitemsAggregate[0].noofitems;
+            }else{
+                nooitems = 0;
+
+            }
+            pager = paginate(nooitems, page,resPerPage);
+
+
+            vehicleData = await Vehicle.aggregate([ 
+            { $match: { $and: matchCondition } },
+    
+            {
+                $lookup: {
+                    from: "vehicleDetails", // collection to join
+                    let: { "vechDetId": "$vehicleDetailsId" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
+                        { "$project": { "vehicleDetails": 1, "_id": 0 }}
+                    ],
+                    as: "vehicleDetailsArray"// output array field
+                }
+            }
+            ,{
+
+
+                
+                    $lookup: {
+                        from: "vehicleType", // from collection name
+                        let: { "vechTypeId": "$vehicle_typeId" },
+                        pipeline: [
+                            { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
+                            { "$project": { "vehicleType": 1, "_id": 0 }}
+                        ],
+                        as: "vehicleTypesArray"
+                    }
+                
+            },
+            
+            {
+                $lookup: {
+                    from: "vehicleStatus", // from collection name
+                    let: { "vechStatusId": "$vehicleStatusId" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vechStatusId"] }}},
+                        { "$project": { "vehicleStatus": 1, "_id": 0 }}
+                    ],
+                    as: "vehicleStatusArray"
+                }
+            },
+            {
+                $lookup: {
+                    from: "worklocation", // from collection name
+                    let: { "worklocid": "$workLocationId" },
+                    pipeline: [
+                        { "$match": { "$expr": { "$eq": ["$workLocationId", "$$worklocid"] }}},
+                        { "$project": { "workLocation": 1, "_id": 0 }}
+                    ],
+                    as: "workLocationArray"
+                }
+            },
+        
+            {
+                $skip: skipd
+            },
+            {
+                $limit:resPerPage
+            }
+        
+        
+            ]);
+        }else{
+             vehicleData = await Vehicle.aggregate([{
+
+                $match: {
+                    "isDeleted":"0"
+                }
+               }
+                
+                , {
+                    $lookup: {
+                        from: "vehicleDetails", // collection to join
+                        let: { "vechDetId": "$vehicleDetailsId" },
+                        pipeline: [
+                            { "$match": { "$expr": { "$eq": ["$vehicleDetailsId", "$$vechDetId"] }}},
+                            { "$project": { "vehicleDetails": 1, "_id": 0 }}
+                        ],
+                        as: "vehicleDetailsArray"// output array field
+                    }
+                },{
+        
+        
+                    
+                        $lookup: {
+                            from: "vehicleType", // from collection name
+                            let: { "vechTypeId": "$vehicle_typeId" },
+                            pipeline: [
+                                { "$match": { "$expr": { "$eq": ["$vehicleTypeId", "$$vechTypeId"] }}},
+                                { "$project": { "vehicleType": 1, "_id": 0 }}
+                            ],
+                            as: "vehicleTypesArray"
+                        }
+                    
+                },
+                
+                {
+                    $lookup: {
+                        from: "vehicleStatus", // from collection name
+                        let: { "vechStatusId": "$vehicleStatusId" },
+                        pipeline: [
+                            { "$match": { "$expr": { "$eq": ["$vehicleStatusId", "$$vechStatusId"] }}},
+                            { "$project": { "vehicleStatus": 1, "_id": 0 }}
+                        ],
+                        as: "vehicleStatusArray"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "worklocation", // from collection name
+                        let: { "worklocid": "$workLocationId" },
+                        pipeline: [
+                            { "$match": { "$expr": { "$eq": ["$workLocationId", "$$worklocid"] }}},
+                            { "$project": { "workLocation": 1, "_id": 0 }}
+                        ],
+                        as: "workLocationArray"
+                    }
+                },
+                {
+                    $skip: skipd
+                },
+                {
+                    $limit:resPerPage
+                }
+               
+            
+            ]);
+
+        }
 
         let responseData = {};
         responseData["status"] = 200;
@@ -1002,8 +1223,6 @@ router.get("/",async(req,res) => {
        
 
         const nooitems = await Vehicle.countDocuments({"isDeleted": "0"});
-        console.log(nooitems);
-         // get pager object for specified page
          const pager = paginate(nooitems, page,resPerPage);
 
        let vehicleData = await Vehicle.aggregate([{
